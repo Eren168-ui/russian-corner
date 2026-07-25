@@ -143,7 +143,6 @@ public final class PracticeViewModel {
       throw PracticeViewModelError.answerNotRevealed
     }
     guard let card = currentCard else { return }
-    let cleanupMessage = cleanupRecordingForTransition()
     let instant = now()
     let elapsed = max(0, instant.timeIntervalSince(recallStartedAt))
     let event = ReviewEvent(
@@ -169,6 +168,7 @@ public final class PracticeViewModel {
       dailyCompletedCount: newCompletedCount,
       calendar: .current
     )
+    let cleanupMessage = cleanupRecordingForTransition()
     states[card.id] = newState
     completedToday = newCompletedCount
     advance(status: cleanupMessage)

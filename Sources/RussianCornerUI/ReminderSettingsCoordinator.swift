@@ -15,8 +15,10 @@ public protocol ReminderSettingsScheduling: Sendable {
 
 public enum ReminderSettingsUpdateResult: Equatable, Sendable {
   case applied
+  case appliedLocally
   case scheduleFailed(String)
   case databaseFailed(String, rollbackSucceeded: Bool)
+  case localDatabaseFailed(String)
 }
 
 extension ProgressRepository: ReminderSettingsPersisting {}
@@ -25,11 +27,11 @@ extension ReminderService: ReminderSettingsScheduling {}
 @MainActor
 public final class ReminderSettingsCoordinator {
   private let store: any ReminderSettingsPersisting
-  private let scheduler: any ReminderSettingsScheduling
+  private let scheduler: (any ReminderSettingsScheduling)?
 
   public init(
     store: any ReminderSettingsPersisting,
-    scheduler: any ReminderSettingsScheduling
+    scheduler: (any ReminderSettingsScheduling)?
   ) {
     self.store = store
     self.scheduler = scheduler
@@ -43,6 +45,17 @@ public final class ReminderSettingsCoordinator {
       morningReminder: appModel.morningReminder,
       eveningReminder: appModel.eveningReminder
     )
+    guard let scheduler else {
+      do {
+        try store.save(settings: proposed)
+        appModel.morningReminder = proposed.morningReminder
+        appModel.eveningReminder = proposed.eveningReminder
+        return .appliedLocally
+      } catch {
+        restore(oldSettings, to: appModel)
+        return .localDatabaseFailed(error.localizedDescription)
+      }
+    }
     let scheduleResult = await scheduler.schedule(settings: proposed)
     guard case .scheduled = scheduleResult else {
       restore(oldSettings, to: appModel)

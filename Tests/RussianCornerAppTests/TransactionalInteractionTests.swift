@@ -114,7 +114,15 @@ final class TransactionalPracticeTests: XCTestCase {
   func testGradeFailureDoesNotAdvanceAndRetryCommitsOnlyOnce() throws {
     let store = TransactionalPracticeStore()
     store.shouldFailCommit = true
-    let fixture = try makeModel(store: store)
+    let recording = FakeRecordingManager()
+    recording.isRecording = true
+    recording.temporaryRecordingURL = URL(
+      fileURLWithPath: "/tmp/russian-corner-grade-retry.m4a"
+    )
+    let fixture = try makeModel(
+      store: store,
+      recording: recording
+    )
     fixture.model.reveal()
 
     XCTAssertThrowsError(try fixture.model.grade(.easy))
@@ -124,6 +132,13 @@ final class TransactionalPracticeTests: XCTestCase {
     XCTAssertEqual(fixture.model.completedToday, 0)
     XCTAssertEqual(store.commitCallCount, 1)
     XCTAssertTrue(store.events.isEmpty)
+    XCTAssertTrue(recording.isRecording)
+    XCTAssertEqual(
+      recording.temporaryRecordingURL,
+      URL(fileURLWithPath: "/tmp/russian-corner-grade-retry.m4a")
+    )
+    XCTAssertEqual(recording.stopCallCount, 0)
+    XCTAssertEqual(recording.discardCallCount, 0)
 
     try fixture.model.grade(.easy)
 
@@ -131,6 +146,10 @@ final class TransactionalPracticeTests: XCTestCase {
     XCTAssertFalse(fixture.model.isRevealed)
     XCTAssertEqual(store.commitCallCount, 2)
     XCTAssertEqual(store.events.count, 1)
+    XCTAssertFalse(recording.isRecording)
+    XCTAssertNil(recording.temporaryRecordingURL)
+    XCTAssertEqual(recording.stopCallCount, 1)
+    XCTAssertEqual(recording.discardCallCount, 1)
   }
 
   func testGradeBeforeRevealIsRejectedWithoutCommit() throws {
@@ -344,6 +363,25 @@ final class ReminderSettingsCoordinatorTests: XCTestCase {
     XCTAssertEqual(scheduleCalls, [proposed])
   }
 
+  func testMissingSystemSchedulerStillPersistsAndUpdatesModel() async {
+    let fixture = makeReminderFixture(results: [])
+    let coordinator = ReminderSettingsCoordinator(
+      store: fixture.store,
+      scheduler: nil
+    )
+
+    let result = await coordinator.apply(
+      proposed: proposed,
+      to: fixture.model
+    )
+
+    XCTAssertEqual(result, .appliedLocally)
+    XCTAssertEqual(fixture.store.savedSettings, proposed)
+    XCTAssertEqual(settings(from: fixture.model), proposed)
+    let scheduleCalls = await fixture.scheduler.calls()
+    XCTAssertTrue(scheduleCalls.isEmpty)
+  }
+
   private func makeReminderFixture(
     results: [ReminderScheduleResult],
     failDatabase: Bool = false
@@ -377,6 +415,28 @@ final class ReminderSettingsCoordinatorTests: XCTestCase {
       morningReminder: model.morningReminder,
       eveningReminder: model.eveningReminder
     )
+  }
+}
+
+@MainActor
+final class DailyCardCountCoordinatorTests: XCTestCase {
+  func testPersistentReloadFailureRestoresModelWithOneAttempt() {
+    let suiteName = "DailyCardCountCoordinatorTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+    let model = AppModel(defaults: defaults)
+    model.dailyCardCount = 7
+    var reloadCallCount = 0
+    let coordinator = DailyCardCountCoordinator {
+      reloadCallCount += 1
+      throw FixtureFailure.database
+    }
+
+    let result = coordinator.apply(proposed: 9, to: model)
+
+    XCTAssertFalse(result)
+    XCTAssertEqual(model.dailyCardCount, 7)
+    XCTAssertEqual(reloadCallCount, 1)
   }
 }
 

@@ -166,10 +166,17 @@ public final class SettingsRecord {
 public final class ProgressRepository {
     public let container: ModelContainer
     private let context: ModelContext
+    private let saveContext: (ModelContext) throws -> Void
 
-    public init(container: ModelContainer) {
+    public init(
+        container: ModelContainer,
+        saveContext: @escaping (ModelContext) throws -> Void = {
+            try $0.save()
+        }
+    ) {
         self.container = container
         context = ModelContext(container)
+        self.saveContext = saveContext
     }
 
     public static func makeContainer(
@@ -286,20 +293,25 @@ public final class ProgressRepository {
     }
 
     public func save(settings: RussianCornerSettings) throws {
-        let settingsKey = "settings"
-        let descriptor = FetchDescriptor<SettingsRecord>(
-            predicate: #Predicate { $0.key == settingsKey }
-        )
+        do {
+            let settingsKey = "settings"
+            let descriptor = FetchDescriptor<SettingsRecord>(
+                predicate: #Predicate { $0.key == settingsKey }
+            )
 
-        if let record = try context.fetch(descriptor).first {
-            record.morningHour = settings.morningReminder.hour
-            record.morningMinute = settings.morningReminder.minute
-            record.eveningHour = settings.eveningReminder.hour
-            record.eveningMinute = settings.eveningReminder.minute
-        } else {
-            context.insert(SettingsRecord(settings: settings))
+            if let record = try context.fetch(descriptor).first {
+                record.morningHour = settings.morningReminder.hour
+                record.morningMinute = settings.morningReminder.minute
+                record.eveningHour = settings.eveningReminder.hour
+                record.eveningMinute = settings.eveningReminder.minute
+            } else {
+                context.insert(SettingsRecord(settings: settings))
+            }
+            try saveContext(context)
+        } catch {
+            context.rollback()
+            throw error
         }
-        try context.save()
     }
 
     public func settings() throws -> RussianCornerSettings {

@@ -119,6 +119,45 @@ final class PersistenceTests: XCTestCase {
         XCTAssertEqual(restored.reminderTimes.count, 2)
     }
 
+    func testFailedSettingsSaveRollsBackSameContextBeforeRetry() throws {
+        let container = try ProgressRepository.makeInMemoryContainer()
+        let original = RussianCornerSettings(
+            morningReminder: ReminderTime(hour: 8, minute: 5),
+            eveningReminder: ReminderTime(hour: 20, minute: 10)
+        )
+        let rejected = RussianCornerSettings(
+            morningReminder: ReminderTime(hour: 9, minute: 15),
+            eveningReminder: ReminderTime(hour: 21, minute: 20)
+        )
+        let replacement = RussianCornerSettings(
+            morningReminder: ReminderTime(hour: 10, minute: 25),
+            eveningReminder: ReminderTime(hour: 22, minute: 30)
+        )
+        try ProgressRepository(container: container).save(settings: original)
+        var saveAttempts = 0
+        let repository = ProgressRepository(
+            container: container,
+            saveContext: { context in
+                saveAttempts += 1
+                if saveAttempts == 1 {
+                    throw FixturePersistenceError.saveFailed
+                }
+                try context.save()
+            }
+        )
+
+        XCTAssertThrowsError(try repository.save(settings: rejected))
+        XCTAssertEqual(try repository.settings(), original)
+
+        try repository.save(settings: replacement)
+
+        XCTAssertEqual(try repository.settings(), replacement)
+        XCTAssertEqual(
+            try ProgressRepository(container: container).settings(),
+            replacement
+        )
+    }
+
     func testCorruptedReviewEventRawValueThrowsExplicitError() throws {
         let container = try ProgressRepository.makeInMemoryContainer()
         let recordID = UUID()
@@ -149,6 +188,10 @@ final class PersistenceTests: XCTestCase {
             )
         }
     }
+}
+
+private enum FixturePersistenceError: Error {
+    case saveFailed
 }
 
 private struct FixedMicrophonePermissionProvider:

@@ -4,12 +4,16 @@ import SwiftUI
 public struct RussianCornerSettingsView: View {
   @Bindable private var runtime: AppRuntime
   @Bindable private var appModel: AppModel
+  @State private var dailyCardCountDraft: Int
   @State private var morningDraft: Date
   @State private var eveningDraft: Date
 
   public init(runtime: AppRuntime) {
     self.runtime = runtime
     appModel = runtime.appModel
+    _dailyCardCountDraft = State(
+      initialValue: runtime.appModel.dailyCardCount
+    )
     _morningDraft = State(
       initialValue: Self.date(from: runtime.appModel.morningReminder)
     )
@@ -57,10 +61,22 @@ public struct RussianCornerSettingsView: View {
 
       Section("练习") {
         Stepper(
-          "每日 \(appModel.dailyCardCount) 卡",
-          value: $appModel.dailyCardCount,
+          "每日 \(dailyCardCountDraft) 卡",
+          value: $dailyCardCountDraft,
           in: 5...10
         )
+        Button("应用每日卡数") {
+          let coordinator = DailyCardCountCoordinator {
+            try runtime.reloadPractice()
+          }
+          let applied = coordinator.apply(
+            proposed: dailyCardCountDraft,
+            to: appModel
+          )
+          if !applied {
+            dailyCardCountDraft = appModel.dailyCardCount
+          }
+        }
         Picker("练习方式", selection: $appModel.mode) {
           Text("安静默读").tag(PracticeMode.quiet)
           Text("开口练习").tag(PracticeMode.speaking)
@@ -104,17 +120,6 @@ public struct RussianCornerSettingsView: View {
     .formStyle(.grouped)
     .frame(width: 470, height: 550)
     .navigationTitle("Russian Corner 设置")
-    .onChange(of: appModel.dailyCardCount) { oldValue, _ in
-      do {
-        try runtime.reloadPractice()
-      } catch {
-        appModel.transientStatus =
-          "每日卡数未更新：\(error.localizedDescription)"
-        if appModel.dailyCardCount != oldValue {
-          appModel.dailyCardCount = oldValue
-        }
-      }
-    }
     .onChange(of: appModel.mode) {
       runtime.practice?.mode = appModel.mode
     }

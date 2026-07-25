@@ -204,12 +204,10 @@ public final class AppRuntime {
       )
       self.catalog = catalog
       self.repository = repository
-      if let reminderService {
-        reminderSettingsCoordinator = ReminderSettingsCoordinator(
-          store: repository,
-          scheduler: reminderService
-        )
-      }
+      reminderSettingsCoordinator = ReminderSettingsCoordinator(
+        store: repository,
+        scheduler: reminderService
+      )
       let persistedSettings = try repository.settings()
       appModel.morningReminder = persistedSettings.morningReminder
       appModel.eveningReminder = persistedSettings.eveningReminder
@@ -234,15 +232,13 @@ public final class AppRuntime {
   public func saveReminderSettings(
     _ proposed: RussianCornerSettings
   ) async -> Bool {
-    guard
-      let reminderService,
-      let reminderSettingsCoordinator
-    else {
-      appModel.transientStatus =
-        "当前运行方式无法启用系统通知，原设置保持不变"
+    guard let reminderSettingsCoordinator else {
+      appModel.transientStatus = "提醒设置暂时无法保存"
       return false
     }
-    if await reminderService.permissionStatus() == .undetermined {
+    if let reminderService,
+      await reminderService.permissionStatus() == .undetermined
+    {
       _ = await reminderService.requestPermission()
     }
     let result = await reminderSettingsCoordinator.apply(
@@ -253,6 +249,10 @@ public final class AppRuntime {
     case .applied:
       appModel.transientStatus = "提醒时间已更新"
       return true
+    case .appliedLocally:
+      appModel.transientStatus =
+        "提醒时间已保存；当前运行方式不支持系统通知"
+      return true
     case .scheduleFailed(let message):
       appModel.transientStatus =
         "提醒未更新，原设置保持不变：\(message)"
@@ -262,6 +262,9 @@ public final class AppRuntime {
         rollbackSucceeded
         ? "提醒保存失败，系统时间已恢复：\(message)"
         : "提醒保存失败，系统回滚也未完成：\(message)"
+      return false
+    case .localDatabaseFailed(let message):
+      appModel.transientStatus = "提醒保存失败：\(message)"
       return false
     }
   }
