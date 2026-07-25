@@ -1,0 +1,5762 @@
+[
+  {
+    "id": "lexeme-greetings-здравствуйте",
+    "lemma": "здравствуйте",
+    "stressedForm": "здра́вствуйте",
+    "speechText": "здравствуйте",
+    "partOfSpeech": "interjection",
+    "glossZh": "您好",
+    "collocations": [
+      "Здравствуйте! Очень приятно познакомиться."
+    ],
+    "example": "Здравствуйте! Очень приятно познакомиться.",
+    "sentenceIDs": [
+      "sentence-greetings-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-greetings-привет",
+    "lemma": "привет",
+    "stressedForm": "приве́т",
+    "speechText": "привет",
+    "partOfSpeech": "interjection",
+    "glossZh": "你好",
+    "collocations": [
+      "Здравствуйте! Очень приятно познакомиться."
+    ],
+    "example": "Здравствуйте! Очень приятно познакомиться.",
+    "sentenceIDs": [
+      "sentence-greetings-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-greetings-познакомиться",
+    "lemma": "познакомиться",
+    "stressedForm": "познако́миться",
+    "speechText": "познакомиться",
+    "partOfSpeech": "verb",
+    "glossZh": "认识",
+    "collocations": [
+      "Здравствуйте! Очень приятно познакомиться."
+    ],
+    "example": "Здравствуйте! Очень приятно познакомиться.",
+    "sentenceIDs": [
+      "sentence-greetings-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-greetings-приятно",
+    "lemma": "приятно",
+    "stressedForm": "прия́тно",
+    "speechText": "приятно",
+    "partOfSpeech": "adverb",
+    "glossZh": "愉快地",
+    "collocations": [
+      "Здравствуйте! Очень приятно познакомиться."
+    ],
+    "example": "Здравствуйте! Очень приятно познакомиться.",
+    "sentenceIDs": [
+      "sentence-greetings-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-greetings-встреча",
+    "lemma": "встреча",
+    "stressedForm": "встре́ча",
+    "speechText": "встреча",
+    "partOfSpeech": "noun",
+    "glossZh": "见面",
+    "collocations": [
+      "Здравствуйте! Очень приятно познакомиться."
+    ],
+    "example": "Здравствуйте! Очень приятно познакомиться.",
+    "sentenceIDs": [
+      "sentence-greetings-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-greetings-спасибо",
+    "lemma": "спасибо",
+    "stressedForm": "спаси́бо",
+    "speechText": "спасибо",
+    "partOfSpeech": "interjection",
+    "glossZh": "谢谢",
+    "collocations": [
+      "Спасибо за помощь, до свидания!"
+    ],
+    "example": "Спасибо за помощь, до свидания!",
+    "sentenceIDs": [
+      "sentence-greetings-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-greetings-пожалуйста",
+    "lemma": "пожалуйста",
+    "stressedForm": "пожа́луйста",
+    "speechText": "пожалуйста",
+    "partOfSpeech": "interjection",
+    "glossZh": "请；不客气",
+    "collocations": [
+      "Спасибо за помощь, до свидания!"
+    ],
+    "example": "Спасибо за помощь, до свидания!",
+    "sentenceIDs": [
+      "sentence-greetings-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-greetings-помощь",
+    "lemma": "помощь",
+    "stressedForm": "по́мощь",
+    "speechText": "помощь",
+    "partOfSpeech": "noun",
+    "glossZh": "帮助",
+    "collocations": [
+      "Спасибо за помощь, до свидания!"
+    ],
+    "example": "Спасибо за помощь, до свидания!",
+    "sentenceIDs": [
+      "sentence-greetings-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-greetings-свидание",
+    "lemma": "свидание",
+    "stressedForm": "свида́ние",
+    "speechText": "свидание",
+    "partOfSpeech": "noun",
+    "glossZh": "会面；再见",
+    "collocations": [
+      "Спасибо за помощь, до свидания!"
+    ],
+    "example": "Спасибо за помощь, до свидания!",
+    "sentenceIDs": [
+      "sentence-greetings-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-greetings-пока",
+    "lemma": "пока",
+    "stressedForm": "пока́",
+    "speechText": "пока",
+    "partOfSpeech": "interjection",
+    "glossZh": "再见",
+    "collocations": [
+      "Спасибо за помощь, до свидания!"
+    ],
+    "example": "Спасибо за помощь, до свидания!",
+    "sentenceIDs": [
+      "sentence-greetings-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-family-семья",
+    "lemma": "семья",
+    "stressedForm": "семья́",
+    "speechText": "семья",
+    "partOfSpeech": "noun",
+    "glossZh": "家庭",
+    "collocations": [
+      "Я живу вместе с родителями и младшим братом."
+    ],
+    "example": "Я живу вместе с родителями и младшим братом.",
+    "sentenceIDs": [
+      "sentence-family-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-family-родитель",
+    "lemma": "родитель",
+    "stressedForm": "роди́тель",
+    "speechText": "родитель",
+    "partOfSpeech": "noun",
+    "glossZh": "父母之一",
+    "collocations": [
+      "Я живу вместе с родителями и младшим братом."
+    ],
+    "example": "Я живу вместе с родителями и младшим братом.",
+    "sentenceIDs": [
+      "sentence-family-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-family-мама",
+    "lemma": "мама",
+    "stressedForm": "ма́ма",
+    "speechText": "мама",
+    "partOfSpeech": "noun",
+    "glossZh": "妈妈",
+    "collocations": [
+      "Я живу вместе с родителями и младшим братом."
+    ],
+    "example": "Я живу вместе с родителями и младшим братом.",
+    "sentenceIDs": [
+      "sentence-family-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-family-папа",
+    "lemma": "папа",
+    "stressedForm": "па́па",
+    "speechText": "папа",
+    "partOfSpeech": "noun",
+    "glossZh": "爸爸",
+    "collocations": [
+      "Я живу вместе с родителями и младшим братом."
+    ],
+    "example": "Я живу вместе с родителями и младшим братом.",
+    "sentenceIDs": [
+      "sentence-family-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-family-брат",
+    "lemma": "брат",
+    "stressedForm": "бра́т",
+    "speechText": "брат",
+    "partOfSpeech": "noun",
+    "glossZh": "兄弟",
+    "collocations": [
+      "Я живу вместе с родителями и младшим братом."
+    ],
+    "example": "Я живу вместе с родителями и младшим братом.",
+    "sentenceIDs": [
+      "sentence-family-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-family-сестра",
+    "lemma": "сестра",
+    "stressedForm": "сестра́",
+    "speechText": "сестра",
+    "partOfSpeech": "noun",
+    "glossZh": "姐妹",
+    "collocations": [
+      "В воскресенье бабушка и дедушка навещают внучку."
+    ],
+    "example": "В воскресенье бабушка и дедушка навещают внучку.",
+    "sentenceIDs": [
+      "sentence-family-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-family-бабушка",
+    "lemma": "бабушка",
+    "stressedForm": "ба́бушка",
+    "speechText": "бабушка",
+    "partOfSpeech": "noun",
+    "glossZh": "祖母；外祖母",
+    "collocations": [
+      "В воскресенье бабушка и дедушка навещают внучку."
+    ],
+    "example": "В воскресенье бабушка и дедушка навещают внучку.",
+    "sentenceIDs": [
+      "sentence-family-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-family-дедушка",
+    "lemma": "дедушка",
+    "stressedForm": "де́душка",
+    "speechText": "дедушка",
+    "partOfSpeech": "noun",
+    "glossZh": "祖父；外祖父",
+    "collocations": [
+      "В воскресенье бабушка и дедушка навещают внучку."
+    ],
+    "example": "В воскресенье бабушка и дедушка навещают внучку.",
+    "sentenceIDs": [
+      "sentence-family-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-family-внучка",
+    "lemma": "внучка",
+    "stressedForm": "вну́чка",
+    "speechText": "внучка",
+    "partOfSpeech": "noun",
+    "glossZh": "孙女；外孙女",
+    "collocations": [
+      "В воскресенье бабушка и дедушка навещают внучку."
+    ],
+    "example": "В воскресенье бабушка и дедушка навещают внучку.",
+    "sentenceIDs": [
+      "sentence-family-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-family-родственник",
+    "lemma": "родственник",
+    "stressedForm": "ро́дственник",
+    "speechText": "родственник",
+    "partOfSpeech": "noun",
+    "glossZh": "亲戚",
+    "collocations": [
+      "В воскресенье бабушка и дедушка навещают внучку."
+    ],
+    "example": "В воскресенье бабушка и дедушка навещают внучку.",
+    "sentenceIDs": [
+      "sentence-family-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-home-квартира",
+    "lemma": "квартира",
+    "stressedForm": "кварти́ра",
+    "speechText": "квартира",
+    "partOfSpeech": "noun",
+    "glossZh": "公寓",
+    "collocations": [
+      "В светлой квартире есть кухня, спальня и балкон."
+    ],
+    "example": "В светлой квартире есть кухня, спальня и балкон.",
+    "sentenceIDs": [
+      "sentence-home-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-home-кухня",
+    "lemma": "кухня",
+    "stressedForm": "ку́хня",
+    "speechText": "кухня",
+    "partOfSpeech": "noun",
+    "glossZh": "厨房",
+    "collocations": [
+      "В светлой квартире есть кухня, спальня и балкон."
+    ],
+    "example": "В светлой квартире есть кухня, спальня и балкон.",
+    "sentenceIDs": [
+      "sentence-home-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-home-спальня",
+    "lemma": "спальня",
+    "stressedForm": "спа́льня",
+    "speechText": "спальня",
+    "partOfSpeech": "noun",
+    "glossZh": "卧室",
+    "collocations": [
+      "В светлой квартире есть кухня, спальня и балкон."
+    ],
+    "example": "В светлой квартире есть кухня, спальня и балкон.",
+    "sentenceIDs": [
+      "sentence-home-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-home-балкон",
+    "lemma": "балкон",
+    "stressedForm": "балко́н",
+    "speechText": "балкон",
+    "partOfSpeech": "noun",
+    "glossZh": "阳台",
+    "collocations": [
+      "В светлой квартире есть кухня, спальня и балкон."
+    ],
+    "example": "В светлой квартире есть кухня, спальня и балкон.",
+    "sentenceIDs": [
+      "sentence-home-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-home-светлый",
+    "lemma": "светлый",
+    "stressedForm": "све́тлый",
+    "speechText": "светлый",
+    "partOfSpeech": "adjective",
+    "glossZh": "明亮的",
+    "collocations": [
+      "В светлой квартире есть кухня, спальня и балкон."
+    ],
+    "example": "В светлой квартире есть кухня, спальня и балкон.",
+    "sentenceIDs": [
+      "sentence-home-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-home-гостиная",
+    "lemma": "гостиная",
+    "stressedForm": "гости́ная",
+    "speechText": "гостиная",
+    "partOfSpeech": "noun",
+    "glossZh": "客厅",
+    "collocations": [
+      "В гостиной удобный диван стоит рядом с окном."
+    ],
+    "example": "В гостиной удобный диван стоит рядом с окном.",
+    "sentenceIDs": [
+      "sentence-home-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-home-удобный",
+    "lemma": "удобный",
+    "stressedForm": "удо́бный",
+    "speechText": "удобный",
+    "partOfSpeech": "adjective",
+    "glossZh": "舒适的",
+    "collocations": [
+      "В гостиной удобный диван стоит рядом с окном."
+    ],
+    "example": "В гостиной удобный диван стоит рядом с окном.",
+    "sentenceIDs": [
+      "sentence-home-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-home-диван",
+    "lemma": "диван",
+    "stressedForm": "дива́н",
+    "speechText": "диван",
+    "partOfSpeech": "noun",
+    "glossZh": "沙发",
+    "collocations": [
+      "В гостиной удобный диван стоит рядом с окном."
+    ],
+    "example": "В гостиной удобный диван стоит рядом с окном.",
+    "sentenceIDs": [
+      "sentence-home-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-home-окно",
+    "lemma": "окно",
+    "stressedForm": "окно́",
+    "speechText": "окно",
+    "partOfSpeech": "noun",
+    "glossZh": "窗户",
+    "collocations": [
+      "В гостиной удобный диван стоит рядом с окном."
+    ],
+    "example": "В гостиной удобный диван стоит рядом с окном.",
+    "sentenceIDs": [
+      "sentence-home-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-home-мебель",
+    "lemma": "мебель",
+    "stressedForm": "ме́бель",
+    "speechText": "мебель",
+    "partOfSpeech": "noun",
+    "glossZh": "家具",
+    "collocations": [
+      "В гостиной удобный диван стоит рядом с окном."
+    ],
+    "example": "В гостиной удобный диван стоит рядом с окном.",
+    "sentenceIDs": [
+      "sentence-home-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-daily-routine-вставать",
+    "lemma": "вставать",
+    "stressedForm": "встава́ть",
+    "speechText": "вставать",
+    "partOfSpeech": "verb",
+    "glossZh": "起床",
+    "collocations": [
+      "Я рано встаю, умываюсь и принимаю душ."
+    ],
+    "example": "Я рано встаю, умываюсь и принимаю душ.",
+    "sentenceIDs": [
+      "sentence-daily-routine-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-daily-routine-умываться",
+    "lemma": "умываться",
+    "stressedForm": "умыва́ться",
+    "speechText": "умываться",
+    "partOfSpeech": "verb",
+    "glossZh": "洗脸",
+    "collocations": [
+      "Я рано встаю, умываюсь и принимаю душ."
+    ],
+    "example": "Я рано встаю, умываюсь и принимаю душ.",
+    "sentenceIDs": [
+      "sentence-daily-routine-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-daily-routine-принимать",
+    "lemma": "принимать",
+    "stressedForm": "принима́ть",
+    "speechText": "принимать",
+    "partOfSpeech": "verb",
+    "glossZh": "接受；进行",
+    "collocations": [
+      "Я рано встаю, умываюсь и принимаю душ."
+    ],
+    "example": "Я рано встаю, умываюсь и принимаю душ.",
+    "sentenceIDs": [
+      "sentence-daily-routine-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-daily-routine-душ",
+    "lemma": "душ",
+    "stressedForm": "ду́ш",
+    "speechText": "душ",
+    "partOfSpeech": "noun",
+    "glossZh": "淋浴",
+    "collocations": [
+      "Я рано встаю, умываюсь и принимаю душ."
+    ],
+    "example": "Я рано встаю, умываюсь и принимаю душ.",
+    "sentenceIDs": [
+      "sentence-daily-routine-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-daily-routine-рано",
+    "lemma": "рано",
+    "stressedForm": "ра́но",
+    "speechText": "рано",
+    "partOfSpeech": "adverb",
+    "glossZh": "早地",
+    "collocations": [
+      "Я рано встаю, умываюсь и принимаю душ."
+    ],
+    "example": "Я рано встаю, умываюсь и принимаю душ.",
+    "sentenceIDs": [
+      "sentence-daily-routine-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-daily-routine-завтрак",
+    "lemma": "завтрак",
+    "stressedForm": "за́втрак",
+    "speechText": "завтрак",
+    "partOfSpeech": "noun",
+    "glossZh": "早餐",
+    "collocations": [
+      "После завтрака я одеваюсь, а в одиннадцать ложусь спать."
+    ],
+    "example": "После завтрака я одеваюсь, а в одиннадцать ложусь спать.",
+    "sentenceIDs": [
+      "sentence-daily-routine-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-daily-routine-одеваться",
+    "lemma": "одеваться",
+    "stressedForm": "одева́ться",
+    "speechText": "одеваться",
+    "partOfSpeech": "verb",
+    "glossZh": "穿衣",
+    "collocations": [
+      "После завтрака я одеваюсь, а в одиннадцать ложусь спать."
+    ],
+    "example": "После завтрака я одеваюсь, а в одиннадцать ложусь спать.",
+    "sentenceIDs": [
+      "sentence-daily-routine-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-daily-routine-ложиться",
+    "lemma": "ложиться",
+    "stressedForm": "ложи́ться",
+    "speechText": "ложиться",
+    "partOfSpeech": "verb",
+    "glossZh": "躺下；上床",
+    "collocations": [
+      "После завтрака я одеваюсь, а в одиннадцать ложусь спать."
+    ],
+    "example": "После завтрака я одеваюсь, а в одиннадцать ложусь спать.",
+    "sentenceIDs": [
+      "sentence-daily-routine-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-daily-routine-спать",
+    "lemma": "спать",
+    "stressedForm": "спать",
+    "speechText": "спать",
+    "partOfSpeech": "verb",
+    "glossZh": "睡觉",
+    "collocations": [
+      "После завтрака я одеваюсь, а в одиннадцать ложусь спать."
+    ],
+    "example": "После завтрака я одеваюсь, а в одиннадцать ложусь спать.",
+    "sentenceIDs": [
+      "sentence-daily-routine-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-daily-routine-распорядок",
+    "lemma": "распорядок",
+    "stressedForm": "распоря́док",
+    "speechText": "распорядок",
+    "partOfSpeech": "noun",
+    "glossZh": "作息；秩序",
+    "collocations": [
+      "После завтрака я одеваюсь, а в одиннадцать ложусь спать."
+    ],
+    "example": "После завтрака я одеваюсь, а в одиннадцать ложусь спать.",
+    "sentenceIDs": [
+      "sentence-daily-routine-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-food-обед",
+    "lemma": "обед",
+    "stressedForm": "обе́д",
+    "speechText": "обед",
+    "partOfSpeech": "noun",
+    "glossZh": "午餐",
+    "collocations": [
+      "На обед я ем суп, салат и свежий хлеб."
+    ],
+    "example": "На обед я ем суп, салат и свежий хлеб.",
+    "sentenceIDs": [
+      "sentence-food-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-food-суп",
+    "lemma": "суп",
+    "stressedForm": "су́п",
+    "speechText": "суп",
+    "partOfSpeech": "noun",
+    "glossZh": "汤",
+    "collocations": [
+      "На обед я ем суп, салат и свежий хлеб."
+    ],
+    "example": "На обед я ем суп, салат и свежий хлеб.",
+    "sentenceIDs": [
+      "sentence-food-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-food-салат",
+    "lemma": "салат",
+    "stressedForm": "сала́т",
+    "speechText": "салат",
+    "partOfSpeech": "noun",
+    "glossZh": "沙拉",
+    "collocations": [
+      "На обед я ем суп, салат и свежий хлеб."
+    ],
+    "example": "На обед я ем суп, салат и свежий хлеб.",
+    "sentenceIDs": [
+      "sentence-food-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-food-свежий",
+    "lemma": "свежий",
+    "stressedForm": "све́жий",
+    "speechText": "свежий",
+    "partOfSpeech": "adjective",
+    "glossZh": "新鲜的",
+    "collocations": [
+      "На обед я ем суп, салат и свежий хлеб."
+    ],
+    "example": "На обед я ем суп, салат и свежий хлеб.",
+    "sentenceIDs": [
+      "sentence-food-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-food-хлеб",
+    "lemma": "хлеб",
+    "stressedForm": "хле́б",
+    "speechText": "хлеб",
+    "partOfSpeech": "noun",
+    "glossZh": "面包",
+    "collocations": [
+      "На обед я ем суп, салат и свежий хлеб."
+    ],
+    "example": "На обед я ем суп, салат и свежий хлеб.",
+    "sentenceIDs": [
+      "sentence-food-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-food-ужин",
+    "lemma": "ужин",
+    "stressedForm": "у́жин",
+    "speechText": "ужин",
+    "partOfSpeech": "noun",
+    "glossZh": "晚餐",
+    "collocations": [
+      "На ужин мы готовим рис, рыбу и пьём чай."
+    ],
+    "example": "На ужин мы готовим рис, рыбу и пьём чай.",
+    "sentenceIDs": [
+      "sentence-food-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-food-готовить",
+    "lemma": "готовить",
+    "stressedForm": "гото́вить",
+    "speechText": "готовить",
+    "partOfSpeech": "verb",
+    "glossZh": "做饭；准备",
+    "collocations": [
+      "На ужин мы готовим рис, рыбу и пьём чай."
+    ],
+    "example": "На ужин мы готовим рис, рыбу и пьём чай.",
+    "sentenceIDs": [
+      "sentence-food-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-food-рис",
+    "lemma": "рис",
+    "stressedForm": "ри́с",
+    "speechText": "рис",
+    "partOfSpeech": "noun",
+    "glossZh": "米饭；大米",
+    "collocations": [
+      "На ужин мы готовим рис, рыбу и пьём чай."
+    ],
+    "example": "На ужин мы готовим рис, рыбу и пьём чай.",
+    "sentenceIDs": [
+      "sentence-food-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-food-рыба",
+    "lemma": "рыба",
+    "stressedForm": "ры́ба",
+    "speechText": "рыба",
+    "partOfSpeech": "noun",
+    "glossZh": "鱼",
+    "collocations": [
+      "На ужин мы готовим рис, рыбу и пьём чай."
+    ],
+    "example": "На ужин мы готовим рис, рыбу и пьём чай.",
+    "sentenceIDs": [
+      "sentence-food-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-food-чай",
+    "lemma": "чай",
+    "stressedForm": "ча́й",
+    "speechText": "чай",
+    "partOfSpeech": "noun",
+    "glossZh": "茶",
+    "collocations": [
+      "На ужин мы готовим рис, рыбу и пьём чай."
+    ],
+    "example": "На ужин мы готовим рис, рыбу и пьём чай.",
+    "sentenceIDs": [
+      "sentence-food-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-shopping-магазин",
+    "lemma": "магазин",
+    "stressedForm": "магази́н",
+    "speechText": "магазин",
+    "partOfSpeech": "noun",
+    "glossZh": "商店",
+    "collocations": [
+      "В магазине я сравниваю цены и выбираю недорогой товар."
+    ],
+    "example": "В магазине я сравниваю цены и выбираю недорогой товар.",
+    "sentenceIDs": [
+      "sentence-shopping-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-shopping-сравнивать",
+    "lemma": "сравнивать",
+    "stressedForm": "сравнива́ть",
+    "speechText": "сравнивать",
+    "partOfSpeech": "verb",
+    "glossZh": "比较",
+    "collocations": [
+      "В магазине я сравниваю цены и выбираю недорогой товар."
+    ],
+    "example": "В магазине я сравниваю цены и выбираю недорогой товар.",
+    "sentenceIDs": [
+      "sentence-shopping-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-shopping-цена",
+    "lemma": "цена",
+    "stressedForm": "цена́",
+    "speechText": "цена",
+    "partOfSpeech": "noun",
+    "glossZh": "价格",
+    "collocations": [
+      "В магазине я сравниваю цены и выбираю недорогой товар."
+    ],
+    "example": "В магазине я сравниваю цены и выбираю недорогой товар.",
+    "sentenceIDs": [
+      "sentence-shopping-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-shopping-выбирать",
+    "lemma": "выбирать",
+    "stressedForm": "выбира́ть",
+    "speechText": "выбирать",
+    "partOfSpeech": "verb",
+    "glossZh": "选择",
+    "collocations": [
+      "В магазине я сравниваю цены и выбираю недорогой товар."
+    ],
+    "example": "В магазине я сравниваю цены и выбираю недорогой товар.",
+    "sentenceIDs": [
+      "sentence-shopping-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-shopping-товар",
+    "lemma": "товар",
+    "stressedForm": "това́р",
+    "speechText": "товар",
+    "partOfSpeech": "noun",
+    "glossZh": "商品",
+    "collocations": [
+      "В магазине я сравниваю цены и выбираю недорогой товар."
+    ],
+    "example": "В магазине я сравниваю цены и выбираю недорогой товар.",
+    "sentenceIDs": [
+      "sentence-shopping-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-shopping-чек",
+    "lemma": "чек",
+    "stressedForm": "че́к",
+    "speechText": "чек",
+    "partOfSpeech": "noun",
+    "glossZh": "小票",
+    "collocations": [
+      "Дайте, пожалуйста, чек: я плачу банковской картой."
+    ],
+    "example": "Дайте, пожалуйста, чек: я плачу банковской картой.",
+    "sentenceIDs": [
+      "sentence-shopping-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-shopping-платить",
+    "lemma": "платить",
+    "stressedForm": "плати́ть",
+    "speechText": "платить",
+    "partOfSpeech": "verb",
+    "glossZh": "付款",
+    "collocations": [
+      "Дайте, пожалуйста, чек: я плачу банковской картой."
+    ],
+    "example": "Дайте, пожалуйста, чек: я плачу банковской картой.",
+    "sentenceIDs": [
+      "sentence-shopping-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-shopping-банковский",
+    "lemma": "банковский",
+    "stressedForm": "ба́нковский",
+    "speechText": "банковский",
+    "partOfSpeech": "adjective",
+    "glossZh": "银行的",
+    "collocations": [
+      "Дайте, пожалуйста, чек: я плачу банковской картой."
+    ],
+    "example": "Дайте, пожалуйста, чек: я плачу банковской картой.",
+    "sentenceIDs": [
+      "sentence-shopping-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-shopping-карта",
+    "lemma": "карта",
+    "stressedForm": "ка́рта",
+    "speechText": "карта",
+    "partOfSpeech": "noun",
+    "glossZh": "卡片；银行卡",
+    "collocations": [
+      "Дайте, пожалуйста, чек: я плачу банковской картой."
+    ],
+    "example": "Дайте, пожалуйста, чек: я плачу банковской картой.",
+    "sentenceIDs": [
+      "sentence-shopping-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-shopping-скидка",
+    "lemma": "скидка",
+    "stressedForm": "ски́дка",
+    "speechText": "скидка",
+    "partOfSpeech": "noun",
+    "glossZh": "折扣",
+    "collocations": [
+      "Дайте, пожалуйста, чек: я плачу банковской картой."
+    ],
+    "example": "Дайте, пожалуйста, чек: я плачу банковской картой.",
+    "sentenceIDs": [
+      "sentence-shopping-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-cafe-официант",
+    "lemma": "официант",
+    "stressedForm": "официа́нт",
+    "speechText": "официант",
+    "partOfSpeech": "noun",
+    "glossZh": "服务员",
+    "collocations": [
+      "Официант, принесите, пожалуйста, меню и чашку кофе."
+    ],
+    "example": "Официант, принесите, пожалуйста, меню и чашку кофе.",
+    "sentenceIDs": [
+      "sentence-cafe-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-cafe-меню",
+    "lemma": "меню",
+    "stressedForm": "меню́",
+    "speechText": "меню",
+    "partOfSpeech": "noun",
+    "glossZh": "菜单",
+    "collocations": [
+      "Официант, принесите, пожалуйста, меню и чашку кофе."
+    ],
+    "example": "Официант, принесите, пожалуйста, меню и чашку кофе.",
+    "sentenceIDs": [
+      "sentence-cafe-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-cafe-чашка",
+    "lemma": "чашка",
+    "stressedForm": "ча́шка",
+    "speechText": "чашка",
+    "partOfSpeech": "noun",
+    "glossZh": "杯子",
+    "collocations": [
+      "Официант, принесите, пожалуйста, меню и чашку кофе."
+    ],
+    "example": "Официант, принесите, пожалуйста, меню и чашку кофе.",
+    "sentenceIDs": [
+      "sentence-cafe-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-cafe-кофе",
+    "lemma": "кофе",
+    "stressedForm": "ко́фе",
+    "speechText": "кофе",
+    "partOfSpeech": "noun",
+    "glossZh": "咖啡",
+    "collocations": [
+      "Официант, принесите, пожалуйста, меню и чашку кофе."
+    ],
+    "example": "Официант, принесите, пожалуйста, меню и чашку кофе.",
+    "sentenceIDs": [
+      "sentence-cafe-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-cafe-принести",
+    "lemma": "принести",
+    "stressedForm": "принести́",
+    "speechText": "принести",
+    "partOfSpeech": "verb",
+    "glossZh": "拿来",
+    "collocations": [
+      "Официант, принесите, пожалуйста, меню и чашку кофе."
+    ],
+    "example": "Официант, принесите, пожалуйста, меню и чашку кофе.",
+    "sentenceIDs": [
+      "sentence-cafe-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-cafe-заказ",
+    "lemma": "заказ",
+    "stressedForm": "зака́з",
+    "speechText": "заказ",
+    "partOfSpeech": "noun",
+    "glossZh": "订单；点餐",
+    "collocations": [
+      "Мы уже сделали заказ и в конце просим счёт."
+    ],
+    "example": "Мы уже сделали заказ и в конце просим счёт.",
+    "sentenceIDs": [
+      "sentence-cafe-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-cafe-сделать",
+    "lemma": "сделать",
+    "stressedForm": "сде́лать",
+    "speechText": "сделать",
+    "partOfSpeech": "verb",
+    "glossZh": "做；完成",
+    "collocations": [
+      "Мы уже сделали заказ и в конце просим счёт."
+    ],
+    "example": "Мы уже сделали заказ и в конце просим счёт.",
+    "sentenceIDs": [
+      "sentence-cafe-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-cafe-просить",
+    "lemma": "просить",
+    "stressedForm": "проси́ть",
+    "speechText": "просить",
+    "partOfSpeech": "verb",
+    "glossZh": "请求",
+    "collocations": [
+      "Мы уже сделали заказ и в конце просим счёт."
+    ],
+    "example": "Мы уже сделали заказ и в конце просим счёт.",
+    "sentenceIDs": [
+      "sentence-cafe-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-cafe-счет",
+    "lemma": "счёт",
+    "stressedForm": "счёт",
+    "speechText": "счёт",
+    "partOfSpeech": "noun",
+    "glossZh": "账单",
+    "collocations": [
+      "Мы уже сделали заказ и в конце просим счёт."
+    ],
+    "example": "Мы уже сделали заказ и в конце просим счёт.",
+    "sentenceIDs": [
+      "sentence-cafe-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-cafe-десерт",
+    "lemma": "десерт",
+    "stressedForm": "десе́рт",
+    "speechText": "десерт",
+    "partOfSpeech": "noun",
+    "glossZh": "甜点",
+    "collocations": [
+      "Мы уже сделали заказ и в конце просим счёт."
+    ],
+    "example": "Мы уже сделали заказ и в конце просим счёт.",
+    "sentenceIDs": [
+      "sentence-cafe-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-transport-автобус",
+    "lemma": "автобус",
+    "stressedForm": "авто́бус",
+    "speechText": "автобус",
+    "partOfSpeech": "noun",
+    "glossZh": "公共汽车",
+    "collocations": [
+      "Автобус приедет на остановку через пять минут."
+    ],
+    "example": "Автобус приедет на остановку через пять минут.",
+    "sentenceIDs": [
+      "sentence-transport-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-transport-приехать",
+    "lemma": "приехать",
+    "stressedForm": "прие́хать",
+    "speechText": "приехать",
+    "partOfSpeech": "verb",
+    "glossZh": "到达（乘车）",
+    "collocations": [
+      "Автобус приедет на остановку через пять минут."
+    ],
+    "example": "Автобус приедет на остановку через пять минут.",
+    "sentenceIDs": [
+      "sentence-transport-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-transport-остановка",
+    "lemma": "остановка",
+    "stressedForm": "остано́вка",
+    "speechText": "остановка",
+    "partOfSpeech": "noun",
+    "glossZh": "车站",
+    "collocations": [
+      "Автобус приедет на остановку через пять минут."
+    ],
+    "example": "Автобус приедет на остановку через пять минут.",
+    "sentenceIDs": [
+      "sentence-transport-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-transport-через",
+    "lemma": "через",
+    "stressedForm": "че́рез",
+    "speechText": "через",
+    "partOfSpeech": "preposition",
+    "glossZh": "经过；之后",
+    "collocations": [
+      "Автобус приедет на остановку через пять минут."
+    ],
+    "example": "Автобус приедет на остановку через пять минут.",
+    "sentenceIDs": [
+      "sentence-transport-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-transport-минута",
+    "lemma": "минута",
+    "stressedForm": "мину́та",
+    "speechText": "минута",
+    "partOfSpeech": "noun",
+    "glossZh": "分钟",
+    "collocations": [
+      "Автобус приедет на остановку через пять минут."
+    ],
+    "example": "Автобус приедет на остановку через пять минут.",
+    "sentenceIDs": [
+      "sentence-transport-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-transport-обычно",
+    "lemma": "обычно",
+    "stressedForm": "обы́чно",
+    "speechText": "обычно",
+    "partOfSpeech": "adverb",
+    "glossZh": "通常",
+    "collocations": [
+      "Обычно я еду на метро, а иногда вызываю такси."
+    ],
+    "example": "Обычно я еду на метро, а иногда вызываю такси.",
+    "sentenceIDs": [
+      "sentence-transport-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-transport-ехать",
+    "lemma": "ехать",
+    "stressedForm": "е́хать",
+    "speechText": "ехать",
+    "partOfSpeech": "verb",
+    "glossZh": "乘车行进",
+    "collocations": [
+      "Обычно я еду на метро, а иногда вызываю такси."
+    ],
+    "example": "Обычно я еду на метро, а иногда вызываю такси.",
+    "sentenceIDs": [
+      "sentence-transport-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-transport-метро",
+    "lemma": "метро",
+    "stressedForm": "метро́",
+    "speechText": "метро",
+    "partOfSpeech": "noun",
+    "glossZh": "地铁",
+    "collocations": [
+      "Обычно я еду на метро, а иногда вызываю такси."
+    ],
+    "example": "Обычно я еду на метро, а иногда вызываю такси.",
+    "sentenceIDs": [
+      "sentence-transport-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-transport-вызывать",
+    "lemma": "вызывать",
+    "stressedForm": "вызыва́ть",
+    "speechText": "вызывать",
+    "partOfSpeech": "verb",
+    "glossZh": "呼叫",
+    "collocations": [
+      "Обычно я еду на метро, а иногда вызываю такси."
+    ],
+    "example": "Обычно я еду на метро, а иногда вызываю такси.",
+    "sentenceIDs": [
+      "sentence-transport-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-transport-такси",
+    "lemma": "такси",
+    "stressedForm": "такси́",
+    "speechText": "такси",
+    "partOfSpeech": "noun",
+    "glossZh": "出租车",
+    "collocations": [
+      "Обычно я еду на метро, а иногда вызываю такси."
+    ],
+    "example": "Обычно я еду на метро, а иногда вызываю такси.",
+    "sentenceIDs": [
+      "sentence-transport-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-city-центр",
+    "lemma": "центр",
+    "stressedForm": "це́нтр",
+    "speechText": "центр",
+    "partOfSpeech": "noun",
+    "glossZh": "中心",
+    "collocations": [
+      "В центре города есть широкая площадь и музей."
+    ],
+    "example": "В центре города есть широкая площадь и музей.",
+    "sentenceIDs": [
+      "sentence-city-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-city-город",
+    "lemma": "город",
+    "stressedForm": "го́род",
+    "speechText": "город",
+    "partOfSpeech": "noun",
+    "glossZh": "城市",
+    "collocations": [
+      "В центре города есть широкая площадь и музей."
+    ],
+    "example": "В центре города есть широкая площадь и музей.",
+    "sentenceIDs": [
+      "sentence-city-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-city-широкий",
+    "lemma": "широкий",
+    "stressedForm": "широ́кий",
+    "speechText": "широкий",
+    "partOfSpeech": "adjective",
+    "glossZh": "宽阔的",
+    "collocations": [
+      "В центре города есть широкая площадь и музей."
+    ],
+    "example": "В центре города есть широкая площадь и музей.",
+    "sentenceIDs": [
+      "sentence-city-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-city-площадь",
+    "lemma": "площадь",
+    "stressedForm": "пло́щадь",
+    "speechText": "площадь",
+    "partOfSpeech": "noun",
+    "glossZh": "广场；面积",
+    "collocations": [
+      "В центре города есть широкая площадь и музей."
+    ],
+    "example": "В центре города есть широкая площадь и музей.",
+    "sentenceIDs": [
+      "sentence-city-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-city-музей",
+    "lemma": "музей",
+    "stressedForm": "музе́й",
+    "speechText": "музей",
+    "partOfSpeech": "noun",
+    "glossZh": "博物馆",
+    "collocations": [
+      "В центре города есть широкая площадь и музей."
+    ],
+    "example": "В центре города есть широкая площадь и музей.",
+    "sentenceIDs": [
+      "sentence-city-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-city-тихий",
+    "lemma": "тихий",
+    "stressedForm": "ти́хий",
+    "speechText": "тихий",
+    "partOfSpeech": "adjective",
+    "glossZh": "安静的",
+    "collocations": [
+      "Эта тихая улица ведёт к парку и набережной."
+    ],
+    "example": "Эта тихая улица ведёт к парку и набережной.",
+    "sentenceIDs": [
+      "sentence-city-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-city-улица",
+    "lemma": "улица",
+    "stressedForm": "у́лица",
+    "speechText": "улица",
+    "partOfSpeech": "noun",
+    "glossZh": "街道",
+    "collocations": [
+      "Эта тихая улица ведёт к парку и набережной."
+    ],
+    "example": "Эта тихая улица ведёт к парку и набережной.",
+    "sentenceIDs": [
+      "sentence-city-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-city-вести",
+    "lemma": "вести",
+    "stressedForm": "вести́",
+    "speechText": "вести",
+    "partOfSpeech": "verb",
+    "glossZh": "通向；带领",
+    "collocations": [
+      "Эта тихая улица ведёт к парку и набережной."
+    ],
+    "example": "Эта тихая улица ведёт к парку и набережной.",
+    "sentenceIDs": [
+      "sentence-city-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-city-парк",
+    "lemma": "парк",
+    "stressedForm": "па́рк",
+    "speechText": "парк",
+    "partOfSpeech": "noun",
+    "glossZh": "公园",
+    "collocations": [
+      "Эта тихая улица ведёт к парку и набережной."
+    ],
+    "example": "Эта тихая улица ведёт к парку и набережной.",
+    "sentenceIDs": [
+      "sentence-city-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-city-набережная",
+    "lemma": "набережная",
+    "stressedForm": "на́бережная",
+    "speechText": "набережная",
+    "partOfSpeech": "noun",
+    "glossZh": "河岸街",
+    "collocations": [
+      "Эта тихая улица ведёт к парку и набережной."
+    ],
+    "example": "Эта тихая улица ведёт к парку и набережной.",
+    "sentenceIDs": [
+      "sentence-city-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-directions-прямо",
+    "lemma": "прямо",
+    "stressedForm": "пря́мо",
+    "speechText": "прямо",
+    "partOfSpeech": "adverb",
+    "glossZh": "直行",
+    "collocations": [
+      "Идите прямо, потом на перекрёстке поверните налево."
+    ],
+    "example": "Идите прямо, потом на перекрёстке поверните налево.",
+    "sentenceIDs": [
+      "sentence-directions-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-directions-потом",
+    "lemma": "потом",
+    "stressedForm": "пото́м",
+    "speechText": "потом",
+    "partOfSpeech": "adverb",
+    "glossZh": "然后",
+    "collocations": [
+      "Идите прямо, потом на перекрёстке поверните налево."
+    ],
+    "example": "Идите прямо, потом на перекрёстке поверните налево.",
+    "sentenceIDs": [
+      "sentence-directions-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-directions-перекресток",
+    "lemma": "перекрёсток",
+    "stressedForm": "перекрёсток",
+    "speechText": "перекрёсток",
+    "partOfSpeech": "noun",
+    "glossZh": "十字路口",
+    "collocations": [
+      "Идите прямо, потом на перекрёстке поверните налево."
+    ],
+    "example": "Идите прямо, потом на перекрёстке поверните налево.",
+    "sentenceIDs": [
+      "sentence-directions-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-directions-повернуть",
+    "lemma": "повернуть",
+    "stressedForm": "поверну́ть",
+    "speechText": "повернуть",
+    "partOfSpeech": "verb",
+    "glossZh": "转弯",
+    "collocations": [
+      "Идите прямо, потом на перекрёстке поверните налево."
+    ],
+    "example": "Идите прямо, потом на перекрёстке поверните налево.",
+    "sentenceIDs": [
+      "sentence-directions-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-directions-налево",
+    "lemma": "налево",
+    "stressedForm": "нале́во",
+    "speechText": "налево",
+    "partOfSpeech": "adverb",
+    "glossZh": "向左",
+    "collocations": [
+      "Идите прямо, потом на перекрёстке поверните налево."
+    ],
+    "example": "Идите прямо, потом на перекрёстке поверните налево.",
+    "sentenceIDs": [
+      "sentence-directions-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-directions-аптека",
+    "lemma": "аптека",
+    "stressedForm": "апте́ка",
+    "speechText": "аптека",
+    "partOfSpeech": "noun",
+    "glossZh": "药店",
+    "collocations": [
+      "Аптека напротив банка, а вход справа."
+    ],
+    "example": "Аптека напротив банка, а вход справа.",
+    "sentenceIDs": [
+      "sentence-directions-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-directions-напротив",
+    "lemma": "напротив",
+    "stressedForm": "напро́тив",
+    "speechText": "напротив",
+    "partOfSpeech": "preposition",
+    "glossZh": "在对面",
+    "collocations": [
+      "Аптека напротив банка, а вход справа."
+    ],
+    "example": "Аптека напротив банка, а вход справа.",
+    "sentenceIDs": [
+      "sentence-directions-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-directions-банк",
+    "lemma": "банк",
+    "stressedForm": "ба́нк",
+    "speechText": "банк",
+    "partOfSpeech": "noun",
+    "glossZh": "银行",
+    "collocations": [
+      "Аптека напротив банка, а вход справа."
+    ],
+    "example": "Аптека напротив банка, а вход справа.",
+    "sentenceIDs": [
+      "sentence-directions-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-directions-вход",
+    "lemma": "вход",
+    "stressedForm": "вхо́д",
+    "speechText": "вход",
+    "partOfSpeech": "noun",
+    "glossZh": "入口",
+    "collocations": [
+      "Аптека напротив банка, а вход справа."
+    ],
+    "example": "Аптека напротив банка, а вход справа.",
+    "sentenceIDs": [
+      "sentence-directions-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-directions-справа",
+    "lemma": "справа",
+    "stressedForm": "спра́ва",
+    "speechText": "справа",
+    "partOfSpeech": "adverb",
+    "glossZh": "在右边",
+    "collocations": [
+      "Аптека напротив банка, а вход справа."
+    ],
+    "example": "Аптека напротив банка, а вход справа.",
+    "sentenceIDs": [
+      "sentence-directions-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-weather-сегодня",
+    "lemma": "сегодня",
+    "stressedForm": "сего́дня",
+    "speechText": "сегодня",
+    "partOfSpeech": "adverb",
+    "glossZh": "今天",
+    "collocations": [
+      "Сегодня тепло и солнечно, ветра почти нет."
+    ],
+    "example": "Сегодня тепло и солнечно, ветра почти нет.",
+    "sentenceIDs": [
+      "sentence-weather-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-weather-тепло",
+    "lemma": "тепло",
+    "stressedForm": "тепло́",
+    "speechText": "тепло",
+    "partOfSpeech": "adverb",
+    "glossZh": "暖和",
+    "collocations": [
+      "Сегодня тепло и солнечно, ветра почти нет."
+    ],
+    "example": "Сегодня тепло и солнечно, ветра почти нет.",
+    "sentenceIDs": [
+      "sentence-weather-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-weather-солнечно",
+    "lemma": "солнечно",
+    "stressedForm": "со́лнечно",
+    "speechText": "солнечно",
+    "partOfSpeech": "adverb",
+    "glossZh": "晴朗",
+    "collocations": [
+      "Сегодня тепло и солнечно, ветра почти нет."
+    ],
+    "example": "Сегодня тепло и солнечно, ветра почти нет.",
+    "sentenceIDs": [
+      "sentence-weather-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-weather-ветер",
+    "lemma": "ветер",
+    "stressedForm": "ве́тер",
+    "speechText": "ветер",
+    "partOfSpeech": "noun",
+    "glossZh": "风",
+    "collocations": [
+      "Сегодня тепло и солнечно, ветра почти нет."
+    ],
+    "example": "Сегодня тепло и солнечно, ветра почти нет.",
+    "sentenceIDs": [
+      "sentence-weather-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-weather-почти",
+    "lemma": "почти",
+    "stressedForm": "почти́",
+    "speechText": "почти",
+    "partOfSpeech": "adverb",
+    "glossZh": "几乎",
+    "collocations": [
+      "Сегодня тепло и солнечно, ветра почти нет."
+    ],
+    "example": "Сегодня тепло и солнечно, ветра почти нет.",
+    "sentenceIDs": [
+      "sentence-weather-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-weather-днем",
+    "lemma": "днём",
+    "stressedForm": "днём",
+    "speechText": "днём",
+    "partOfSpeech": "adverb",
+    "glossZh": "白天；下午",
+    "collocations": [
+      "Днём возможен дождь, не забудьте взять зонт."
+    ],
+    "example": "Днём возможен дождь, не забудьте взять зонт.",
+    "sentenceIDs": [
+      "sentence-weather-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-weather-возможный",
+    "lemma": "возможный",
+    "stressedForm": "возмо́жный",
+    "speechText": "возможный",
+    "partOfSpeech": "adjective",
+    "glossZh": "可能的",
+    "collocations": [
+      "Днём возможен дождь, не забудьте взять зонт."
+    ],
+    "example": "Днём возможен дождь, не забудьте взять зонт.",
+    "sentenceIDs": [
+      "sentence-weather-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-weather-дождь",
+    "lemma": "дождь",
+    "stressedForm": "до́ждь",
+    "speechText": "дождь",
+    "partOfSpeech": "noun",
+    "glossZh": "雨",
+    "collocations": [
+      "Днём возможен дождь, не забудьте взять зонт."
+    ],
+    "example": "Днём возможен дождь, не забудьте взять зонт.",
+    "sentenceIDs": [
+      "sentence-weather-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-weather-забывать",
+    "lemma": "забывать",
+    "stressedForm": "забыва́ть",
+    "speechText": "забывать",
+    "partOfSpeech": "verb",
+    "glossZh": "忘记",
+    "collocations": [
+      "Днём возможен дождь, не забудьте взять зонт."
+    ],
+    "example": "Днём возможен дождь, не забудьте взять зонт.",
+    "sentenceIDs": [
+      "sentence-weather-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-weather-зонт",
+    "lemma": "зонт",
+    "stressedForm": "зо́нт",
+    "speechText": "зонт",
+    "partOfSpeech": "noun",
+    "glossZh": "雨伞",
+    "collocations": [
+      "Днём возможен дождь, не забудьте взять зонт."
+    ],
+    "example": "Днём возможен дождь, не забудьте взять зонт.",
+    "sentenceIDs": [
+      "sentence-weather-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-seasons-весна",
+    "lemma": "весна",
+    "stressedForm": "весна́",
+    "speechText": "весна",
+    "partOfSpeech": "noun",
+    "glossZh": "春天",
+    "collocations": [
+      "Весной снег тает и расцветают первые цветы."
+    ],
+    "example": "Весной снег тает и расцветают первые цветы.",
+    "sentenceIDs": [
+      "sentence-seasons-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-seasons-снег",
+    "lemma": "снег",
+    "stressedForm": "сне́г",
+    "speechText": "снег",
+    "partOfSpeech": "noun",
+    "glossZh": "雪",
+    "collocations": [
+      "Весной снег тает и расцветают первые цветы."
+    ],
+    "example": "Весной снег тает и расцветают первые цветы.",
+    "sentenceIDs": [
+      "sentence-seasons-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-seasons-таять",
+    "lemma": "таять",
+    "stressedForm": "та́ять",
+    "speechText": "таять",
+    "partOfSpeech": "verb",
+    "glossZh": "融化",
+    "collocations": [
+      "Весной снег тает и расцветают первые цветы."
+    ],
+    "example": "Весной снег тает и расцветают первые цветы.",
+    "sentenceIDs": [
+      "sentence-seasons-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-seasons-расцветать",
+    "lemma": "расцветать",
+    "stressedForm": "расцвета́ть",
+    "speechText": "расцветать",
+    "partOfSpeech": "verb",
+    "glossZh": "开花",
+    "collocations": [
+      "Весной снег тает и расцветают первые цветы."
+    ],
+    "example": "Весной снег тает и расцветают первые цветы.",
+    "sentenceIDs": [
+      "sentence-seasons-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-seasons-цветок",
+    "lemma": "цветок",
+    "stressedForm": "цвето́к",
+    "speechText": "цветок",
+    "partOfSpeech": "noun",
+    "glossZh": "花",
+    "collocations": [
+      "Весной снег тает и расцветают первые цветы."
+    ],
+    "example": "Весной снег тает и расцветают первые цветы.",
+    "sentenceIDs": [
+      "sentence-seasons-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-seasons-осень",
+    "lemma": "осень",
+    "stressedForm": "о́сень",
+    "speechText": "осень",
+    "partOfSpeech": "noun",
+    "glossZh": "秋天",
+    "collocations": [
+      "Осенью листья желтеют, а воздух становится прохладным."
+    ],
+    "example": "Осенью листья желтеют, а воздух становится прохладным.",
+    "sentenceIDs": [
+      "sentence-seasons-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-seasons-лист",
+    "lemma": "лист",
+    "stressedForm": "ли́ст",
+    "speechText": "лист",
+    "partOfSpeech": "noun",
+    "glossZh": "叶子",
+    "collocations": [
+      "Осенью листья желтеют, а воздух становится прохладным."
+    ],
+    "example": "Осенью листья желтеют, а воздух становится прохладным.",
+    "sentenceIDs": [
+      "sentence-seasons-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-seasons-желтеть",
+    "lemma": "желтеть",
+    "stressedForm": "желте́ть",
+    "speechText": "желтеть",
+    "partOfSpeech": "verb",
+    "glossZh": "变黄",
+    "collocations": [
+      "Осенью листья желтеют, а воздух становится прохладным."
+    ],
+    "example": "Осенью листья желтеют, а воздух становится прохладным.",
+    "sentenceIDs": [
+      "sentence-seasons-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-seasons-воздух",
+    "lemma": "воздух",
+    "stressedForm": "во́здух",
+    "speechText": "воздух",
+    "partOfSpeech": "noun",
+    "glossZh": "空气",
+    "collocations": [
+      "Осенью листья желтеют, а воздух становится прохладным."
+    ],
+    "example": "Осенью листья желтеют, а воздух становится прохладным.",
+    "sentenceIDs": [
+      "sentence-seasons-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-seasons-прохладный",
+    "lemma": "прохладный",
+    "stressedForm": "прохла́дный",
+    "speechText": "прохладный",
+    "partOfSpeech": "adjective",
+    "glossZh": "凉爽的",
+    "collocations": [
+      "Осенью листья желтеют, а воздух становится прохладным."
+    ],
+    "example": "Осенью листья желтеют, а воздух становится прохладным.",
+    "sentenceIDs": [
+      "sentence-seasons-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-time-сейчас",
+    "lemma": "сейчас",
+    "stressedForm": "сейча́с",
+    "speechText": "сейчас",
+    "partOfSpeech": "adverb",
+    "glossZh": "现在",
+    "collocations": [
+      "Сейчас четверть восьмого, у меня есть полчаса."
+    ],
+    "example": "Сейчас четверть восьмого, у меня есть полчаса.",
+    "sentenceIDs": [
+      "sentence-time-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-time-четверть",
+    "lemma": "четверть",
+    "stressedForm": "че́тверть",
+    "speechText": "четверть",
+    "partOfSpeech": "noun",
+    "glossZh": "四分之一；一刻钟",
+    "collocations": [
+      "Сейчас четверть восьмого, у меня есть полчаса."
+    ],
+    "example": "Сейчас четверть восьмого, у меня есть полчаса.",
+    "sentenceIDs": [
+      "sentence-time-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-time-восьмой",
+    "lemma": "восьмой",
+    "stressedForm": "восьмо́й",
+    "speechText": "восьмой",
+    "partOfSpeech": "numeral",
+    "glossZh": "第八",
+    "collocations": [
+      "Сейчас четверть восьмого, у меня есть полчаса."
+    ],
+    "example": "Сейчас четверть восьмого, у меня есть полчаса.",
+    "sentenceIDs": [
+      "sentence-time-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-time-полчаса",
+    "lemma": "полчаса",
+    "stressedForm": "полчаса́",
+    "speechText": "полчаса",
+    "partOfSpeech": "noun",
+    "glossZh": "半小时",
+    "collocations": [
+      "Сейчас четверть восьмого, у меня есть полчаса."
+    ],
+    "example": "Сейчас четверть восьмого, у меня есть полчаса.",
+    "sentenceIDs": [
+      "sentence-time-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-time-успевать",
+    "lemma": "успевать",
+    "stressedForm": "успева́ть",
+    "speechText": "успевать",
+    "partOfSpeech": "verb",
+    "glossZh": "来得及",
+    "collocations": [
+      "Сейчас четверть восьмого, у меня есть полчаса."
+    ],
+    "example": "Сейчас четверть восьмого, у меня есть полчаса.",
+    "sentenceIDs": [
+      "sentence-time-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-time-начинаться",
+    "lemma": "начинаться",
+    "stressedForm": "начина́ться",
+    "speechText": "начинаться",
+    "partOfSpeech": "verb",
+    "glossZh": "开始",
+    "collocations": [
+      "Встреча начинается вовремя и длится всего сорок минут."
+    ],
+    "example": "Встреча начинается вовремя и длится всего сорок минут.",
+    "sentenceIDs": [
+      "sentence-time-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-time-вовремя",
+    "lemma": "вовремя",
+    "stressedForm": "во́время",
+    "speechText": "вовремя",
+    "partOfSpeech": "adverb",
+    "glossZh": "准时",
+    "collocations": [
+      "Встреча начинается вовремя и длится всего сорок минут."
+    ],
+    "example": "Встреча начинается вовремя и длится всего сорок минут.",
+    "sentenceIDs": [
+      "sentence-time-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-time-длиться",
+    "lemma": "длиться",
+    "stressedForm": "дли́ться",
+    "speechText": "длиться",
+    "partOfSpeech": "verb",
+    "glossZh": "持续",
+    "collocations": [
+      "Встреча начинается вовремя и длится всего сорок минут."
+    ],
+    "example": "Встреча начинается вовремя и длится всего сорок минут.",
+    "sentenceIDs": [
+      "sentence-time-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-time-всего",
+    "lemma": "всего",
+    "stressedForm": "всего́",
+    "speechText": "всего",
+    "partOfSpeech": "adverb",
+    "glossZh": "总共；仅仅",
+    "collocations": [
+      "Встреча начинается вовремя и длится всего сорок минут."
+    ],
+    "example": "Встреча начинается вовремя и длится всего сорок минут.",
+    "sentenceIDs": [
+      "sentence-time-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-time-сорок",
+    "lemma": "сорок",
+    "stressedForm": "со́рок",
+    "speechText": "сорок",
+    "partOfSpeech": "numeral",
+    "glossZh": "四十",
+    "collocations": [
+      "Встреча начинается вовремя и длится всего сорок минут."
+    ],
+    "example": "Встреча начинается вовремя и длится всего сорок минут.",
+    "sentenceIDs": [
+      "sentence-time-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-calendar-назначать",
+    "lemma": "назначать",
+    "stressedForm": "назнача́ть",
+    "speechText": "назначать",
+    "partOfSpeech": "verb",
+    "glossZh": "安排；指定",
+    "collocations": [
+      "Наша встреча назначена на следующий вторник."
+    ],
+    "example": "Наша встреча назначена на следующий вторник.",
+    "sentenceIDs": [
+      "sentence-calendar-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-calendar-следующий",
+    "lemma": "следующий",
+    "stressedForm": "сле́дующий",
+    "speechText": "следующий",
+    "partOfSpeech": "adjective",
+    "glossZh": "下一个的",
+    "collocations": [
+      "Наша встреча назначена на следующий вторник."
+    ],
+    "example": "Наша встреча назначена на следующий вторник.",
+    "sentenceIDs": [
+      "sentence-calendar-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-calendar-вторник",
+    "lemma": "вторник",
+    "stressedForm": "вто́рник",
+    "speechText": "вторник",
+    "partOfSpeech": "noun",
+    "glossZh": "星期二",
+    "collocations": [
+      "Наша встреча назначена на следующий вторник."
+    ],
+    "example": "Наша встреча назначена на следующий вторник.",
+    "sentenceIDs": [
+      "sentence-calendar-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-calendar-неделя",
+    "lemma": "неделя",
+    "stressedForm": "неде́ля",
+    "speechText": "неделя",
+    "partOfSpeech": "noun",
+    "glossZh": "星期；周",
+    "collocations": [
+      "Наша встреча назначена на следующий вторник."
+    ],
+    "example": "Наша встреча назначена на следующий вторник.",
+    "sentenceIDs": [
+      "sentence-calendar-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-calendar-календарь",
+    "lemma": "календарь",
+    "stressedForm": "календа́рь",
+    "speechText": "календарь",
+    "partOfSpeech": "noun",
+    "glossZh": "日历",
+    "collocations": [
+      "Наша встреча назначена на следующий вторник."
+    ],
+    "example": "Наша встреча назначена на следующий вторник.",
+    "sentenceIDs": [
+      "sentence-calendar-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-calendar-конец",
+    "lemma": "конец",
+    "stressedForm": "коне́ц",
+    "speechText": "конец",
+    "partOfSpeech": "noun",
+    "glossZh": "末尾",
+    "collocations": [
+      "В конце месяца у меня будет три дня отпуска."
+    ],
+    "example": "В конце месяца у меня будет три дня отпуска.",
+    "sentenceIDs": [
+      "sentence-calendar-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-calendar-месяц",
+    "lemma": "месяц",
+    "stressedForm": "ме́сяц",
+    "speechText": "месяц",
+    "partOfSpeech": "noun",
+    "glossZh": "月",
+    "collocations": [
+      "В конце месяца у меня будет три дня отпуска."
+    ],
+    "example": "В конце месяца у меня будет три дня отпуска.",
+    "sentenceIDs": [
+      "sentence-calendar-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-calendar-будущий",
+    "lemma": "будущий",
+    "stressedForm": "бу́дущий",
+    "speechText": "будущий",
+    "partOfSpeech": "adjective",
+    "glossZh": "将来的",
+    "collocations": [
+      "В конце месяца у меня будет три дня отпуска."
+    ],
+    "example": "В конце месяца у меня будет три дня отпуска.",
+    "sentenceIDs": [
+      "sentence-calendar-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-calendar-день",
+    "lemma": "день",
+    "stressedForm": "де́нь",
+    "speechText": "день",
+    "partOfSpeech": "noun",
+    "glossZh": "天；日",
+    "collocations": [
+      "В конце месяца у меня будет три дня отпуска."
+    ],
+    "example": "В конце месяца у меня будет три дня отпуска.",
+    "sentenceIDs": [
+      "sentence-calendar-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-calendar-отпуск",
+    "lemma": "отпуск",
+    "stressedForm": "о́тпуск",
+    "speechText": "отпуск",
+    "partOfSpeech": "noun",
+    "glossZh": "休假",
+    "collocations": [
+      "В конце месяца у меня будет три дня отпуска."
+    ],
+    "example": "В конце месяца у меня будет три дня отпуска.",
+    "sentenceIDs": [
+      "sentence-calendar-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-study-студент",
+    "lemma": "студент",
+    "stressedForm": "студе́нт",
+    "speechText": "студент",
+    "partOfSpeech": "noun",
+    "glossZh": "学生",
+    "collocations": [
+      "Студент читает учебник в библиотеке и делает записи."
+    ],
+    "example": "Студент читает учебник в библиотеке и делает записи.",
+    "sentenceIDs": [
+      "sentence-study-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-study-читать",
+    "lemma": "читать",
+    "stressedForm": "чита́ть",
+    "speechText": "читать",
+    "partOfSpeech": "verb",
+    "glossZh": "阅读",
+    "collocations": [
+      "Студент читает учебник в библиотеке и делает записи."
+    ],
+    "example": "Студент читает учебник в библиотеке и делает записи.",
+    "sentenceIDs": [
+      "sentence-study-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-study-учебник",
+    "lemma": "учебник",
+    "stressedForm": "уче́бник",
+    "speechText": "учебник",
+    "partOfSpeech": "noun",
+    "glossZh": "课本",
+    "collocations": [
+      "Студент читает учебник в библиотеке и делает записи."
+    ],
+    "example": "Студент читает учебник в библиотеке и делает записи.",
+    "sentenceIDs": [
+      "sentence-study-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-study-библиотека",
+    "lemma": "библиотека",
+    "stressedForm": "библиоте́ка",
+    "speechText": "библиотека",
+    "partOfSpeech": "noun",
+    "glossZh": "图书馆",
+    "collocations": [
+      "Студент читает учебник в библиотеке и делает записи."
+    ],
+    "example": "Студент читает учебник в библиотеке и делает записи.",
+    "sentenceIDs": [
+      "sentence-study-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-study-запись",
+    "lemma": "запись",
+    "stressedForm": "за́пись",
+    "speechText": "запись",
+    "partOfSpeech": "noun",
+    "glossZh": "笔记；记录",
+    "collocations": [
+      "Студент читает учебник в библиотеке и делает записи."
+    ],
+    "example": "Студент читает учебник в библиотеке и делает записи.",
+    "sentenceIDs": [
+      "sentence-study-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-study-преподаватель",
+    "lemma": "преподаватель",
+    "stressedForm": "преподава́тель",
+    "speechText": "преподаватель",
+    "partOfSpeech": "noun",
+    "glossZh": "教师",
+    "collocations": [
+      "Преподаватель объясняет задание, а мы отвечаем на вопросы."
+    ],
+    "example": "Преподаватель объясняет задание, а мы отвечаем на вопросы.",
+    "sentenceIDs": [
+      "sentence-study-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-study-объяснять",
+    "lemma": "объяснять",
+    "stressedForm": "объясня́ть",
+    "speechText": "объяснять",
+    "partOfSpeech": "verb",
+    "glossZh": "解释",
+    "collocations": [
+      "Преподаватель объясняет задание, а мы отвечаем на вопросы."
+    ],
+    "example": "Преподаватель объясняет задание, а мы отвечаем на вопросы.",
+    "sentenceIDs": [
+      "sentence-study-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-study-задание",
+    "lemma": "задание",
+    "stressedForm": "зада́ние",
+    "speechText": "задание",
+    "partOfSpeech": "noun",
+    "glossZh": "任务；作业",
+    "collocations": [
+      "Преподаватель объясняет задание, а мы отвечаем на вопросы."
+    ],
+    "example": "Преподаватель объясняет задание, а мы отвечаем на вопросы.",
+    "sentenceIDs": [
+      "sentence-study-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-study-отвечать",
+    "lemma": "отвечать",
+    "stressedForm": "отвеча́ть",
+    "speechText": "отвечать",
+    "partOfSpeech": "verb",
+    "glossZh": "回答",
+    "collocations": [
+      "Преподаватель объясняет задание, а мы отвечаем на вопросы."
+    ],
+    "example": "Преподаватель объясняет задание, а мы отвечаем на вопросы.",
+    "sentenceIDs": [
+      "sentence-study-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-study-вопрос",
+    "lemma": "вопрос",
+    "stressedForm": "вопро́с",
+    "speechText": "вопрос",
+    "partOfSpeech": "noun",
+    "glossZh": "问题",
+    "collocations": [
+      "Преподаватель объясняет задание, а мы отвечаем на вопросы."
+    ],
+    "example": "Преподаватель объясняет задание, а мы отвечаем на вопросы.",
+    "sentenceIDs": [
+      "sentence-study-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-language-learning-повторять",
+    "lemma": "повторять",
+    "stressedForm": "повторя́ть",
+    "speechText": "повторять",
+    "partOfSpeech": "verb",
+    "glossZh": "复习；重复",
+    "collocations": [
+      "Каждый день я повторяю новые слова и фразы вслух."
+    ],
+    "example": "Каждый день я повторяю новые слова и фразы вслух.",
+    "sentenceIDs": [
+      "sentence-language-learning-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-language-learning-новый",
+    "lemma": "новый",
+    "stressedForm": "но́вый",
+    "speechText": "новый",
+    "partOfSpeech": "adjective",
+    "glossZh": "新的",
+    "collocations": [
+      "Каждый день я повторяю новые слова и фразы вслух."
+    ],
+    "example": "Каждый день я повторяю новые слова и фразы вслух.",
+    "sentenceIDs": [
+      "sentence-language-learning-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-language-learning-слово",
+    "lemma": "слово",
+    "stressedForm": "сло́во",
+    "speechText": "слово",
+    "partOfSpeech": "noun",
+    "glossZh": "单词；话",
+    "collocations": [
+      "Каждый день я повторяю новые слова и фразы вслух."
+    ],
+    "example": "Каждый день я повторяю новые слова и фразы вслух.",
+    "sentenceIDs": [
+      "sentence-language-learning-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-language-learning-фраза",
+    "lemma": "фраза",
+    "stressedForm": "фра́за",
+    "speechText": "фраза",
+    "partOfSpeech": "noun",
+    "glossZh": "短语",
+    "collocations": [
+      "Каждый день я повторяю новые слова и фразы вслух."
+    ],
+    "example": "Каждый день я повторяю новые слова и фразы вслух.",
+    "sentenceIDs": [
+      "sentence-language-learning-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-language-learning-вслух",
+    "lemma": "вслух",
+    "stressedForm": "вслу́х",
+    "speechText": "вслух",
+    "partOfSpeech": "adverb",
+    "glossZh": "大声地",
+    "collocations": [
+      "Каждый день я повторяю новые слова и фразы вслух."
+    ],
+    "example": "Каждый день я повторяю новые слова и фразы вслух.",
+    "sentenceIDs": [
+      "sentence-language-learning-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-language-learning-свободно",
+    "lemma": "свободно",
+    "stressedForm": "свобо́дно",
+    "speechText": "свободно",
+    "partOfSpeech": "adverb",
+    "glossZh": "流利地；自由地",
+    "collocations": [
+      "Чтобы говорить свободнее, я слушаю диалоги и тренирую произношение."
+    ],
+    "example": "Чтобы говорить свободнее, я слушаю диалоги и тренирую произношение.",
+    "sentenceIDs": [
+      "sentence-language-learning-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-language-learning-слушать",
+    "lemma": "слушать",
+    "stressedForm": "слу́шать",
+    "speechText": "слушать",
+    "partOfSpeech": "verb",
+    "glossZh": "听",
+    "collocations": [
+      "Чтобы говорить свободнее, я слушаю диалоги и тренирую произношение."
+    ],
+    "example": "Чтобы говорить свободнее, я слушаю диалоги и тренирую произношение.",
+    "sentenceIDs": [
+      "sentence-language-learning-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-language-learning-диалог",
+    "lemma": "диалог",
+    "stressedForm": "диало́г",
+    "speechText": "диалог",
+    "partOfSpeech": "noun",
+    "glossZh": "对话",
+    "collocations": [
+      "Чтобы говорить свободнее, я слушаю диалоги и тренирую произношение."
+    ],
+    "example": "Чтобы говорить свободнее, я слушаю диалоги и тренирую произношение.",
+    "sentenceIDs": [
+      "sentence-language-learning-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-language-learning-тренировать",
+    "lemma": "тренировать",
+    "stressedForm": "тренирова́ть",
+    "speechText": "тренировать",
+    "partOfSpeech": "verb",
+    "glossZh": "训练",
+    "collocations": [
+      "Чтобы говорить свободнее, я слушаю диалоги и тренирую произношение."
+    ],
+    "example": "Чтобы говорить свободнее, я слушаю диалоги и тренирую произношение.",
+    "sentenceIDs": [
+      "sentence-language-learning-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-language-learning-произношение",
+    "lemma": "произношение",
+    "stressedForm": "произноше́ние",
+    "speechText": "произношение",
+    "partOfSpeech": "noun",
+    "glossZh": "发音",
+    "collocations": [
+      "Чтобы говорить свободнее, я слушаю диалоги и тренирую произношение."
+    ],
+    "example": "Чтобы говорить свободнее, я слушаю диалоги и тренирую произношение.",
+    "sentenceIDs": [
+      "sentence-language-learning-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-health-болеть",
+    "lemma": "болеть",
+    "stressedForm": "боле́ть",
+    "speechText": "болеть",
+    "partOfSpeech": "verb",
+    "glossZh": "疼；生病",
+    "collocations": [
+      "У меня болит голова и небольшая температура, нужно отдохнуть."
+    ],
+    "example": "У меня болит голова и небольшая температура, нужно отдохнуть.",
+    "sentenceIDs": [
+      "sentence-health-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-health-голова",
+    "lemma": "голова",
+    "stressedForm": "голова́",
+    "speechText": "голова",
+    "partOfSpeech": "noun",
+    "glossZh": "头",
+    "collocations": [
+      "У меня болит голова и небольшая температура, нужно отдохнуть."
+    ],
+    "example": "У меня болит голова и небольшая температура, нужно отдохнуть.",
+    "sentenceIDs": [
+      "sentence-health-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-health-температура",
+    "lemma": "температура",
+    "stressedForm": "температу́ра",
+    "speechText": "температура",
+    "partOfSpeech": "noun",
+    "glossZh": "体温；温度",
+    "collocations": [
+      "У меня болит голова и небольшая температура, нужно отдохнуть."
+    ],
+    "example": "У меня болит голова и небольшая температура, нужно отдохнуть.",
+    "sentenceIDs": [
+      "sentence-health-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-health-нужно",
+    "lemma": "нужно",
+    "stressedForm": "ну́жно",
+    "speechText": "нужно",
+    "partOfSpeech": "adverb",
+    "glossZh": "需要",
+    "collocations": [
+      "У меня болит голова и небольшая температура, нужно отдохнуть."
+    ],
+    "example": "У меня болит голова и небольшая температура, нужно отдохнуть.",
+    "sentenceIDs": [
+      "sentence-health-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-health-отдохнуть",
+    "lemma": "отдохнуть",
+    "stressedForm": "отдохну́ть",
+    "speechText": "отдохнуть",
+    "partOfSpeech": "verb",
+    "glossZh": "休息一下",
+    "collocations": [
+      "У меня болит голова и небольшая температура, нужно отдохнуть."
+    ],
+    "example": "У меня болит голова и небольшая температура, нужно отдохнуть.",
+    "sentenceIDs": [
+      "sentence-health-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-health-врач",
+    "lemma": "врач",
+    "stressedForm": "вра́ч",
+    "speechText": "врач",
+    "partOfSpeech": "noun",
+    "glossZh": "医生",
+    "collocations": [
+      "Врач советует пить больше воды и вовремя принимать лекарство."
+    ],
+    "example": "Врач советует пить больше воды и вовремя принимать лекарство.",
+    "sentenceIDs": [
+      "sentence-health-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-health-советовать",
+    "lemma": "советовать",
+    "stressedForm": "сове́товать",
+    "speechText": "советовать",
+    "partOfSpeech": "verb",
+    "glossZh": "建议",
+    "collocations": [
+      "Врач советует пить больше воды и вовремя принимать лекарство."
+    ],
+    "example": "Врач советует пить больше воды и вовремя принимать лекарство.",
+    "sentenceIDs": [
+      "sentence-health-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-health-пить",
+    "lemma": "пить",
+    "stressedForm": "пи́ть",
+    "speechText": "пить",
+    "partOfSpeech": "verb",
+    "glossZh": "喝",
+    "collocations": [
+      "Врач советует пить больше воды и вовремя принимать лекарство."
+    ],
+    "example": "Врач советует пить больше воды и вовремя принимать лекарство.",
+    "sentenceIDs": [
+      "sentence-health-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-health-вода",
+    "lemma": "вода",
+    "stressedForm": "вода́",
+    "speechText": "вода",
+    "partOfSpeech": "noun",
+    "glossZh": "水",
+    "collocations": [
+      "Врач советует пить больше воды и вовремя принимать лекарство."
+    ],
+    "example": "Врач советует пить больше воды и вовремя принимать лекарство.",
+    "sentenceIDs": [
+      "sentence-health-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-health-лекарство",
+    "lemma": "лекарство",
+    "stressedForm": "лека́рство",
+    "speechText": "лекарство",
+    "partOfSpeech": "noun",
+    "glossZh": "药",
+    "collocations": [
+      "Врач советует пить больше воды и вовремя принимать лекарство."
+    ],
+    "example": "Врач советует пить больше воды и вовремя принимать лекарство.",
+    "sentenceIDs": [
+      "sentence-health-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-feelings-радоваться",
+    "lemma": "радоваться",
+    "stressedForm": "ра́доваться",
+    "speechText": "радоваться",
+    "partOfSpeech": "verb",
+    "glossZh": "高兴",
+    "collocations": [
+      "Я рад хорошей новости и чувствую себя спокойно."
+    ],
+    "example": "Я рад хорошей новости и чувствую себя спокойно.",
+    "sentenceIDs": [
+      "sentence-feelings-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-feelings-хороший",
+    "lemma": "хороший",
+    "stressedForm": "хоро́ший",
+    "speechText": "хороший",
+    "partOfSpeech": "adjective",
+    "glossZh": "好的",
+    "collocations": [
+      "Я рад хорошей новости и чувствую себя спокойно."
+    ],
+    "example": "Я рад хорошей новости и чувствую себя спокойно.",
+    "sentenceIDs": [
+      "sentence-feelings-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-feelings-новость",
+    "lemma": "новость",
+    "stressedForm": "но́вость",
+    "speechText": "новость",
+    "partOfSpeech": "noun",
+    "glossZh": "消息",
+    "collocations": [
+      "Я рад хорошей новости и чувствую себя спокойно."
+    ],
+    "example": "Я рад хорошей новости и чувствую себя спокойно.",
+    "sentenceIDs": [
+      "sentence-feelings-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-feelings-чувствовать",
+    "lemma": "чувствовать",
+    "stressedForm": "чу́вствовать",
+    "speechText": "чувствовать",
+    "partOfSpeech": "verb",
+    "glossZh": "感觉",
+    "collocations": [
+      "Я рад хорошей новости и чувствую себя спокойно."
+    ],
+    "example": "Я рад хорошей новости и чувствую себя спокойно.",
+    "sentenceIDs": [
+      "sentence-feelings-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-feelings-спокойно",
+    "lemma": "спокойно",
+    "stressedForm": "споко́йно",
+    "speechText": "спокойно",
+    "partOfSpeech": "adverb",
+    "glossZh": "平静地",
+    "collocations": [
+      "Я рад хорошей новости и чувствую себя спокойно."
+    ],
+    "example": "Я рад хорошей новости и чувствую себя спокойно.",
+    "sentenceIDs": [
+      "sentence-feelings-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-feelings-немного",
+    "lemma": "немного",
+    "stressedForm": "немно́го",
+    "speechText": "немного",
+    "partOfSpeech": "adverb",
+    "glossZh": "一点",
+    "collocations": [
+      "Она немного волнуется, но друг её поддерживает."
+    ],
+    "example": "Она немного волнуется, но друг её поддерживает.",
+    "sentenceIDs": [
+      "sentence-feelings-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-feelings-волноваться",
+    "lemma": "волноваться",
+    "stressedForm": "волнова́ться",
+    "speechText": "волноваться",
+    "partOfSpeech": "verb",
+    "glossZh": "担心；激动",
+    "collocations": [
+      "Она немного волнуется, но друг её поддерживает."
+    ],
+    "example": "Она немного волнуется, но друг её поддерживает.",
+    "sentenceIDs": [
+      "sentence-feelings-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-feelings-друг",
+    "lemma": "друг",
+    "stressedForm": "дру́г",
+    "speechText": "друг",
+    "partOfSpeech": "noun",
+    "glossZh": "朋友",
+    "collocations": [
+      "Она немного волнуется, но друг её поддерживает."
+    ],
+    "example": "Она немного волнуется, но друг её поддерживает.",
+    "sentenceIDs": [
+      "sentence-feelings-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-feelings-поддерживать",
+    "lemma": "поддерживать",
+    "stressedForm": "подде́рживать",
+    "speechText": "поддерживать",
+    "partOfSpeech": "verb",
+    "glossZh": "支持",
+    "collocations": [
+      "Она немного волнуется, но друг её поддерживает."
+    ],
+    "example": "Она немного волнуется, но друг её поддерживает.",
+    "sentenceIDs": [
+      "sentence-feelings-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-feelings-настроение",
+    "lemma": "настроение",
+    "stressedForm": "настрое́ние",
+    "speechText": "настроение",
+    "partOfSpeech": "noun",
+    "glossZh": "心情",
+    "collocations": [
+      "Она немного волнуется, но друг её поддерживает."
+    ],
+    "example": "Она немного волнуется, но друг её поддерживает.",
+    "sentenceIDs": [
+      "sentence-feelings-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hobbies-свободный",
+    "lemma": "свободный",
+    "stressedForm": "свобо́дный",
+    "speechText": "свободный",
+    "partOfSpeech": "adjective",
+    "glossZh": "空闲的；自由的",
+    "collocations": [
+      "В свободное время я рисую, фотографирую и собираю открытки."
+    ],
+    "example": "В свободное время я рисую, фотографирую и собираю открытки.",
+    "sentenceIDs": [
+      "sentence-hobbies-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hobbies-рисовать",
+    "lemma": "рисовать",
+    "stressedForm": "рисова́ть",
+    "speechText": "рисовать",
+    "partOfSpeech": "verb",
+    "glossZh": "画画",
+    "collocations": [
+      "В свободное время я рисую, фотографирую и собираю открытки."
+    ],
+    "example": "В свободное время я рисую, фотографирую и собираю открытки.",
+    "sentenceIDs": [
+      "sentence-hobbies-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hobbies-фотографировать",
+    "lemma": "фотографировать",
+    "stressedForm": "фотографи́ровать",
+    "speechText": "фотографировать",
+    "partOfSpeech": "verb",
+    "glossZh": "摄影",
+    "collocations": [
+      "В свободное время я рисую, фотографирую и собираю открытки."
+    ],
+    "example": "В свободное время я рисую, фотографирую и собираю открытки.",
+    "sentenceIDs": [
+      "sentence-hobbies-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hobbies-собирать",
+    "lemma": "собирать",
+    "stressedForm": "собира́ть",
+    "speechText": "собирать",
+    "partOfSpeech": "verb",
+    "glossZh": "收集",
+    "collocations": [
+      "В свободное время я рисую, фотографирую и собираю открытки."
+    ],
+    "example": "В свободное время я рисую, фотографирую и собираю открытки.",
+    "sentenceIDs": [
+      "sentence-hobbies-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hobbies-открытка",
+    "lemma": "открытка",
+    "stressedForm": "откры́тка",
+    "speechText": "открытка",
+    "partOfSpeech": "noun",
+    "glossZh": "明信片",
+    "collocations": [
+      "В свободное время я рисую, фотографирую и собираю открытки."
+    ],
+    "example": "В свободное время я рисую, фотографирую и собираю открытки.",
+    "sentenceIDs": [
+      "sentence-hobbies-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hobbies-выходной",
+    "lemma": "выходной",
+    "stressedForm": "выходно́й",
+    "speechText": "выходной",
+    "partOfSpeech": "noun",
+    "glossZh": "休息日",
+    "collocations": [
+      "В выходные она любит играть на гитаре и смотреть кино."
+    ],
+    "example": "В выходные она любит играть на гитаре и смотреть кино.",
+    "sentenceIDs": [
+      "sentence-hobbies-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hobbies-любить",
+    "lemma": "любить",
+    "stressedForm": "люби́ть",
+    "speechText": "любить",
+    "partOfSpeech": "verb",
+    "glossZh": "喜欢；爱",
+    "collocations": [
+      "В выходные она любит играть на гитаре и смотреть кино."
+    ],
+    "example": "В выходные она любит играть на гитаре и смотреть кино.",
+    "sentenceIDs": [
+      "sentence-hobbies-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hobbies-играть",
+    "lemma": "играть",
+    "stressedForm": "игра́ть",
+    "speechText": "играть",
+    "partOfSpeech": "verb",
+    "glossZh": "演奏；玩",
+    "collocations": [
+      "В выходные она любит играть на гитаре и смотреть кино."
+    ],
+    "example": "В выходные она любит играть на гитаре и смотреть кино.",
+    "sentenceIDs": [
+      "sentence-hobbies-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hobbies-гитара",
+    "lemma": "гитара",
+    "stressedForm": "гита́ра",
+    "speechText": "гитара",
+    "partOfSpeech": "noun",
+    "glossZh": "吉他",
+    "collocations": [
+      "В выходные она любит играть на гитаре и смотреть кино."
+    ],
+    "example": "В выходные она любит играть на гитаре и смотреть кино.",
+    "sentenceIDs": [
+      "sentence-hobbies-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hobbies-кино",
+    "lemma": "кино",
+    "stressedForm": "кино́",
+    "speechText": "кино",
+    "partOfSpeech": "noun",
+    "glossZh": "电影",
+    "collocations": [
+      "В выходные она любит играть на гитаре и смотреть кино."
+    ],
+    "example": "В выходные она любит играть на гитаре и смотреть кино.",
+    "sentenceIDs": [
+      "sentence-hobbies-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-sports-бегать",
+    "lemma": "бегать",
+    "stressedForm": "бе́гать",
+    "speechText": "бегать",
+    "partOfSpeech": "verb",
+    "glossZh": "跑步",
+    "collocations": [
+      "Утром мы бегаем на стадионе и делаем разминку."
+    ],
+    "example": "Утром мы бегаем на стадионе и делаем разминку.",
+    "sentenceIDs": [
+      "sentence-sports-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-sports-стадион",
+    "lemma": "стадион",
+    "stressedForm": "стадио́н",
+    "speechText": "стадион",
+    "partOfSpeech": "noun",
+    "glossZh": "体育场",
+    "collocations": [
+      "Утром мы бегаем на стадионе и делаем разминку."
+    ],
+    "example": "Утром мы бегаем на стадионе и делаем разминку.",
+    "sentenceIDs": [
+      "sentence-sports-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-sports-разминка",
+    "lemma": "разминка",
+    "stressedForm": "разми́нка",
+    "speechText": "разминка",
+    "partOfSpeech": "noun",
+    "glossZh": "热身",
+    "collocations": [
+      "Утром мы бегаем на стадионе и делаем разминку."
+    ],
+    "example": "Утром мы бегаем на стадионе и делаем разминку.",
+    "sentenceIDs": [
+      "sentence-sports-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-sports-утром",
+    "lemma": "утром",
+    "stressedForm": "у́тром",
+    "speechText": "утром",
+    "partOfSpeech": "adverb",
+    "glossZh": "早晨",
+    "collocations": [
+      "Утром мы бегаем на стадионе и делаем разминку."
+    ],
+    "example": "Утром мы бегаем на стадионе и делаем разминку.",
+    "sentenceIDs": [
+      "sentence-sports-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-sports-упражнение",
+    "lemma": "упражнение",
+    "stressedForm": "упражне́ние",
+    "speechText": "упражнение",
+    "partOfSpeech": "noun",
+    "glossZh": "练习；动作",
+    "collocations": [
+      "Утром мы бегаем на стадионе и делаем разминку."
+    ],
+    "example": "Утром мы бегаем на стадионе и делаем разминку.",
+    "sentenceIDs": [
+      "sentence-sports-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-sports-команда",
+    "lemma": "команда",
+    "stressedForm": "кома́нда",
+    "speechText": "команда",
+    "partOfSpeech": "noun",
+    "glossZh": "队伍",
+    "collocations": [
+      "Вечером команда тренируется, а тренер записывает результат."
+    ],
+    "example": "Вечером команда тренируется, а тренер записывает результат.",
+    "sentenceIDs": [
+      "sentence-sports-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-sports-тренироваться",
+    "lemma": "тренироваться",
+    "stressedForm": "тренирова́ться",
+    "speechText": "тренироваться",
+    "partOfSpeech": "verb",
+    "glossZh": "训练",
+    "collocations": [
+      "Вечером команда тренируется, а тренер записывает результат."
+    ],
+    "example": "Вечером команда тренируется, а тренер записывает результат.",
+    "sentenceIDs": [
+      "sentence-sports-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-sports-тренер",
+    "lemma": "тренер",
+    "stressedForm": "тре́нер",
+    "speechText": "тренер",
+    "partOfSpeech": "noun",
+    "glossZh": "教练",
+    "collocations": [
+      "Вечером команда тренируется, а тренер записывает результат."
+    ],
+    "example": "Вечером команда тренируется, а тренер записывает результат.",
+    "sentenceIDs": [
+      "sentence-sports-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-sports-записывать",
+    "lemma": "записывать",
+    "stressedForm": "запи́сывать",
+    "speechText": "записывать",
+    "partOfSpeech": "verb",
+    "glossZh": "记录",
+    "collocations": [
+      "Вечером команда тренируется, а тренер записывает результат."
+    ],
+    "example": "Вечером команда тренируется, а тренер записывает результат.",
+    "sentenceIDs": [
+      "sentence-sports-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-sports-результат",
+    "lemma": "результат",
+    "stressedForm": "результа́т",
+    "speechText": "результат",
+    "partOfSpeech": "noun",
+    "glossZh": "结果",
+    "collocations": [
+      "Вечером команда тренируется, а тренер записывает результат."
+    ],
+    "example": "Вечером команда тренируется, а тренер записывает результат.",
+    "sentenceIDs": [
+      "sentence-sports-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-travel-путешествие",
+    "lemma": "путешествие",
+    "stressedForm": "путеше́ствие",
+    "speechText": "путешествие",
+    "partOfSpeech": "noun",
+    "glossZh": "旅行",
+    "collocations": [
+      "Перед путешествием мы выбираем маршрут и собираем чемодан."
+    ],
+    "example": "Перед путешествием мы выбираем маршрут и собираем чемодан.",
+    "sentenceIDs": [
+      "sentence-travel-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-travel-маршрут",
+    "lemma": "маршрут",
+    "stressedForm": "маршру́т",
+    "speechText": "маршрут",
+    "partOfSpeech": "noun",
+    "glossZh": "路线",
+    "collocations": [
+      "Перед путешествием мы выбираем маршрут и собираем чемодан."
+    ],
+    "example": "Перед путешествием мы выбираем маршрут и собираем чемодан.",
+    "sentenceIDs": [
+      "sentence-travel-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-travel-чемодан",
+    "lemma": "чемодан",
+    "stressedForm": "чемода́н",
+    "speechText": "чемодан",
+    "partOfSpeech": "noun",
+    "glossZh": "行李箱",
+    "collocations": [
+      "Перед путешествием мы выбираем маршрут и собираем чемодан."
+    ],
+    "example": "Перед путешествием мы выбираем маршрут и собираем чемодан.",
+    "sentenceIDs": [
+      "sentence-travel-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-travel-собираться",
+    "lemma": "собираться",
+    "stressedForm": "собира́ться",
+    "speechText": "собираться",
+    "partOfSpeech": "verb",
+    "glossZh": "收拾；准备",
+    "collocations": [
+      "Перед путешествием мы выбираем маршрут и собираем чемодан."
+    ],
+    "example": "Перед путешествием мы выбираем маршрут и собираем чемодан.",
+    "sentenceIDs": [
+      "sentence-travel-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-travel-поездка",
+    "lemma": "поездка",
+    "stressedForm": "по́ездка",
+    "speechText": "поездка",
+    "partOfSpeech": "noun",
+    "glossZh": "出行",
+    "collocations": [
+      "Перед путешествием мы выбираем маршрут и собираем чемодан."
+    ],
+    "example": "Перед путешествием мы выбираем маршрут и собираем чемодан.",
+    "sentenceIDs": [
+      "sentence-travel-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-travel-место",
+    "lemma": "место",
+    "stressedForm": "ме́сто",
+    "speechText": "место",
+    "partOfSpeech": "noun",
+    "glossZh": "地方；位置",
+    "collocations": [
+      "В новом месте я люблю гулять, снимать и знакомиться с местными."
+    ],
+    "example": "В новом месте я люблю гулять, снимать и знакомиться с местными.",
+    "sentenceIDs": [
+      "sentence-travel-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-travel-гулять",
+    "lemma": "гулять",
+    "stressedForm": "гуля́ть",
+    "speechText": "гулять",
+    "partOfSpeech": "verb",
+    "glossZh": "散步",
+    "collocations": [
+      "В новом месте я люблю гулять, снимать и знакомиться с местными."
+    ],
+    "example": "В новом месте я люблю гулять, снимать и знакомиться с местными.",
+    "sentenceIDs": [
+      "sentence-travel-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-travel-снимать",
+    "lemma": "снимать",
+    "stressedForm": "снима́ть",
+    "speechText": "снимать",
+    "partOfSpeech": "verb",
+    "glossZh": "拍摄；租",
+    "collocations": [
+      "В новом месте я люблю гулять, снимать и знакомиться с местными."
+    ],
+    "example": "В новом месте я люблю гулять, снимать и знакомиться с местными.",
+    "sentenceIDs": [
+      "sentence-travel-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-travel-знакомиться",
+    "lemma": "знакомиться",
+    "stressedForm": "знако́миться",
+    "speechText": "знакомиться",
+    "partOfSpeech": "verb",
+    "glossZh": "结识",
+    "collocations": [
+      "В новом месте я люблю гулять, снимать и знакомиться с местными."
+    ],
+    "example": "В новом месте я люблю гулять, снимать и знакомиться с местными.",
+    "sentenceIDs": [
+      "sentence-travel-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-travel-местный",
+    "lemma": "местный",
+    "stressedForm": "ме́стный",
+    "speechText": "местный",
+    "partOfSpeech": "adjective",
+    "glossZh": "当地的",
+    "collocations": [
+      "В новом месте я люблю гулять, снимать и знакомиться с местными."
+    ],
+    "example": "В новом месте я люблю гулять, снимать и знакомиться с местными.",
+    "sentenceIDs": [
+      "sentence-travel-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hotel-бронировать",
+    "lemma": "бронировать",
+    "stressedForm": "брони́ровать",
+    "speechText": "бронировать",
+    "partOfSpeech": "verb",
+    "glossZh": "预订",
+    "collocations": [
+      "Я забронировал одноместный номер с завтраком."
+    ],
+    "example": "Я забронировал одноместный номер с завтраком.",
+    "sentenceIDs": [
+      "sentence-hotel-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hotel-одноместный",
+    "lemma": "одноместный",
+    "stressedForm": "одноме́стный",
+    "speechText": "одноместный",
+    "partOfSpeech": "adjective",
+    "glossZh": "单人的",
+    "collocations": [
+      "Я забронировал одноместный номер с завтраком."
+    ],
+    "example": "Я забронировал одноместный номер с завтраком.",
+    "sentenceIDs": [
+      "sentence-hotel-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hotel-номер",
+    "lemma": "номер",
+    "stressedForm": "но́мер",
+    "speechText": "номер",
+    "partOfSpeech": "noun",
+    "glossZh": "房间；号码",
+    "collocations": [
+      "Я забронировал одноместный номер с завтраком."
+    ],
+    "example": "Я забронировал одноместный номер с завтраком.",
+    "sentenceIDs": [
+      "sentence-hotel-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hotel-питание",
+    "lemma": "питание",
+    "stressedForm": "пита́ние",
+    "speechText": "питание",
+    "partOfSpeech": "noun",
+    "glossZh": "餐食",
+    "collocations": [
+      "Я забронировал одноместный номер с завтраком."
+    ],
+    "example": "Я забронировал одноместный номер с завтраком.",
+    "sentenceIDs": [
+      "sentence-hotel-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hotel-гостиница",
+    "lemma": "гостиница",
+    "stressedForm": "гости́ница",
+    "speechText": "гостиница",
+    "partOfSpeech": "noun",
+    "glossZh": "酒店",
+    "collocations": [
+      "Я забронировал одноместный номер с завтраком."
+    ],
+    "example": "Я забронировал одноместный номер с завтраком.",
+    "sentenceIDs": [
+      "sentence-hotel-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hotel-администратор",
+    "lemma": "администратор",
+    "stressedForm": "администра́тор",
+    "speechText": "администратор",
+    "partOfSpeech": "noun",
+    "glossZh": "前台人员；管理员",
+    "collocations": [
+      "Администратор дал мне ключ и назвал пароль от вайфая."
+    ],
+    "example": "Администратор дал мне ключ и назвал пароль от вайфая.",
+    "sentenceIDs": [
+      "sentence-hotel-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hotel-ключ",
+    "lemma": "ключ",
+    "stressedForm": "клю́ч",
+    "speechText": "ключ",
+    "partOfSpeech": "noun",
+    "glossZh": "钥匙",
+    "collocations": [
+      "Администратор дал мне ключ и назвал пароль от вайфая."
+    ],
+    "example": "Администратор дал мне ключ и назвал пароль от вайфая.",
+    "sentenceIDs": [
+      "sentence-hotel-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hotel-назвать",
+    "lemma": "назвать",
+    "stressedForm": "назва́ть",
+    "speechText": "назвать",
+    "partOfSpeech": "verb",
+    "glossZh": "说出；命名",
+    "collocations": [
+      "Администратор дал мне ключ и назвал пароль от вайфая."
+    ],
+    "example": "Администратор дал мне ключ и назвал пароль от вайфая.",
+    "sentenceIDs": [
+      "sentence-hotel-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hotel-пароль",
+    "lemma": "пароль",
+    "stressedForm": "паро́ль",
+    "speechText": "пароль",
+    "partOfSpeech": "noun",
+    "glossZh": "密码",
+    "collocations": [
+      "Администратор дал мне ключ и назвал пароль от вайфая."
+    ],
+    "example": "Администратор дал мне ключ и назвал пароль от вайфая.",
+    "sentenceIDs": [
+      "sentence-hotel-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-hotel-вайфай",
+    "lemma": "вайфай",
+    "stressedForm": "ва́йфа́й",
+    "speechText": "вайфай",
+    "partOfSpeech": "noun",
+    "glossZh": "无线网络",
+    "collocations": [
+      "Администратор дал мне ключ и назвал пароль от вайфая."
+    ],
+    "example": "Администратор дал мне ключ и назвал пароль от вайфая.",
+    "sentenceIDs": [
+      "sentence-hotel-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-airport-регистрация",
+    "lemma": "регистрация",
+    "stressedForm": "регистра́ция",
+    "speechText": "регистрация",
+    "partOfSpeech": "noun",
+    "glossZh": "登记；值机",
+    "collocations": [
+      "На регистрации покажите паспорт и билет."
+    ],
+    "example": "На регистрации покажите паспорт и билет.",
+    "sentenceIDs": [
+      "sentence-airport-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-airport-показать",
+    "lemma": "показать",
+    "stressedForm": "показа́ть",
+    "speechText": "показать",
+    "partOfSpeech": "verb",
+    "glossZh": "出示；展示",
+    "collocations": [
+      "На регистрации покажите паспорт и билет."
+    ],
+    "example": "На регистрации покажите паспорт и билет.",
+    "sentenceIDs": [
+      "sentence-airport-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-airport-паспорт",
+    "lemma": "паспорт",
+    "stressedForm": "па́спорт",
+    "speechText": "паспорт",
+    "partOfSpeech": "noun",
+    "glossZh": "护照",
+    "collocations": [
+      "На регистрации покажите паспорт и билет."
+    ],
+    "example": "На регистрации покажите паспорт и билет.",
+    "sentenceIDs": [
+      "sentence-airport-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-airport-билет",
+    "lemma": "билет",
+    "stressedForm": "биле́т",
+    "speechText": "билет",
+    "partOfSpeech": "noun",
+    "glossZh": "票",
+    "collocations": [
+      "На регистрации покажите паспорт и билет."
+    ],
+    "example": "На регистрации покажите паспорт и билет.",
+    "sentenceIDs": [
+      "sentence-airport-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-airport-багаж",
+    "lemma": "багаж",
+    "stressedForm": "бага́ж",
+    "speechText": "багаж",
+    "partOfSpeech": "noun",
+    "glossZh": "行李",
+    "collocations": [
+      "На регистрации покажите паспорт и билет."
+    ],
+    "example": "На регистрации покажите паспорт и билет.",
+    "sentenceIDs": [
+      "sentence-airport-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-airport-рейс",
+    "lemma": "рейс",
+    "stressedForm": "ре́йс",
+    "speechText": "рейс",
+    "partOfSpeech": "noun",
+    "glossZh": "航班",
+    "collocations": [
+      "Наш рейс задерживается, и выход на посадку изменился."
+    ],
+    "example": "Наш рейс задерживается, и выход на посадку изменился.",
+    "sentenceIDs": [
+      "sentence-airport-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-airport-задерживаться",
+    "lemma": "задерживаться",
+    "stressedForm": "заде́рживаться",
+    "speechText": "задерживаться",
+    "partOfSpeech": "verb",
+    "glossZh": "延误",
+    "collocations": [
+      "Наш рейс задерживается, и выход на посадку изменился."
+    ],
+    "example": "Наш рейс задерживается, и выход на посадку изменился.",
+    "sentenceIDs": [
+      "sentence-airport-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-airport-выход",
+    "lemma": "выход",
+    "stressedForm": "вы́ход",
+    "speechText": "выход",
+    "partOfSpeech": "noun",
+    "glossZh": "出口；登机口",
+    "collocations": [
+      "Наш рейс задерживается, и выход на посадку изменился."
+    ],
+    "example": "Наш рейс задерживается, и выход на посадку изменился.",
+    "sentenceIDs": [
+      "sentence-airport-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-airport-посадка",
+    "lemma": "посадка",
+    "stressedForm": "поса́дка",
+    "speechText": "посадка",
+    "partOfSpeech": "noun",
+    "glossZh": "登机；落座",
+    "collocations": [
+      "Наш рейс задерживается, и выход на посадку изменился."
+    ],
+    "example": "Наш рейс задерживается, и выход на посадку изменился.",
+    "sentenceIDs": [
+      "sentence-airport-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-airport-измениться",
+    "lemma": "измениться",
+    "stressedForm": "измени́ться",
+    "speechText": "измениться",
+    "partOfSpeech": "verb",
+    "glossZh": "改变",
+    "collocations": [
+      "Наш рейс задерживается, и выход на посадку изменился."
+    ],
+    "example": "Наш рейс задерживается, и выход на посадку изменился.",
+    "sentenceIDs": [
+      "sentence-airport-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-train-поезд",
+    "lemma": "поезд",
+    "stressedForm": "по́езд",
+    "speechText": "поезд",
+    "partOfSpeech": "noun",
+    "glossZh": "火车",
+    "collocations": [
+      "Поезд отправляется со второй платформы."
+    ],
+    "example": "Поезд отправляется со второй платформы.",
+    "sentenceIDs": [
+      "sentence-train-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-train-отправляться",
+    "lemma": "отправляться",
+    "stressedForm": "отправля́ться",
+    "speechText": "отправляться",
+    "partOfSpeech": "verb",
+    "glossZh": "出发",
+    "collocations": [
+      "Поезд отправляется со второй платформы."
+    ],
+    "example": "Поезд отправляется со второй платформы.",
+    "sentenceIDs": [
+      "sentence-train-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-train-второй",
+    "lemma": "второй",
+    "stressedForm": "второ́й",
+    "speechText": "второй",
+    "partOfSpeech": "numeral",
+    "glossZh": "第二",
+    "collocations": [
+      "Поезд отправляется со второй платформы."
+    ],
+    "example": "Поезд отправляется со второй платформы.",
+    "sentenceIDs": [
+      "sentence-train-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-train-платформа",
+    "lemma": "платформа",
+    "stressedForm": "платфо́рма",
+    "speechText": "платформа",
+    "partOfSpeech": "noun",
+    "glossZh": "站台",
+    "collocations": [
+      "Поезд отправляется со второй платформы."
+    ],
+    "example": "Поезд отправляется со второй платформы.",
+    "sentenceIDs": [
+      "sentence-train-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-train-расписание",
+    "lemma": "расписание",
+    "stressedForm": "расписа́ние",
+    "speechText": "расписание",
+    "partOfSpeech": "noun",
+    "glossZh": "时刻表",
+    "collocations": [
+      "Поезд отправляется со второй платформы."
+    ],
+    "example": "Поезд отправляется со второй платформы.",
+    "sentenceIDs": [
+      "sentence-train-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-train-найти",
+    "lemma": "найти",
+    "stressedForm": "найти́",
+    "speechText": "найти",
+    "partOfSpeech": "verb",
+    "glossZh": "找到",
+    "collocations": [
+      "Я нашёл свой вагон и место у окна."
+    ],
+    "example": "Я нашёл свой вагон и место у окна.",
+    "sentenceIDs": [
+      "sentence-train-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-train-вагон",
+    "lemma": "вагон",
+    "stressedForm": "ваго́н",
+    "speechText": "вагон",
+    "partOfSpeech": "noun",
+    "glossZh": "车厢",
+    "collocations": [
+      "Я нашёл свой вагон и место у окна."
+    ],
+    "example": "Я нашёл свой вагон и место у окна.",
+    "sentenceIDs": [
+      "sentence-train-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-train-сиденье",
+    "lemma": "сиденье",
+    "stressedForm": "сиде́нье",
+    "speechText": "сиденье",
+    "partOfSpeech": "noun",
+    "glossZh": "座位",
+    "collocations": [
+      "Я нашёл свой вагон и место у окна."
+    ],
+    "example": "Я нашёл свой вагон и место у окна.",
+    "sentenceIDs": [
+      "sentence-train-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-train-полка",
+    "lemma": "полка",
+    "stressedForm": "по́лка",
+    "speechText": "полка",
+    "partOfSpeech": "noun",
+    "glossZh": "卧铺；搁板",
+    "collocations": [
+      "Я нашёл свой вагон и место у окна."
+    ],
+    "example": "Я нашёл свой вагон и место у окна.",
+    "sentenceIDs": [
+      "sentence-train-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-train-проводник",
+    "lemma": "проводник",
+    "stressedForm": "прово́дник",
+    "speechText": "проводник",
+    "partOfSpeech": "noun",
+    "glossZh": "列车员",
+    "collocations": [
+      "Я нашёл свой вагон и место у окна."
+    ],
+    "example": "Я нашёл свой вагон и место у окна.",
+    "sentenceIDs": [
+      "sentence-train-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-communication-позвонить",
+    "lemma": "позвонить",
+    "stressedForm": "позвони́ть",
+    "speechText": "позвонить",
+    "partOfSpeech": "verb",
+    "glossZh": "打电话",
+    "collocations": [
+      "Позвоните мне или отправьте сообщение."
+    ],
+    "example": "Позвоните мне или отправьте сообщение.",
+    "sentenceIDs": [
+      "sentence-communication-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-communication-отправить",
+    "lemma": "отправить",
+    "stressedForm": "отпра́вить",
+    "speechText": "отправить",
+    "partOfSpeech": "verb",
+    "glossZh": "发送",
+    "collocations": [
+      "Позвоните мне или отправьте сообщение."
+    ],
+    "example": "Позвоните мне или отправьте сообщение.",
+    "sentenceIDs": [
+      "sentence-communication-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-communication-сообщение",
+    "lemma": "сообщение",
+    "stressedForm": "сообще́ние",
+    "speechText": "сообщение",
+    "partOfSpeech": "noun",
+    "glossZh": "消息",
+    "collocations": [
+      "Позвоните мне или отправьте сообщение."
+    ],
+    "example": "Позвоните мне или отправьте сообщение.",
+    "sentenceIDs": [
+      "sentence-communication-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-communication-или",
+    "lemma": "или",
+    "stressedForm": "и́ли",
+    "speechText": "или",
+    "partOfSpeech": "conjunction",
+    "glossZh": "或者",
+    "collocations": [
+      "Позвоните мне или отправьте сообщение."
+    ],
+    "example": "Позвоните мне или отправьте сообщение.",
+    "sentenceIDs": [
+      "sentence-communication-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-communication-телефон",
+    "lemma": "телефон",
+    "stressedForm": "телефо́н",
+    "speechText": "телефон",
+    "partOfSpeech": "noun",
+    "glossZh": "电话；手机",
+    "collocations": [
+      "Позвоните мне или отправьте сообщение."
+    ],
+    "example": "Позвоните мне или отправьте сообщение.",
+    "sentenceIDs": [
+      "sentence-communication-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-communication-ответить",
+    "lemma": "ответить",
+    "stressedForm": "отве́тить",
+    "speechText": "ответить",
+    "partOfSpeech": "verb",
+    "glossZh": "回答；接听",
+    "collocations": [
+      "Если я не отвечу, свяжитесь со мной позже."
+    ],
+    "example": "Если я не отвечу, свяжитесь со мной позже.",
+    "sentenceIDs": [
+      "sentence-communication-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-communication-связаться",
+    "lemma": "связаться",
+    "stressedForm": "связа́ться",
+    "speechText": "связаться",
+    "partOfSpeech": "verb",
+    "glossZh": "联系",
+    "collocations": [
+      "Если я не отвечу, свяжитесь со мной позже."
+    ],
+    "example": "Если я не отвечу, свяжитесь со мной позже.",
+    "sentenceIDs": [
+      "sentence-communication-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-communication-позже",
+    "lemma": "позже",
+    "stressedForm": "по́зже",
+    "speechText": "позже",
+    "partOfSpeech": "adverb",
+    "glossZh": "稍后",
+    "collocations": [
+      "Если я не отвечу, свяжитесь со мной позже."
+    ],
+    "example": "Если я не отвечу, свяжитесь со мной позже.",
+    "sentenceIDs": [
+      "sentence-communication-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-communication-контакт",
+    "lemma": "контакт",
+    "stressedForm": "конта́кт",
+    "speechText": "контакт",
+    "partOfSpeech": "noun",
+    "glossZh": "联系；联系人",
+    "collocations": [
+      "Если я не отвечу, свяжитесь со мной позже."
+    ],
+    "example": "Если я не отвечу, свяжитесь со мной позже.",
+    "sentenceIDs": [
+      "sentence-communication-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-communication-разговор",
+    "lemma": "разговор",
+    "stressedForm": "разгово́р",
+    "speechText": "разговор",
+    "partOfSpeech": "noun",
+    "glossZh": "谈话",
+    "collocations": [
+      "Если я не отвечу, свяжитесь со мной позже."
+    ],
+    "example": "Если я не отвечу, свяжитесь со мной позже.",
+    "sentenceIDs": [
+      "sentence-communication-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-technology-разрядиться",
+    "lemma": "разрядиться",
+    "stressedForm": "разряди́ться",
+    "speechText": "разрядиться",
+    "partOfSpeech": "verb",
+    "glossZh": "没电",
+    "collocations": [
+      "Мой телефон разрядился, мне нужно зарядное устройство."
+    ],
+    "example": "Мой телефон разрядился, мне нужно зарядное устройство.",
+    "sentenceIDs": [
+      "sentence-technology-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-technology-зарядный",
+    "lemma": "зарядный",
+    "stressedForm": "заря́дный",
+    "speechText": "зарядный",
+    "partOfSpeech": "adjective",
+    "glossZh": "充电的",
+    "collocations": [
+      "Мой телефон разрядился, мне нужно зарядное устройство."
+    ],
+    "example": "Мой телефон разрядился, мне нужно зарядное устройство.",
+    "sentenceIDs": [
+      "sentence-technology-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-technology-устройство",
+    "lemma": "устройство",
+    "stressedForm": "устро́йство",
+    "speechText": "устройство",
+    "partOfSpeech": "noun",
+    "glossZh": "设备",
+    "collocations": [
+      "Мой телефон разрядился, мне нужно зарядное устройство."
+    ],
+    "example": "Мой телефон разрядился, мне нужно зарядное устройство.",
+    "sentenceIDs": [
+      "sentence-technology-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-technology-экран",
+    "lemma": "экран",
+    "stressedForm": "экра́н",
+    "speechText": "экран",
+    "partOfSpeech": "noun",
+    "glossZh": "屏幕",
+    "collocations": [
+      "Мой телефон разрядился, мне нужно зарядное устройство."
+    ],
+    "example": "Мой телефон разрядился, мне нужно зарядное устройство.",
+    "sentenceIDs": [
+      "sentence-technology-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-technology-батарея",
+    "lemma": "батарея",
+    "stressedForm": "ба́тарея",
+    "speechText": "батарея",
+    "partOfSpeech": "noun",
+    "glossZh": "电池",
+    "collocations": [
+      "Мой телефон разрядился, мне нужно зарядное устройство."
+    ],
+    "example": "Мой телефон разрядился, мне нужно зарядное устройство.",
+    "sentenceIDs": [
+      "sentence-technology-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-technology-подключиться",
+    "lemma": "подключиться",
+    "stressedForm": "подключи́ться",
+    "speechText": "подключиться",
+    "partOfSpeech": "verb",
+    "glossZh": "连接",
+    "collocations": [
+      "Подключитесь к сети и откройте это приложение."
+    ],
+    "example": "Подключитесь к сети и откройте это приложение.",
+    "sentenceIDs": [
+      "sentence-technology-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-technology-сеть",
+    "lemma": "сеть",
+    "stressedForm": "се́ть",
+    "speechText": "сеть",
+    "partOfSpeech": "noun",
+    "glossZh": "网络",
+    "collocations": [
+      "Подключитесь к сети и откройте это приложение."
+    ],
+    "example": "Подключитесь к сети и откройте это приложение.",
+    "sentenceIDs": [
+      "sentence-technology-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-technology-открыть",
+    "lemma": "открыть",
+    "stressedForm": "откры́ть",
+    "speechText": "открыть",
+    "partOfSpeech": "verb",
+    "glossZh": "打开",
+    "collocations": [
+      "Подключитесь к сети и откройте это приложение."
+    ],
+    "example": "Подключитесь к сети и откройте это приложение.",
+    "sentenceIDs": [
+      "sentence-technology-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-technology-приложение",
+    "lemma": "приложение",
+    "stressedForm": "приложе́ние",
+    "speechText": "приложение",
+    "partOfSpeech": "noun",
+    "glossZh": "应用程序",
+    "collocations": [
+      "Подключитесь к сети и откройте это приложение."
+    ],
+    "example": "Подключитесь к сети и откройте это приложение.",
+    "sentenceIDs": [
+      "sentence-technology-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-technology-интернет",
+    "lemma": "интернет",
+    "stressedForm": "интерне́т",
+    "speechText": "интернет",
+    "partOfSpeech": "noun",
+    "glossZh": "互联网",
+    "collocations": [
+      "Подключитесь к сети и откройте это приложение."
+    ],
+    "example": "Подключитесь к сети и откройте это приложение.",
+    "sentenceIDs": [
+      "sentence-technology-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-clothing-холодный",
+    "lemma": "холодный",
+    "stressedForm": "холо́дный",
+    "speechText": "холодный",
+    "partOfSpeech": "adjective",
+    "glossZh": "寒冷的",
+    "collocations": [
+      "В холодную погоду я надеваю пальто, шарф и сапоги."
+    ],
+    "example": "В холодную погоду я надеваю пальто, шарф и сапоги.",
+    "sentenceIDs": [
+      "sentence-clothing-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-clothing-надевать",
+    "lemma": "надевать",
+    "stressedForm": "надева́ть",
+    "speechText": "надевать",
+    "partOfSpeech": "verb",
+    "glossZh": "穿上",
+    "collocations": [
+      "В холодную погоду я надеваю пальто, шарф и сапоги."
+    ],
+    "example": "В холодную погоду я надеваю пальто, шарф и сапоги.",
+    "sentenceIDs": [
+      "sentence-clothing-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-clothing-пальто",
+    "lemma": "пальто",
+    "stressedForm": "па́льто",
+    "speechText": "пальто",
+    "partOfSpeech": "noun",
+    "glossZh": "大衣",
+    "collocations": [
+      "В холодную погоду я надеваю пальто, шарф и сапоги."
+    ],
+    "example": "В холодную погоду я надеваю пальто, шарф и сапоги.",
+    "sentenceIDs": [
+      "sentence-clothing-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-clothing-шарф",
+    "lemma": "шарф",
+    "stressedForm": "ша́рф",
+    "speechText": "шарф",
+    "partOfSpeech": "noun",
+    "glossZh": "围巾",
+    "collocations": [
+      "В холодную погоду я надеваю пальто, шарф и сапоги."
+    ],
+    "example": "В холодную погоду я надеваю пальто, шарф и сапоги.",
+    "sentenceIDs": [
+      "sentence-clothing-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-clothing-сапог",
+    "lemma": "сапог",
+    "stressedForm": "сапо́г",
+    "speechText": "сапог",
+    "partOfSpeech": "noun",
+    "glossZh": "靴子",
+    "collocations": [
+      "В холодную погоду я надеваю пальто, шарф и сапоги."
+    ],
+    "example": "В холодную погоду я надеваю пальто, шарф и сапоги.",
+    "sentenceIDs": [
+      "sentence-clothing-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-clothing-рубашка",
+    "lemma": "рубашка",
+    "stressedForm": "руба́шка",
+    "speechText": "рубашка",
+    "partOfSpeech": "noun",
+    "glossZh": "衬衫",
+    "collocations": [
+      "Эта рубашка мне впору, а брюки слишком длинные."
+    ],
+    "example": "Эта рубашка мне впору, а брюки слишком длинные.",
+    "sentenceIDs": [
+      "sentence-clothing-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-clothing-впору",
+    "lemma": "впору",
+    "stressedForm": "впо́ру",
+    "speechText": "впору",
+    "partOfSpeech": "adverb",
+    "glossZh": "正合身",
+    "collocations": [
+      "Эта рубашка мне впору, а брюки слишком длинные."
+    ],
+    "example": "Эта рубашка мне впору, а брюки слишком длинные.",
+    "sentenceIDs": [
+      "sentence-clothing-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-clothing-брюки",
+    "lemma": "брюки",
+    "stressedForm": "брю́ки",
+    "speechText": "брюки",
+    "partOfSpeech": "noun",
+    "glossZh": "裤子",
+    "collocations": [
+      "Эта рубашка мне впору, а брюки слишком длинные."
+    ],
+    "example": "Эта рубашка мне впору, а брюки слишком длинные.",
+    "sentenceIDs": [
+      "sentence-clothing-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-clothing-слишком",
+    "lemma": "слишком",
+    "stressedForm": "сли́шком",
+    "speechText": "слишком",
+    "partOfSpeech": "adverb",
+    "glossZh": "过于",
+    "collocations": [
+      "Эта рубашка мне впору, а брюки слишком длинные."
+    ],
+    "example": "Эта рубашка мне впору, а брюки слишком длинные.",
+    "sentenceIDs": [
+      "sentence-clothing-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-clothing-длинный",
+    "lemma": "длинный",
+    "stressedForm": "дли́нный",
+    "speechText": "длинный",
+    "partOfSpeech": "adjective",
+    "glossZh": "长的",
+    "collocations": [
+      "Эта рубашка мне впору, а брюки слишком длинные."
+    ],
+    "example": "Эта рубашка мне впору, а брюки слишком длинные.",
+    "sentenceIDs": [
+      "sentence-clothing-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-appearance-высокий",
+    "lemma": "высокий",
+    "stressedForm": "высо́кий",
+    "speechText": "высокий",
+    "partOfSpeech": "adjective",
+    "glossZh": "高的",
+    "collocations": [
+      "У высокого мужчины короткие волосы и очки."
+    ],
+    "example": "У высокого мужчины короткие волосы и очки.",
+    "sentenceIDs": [
+      "sentence-appearance-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-appearance-мужчина",
+    "lemma": "мужчина",
+    "stressedForm": "мужчи́на",
+    "speechText": "мужчина",
+    "partOfSpeech": "noun",
+    "glossZh": "男人",
+    "collocations": [
+      "У высокого мужчины короткие волосы и очки."
+    ],
+    "example": "У высокого мужчины короткие волосы и очки.",
+    "sentenceIDs": [
+      "sentence-appearance-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-appearance-короткий",
+    "lemma": "короткий",
+    "stressedForm": "коро́ткий",
+    "speechText": "короткий",
+    "partOfSpeech": "adjective",
+    "glossZh": "短的",
+    "collocations": [
+      "У высокого мужчины короткие волосы и очки."
+    ],
+    "example": "У высокого мужчины короткие волосы и очки.",
+    "sentenceIDs": [
+      "sentence-appearance-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-appearance-волос",
+    "lemma": "волос",
+    "stressedForm": "во́лос",
+    "speechText": "волос",
+    "partOfSpeech": "noun",
+    "glossZh": "头发",
+    "collocations": [
+      "У высокого мужчины короткие волосы и очки."
+    ],
+    "example": "У высокого мужчины короткие волосы и очки.",
+    "sentenceIDs": [
+      "sentence-appearance-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-appearance-очки",
+    "lemma": "очки",
+    "stressedForm": "очки́",
+    "speechText": "очки",
+    "partOfSpeech": "noun",
+    "glossZh": "眼镜",
+    "collocations": [
+      "У высокого мужчины короткие волосы и очки."
+    ],
+    "example": "У высокого мужчины короткие волосы и очки.",
+    "sentenceIDs": [
+      "sentence-appearance-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-appearance-добрый",
+    "lemma": "добрый",
+    "stressedForm": "до́брый",
+    "speechText": "добрый",
+    "partOfSpeech": "adjective",
+    "glossZh": "友善的",
+    "collocations": [
+      "У неё добрая улыбка и синее платье."
+    ],
+    "example": "У неё добрая улыбка и синее платье.",
+    "sentenceIDs": [
+      "sentence-appearance-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-appearance-улыбка",
+    "lemma": "улыбка",
+    "stressedForm": "улы́бка",
+    "speechText": "улыбка",
+    "partOfSpeech": "noun",
+    "glossZh": "微笑",
+    "collocations": [
+      "У неё добрая улыбка и синее платье."
+    ],
+    "example": "У неё добрая улыбка и синее платье.",
+    "sentenceIDs": [
+      "sentence-appearance-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-appearance-синий",
+    "lemma": "синий",
+    "stressedForm": "си́ний",
+    "speechText": "синий",
+    "partOfSpeech": "adjective",
+    "glossZh": "蓝色的",
+    "collocations": [
+      "У неё добрая улыбка и синее платье."
+    ],
+    "example": "У неё добрая улыбка и синее платье.",
+    "sentenceIDs": [
+      "sentence-appearance-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-appearance-платье",
+    "lemma": "платье",
+    "stressedForm": "пла́тье",
+    "speechText": "платье",
+    "partOfSpeech": "noun",
+    "glossZh": "连衣裙",
+    "collocations": [
+      "У неё добрая улыбка и синее платье."
+    ],
+    "example": "У неё добрая улыбка и синее платье.",
+    "sentenceIDs": [
+      "sentence-appearance-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-appearance-внешность",
+    "lemma": "внешность",
+    "stressedForm": "вне́шность",
+    "speechText": "внешность",
+    "partOfSpeech": "noun",
+    "glossZh": "外貌",
+    "collocations": [
+      "У неё добрая улыбка и синее платье."
+    ],
+    "example": "У неё добрая улыбка и синее платье.",
+    "sentenceIDs": [
+      "sentence-appearance-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-friends-старый",
+    "lemma": "старый",
+    "stressedForm": "ста́рый",
+    "speechText": "старый",
+    "partOfSpeech": "adjective",
+    "glossZh": "老的；相识已久的",
+    "collocations": [
+      "Мой старый друг живёт недалеко, и мы часто видимся."
+    ],
+    "example": "Мой старый друг живёт недалеко, и мы часто видимся.",
+    "sentenceIDs": [
+      "sentence-friends-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-friends-жить",
+    "lemma": "жить",
+    "stressedForm": "жи́ть",
+    "speechText": "жить",
+    "partOfSpeech": "verb",
+    "glossZh": "居住；生活",
+    "collocations": [
+      "Мой старый друг живёт недалеко, и мы часто видимся."
+    ],
+    "example": "Мой старый друг живёт недалеко, и мы часто видимся.",
+    "sentenceIDs": [
+      "sentence-friends-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-friends-недалеко",
+    "lemma": "недалеко",
+    "stressedForm": "недалеко́",
+    "speechText": "недалеко",
+    "partOfSpeech": "adverb",
+    "glossZh": "不远",
+    "collocations": [
+      "Мой старый друг живёт недалеко, и мы часто видимся."
+    ],
+    "example": "Мой старый друг живёт недалеко, и мы часто видимся.",
+    "sentenceIDs": [
+      "sentence-friends-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-friends-часто",
+    "lemma": "часто",
+    "stressedForm": "ча́сто",
+    "speechText": "часто",
+    "partOfSpeech": "adverb",
+    "glossZh": "经常",
+    "collocations": [
+      "Мой старый друг живёт недалеко, и мы часто видимся."
+    ],
+    "example": "Мой старый друг живёт недалеко, и мы часто видимся.",
+    "sentenceIDs": [
+      "sentence-friends-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-friends-видеться",
+    "lemma": "видеться",
+    "stressedForm": "ви́деться",
+    "speechText": "видеться",
+    "partOfSpeech": "verb",
+    "glossZh": "见面",
+    "collocations": [
+      "Мой старый друг живёт недалеко, и мы часто видимся."
+    ],
+    "example": "Мой старый друг живёт недалеко, и мы часто видимся.",
+    "sentenceIDs": [
+      "sentence-friends-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-friends-доверять",
+    "lemma": "доверять",
+    "stressedForm": "доверя́ть",
+    "speechText": "доверять",
+    "partOfSpeech": "verb",
+    "glossZh": "信任",
+    "collocations": [
+      "Мы доверяем друг другу и честно говорим обо всём."
+    ],
+    "example": "Мы доверяем друг другу и честно говорим обо всём.",
+    "sentenceIDs": [
+      "sentence-friends-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-friends-товарищ",
+    "lemma": "товарищ",
+    "stressedForm": "това́рищ",
+    "speechText": "товарищ",
+    "partOfSpeech": "noun",
+    "glossZh": "伙伴",
+    "collocations": [
+      "Мы доверяем друг другу и честно говорим обо всём."
+    ],
+    "example": "Мы доверяем друг другу и честно говорим обо всём.",
+    "sentenceIDs": [
+      "sentence-friends-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-friends-честно",
+    "lemma": "честно",
+    "stressedForm": "че́стно",
+    "speechText": "честно",
+    "partOfSpeech": "adverb",
+    "glossZh": "坦诚地",
+    "collocations": [
+      "Мы доверяем друг другу и честно говорим обо всём."
+    ],
+    "example": "Мы доверяем друг другу и честно говорим обо всём.",
+    "sentenceIDs": [
+      "sentence-friends-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-friends-говорить",
+    "lemma": "говорить",
+    "stressedForm": "говори́ть",
+    "speechText": "говорить",
+    "partOfSpeech": "verb",
+    "glossZh": "说话",
+    "collocations": [
+      "Мы доверяем друг другу и честно говорим обо всём."
+    ],
+    "example": "Мы доверяем друг другу и честно говорим обо всём.",
+    "sentenceIDs": [
+      "sentence-friends-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-friends-дружба",
+    "lemma": "дружба",
+    "stressedForm": "дру́жба",
+    "speechText": "дружба",
+    "partOfSpeech": "noun",
+    "glossZh": "友谊",
+    "collocations": [
+      "Мы доверяем друг другу и честно говорим обо всём."
+    ],
+    "example": "Мы доверяем друг другу и честно говорим обо всём.",
+    "sentenceIDs": [
+      "sentence-friends-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-plans-завтра",
+    "lemma": "завтра",
+    "stressedForm": "за́втра",
+    "speechText": "завтра",
+    "partOfSpeech": "adverb",
+    "glossZh": "明天",
+    "collocations": [
+      "Завтра я планирую закончить все дела."
+    ],
+    "example": "Завтра я планирую закончить все дела.",
+    "sentenceIDs": [
+      "sentence-plans-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-plans-планировать",
+    "lemma": "планировать",
+    "stressedForm": "планирова́ть",
+    "speechText": "планировать",
+    "partOfSpeech": "verb",
+    "glossZh": "计划",
+    "collocations": [
+      "Завтра я планирую закончить все дела."
+    ],
+    "example": "Завтра я планирую закончить все дела.",
+    "sentenceIDs": [
+      "sentence-plans-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-plans-закончить",
+    "lemma": "закончить",
+    "stressedForm": "зако́нчить",
+    "speechText": "закончить",
+    "partOfSpeech": "verb",
+    "glossZh": "完成",
+    "collocations": [
+      "Завтра я планирую закончить все дела."
+    ],
+    "example": "Завтра я планирую закончить все дела.",
+    "sentenceIDs": [
+      "sentence-plans-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-plans-весь",
+    "lemma": "весь",
+    "stressedForm": "ве́сь",
+    "speechText": "весь",
+    "partOfSpeech": "pronoun",
+    "glossZh": "全部的",
+    "collocations": [
+      "Завтра я планирую закончить все дела."
+    ],
+    "example": "Завтра я планирую закончить все дела.",
+    "sentenceIDs": [
+      "sentence-plans-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-plans-дело",
+    "lemma": "дело",
+    "stressedForm": "де́ло",
+    "speechText": "дело",
+    "partOfSpeech": "noun",
+    "glossZh": "事情",
+    "collocations": [
+      "Завтра я планирую закончить все дела."
+    ],
+    "example": "Завтра я планирую закончить все дела.",
+    "sentenceIDs": [
+      "sentence-plans-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-plans-если",
+    "lemma": "если",
+    "stressedForm": "е́сли",
+    "speechText": "если",
+    "partOfSpeech": "conjunction",
+    "glossZh": "如果",
+    "collocations": [
+      "Если будет время, вечером мы пойдём гулять."
+    ],
+    "example": "Если будет время, вечером мы пойдём гулять.",
+    "sentenceIDs": [
+      "sentence-plans-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-plans-время",
+    "lemma": "время",
+    "stressedForm": "вре́мя",
+    "speechText": "время",
+    "partOfSpeech": "noun",
+    "glossZh": "时间",
+    "collocations": [
+      "Если будет время, вечером мы пойдём гулять."
+    ],
+    "example": "Если будет время, вечером мы пойдём гулять.",
+    "sentenceIDs": [
+      "sentence-plans-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-plans-вечером",
+    "lemma": "вечером",
+    "stressedForm": "ве́чером",
+    "speechText": "вечером",
+    "partOfSpeech": "adverb",
+    "glossZh": "晚上",
+    "collocations": [
+      "Если будет время, вечером мы пойдём гулять."
+    ],
+    "example": "Если будет время, вечером мы пойдём гулять.",
+    "sentenceIDs": [
+      "sentence-plans-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-plans-пойти",
+    "lemma": "пойти",
+    "stressedForm": "пойти́",
+    "speechText": "пойти",
+    "partOfSpeech": "verb",
+    "glossZh": "去；开始走",
+    "collocations": [
+      "Если будет время, вечером мы пойдём гулять."
+    ],
+    "example": "Если будет время, вечером мы пойдём гулять.",
+    "sentenceIDs": [
+      "sentence-plans-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-plans-прогуляться",
+    "lemma": "прогуляться",
+    "stressedForm": "прогуля́ться",
+    "speechText": "прогуляться",
+    "partOfSpeech": "verb",
+    "glossZh": "散步一下",
+    "collocations": [
+      "Если будет время, вечером мы пойдём гулять."
+    ],
+    "example": "Если будет время, вечером мы пойдём гулять.",
+    "sentenceIDs": [
+      "sentence-plans-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-invitations-приходить",
+    "lemma": "приходить",
+    "stressedForm": "приходи́ть",
+    "speechText": "приходить",
+    "partOfSpeech": "verb",
+    "glossZh": "来",
+    "collocations": [
+      "Приходи ко мне в гости в субботу на чай."
+    ],
+    "example": "Приходи ко мне в гости в субботу на чай.",
+    "sentenceIDs": [
+      "sentence-invitations-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-invitations-гость",
+    "lemma": "гость",
+    "stressedForm": "го́сть",
+    "speechText": "гость",
+    "partOfSpeech": "noun",
+    "glossZh": "客人；做客",
+    "collocations": [
+      "Приходи ко мне в гости в субботу на чай."
+    ],
+    "example": "Приходи ко мне в гости в субботу на чай.",
+    "sentenceIDs": [
+      "sentence-invitations-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-invitations-суббота",
+    "lemma": "суббота",
+    "stressedForm": "суббо́та",
+    "speechText": "суббота",
+    "partOfSpeech": "noun",
+    "glossZh": "星期六",
+    "collocations": [
+      "Приходи ко мне в гости в субботу на чай."
+    ],
+    "example": "Приходи ко мне в гости в субботу на чай.",
+    "sentenceIDs": [
+      "sentence-invitations-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-invitations-угощение",
+    "lemma": "угощение",
+    "stressedForm": "угоще́ние",
+    "speechText": "угощение",
+    "partOfSpeech": "noun",
+    "glossZh": "招待；点心",
+    "collocations": [
+      "Приходи ко мне в гости в субботу на чай."
+    ],
+    "example": "Приходи ко мне в гости в субботу на чай.",
+    "sentenceIDs": [
+      "sentence-invitations-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-invitations-приглашать",
+    "lemma": "приглашать",
+    "stressedForm": "приглаша́ть",
+    "speechText": "приглашать",
+    "partOfSpeech": "verb",
+    "glossZh": "邀请",
+    "collocations": [
+      "Приходи ко мне в гости в субботу на чай."
+    ],
+    "example": "Приходи ко мне в гости в субботу на чай.",
+    "sentenceIDs": [
+      "sentence-invitations-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-invitations-приглашение",
+    "lemma": "приглашение",
+    "stressedForm": "приглаше́ние",
+    "speechText": "приглашение",
+    "partOfSpeech": "noun",
+    "glossZh": "邀请",
+    "collocations": [
+      "Спасибо за приглашение, я с удовольствием приду."
+    ],
+    "example": "Спасибо за приглашение, я с удовольствием приду.",
+    "sentenceIDs": [
+      "sentence-invitations-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-invitations-удовольствие",
+    "lemma": "удовольствие",
+    "stressedForm": "удово́льствие",
+    "speechText": "удовольствие",
+    "partOfSpeech": "noun",
+    "glossZh": "愉快",
+    "collocations": [
+      "Спасибо за приглашение, я с удовольствием приду."
+    ],
+    "example": "Спасибо за приглашение, я с удовольствием приду.",
+    "sentenceIDs": [
+      "sentence-invitations-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-invitations-прийти",
+    "lemma": "прийти",
+    "stressedForm": "прийти́",
+    "speechText": "прийти",
+    "partOfSpeech": "verb",
+    "glossZh": "来到",
+    "collocations": [
+      "Спасибо за приглашение, я с удовольствием приду."
+    ],
+    "example": "Спасибо за приглашение, я с удовольствием приду.",
+    "sentenceIDs": [
+      "sentence-invitations-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-invitations-соглашаться",
+    "lemma": "соглашаться",
+    "stressedForm": "соглаша́ться",
+    "speechText": "соглашаться",
+    "partOfSpeech": "verb",
+    "glossZh": "同意",
+    "collocations": [
+      "Спасибо за приглашение, я с удовольствием приду."
+    ],
+    "example": "Спасибо за приглашение, я с удовольствием приду.",
+    "sentenceIDs": [
+      "sentence-invitations-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-invitations-отказываться",
+    "lemma": "отказываться",
+    "stressedForm": "отка́зываться",
+    "speechText": "отказываться",
+    "partOfSpeech": "verb",
+    "glossZh": "拒绝",
+    "collocations": [
+      "Спасибо за приглашение, я с удовольствием приду."
+    ],
+    "example": "Спасибо за приглашение, я с удовольствием приду.",
+    "sentenceIDs": [
+      "sentence-invitations-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-chores-заправлять",
+    "lemma": "заправлять",
+    "stressedForm": "заправля́ть",
+    "speechText": "заправлять",
+    "partOfSpeech": "verb",
+    "glossZh": "整理；铺好",
+    "collocations": [
+      "Утром я заправляю кровать, подметаю пол и выношу мусор."
+    ],
+    "example": "Утром я заправляю кровать, подметаю пол и выношу мусор.",
+    "sentenceIDs": [
+      "sentence-chores-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-chores-кровать",
+    "lemma": "кровать",
+    "stressedForm": "крова́ть",
+    "speechText": "кровать",
+    "partOfSpeech": "noun",
+    "glossZh": "床",
+    "collocations": [
+      "Утром я заправляю кровать, подметаю пол и выношу мусор."
+    ],
+    "example": "Утром я заправляю кровать, подметаю пол и выношу мусор.",
+    "sentenceIDs": [
+      "sentence-chores-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-chores-подметать",
+    "lemma": "подметать",
+    "stressedForm": "подмета́ть",
+    "speechText": "подметать",
+    "partOfSpeech": "verb",
+    "glossZh": "扫地",
+    "collocations": [
+      "Утром я заправляю кровать, подметаю пол и выношу мусор."
+    ],
+    "example": "Утром я заправляю кровать, подметаю пол и выношу мусор.",
+    "sentenceIDs": [
+      "sentence-chores-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-chores-пол",
+    "lemma": "пол",
+    "stressedForm": "по́л",
+    "speechText": "пол",
+    "partOfSpeech": "noun",
+    "glossZh": "地板",
+    "collocations": [
+      "Утром я заправляю кровать, подметаю пол и выношу мусор."
+    ],
+    "example": "Утром я заправляю кровать, подметаю пол и выношу мусор.",
+    "sentenceIDs": [
+      "sentence-chores-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-chores-мусор",
+    "lemma": "мусор",
+    "stressedForm": "му́сор",
+    "speechText": "мусор",
+    "partOfSpeech": "noun",
+    "glossZh": "垃圾",
+    "collocations": [
+      "Утром я заправляю кровать, подметаю пол и выношу мусор."
+    ],
+    "example": "Утром я заправляю кровать, подметаю пол и выношу мусор.",
+    "sentenceIDs": [
+      "sentence-chores-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-chores-мыть",
+    "lemma": "мыть",
+    "stressedForm": "мыть",
+    "speechText": "мыть",
+    "partOfSpeech": "verb",
+    "glossZh": "清洗",
+    "collocations": [
+      "После ужина мы моем посуду и убираем кухню."
+    ],
+    "example": "После ужина мы моем посуду и убираем кухню.",
+    "sentenceIDs": [
+      "sentence-chores-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-chores-посуда",
+    "lemma": "посуда",
+    "stressedForm": "посу́да",
+    "speechText": "посуда",
+    "partOfSpeech": "noun",
+    "glossZh": "餐具",
+    "collocations": [
+      "После ужина мы моем посуду и убираем кухню."
+    ],
+    "example": "После ужина мы моем посуду и убираем кухню.",
+    "sentenceIDs": [
+      "sentence-chores-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-chores-убирать",
+    "lemma": "убирать",
+    "stressedForm": "убира́ть",
+    "speechText": "убирать",
+    "partOfSpeech": "verb",
+    "glossZh": "打扫；收拾",
+    "collocations": [
+      "После ужина мы моем посуду и убираем кухню."
+    ],
+    "example": "После ужина мы моем посуду и убираем кухню.",
+    "sentenceIDs": [
+      "sentence-chores-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-chores-чистый",
+    "lemma": "чистый",
+    "stressedForm": "чи́стый",
+    "speechText": "чистый",
+    "partOfSpeech": "adjective",
+    "glossZh": "干净的",
+    "collocations": [
+      "После ужина мы моем посуду и убираем кухню."
+    ],
+    "example": "После ужина мы моем посуду и убираем кухню.",
+    "sentenceIDs": [
+      "sentence-chores-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-chores-порядок",
+    "lemma": "порядок",
+    "stressedForm": "поря́док",
+    "speechText": "порядок",
+    "partOfSpeech": "noun",
+    "glossZh": "整洁；秩序",
+    "collocations": [
+      "После ужина мы моем посуду и убираем кухню."
+    ],
+    "example": "После ужина мы моем посуду и убираем кухню.",
+    "sentenceIDs": [
+      "sentence-chores-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-services-посылка",
+    "lemma": "посылка",
+    "stressedForm": "посы́лка",
+    "speechText": "посылка",
+    "partOfSpeech": "noun",
+    "glossZh": "包裹",
+    "collocations": [
+      "Мне нужно отправить посылку на почте."
+    ],
+    "example": "Мне нужно отправить посылку на почте.",
+    "sentenceIDs": [
+      "sentence-services-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-services-почта",
+    "lemma": "почта",
+    "stressedForm": "по́чта",
+    "speechText": "почта",
+    "partOfSpeech": "noun",
+    "glossZh": "邮局；邮件",
+    "collocations": [
+      "Мне нужно отправить посылку на почте."
+    ],
+    "example": "Мне нужно отправить посылку на почте.",
+    "sentenceIDs": [
+      "sentence-services-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-services-отправлять",
+    "lemma": "отправлять",
+    "stressedForm": "отпра́влять",
+    "speechText": "отправлять",
+    "partOfSpeech": "verb",
+    "glossZh": "发送；寄出",
+    "collocations": [
+      "Мне нужно отправить посылку на почте."
+    ],
+    "example": "Мне нужно отправить посылку на почте.",
+    "sentenceIDs": [
+      "sentence-services-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-services-адрес",
+    "lemma": "адрес",
+    "stressedForm": "а́дрес",
+    "speechText": "адрес",
+    "partOfSpeech": "noun",
+    "glossZh": "地址",
+    "collocations": [
+      "Мне нужно отправить посылку на почте."
+    ],
+    "example": "Мне нужно отправить посылку на почте.",
+    "sentenceIDs": [
+      "sentence-services-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-services-марка",
+    "lemma": "марка",
+    "stressedForm": "ма́рка",
+    "speechText": "марка",
+    "partOfSpeech": "noun",
+    "glossZh": "邮票",
+    "collocations": [
+      "Мне нужно отправить посылку на почте."
+    ],
+    "example": "Мне нужно отправить посылку на почте.",
+    "sentenceIDs": [
+      "sentence-services-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-services-мастер",
+    "lemma": "мастер",
+    "stressedForm": "ма́стер",
+    "speechText": "мастер",
+    "partOfSpeech": "noun",
+    "glossZh": "师傅",
+    "collocations": [
+      "Мастер в парикмахерской свободен сегодня после обеда."
+    ],
+    "example": "Мастер в парикмахерской свободен сегодня после обеда.",
+    "sentenceIDs": [
+      "sentence-services-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-services-парикмахерская",
+    "lemma": "парикмахерская",
+    "stressedForm": "парикма́херская",
+    "speechText": "парикмахерская",
+    "partOfSpeech": "noun",
+    "glossZh": "理发店",
+    "collocations": [
+      "Мастер в парикмахерской свободен сегодня после обеда."
+    ],
+    "example": "Мастер в парикмахерской свободен сегодня после обеда.",
+    "sentenceIDs": [
+      "sentence-services-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-services-свободен",
+    "lemma": "свободен",
+    "stressedForm": "свобо́ден",
+    "speechText": "свободен",
+    "partOfSpeech": "adjective",
+    "glossZh": "有空的",
+    "collocations": [
+      "Мастер в парикмахерской свободен сегодня после обеда."
+    ],
+    "example": "Мастер в парикмахерской свободен сегодня после обеда.",
+    "sentenceIDs": [
+      "sentence-services-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-services-стрижка",
+    "lemma": "стрижка",
+    "stressedForm": "стри́жка",
+    "speechText": "стрижка",
+    "partOfSpeech": "noun",
+    "glossZh": "理发；发型",
+    "collocations": [
+      "Мастер в парикмахерской свободен сегодня после обеда."
+    ],
+    "example": "Мастер в парикмахерской свободен сегодня после обеда.",
+    "sentenceIDs": [
+      "sentence-services-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-services-услуга",
+    "lemma": "услуга",
+    "stressedForm": "услу́га",
+    "speechText": "услуга",
+    "partOfSpeech": "noun",
+    "glossZh": "服务",
+    "collocations": [
+      "Мастер в парикмахерской свободен сегодня после обеда."
+    ],
+    "example": "Мастер в парикмахерской свободен сегодня после обеда.",
+    "sentenceIDs": [
+      "sentence-services-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-nature-лес",
+    "lemma": "лес",
+    "stressedForm": "ле́с",
+    "speechText": "лес",
+    "partOfSpeech": "noun",
+    "glossZh": "森林",
+    "collocations": [
+      "В лесу есть чистая река и высокие горы."
+    ],
+    "example": "В лесу есть чистая река и высокие горы.",
+    "sentenceIDs": [
+      "sentence-nature-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-nature-прозрачный",
+    "lemma": "прозрачный",
+    "stressedForm": "прозра́чный",
+    "speechText": "прозрачный",
+    "partOfSpeech": "adjective",
+    "glossZh": "清澈的",
+    "collocations": [
+      "В лесу есть чистая река и высокие горы."
+    ],
+    "example": "В лесу есть чистая река и высокие горы.",
+    "sentenceIDs": [
+      "sentence-nature-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-nature-река",
+    "lemma": "река",
+    "stressedForm": "река́",
+    "speechText": "река",
+    "partOfSpeech": "noun",
+    "glossZh": "河",
+    "collocations": [
+      "В лесу есть чистая река и высокие горы."
+    ],
+    "example": "В лесу есть чистая река и высокие горы.",
+    "sentenceIDs": [
+      "sentence-nature-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-nature-крутой",
+    "lemma": "крутой",
+    "stressedForm": "круто́й",
+    "speechText": "крутой",
+    "partOfSpeech": "adjective",
+    "glossZh": "陡峭的",
+    "collocations": [
+      "В лесу есть чистая река и высокие горы."
+    ],
+    "example": "В лесу есть чистая река и высокие горы.",
+    "sentenceIDs": [
+      "sentence-nature-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-nature-гора",
+    "lemma": "гора",
+    "stressedForm": "гора́",
+    "speechText": "гора",
+    "partOfSpeech": "noun",
+    "glossZh": "山",
+    "collocations": [
+      "В лесу есть чистая река и высокие горы."
+    ],
+    "example": "В лесу есть чистая река и высокие горы.",
+    "sentenceIDs": [
+      "sentence-nature-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-nature-тропинка",
+    "lemma": "тропинка",
+    "stressedForm": "тропи́нка",
+    "speechText": "тропинка",
+    "partOfSpeech": "noun",
+    "glossZh": "小路",
+    "collocations": [
+      "Мы идём по тропинке и слушаем пение птиц."
+    ],
+    "example": "Мы идём по тропинке и слушаем пение птиц.",
+    "sentenceIDs": [
+      "sentence-nature-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-nature-слышать",
+    "lemma": "слышать",
+    "stressedForm": "слы́шать",
+    "speechText": "слышать",
+    "partOfSpeech": "verb",
+    "glossZh": "听见",
+    "collocations": [
+      "Мы идём по тропинке и слушаем пение птиц."
+    ],
+    "example": "Мы идём по тропинке и слушаем пение птиц.",
+    "sentenceIDs": [
+      "sentence-nature-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-nature-пение",
+    "lemma": "пение",
+    "stressedForm": "пе́ние",
+    "speechText": "пение",
+    "partOfSpeech": "noun",
+    "glossZh": "歌声；鸣叫",
+    "collocations": [
+      "Мы идём по тропинке и слушаем пение птиц."
+    ],
+    "example": "Мы идём по тропинке и слушаем пение птиц.",
+    "sentenceIDs": [
+      "sentence-nature-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-nature-птица",
+    "lemma": "птица",
+    "stressedForm": "пти́ца",
+    "speechText": "птица",
+    "partOfSpeech": "noun",
+    "glossZh": "鸟",
+    "collocations": [
+      "Мы идём по тропинке и слушаем пение птиц."
+    ],
+    "example": "Мы идём по тропинке и слушаем пение птиц.",
+    "sentenceIDs": [
+      "sentence-nature-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-nature-природа",
+    "lemma": "природа",
+    "stressedForm": "приро́да",
+    "speechText": "природа",
+    "partOfSpeech": "noun",
+    "glossZh": "自然",
+    "collocations": [
+      "Мы идём по тропинке и слушаем пение птиц."
+    ],
+    "example": "Мы идём по тропинке и слушаем пение птиц.",
+    "sentenceIDs": [
+      "sentence-nature-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-holidays-праздник",
+    "lemma": "праздник",
+    "stressedForm": "пра́здник",
+    "speechText": "праздник",
+    "partOfSpeech": "noun",
+    "glossZh": "节日",
+    "collocations": [
+      "Перед праздником мы украшаем комнату и покупаем подарки."
+    ],
+    "example": "Перед праздником мы украшаем комнату и покупаем подарки.",
+    "sentenceIDs": [
+      "sentence-holidays-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-holidays-украшать",
+    "lemma": "украшать",
+    "stressedForm": "украша́ть",
+    "speechText": "украшать",
+    "partOfSpeech": "verb",
+    "glossZh": "装饰",
+    "collocations": [
+      "Перед праздником мы украшаем комнату и покупаем подарки."
+    ],
+    "example": "Перед праздником мы украшаем комнату и покупаем подарки.",
+    "sentenceIDs": [
+      "sentence-holidays-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-holidays-комната",
+    "lemma": "комната",
+    "stressedForm": "ко́мната",
+    "speechText": "комната",
+    "partOfSpeech": "noun",
+    "glossZh": "房间",
+    "collocations": [
+      "Перед праздником мы украшаем комнату и покупаем подарки."
+    ],
+    "example": "Перед праздником мы украшаем комнату и покупаем подарки.",
+    "sentenceIDs": [
+      "sentence-holidays-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-holidays-покупать",
+    "lemma": "покупать",
+    "stressedForm": "покупа́ть",
+    "speechText": "покупать",
+    "partOfSpeech": "verb",
+    "glossZh": "购买",
+    "collocations": [
+      "Перед праздником мы украшаем комнату и покупаем подарки."
+    ],
+    "example": "Перед праздником мы украшаем комнату и покупаем подарки.",
+    "sentenceIDs": [
+      "sentence-holidays-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-holidays-подарок",
+    "lemma": "подарок",
+    "stressedForm": "пода́рок",
+    "speechText": "подарок",
+    "partOfSpeech": "noun",
+    "glossZh": "礼物",
+    "collocations": [
+      "Перед праздником мы украшаем комнату и покупаем подарки."
+    ],
+    "example": "Перед праздником мы украшаем комнату и покупаем подарки.",
+    "sentenceIDs": [
+      "sentence-holidays-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-holidays-полночь",
+    "lemma": "полночь",
+    "stressedForm": "по́лночь",
+    "speechText": "полночь",
+    "partOfSpeech": "noun",
+    "glossZh": "午夜",
+    "collocations": [
+      "В полночь все поздравляют друг друга и делают общее фото."
+    ],
+    "example": "В полночь все поздравляют друг друга и делают общее фото.",
+    "sentenceIDs": [
+      "sentence-holidays-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-holidays-поздравлять",
+    "lemma": "поздравлять",
+    "stressedForm": "поздравля́ть",
+    "speechText": "поздравлять",
+    "partOfSpeech": "verb",
+    "glossZh": "祝贺",
+    "collocations": [
+      "В полночь все поздравляют друг друга и делают общее фото."
+    ],
+    "example": "В полночь все поздравляют друг друга и делают общее фото.",
+    "sentenceIDs": [
+      "sentence-holidays-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-holidays-общий",
+    "lemma": "общий",
+    "stressedForm": "о́бщий",
+    "speechText": "общий",
+    "partOfSpeech": "adjective",
+    "glossZh": "共同的",
+    "collocations": [
+      "В полночь все поздравляют друг друга и делают общее фото."
+    ],
+    "example": "В полночь все поздравляют друг друга и делают общее фото.",
+    "sentenceIDs": [
+      "sentence-holidays-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-holidays-фото",
+    "lemma": "фото",
+    "stressedForm": "фо́то",
+    "speechText": "фото",
+    "partOfSpeech": "noun",
+    "glossZh": "照片",
+    "collocations": [
+      "В полночь все поздравляют друг друга и делают общее фото."
+    ],
+    "example": "В полночь все поздравляют друг друга и делают общее фото.",
+    "sentenceIDs": [
+      "sentence-holidays-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-holidays-традиция",
+    "lemma": "традиция",
+    "stressedForm": "тради́ция",
+    "speechText": "традиция",
+    "partOfSpeech": "noun",
+    "glossZh": "传统",
+    "collocations": [
+      "В полночь все поздравляют друг друга и делают общее фото."
+    ],
+    "example": "В полночь все поздравляют друг друга и делают общее фото.",
+    "sentenceIDs": [
+      "sentence-holidays-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-emergencies-помогать",
+    "lemma": "помогать",
+    "stressedForm": "помога́ть",
+    "speechText": "помогать",
+    "partOfSpeech": "verb",
+    "glossZh": "帮助",
+    "collocations": [
+      "Помогите, пожалуйста: человек потерял кошелёк."
+    ],
+    "example": "Помогите, пожалуйста: человек потерял кошелёк.",
+    "sentenceIDs": [
+      "sentence-emergencies-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-emergencies-человек",
+    "lemma": "человек",
+    "stressedForm": "челове́к",
+    "speechText": "человек",
+    "partOfSpeech": "noun",
+    "glossZh": "人",
+    "collocations": [
+      "Помогите, пожалуйста: человек потерял кошелёк."
+    ],
+    "example": "Помогите, пожалуйста: человек потерял кошелёк.",
+    "sentenceIDs": [
+      "sentence-emergencies-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-emergencies-потерять",
+    "lemma": "потерять",
+    "stressedForm": "потеря́ть",
+    "speechText": "потерять",
+    "partOfSpeech": "verb",
+    "glossZh": "丢失",
+    "collocations": [
+      "Помогите, пожалуйста: человек потерял кошелёк."
+    ],
+    "example": "Помогите, пожалуйста: человек потерял кошелёк.",
+    "sentenceIDs": [
+      "sentence-emergencies-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-emergencies-кошелек",
+    "lemma": "кошелёк",
+    "stressedForm": "кошелёк",
+    "speechText": "кошелёк",
+    "partOfSpeech": "noun",
+    "glossZh": "钱包",
+    "collocations": [
+      "Помогите, пожалуйста: человек потерял кошелёк."
+    ],
+    "example": "Помогите, пожалуйста: человек потерял кошелёк.",
+    "sentenceIDs": [
+      "sentence-emergencies-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-emergencies-срочно",
+    "lemma": "срочно",
+    "stressedForm": "сро́чно",
+    "speechText": "срочно",
+    "partOfSpeech": "adverb",
+    "glossZh": "紧急地",
+    "collocations": [
+      "Помогите, пожалуйста: человек потерял кошелёк."
+    ],
+    "example": "Помогите, пожалуйста: человек потерял кошелёк.",
+    "sentenceIDs": [
+      "sentence-emergencies-1"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-emergencies-экстренный",
+    "lemma": "экстренный",
+    "stressedForm": "экстре́нный",
+    "speechText": "экстренный",
+    "partOfSpeech": "adjective",
+    "glossZh": "紧急的",
+    "collocations": [
+      "В экстренной ситуации позвоните по этому номеру и точно назовите адрес."
+    ],
+    "example": "В экстренной ситуации позвоните по этому номеру и точно назовите адрес.",
+    "sentenceIDs": [
+      "sentence-emergencies-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-emergencies-ситуация",
+    "lemma": "ситуация",
+    "stressedForm": "ситуа́ция",
+    "speechText": "ситуация",
+    "partOfSpeech": "noun",
+    "glossZh": "情况",
+    "collocations": [
+      "В экстренной ситуации позвоните по этому номеру и точно назовите адрес."
+    ],
+    "example": "В экстренной ситуации позвоните по этому номеру и точно назовите адрес.",
+    "sentenceIDs": [
+      "sentence-emergencies-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-emergencies-звонок",
+    "lemma": "звонок",
+    "stressedForm": "звоно́к",
+    "speechText": "звонок",
+    "partOfSpeech": "noun",
+    "glossZh": "电话；铃声",
+    "collocations": [
+      "В экстренной ситуации позвоните по этому номеру и точно назовите адрес."
+    ],
+    "example": "В экстренной ситуации позвоните по этому номеру и точно назовите адрес.",
+    "sentenceIDs": [
+      "sentence-emergencies-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-emergencies-точно",
+    "lemma": "точно",
+    "stressedForm": "то́чно",
+    "speechText": "точно",
+    "partOfSpeech": "adverb",
+    "glossZh": "准确地",
+    "collocations": [
+      "В экстренной ситуации позвоните по этому номеру и точно назовите адрес."
+    ],
+    "example": "В экстренной ситуации позвоните по этому номеру и точно назовите адрес.",
+    "sentenceIDs": [
+      "sentence-emergencies-2"
+    ],
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "lexeme-emergencies-местонахождение",
+    "lemma": "местонахождение",
+    "stressedForm": "местонахожде́ние",
+    "speechText": "местонахождение",
+    "partOfSpeech": "noun",
+    "glossZh": "所在位置",
+    "collocations": [
+      "В экстренной ситуации позвоните по этому номеру и точно назовите адрес."
+    ],
+    "example": "В экстренной ситуации позвоните по этому номеру и точно назовите адрес.",
+    "sentenceIDs": [
+      "sentence-emergencies-2"
+    ],
+    "reviewStatus": "reviewed"
+  }
+]

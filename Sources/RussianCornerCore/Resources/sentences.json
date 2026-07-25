@@ -1,0 +1,1226 @@
+[
+  {
+    "id": "sentence-greetings-1",
+    "promptZh": "你好！很高兴认识你。",
+    "practiceRu": "Здра́вствуйте! О́чень прия́тно познако́миться.",
+    "speechText": "Здравствуйте! Очень приятно познакомиться.",
+    "theme": "greetings",
+    "lexemeIDs": [
+      "lexeme-greetings-здравствуйте",
+      "lexeme-greetings-привет",
+      "lexeme-greetings-познакомиться",
+      "lexeme-greetings-приятно",
+      "lexeme-greetings-встреча"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/greetings",
+    "sourceText": "Здра́вствуйте! О́чень прия́тно познако́миться.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-greetings-2",
+    "promptZh": "谢谢你的帮助，回头见！",
+    "practiceRu": "Спаси́бо за по́мощь, до свида́ния!",
+    "speechText": "Спасибо за помощь, до свидания!",
+    "theme": "greetings",
+    "lexemeIDs": [
+      "lexeme-greetings-спасибо",
+      "lexeme-greetings-пожалуйста",
+      "lexeme-greetings-помощь",
+      "lexeme-greetings-свидание",
+      "lexeme-greetings-пока"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/greetings",
+    "sourceText": "Спаси́бо за по́мощь, до свида́ния!",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-family-1",
+    "promptZh": "我和父母、弟弟住在一起。",
+    "practiceRu": "Я живу́ вме́сте с роди́телями и мла́дшим бра́том.",
+    "speechText": "Я живу вместе с родителями и младшим братом.",
+    "theme": "family",
+    "lexemeIDs": [
+      "lexeme-family-семья",
+      "lexeme-family-родитель",
+      "lexeme-family-мама",
+      "lexeme-family-папа",
+      "lexeme-family-брат"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/family",
+    "sourceText": "Я живу́ вме́сте с роди́телями и мла́дшим бра́том.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-family-2",
+    "promptZh": "周日祖父母来看孙女。",
+    "practiceRu": "В воскресе́нье ба́бушка и де́душка навеща́ют вну́чку.",
+    "speechText": "В воскресенье бабушка и дедушка навещают внучку.",
+    "theme": "family",
+    "lexemeIDs": [
+      "lexeme-family-сестра",
+      "lexeme-family-бабушка",
+      "lexeme-family-дедушка",
+      "lexeme-family-внучка",
+      "lexeme-family-родственник"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/family",
+    "sourceText": "В воскресе́нье ба́бушка и де́душка навеща́ют вну́чку.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-home-1",
+    "promptZh": "明亮的公寓里有厨房、卧室和阳台。",
+    "practiceRu": "В све́тлой кварти́ре есть ку́хня, спа́льня и балко́н.",
+    "speechText": "В светлой квартире есть кухня, спальня и балкон.",
+    "theme": "home",
+    "lexemeIDs": [
+      "lexeme-home-квартира",
+      "lexeme-home-кухня",
+      "lexeme-home-спальня",
+      "lexeme-home-балкон",
+      "lexeme-home-светлый"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/home",
+    "sourceText": "В све́тлой кварти́ре есть ку́хня, спа́льня и балко́н.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-home-2",
+    "promptZh": "客厅里，舒适的沙发放在窗边。",
+    "practiceRu": "В гости́ной удо́бный дива́н стои́т ря́дом с окно́м.",
+    "speechText": "В гостиной удобный диван стоит рядом с окном.",
+    "theme": "home",
+    "lexemeIDs": [
+      "lexeme-home-гостиная",
+      "lexeme-home-удобный",
+      "lexeme-home-диван",
+      "lexeme-home-окно",
+      "lexeme-home-мебель"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/home",
+    "sourceText": "В гости́ной удо́бный дива́н стои́т ря́дом с окно́м.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-daily-routine-1",
+    "promptZh": "我早起、洗脸，然后洗澡。",
+    "practiceRu": "Я ра́но встаю́, умыва́юсь и принима́ю душ.",
+    "speechText": "Я рано встаю, умываюсь и принимаю душ.",
+    "theme": "daily-routine",
+    "lexemeIDs": [
+      "lexeme-daily-routine-вставать",
+      "lexeme-daily-routine-умываться",
+      "lexeme-daily-routine-принимать",
+      "lexeme-daily-routine-душ",
+      "lexeme-daily-routine-рано"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/daily-routine",
+    "sourceText": "Я ра́но встаю́, умыва́юсь и принима́ю душ.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-daily-routine-2",
+    "promptZh": "吃完早饭我穿衣服，晚上十一点睡觉。",
+    "practiceRu": "По́сле за́втрака я одева́юсь, а в о́диннадцать ложу́сь спать.",
+    "speechText": "После завтрака я одеваюсь, а в одиннадцать ложусь спать.",
+    "theme": "daily-routine",
+    "lexemeIDs": [
+      "lexeme-daily-routine-завтрак",
+      "lexeme-daily-routine-одеваться",
+      "lexeme-daily-routine-ложиться",
+      "lexeme-daily-routine-спать",
+      "lexeme-daily-routine-распорядок"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/daily-routine",
+    "sourceText": "По́сле за́втрака я одева́юсь, а в о́диннадцать ложу́сь спать.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-food-1",
+    "promptZh": "午饭我吃汤、沙拉和新鲜面包。",
+    "practiceRu": "На обе́д я ем суп, сала́т и све́жий хлеб.",
+    "speechText": "На обед я ем суп, салат и свежий хлеб.",
+    "theme": "food",
+    "lexemeIDs": [
+      "lexeme-food-обед",
+      "lexeme-food-суп",
+      "lexeme-food-салат",
+      "lexeme-food-свежий",
+      "lexeme-food-хлеб"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/food",
+    "sourceText": "На обе́д я ем суп, сала́т и све́жий хлеб.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-food-2",
+    "promptZh": "晚饭我们做米饭、鱼并喝茶。",
+    "practiceRu": "На у́жин мы гото́вим рис, ры́бу и пьём чай.",
+    "speechText": "На ужин мы готовим рис, рыбу и пьём чай.",
+    "theme": "food",
+    "lexemeIDs": [
+      "lexeme-food-ужин",
+      "lexeme-food-готовить",
+      "lexeme-food-рис",
+      "lexeme-food-рыба",
+      "lexeme-food-чай"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/food",
+    "sourceText": "На у́жин мы гото́вим рис, ры́бу и пьём чай.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-shopping-1",
+    "promptZh": "我在商店比较价格并选择便宜的商品。",
+    "practiceRu": "В магази́не я сравнива́ю це́ны и выбира́ю недорого́й това́р.",
+    "speechText": "В магазине я сравниваю цены и выбираю недорогой товар.",
+    "theme": "shopping",
+    "lexemeIDs": [
+      "lexeme-shopping-магазин",
+      "lexeme-shopping-сравнивать",
+      "lexeme-shopping-цена",
+      "lexeme-shopping-выбирать",
+      "lexeme-shopping-товар"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/shopping",
+    "sourceText": "В магази́не я сравнива́ю це́ны и выбира́ю недорого́й това́р.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-shopping-2",
+    "promptZh": "请给我收据，我用银行卡付款。",
+    "practiceRu": "Да́йте, пожа́луйста, чек: я плачу́ ба́нковской ка́ртой.",
+    "speechText": "Дайте, пожалуйста, чек: я плачу банковской картой.",
+    "theme": "shopping",
+    "lexemeIDs": [
+      "lexeme-shopping-чек",
+      "lexeme-shopping-платить",
+      "lexeme-shopping-банковский",
+      "lexeme-shopping-карта",
+      "lexeme-shopping-скидка"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/shopping",
+    "sourceText": "Да́йте, пожа́луйста, чек: я плачу́ ба́нковской ка́ртой.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-cafe-1",
+    "promptZh": "服务员，请给我菜单和一杯咖啡。",
+    "practiceRu": "Официа́нт, принеси́те, пожа́луйста, меню́ и ча́шку ко́фе.",
+    "speechText": "Официант, принесите, пожалуйста, меню и чашку кофе.",
+    "theme": "cafe",
+    "lexemeIDs": [
+      "lexeme-cafe-официант",
+      "lexeme-cafe-меню",
+      "lexeme-cafe-чашка",
+      "lexeme-cafe-кофе",
+      "lexeme-cafe-принести"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/cafe",
+    "sourceText": "Официа́нт, принеси́те, пожа́луйста, меню́ и ча́шку ко́фе.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-cafe-2",
+    "promptZh": "我们已经点餐了，最后想买单。",
+    "practiceRu": "Мы уже́ сде́лали зака́з и в конце́ про́сим счёт.",
+    "speechText": "Мы уже сделали заказ и в конце просим счёт.",
+    "theme": "cafe",
+    "lexemeIDs": [
+      "lexeme-cafe-заказ",
+      "lexeme-cafe-сделать",
+      "lexeme-cafe-просить",
+      "lexeme-cafe-счет",
+      "lexeme-cafe-десерт"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/cafe",
+    "sourceText": "Мы уже́ сде́лали зака́з и в конце́ про́сим счёт.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-transport-1",
+    "promptZh": "公共汽车在五分钟后到站。",
+    "practiceRu": "Авто́бус приедет на остано́вку че́рез пять мину́т.",
+    "speechText": "Автобус приедет на остановку через пять минут.",
+    "theme": "transport",
+    "lexemeIDs": [
+      "lexeme-transport-автобус",
+      "lexeme-transport-приехать",
+      "lexeme-transport-остановка",
+      "lexeme-transport-через",
+      "lexeme-transport-минута"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/transport",
+    "sourceText": "Авто́бус приедет на остано́вку че́рез пять мину́т.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-transport-2",
+    "promptZh": "我通常坐地铁，有时叫出租车。",
+    "practiceRu": "Обы́чно я е́ду на метро́, а иногда́ вызыва́ю такси́.",
+    "speechText": "Обычно я еду на метро, а иногда вызываю такси.",
+    "theme": "transport",
+    "lexemeIDs": [
+      "lexeme-transport-обычно",
+      "lexeme-transport-ехать",
+      "lexeme-transport-метро",
+      "lexeme-transport-вызывать",
+      "lexeme-transport-такси"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/transport",
+    "sourceText": "Обы́чно я е́ду на метро́, а иногда́ вызыва́ю такси́.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-city-1",
+    "promptZh": "市中心有一个宽阔的广场和一座博物馆。",
+    "practiceRu": "В це́нтре го́рода есть широ́кая пло́щадь и музе́й.",
+    "speechText": "В центре города есть широкая площадь и музей.",
+    "theme": "city",
+    "lexemeIDs": [
+      "lexeme-city-центр",
+      "lexeme-city-город",
+      "lexeme-city-широкий",
+      "lexeme-city-площадь",
+      "lexeme-city-музей"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/city",
+    "sourceText": "В це́нтре го́рода есть широ́кая пло́щадь и музе́й.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-city-2",
+    "promptZh": "这条安静的街道通向公园和河岸。",
+    "practiceRu": "Э́та ти́хая у́лица ведёт к па́рку и на́бережной.",
+    "speechText": "Эта тихая улица ведёт к парку и набережной.",
+    "theme": "city",
+    "lexemeIDs": [
+      "lexeme-city-тихий",
+      "lexeme-city-улица",
+      "lexeme-city-вести",
+      "lexeme-city-парк",
+      "lexeme-city-набережная"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/city",
+    "sourceText": "Э́та ти́хая у́лица ведёт к па́рку и на́бережной.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-directions-1",
+    "promptZh": "一直走，然后在十字路口向左转。",
+    "practiceRu": "Иди́те пря́мо, пото́м на перекрёстке поверни́те нале́во.",
+    "speechText": "Идите прямо, потом на перекрёстке поверните налево.",
+    "theme": "directions",
+    "lexemeIDs": [
+      "lexeme-directions-прямо",
+      "lexeme-directions-потом",
+      "lexeme-directions-перекресток",
+      "lexeme-directions-повернуть",
+      "lexeme-directions-налево"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/directions",
+    "sourceText": "Иди́те пря́мо, пото́м на перекрёстке поверни́те нале́во.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-directions-2",
+    "promptZh": "药店在银行对面，入口在右边。",
+    "practiceRu": "Апте́ка напро́тив ба́нка, а вход спра́ва.",
+    "speechText": "Аптека напротив банка, а вход справа.",
+    "theme": "directions",
+    "lexemeIDs": [
+      "lexeme-directions-аптека",
+      "lexeme-directions-напротив",
+      "lexeme-directions-банк",
+      "lexeme-directions-вход",
+      "lexeme-directions-справа"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/directions",
+    "sourceText": "Апте́ка напро́тив ба́нка, а вход спра́ва.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-weather-1",
+    "promptZh": "今天温暖而晴朗，几乎没有风。",
+    "practiceRu": "Сего́дня тепло́ и со́лнечно, ве́тра почти́ нет.",
+    "speechText": "Сегодня тепло и солнечно, ветра почти нет.",
+    "theme": "weather",
+    "lexemeIDs": [
+      "lexeme-weather-сегодня",
+      "lexeme-weather-тепло",
+      "lexeme-weather-солнечно",
+      "lexeme-weather-ветер",
+      "lexeme-weather-почти"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/weather",
+    "sourceText": "Сего́дня тепло́ и со́лнечно, ве́тра почти́ нет.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-weather-2",
+    "promptZh": "下午可能下雨，记得带伞。",
+    "practiceRu": "Днём возмо́жен дождь, не забу́дьте взять зонт.",
+    "speechText": "Днём возможен дождь, не забудьте взять зонт.",
+    "theme": "weather",
+    "lexemeIDs": [
+      "lexeme-weather-днем",
+      "lexeme-weather-возможный",
+      "lexeme-weather-дождь",
+      "lexeme-weather-забывать",
+      "lexeme-weather-зонт"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/weather",
+    "sourceText": "Днём возмо́жен дождь, не забу́дьте взять зонт.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-seasons-1",
+    "promptZh": "春天积雪融化，第一批花开放。",
+    "practiceRu": "Весно́й снег та́ет и расцвета́ют пе́рвые цветы́.",
+    "speechText": "Весной снег тает и расцветают первые цветы.",
+    "theme": "seasons",
+    "lexemeIDs": [
+      "lexeme-seasons-весна",
+      "lexeme-seasons-снег",
+      "lexeme-seasons-таять",
+      "lexeme-seasons-расцветать",
+      "lexeme-seasons-цветок"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/seasons",
+    "sourceText": "Весно́й снег та́ет и расцвета́ют пе́рвые цветы́.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-seasons-2",
+    "promptZh": "秋天树叶变黄，空气变凉。",
+    "practiceRu": "О́сенью ли́стья желте́ют, а во́здух стано́вится прохла́дным.",
+    "speechText": "Осенью листья желтеют, а воздух становится прохладным.",
+    "theme": "seasons",
+    "lexemeIDs": [
+      "lexeme-seasons-осень",
+      "lexeme-seasons-лист",
+      "lexeme-seasons-желтеть",
+      "lexeme-seasons-воздух",
+      "lexeme-seasons-прохладный"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/seasons",
+    "sourceText": "О́сенью ли́стья желте́ют, а во́здух стано́вится прохла́дным.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-time-1",
+    "promptZh": "现在七点一刻，我还有半小时。",
+    "practiceRu": "Сейча́с че́тверть восьмо́го, у меня́ есть полчаса́.",
+    "speechText": "Сейчас четверть восьмого, у меня есть полчаса.",
+    "theme": "time",
+    "lexemeIDs": [
+      "lexeme-time-сейчас",
+      "lexeme-time-четверть",
+      "lexeme-time-восьмой",
+      "lexeme-time-полчаса",
+      "lexeme-time-успевать"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/time",
+    "sourceText": "Сейча́с че́тверть восьмо́го, у меня́ есть полчаса́.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-time-2",
+    "promptZh": "会议准时开始，只持续四十分钟。",
+    "practiceRu": "Встре́ча начина́ется во́время и дли́тся всего́ со́рок мину́т.",
+    "speechText": "Встреча начинается вовремя и длится всего сорок минут.",
+    "theme": "time",
+    "lexemeIDs": [
+      "lexeme-time-начинаться",
+      "lexeme-time-вовремя",
+      "lexeme-time-длиться",
+      "lexeme-time-всего",
+      "lexeme-time-сорок"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/time",
+    "sourceText": "Встре́ча начина́ется во́время и дли́тся всего́ со́рок мину́т.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-calendar-1",
+    "promptZh": "我们的预约安排在下周二。",
+    "practiceRu": "На́ша встре́ча назначена́ на сле́дующий вто́рник.",
+    "speechText": "Наша встреча назначена на следующий вторник.",
+    "theme": "calendar",
+    "lexemeIDs": [
+      "lexeme-calendar-назначать",
+      "lexeme-calendar-следующий",
+      "lexeme-calendar-вторник",
+      "lexeme-calendar-неделя",
+      "lexeme-calendar-календарь"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/calendar",
+    "sourceText": "На́ша встре́ча назначена́ на сле́дующий вто́рник.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-calendar-2",
+    "promptZh": "月底我有三天假期。",
+    "practiceRu": "В конце́ ме́сяца у меня́ бу́дет три дня о́тпуска.",
+    "speechText": "В конце месяца у меня будет три дня отпуска.",
+    "theme": "calendar",
+    "lexemeIDs": [
+      "lexeme-calendar-конец",
+      "lexeme-calendar-месяц",
+      "lexeme-calendar-будущий",
+      "lexeme-calendar-день",
+      "lexeme-calendar-отпуск"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/calendar",
+    "sourceText": "В конце́ ме́сяца у меня́ бу́дет три дня о́тпуска.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-study-1",
+    "promptZh": "学生在图书馆读课本并做笔记。",
+    "practiceRu": "Студе́нт чита́ет уче́бник в библиоте́ке и де́лает запи́си.",
+    "speechText": "Студент читает учебник в библиотеке и делает записи.",
+    "theme": "study",
+    "lexemeIDs": [
+      "lexeme-study-студент",
+      "lexeme-study-читать",
+      "lexeme-study-учебник",
+      "lexeme-study-библиотека",
+      "lexeme-study-запись"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/study",
+    "sourceText": "Студе́нт чита́ет уче́бник в библиоте́ке и де́лает запи́си.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-study-2",
+    "promptZh": "老师解释任务，然后我们回答问题。",
+    "practiceRu": "Преподава́тель объясня́ет зада́ние, а мы отвеча́ем на вопро́сы.",
+    "speechText": "Преподаватель объясняет задание, а мы отвечаем на вопросы.",
+    "theme": "study",
+    "lexemeIDs": [
+      "lexeme-study-преподаватель",
+      "lexeme-study-объяснять",
+      "lexeme-study-задание",
+      "lexeme-study-отвечать",
+      "lexeme-study-вопрос"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/study",
+    "sourceText": "Преподава́тель объясня́ет зада́ние, а мы отвеча́ем на вопро́сы.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-language-learning-1",
+    "promptZh": "我每天复习生词并大声重复短语。",
+    "practiceRu": "Ка́ждый день я повторя́ю но́вые слова́ и фра́зы вслух.",
+    "speechText": "Каждый день я повторяю новые слова и фразы вслух.",
+    "theme": "language-learning",
+    "lexemeIDs": [
+      "lexeme-language-learning-повторять",
+      "lexeme-language-learning-новый",
+      "lexeme-language-learning-слово",
+      "lexeme-language-learning-фраза",
+      "lexeme-language-learning-вслух"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/language-learning",
+    "sourceText": "Ка́ждый день я повторя́ю но́вые слова́ и фра́зы вслух.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-language-learning-2",
+    "promptZh": "为了说得更流利，我听对话并练习发音。",
+    "practiceRu": "Что́бы говори́ть свобо́днее, я слу́шаю диало́ги и трениру́ю произноше́ние.",
+    "speechText": "Чтобы говорить свободнее, я слушаю диалоги и тренирую произношение.",
+    "theme": "language-learning",
+    "lexemeIDs": [
+      "lexeme-language-learning-свободно",
+      "lexeme-language-learning-слушать",
+      "lexeme-language-learning-диалог",
+      "lexeme-language-learning-тренировать",
+      "lexeme-language-learning-произношение"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/language-learning",
+    "sourceText": "Что́бы говори́ть свобо́днее, я слу́шаю диало́ги и трениру́ю произноше́ние.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-health-1",
+    "promptZh": "我头疼、有点发烧，需要休息。",
+    "practiceRu": "У меня́ боли́т голова́ и небольшая температу́ра, ну́жно отдохну́ть.",
+    "speechText": "У меня болит голова и небольшая температура, нужно отдохнуть.",
+    "theme": "health",
+    "lexemeIDs": [
+      "lexeme-health-болеть",
+      "lexeme-health-голова",
+      "lexeme-health-температура",
+      "lexeme-health-нужно",
+      "lexeme-health-отдохнуть"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/health",
+    "sourceText": "У меня́ боли́т голова́ и небольшая температу́ра, ну́жно отдохну́ть.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-health-2",
+    "promptZh": "医生建议我多喝水并按时吃药。",
+    "practiceRu": "Врач сове́тует пить бо́льше воды́ и во́время принима́ть лека́рство.",
+    "speechText": "Врач советует пить больше воды и вовремя принимать лекарство.",
+    "theme": "health",
+    "lexemeIDs": [
+      "lexeme-health-врач",
+      "lexeme-health-советовать",
+      "lexeme-health-пить",
+      "lexeme-health-вода",
+      "lexeme-health-лекарство"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/health",
+    "sourceText": "Врач сове́тует пить бо́льше воды́ и во́время принима́ть лека́рство.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-feelings-1",
+    "promptZh": "我为好消息感到高兴，也很平静。",
+    "practiceRu": "Я ра́д хоро́шей но́вости и чу́вствую себя́ споко́йно.",
+    "speechText": "Я рад хорошей новости и чувствую себя спокойно.",
+    "theme": "feelings",
+    "lexemeIDs": [
+      "lexeme-feelings-радоваться",
+      "lexeme-feelings-хороший",
+      "lexeme-feelings-новость",
+      "lexeme-feelings-чувствовать",
+      "lexeme-feelings-спокойно"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/feelings",
+    "sourceText": "Я ра́д хоро́шей но́вости и чу́вствую себя́ споко́йно.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-feelings-2",
+    "promptZh": "她有点担心，但朋友支持她。",
+    "practiceRu": "Она́ немно́го волну́ется, но друг её подде́рживает.",
+    "speechText": "Она немного волнуется, но друг её поддерживает.",
+    "theme": "feelings",
+    "lexemeIDs": [
+      "lexeme-feelings-немного",
+      "lexeme-feelings-волноваться",
+      "lexeme-feelings-друг",
+      "lexeme-feelings-поддерживать",
+      "lexeme-feelings-настроение"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/feelings",
+    "sourceText": "Она́ немно́го волну́ется, но друг её подде́рживает.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-hobbies-1",
+    "promptZh": "空闲时我画画、摄影并收集明信片。",
+    "practiceRu": "В свобо́дное вре́мя я рису́ю, фотографи́рую и собира́ю откры́тки.",
+    "speechText": "В свободное время я рисую, фотографирую и собираю открытки.",
+    "theme": "hobbies",
+    "lexemeIDs": [
+      "lexeme-hobbies-свободный",
+      "lexeme-hobbies-рисовать",
+      "lexeme-hobbies-фотографировать",
+      "lexeme-hobbies-собирать",
+      "lexeme-hobbies-открытка"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/hobbies",
+    "sourceText": "В свобо́дное вре́мя я рису́ю, фотографи́рую и собира́ю откры́тки.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-hobbies-2",
+    "promptZh": "周末她喜欢弹吉他和看电影。",
+    "practiceRu": "В выходны́е она́ лю́бит игра́ть на гита́ре и смотре́ть кино́.",
+    "speechText": "В выходные она любит играть на гитаре и смотреть кино.",
+    "theme": "hobbies",
+    "lexemeIDs": [
+      "lexeme-hobbies-выходной",
+      "lexeme-hobbies-любить",
+      "lexeme-hobbies-играть",
+      "lexeme-hobbies-гитара",
+      "lexeme-hobbies-кино"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/hobbies",
+    "sourceText": "В выходны́е она́ лю́бит игра́ть на гита́ре и смотре́ть кино́.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-sports-1",
+    "promptZh": "早晨我们在体育场跑步并做热身。",
+    "practiceRu": "У́тром мы бе́гаем на стадио́не и де́лаем разми́нку.",
+    "speechText": "Утром мы бегаем на стадионе и делаем разминку.",
+    "theme": "sports",
+    "lexemeIDs": [
+      "lexeme-sports-бегать",
+      "lexeme-sports-стадион",
+      "lexeme-sports-разминка",
+      "lexeme-sports-утром",
+      "lexeme-sports-упражнение"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/sports",
+    "sourceText": "У́тром мы бе́гаем на стадио́не и де́лаем разми́нку.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-sports-2",
+    "promptZh": "晚上球队训练，教练记录结果。",
+    "practiceRu": "Ве́чером кома́нда трениру́ется, а тре́нер записыва́ет результа́т.",
+    "speechText": "Вечером команда тренируется, а тренер записывает результат.",
+    "theme": "sports",
+    "lexemeIDs": [
+      "lexeme-sports-команда",
+      "lexeme-sports-тренироваться",
+      "lexeme-sports-тренер",
+      "lexeme-sports-записывать",
+      "lexeme-sports-результат"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/sports",
+    "sourceText": "Ве́чером кома́нда трениру́ется, а тре́нер записыва́ет результа́т.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-travel-1",
+    "promptZh": "旅行前我们选择路线并收拾行李箱。",
+    "practiceRu": "Пе́ред путеше́ствием мы выбира́ем маршру́т и собира́ем чемода́н.",
+    "speechText": "Перед путешествием мы выбираем маршрут и собираем чемодан.",
+    "theme": "travel",
+    "lexemeIDs": [
+      "lexeme-travel-путешествие",
+      "lexeme-travel-маршрут",
+      "lexeme-travel-чемодан",
+      "lexeme-travel-собираться",
+      "lexeme-travel-поездка"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/travel",
+    "sourceText": "Пе́ред путеше́ствием мы выбира́ем маршру́т и собира́ем чемода́н.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-travel-2",
+    "promptZh": "在新地方我喜欢散步、拍照和认识当地人。",
+    "practiceRu": "В но́вом ме́сте я люблю́ гуля́ть, снима́ть и знако́миться с ме́стными.",
+    "speechText": "В новом месте я люблю гулять, снимать и знакомиться с местными.",
+    "theme": "travel",
+    "lexemeIDs": [
+      "lexeme-travel-место",
+      "lexeme-travel-гулять",
+      "lexeme-travel-снимать",
+      "lexeme-travel-знакомиться",
+      "lexeme-travel-местный"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/travel",
+    "sourceText": "В но́вом ме́сте я люблю́ гуля́ть, снима́ть и знако́миться с ме́стными.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-hotel-1",
+    "promptZh": "我预订了一间带早餐的单人间。",
+    "practiceRu": "Я заброни́ровал одноме́стный но́мер с за́втраком.",
+    "speechText": "Я забронировал одноместный номер с завтраком.",
+    "theme": "hotel",
+    "lexemeIDs": [
+      "lexeme-hotel-бронировать",
+      "lexeme-hotel-одноместный",
+      "lexeme-hotel-номер",
+      "lexeme-hotel-питание",
+      "lexeme-hotel-гостиница"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/hotel",
+    "sourceText": "Я заброни́ровал одноме́стный но́мер с за́втраком.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-hotel-2",
+    "promptZh": "前台给了我钥匙，并说明无线网络密码。",
+    "practiceRu": "Администра́тор дал мне ключ и назва́л паро́ль от ва́йфая.",
+    "speechText": "Администратор дал мне ключ и назвал пароль от вайфая.",
+    "theme": "hotel",
+    "lexemeIDs": [
+      "lexeme-hotel-администратор",
+      "lexeme-hotel-ключ",
+      "lexeme-hotel-назвать",
+      "lexeme-hotel-пароль",
+      "lexeme-hotel-вайфай"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/hotel",
+    "sourceText": "Администра́тор дал мне ключ и назва́л паро́ль от ва́йфая.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-airport-1",
+    "promptZh": "办理登机时请出示护照和机票。",
+    "practiceRu": "На регистра́ции покажи́те па́спорт и биле́т.",
+    "speechText": "На регистрации покажите паспорт и билет.",
+    "theme": "airport",
+    "lexemeIDs": [
+      "lexeme-airport-регистрация",
+      "lexeme-airport-показать",
+      "lexeme-airport-паспорт",
+      "lexeme-airport-билет",
+      "lexeme-airport-багаж"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/airport",
+    "sourceText": "На регистра́ции покажи́те па́спорт и биле́т.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-airport-2",
+    "promptZh": "我们的航班延误了，登机口改变了。",
+    "practiceRu": "Наш рейс заде́рживается, и вы́ход на поса́дку измени́лся.",
+    "speechText": "Наш рейс задерживается, и выход на посадку изменился.",
+    "theme": "airport",
+    "lexemeIDs": [
+      "lexeme-airport-рейс",
+      "lexeme-airport-задерживаться",
+      "lexeme-airport-выход",
+      "lexeme-airport-посадка",
+      "lexeme-airport-измениться"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/airport",
+    "sourceText": "Наш рейс заде́рживается, и вы́ход на поса́дку измени́лся.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-train-1",
+    "promptZh": "列车从二号站台出发。",
+    "practiceRu": "По́езд отправля́ется со второ́й платфо́рмы.",
+    "speechText": "Поезд отправляется со второй платформы.",
+    "theme": "train",
+    "lexemeIDs": [
+      "lexeme-train-поезд",
+      "lexeme-train-отправляться",
+      "lexeme-train-второй",
+      "lexeme-train-платформа",
+      "lexeme-train-расписание"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/train",
+    "sourceText": "По́езд отправля́ется со второ́й платфо́рмы.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-train-2",
+    "promptZh": "我找到自己的车厢和靠窗座位。",
+    "practiceRu": "Я нашёл свой ваго́н и ме́сто у окна́.",
+    "speechText": "Я нашёл свой вагон и место у окна.",
+    "theme": "train",
+    "lexemeIDs": [
+      "lexeme-train-найти",
+      "lexeme-train-вагон",
+      "lexeme-train-сиденье",
+      "lexeme-train-полка",
+      "lexeme-train-проводник"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/train",
+    "sourceText": "Я нашёл свой ваго́н и ме́сто у окна́.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-communication-1",
+    "promptZh": "请给我打电话或发一条短信。",
+    "practiceRu": "Позвони́те мне и́ли отпра́вьте сообще́ние.",
+    "speechText": "Позвоните мне или отправьте сообщение.",
+    "theme": "communication",
+    "lexemeIDs": [
+      "lexeme-communication-позвонить",
+      "lexeme-communication-отправить",
+      "lexeme-communication-сообщение",
+      "lexeme-communication-или",
+      "lexeme-communication-телефон"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/communication",
+    "sourceText": "Позвони́те мне и́ли отпра́вьте сообще́ние.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-communication-2",
+    "promptZh": "如果我没接，请晚些时候再联系。",
+    "practiceRu": "Е́сли я не отвечу́, свяжи́тесь со мной по́зже.",
+    "speechText": "Если я не отвечу, свяжитесь со мной позже.",
+    "theme": "communication",
+    "lexemeIDs": [
+      "lexeme-communication-ответить",
+      "lexeme-communication-связаться",
+      "lexeme-communication-позже",
+      "lexeme-communication-контакт",
+      "lexeme-communication-разговор"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/communication",
+    "sourceText": "Е́сли я не отвечу́, свяжи́тесь со мной по́зже.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-technology-1",
+    "promptZh": "我的手机没电了，需要充电器。",
+    "practiceRu": "Мой телефо́н разряди́лся, мне ну́жно заря́дное устро́йство.",
+    "speechText": "Мой телефон разрядился, мне нужно зарядное устройство.",
+    "theme": "technology",
+    "lexemeIDs": [
+      "lexeme-technology-разрядиться",
+      "lexeme-technology-зарядный",
+      "lexeme-technology-устройство",
+      "lexeme-technology-экран",
+      "lexeme-technology-батарея"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/technology",
+    "sourceText": "Мой телефо́н разряди́лся, мне ну́жно заря́дное устро́йство.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-technology-2",
+    "promptZh": "请连接网络并打开这个应用。",
+    "practiceRu": "Подключи́тесь к се́ти и откро́йте э́то приложе́ние.",
+    "speechText": "Подключитесь к сети и откройте это приложение.",
+    "theme": "technology",
+    "lexemeIDs": [
+      "lexeme-technology-подключиться",
+      "lexeme-technology-сеть",
+      "lexeme-technology-открыть",
+      "lexeme-technology-приложение",
+      "lexeme-technology-интернет"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/technology",
+    "sourceText": "Подключи́тесь к се́ти и откро́йте э́то приложе́ние.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-clothing-1",
+    "promptZh": "天气冷时我穿外套、围巾和靴子。",
+    "practiceRu": "В хо́лодную пого́ду я надева́ю па́льто, шарф и сапоги́.",
+    "speechText": "В холодную погоду я надеваю пальто, шарф и сапоги.",
+    "theme": "clothing",
+    "lexemeIDs": [
+      "lexeme-clothing-холодный",
+      "lexeme-clothing-надевать",
+      "lexeme-clothing-пальто",
+      "lexeme-clothing-шарф",
+      "lexeme-clothing-сапог"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/clothing",
+    "sourceText": "В хо́лодную пого́ду я надева́ю па́льто, шарф и сапоги́.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-clothing-2",
+    "promptZh": "这件衬衫合身，但裤子太长。",
+    "practiceRu": "Э́та руба́шка мне впо́ру, а брю́ки сли́шком дли́нные.",
+    "speechText": "Эта рубашка мне впору, а брюки слишком длинные.",
+    "theme": "clothing",
+    "lexemeIDs": [
+      "lexeme-clothing-рубашка",
+      "lexeme-clothing-впору",
+      "lexeme-clothing-брюки",
+      "lexeme-clothing-слишком",
+      "lexeme-clothing-длинный"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/clothing",
+    "sourceText": "Э́та руба́шка мне впо́ру, а брю́ки сли́шком дли́нные.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-appearance-1",
+    "promptZh": "那个高个子男人留着短发，戴着眼镜。",
+    "practiceRu": "У высо́кого мужчи́ны коро́ткие во́лосы и очки́.",
+    "speechText": "У высокого мужчины короткие волосы и очки.",
+    "theme": "appearance",
+    "lexemeIDs": [
+      "lexeme-appearance-высокий",
+      "lexeme-appearance-мужчина",
+      "lexeme-appearance-короткий",
+      "lexeme-appearance-волос",
+      "lexeme-appearance-очки"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/appearance",
+    "sourceText": "У высо́кого мужчи́ны коро́ткие во́лосы и очки́.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-appearance-2",
+    "promptZh": "她笑容友善，穿着一件蓝色连衣裙。",
+    "practiceRu": "У неё до́брая улы́бка и си́нее пла́тье.",
+    "speechText": "У неё добрая улыбка и синее платье.",
+    "theme": "appearance",
+    "lexemeIDs": [
+      "lexeme-appearance-добрый",
+      "lexeme-appearance-улыбка",
+      "lexeme-appearance-синий",
+      "lexeme-appearance-платье",
+      "lexeme-appearance-внешность"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/appearance",
+    "sourceText": "У неё до́брая улы́бка и си́нее пла́тье.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-friends-1",
+    "promptZh": "我的老朋友住在附近，我们经常见面。",
+    "practiceRu": "Мой ста́рый друг живёт недалеко́, и мы ча́сто ви́димся.",
+    "speechText": "Мой старый друг живёт недалеко, и мы часто видимся.",
+    "theme": "friends",
+    "lexemeIDs": [
+      "lexeme-friends-старый",
+      "lexeme-friends-жить",
+      "lexeme-friends-недалеко",
+      "lexeme-friends-часто",
+      "lexeme-friends-видеться"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/friends",
+    "sourceText": "Мой ста́рый друг живёт недалеко́, и мы ча́сто ви́димся.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-friends-2",
+    "promptZh": "我们互相信任，并坦诚地谈论一切。",
+    "practiceRu": "Мы доверя́ем друг дру́гу и че́стно говори́м обо всём.",
+    "speechText": "Мы доверяем друг другу и честно говорим обо всём.",
+    "theme": "friends",
+    "lexemeIDs": [
+      "lexeme-friends-доверять",
+      "lexeme-friends-товарищ",
+      "lexeme-friends-честно",
+      "lexeme-friends-говорить",
+      "lexeme-friends-дружба"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/friends",
+    "sourceText": "Мы доверя́ем друг дру́гу и че́стно говори́м обо всём.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-plans-1",
+    "promptZh": "明天我打算完成所有事情。",
+    "practiceRu": "За́втра я планиру́ю зако́нчить все дела́.",
+    "speechText": "Завтра я планирую закончить все дела.",
+    "theme": "plans",
+    "lexemeIDs": [
+      "lexeme-plans-завтра",
+      "lexeme-plans-планировать",
+      "lexeme-plans-закончить",
+      "lexeme-plans-весь",
+      "lexeme-plans-дело"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/plans",
+    "sourceText": "За́втра я планиру́ю зако́нчить все дела́.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-plans-2",
+    "promptZh": "如果有时间，晚上我们去散步。",
+    "practiceRu": "Е́сли бу́дет вре́мя, ве́чером мы пойдём гуля́ть.",
+    "speechText": "Если будет время, вечером мы пойдём гулять.",
+    "theme": "plans",
+    "lexemeIDs": [
+      "lexeme-plans-если",
+      "lexeme-plans-время",
+      "lexeme-plans-вечером",
+      "lexeme-plans-пойти",
+      "lexeme-plans-прогуляться"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/plans",
+    "sourceText": "Е́сли бу́дет вре́мя, ве́чером мы пойдём гуля́ть.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-invitations-1",
+    "promptZh": "周六来我家喝茶吧。",
+    "practiceRu": "Приходи́ ко мне в го́сти в суббо́ту на чай.",
+    "speechText": "Приходи ко мне в гости в субботу на чай.",
+    "theme": "invitations",
+    "lexemeIDs": [
+      "lexeme-invitations-приходить",
+      "lexeme-invitations-гость",
+      "lexeme-invitations-суббота",
+      "lexeme-invitations-угощение",
+      "lexeme-invitations-приглашать"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/invitations",
+    "sourceText": "Приходи́ ко мне в го́сти в суббо́ту на чай.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-invitations-2",
+    "promptZh": "谢谢邀请，我很乐意参加。",
+    "practiceRu": "Спаси́бо за приглаше́ние, я с удово́льствием приду́.",
+    "speechText": "Спасибо за приглашение, я с удовольствием приду.",
+    "theme": "invitations",
+    "lexemeIDs": [
+      "lexeme-invitations-приглашение",
+      "lexeme-invitations-удовольствие",
+      "lexeme-invitations-прийти",
+      "lexeme-invitations-соглашаться",
+      "lexeme-invitations-отказываться"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/invitations",
+    "sourceText": "Спаси́бо за приглаше́ние, я с удово́льствием приду́.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-chores-1",
+    "promptZh": "早上我铺床、扫地并倒垃圾。",
+    "practiceRu": "У́тром я заправля́ю крова́ть, подмета́ю пол и выношу́ му́сор.",
+    "speechText": "Утром я заправляю кровать, подметаю пол и выношу мусор.",
+    "theme": "chores",
+    "lexemeIDs": [
+      "lexeme-chores-заправлять",
+      "lexeme-chores-кровать",
+      "lexeme-chores-подметать",
+      "lexeme-chores-пол",
+      "lexeme-chores-мусор"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/chores",
+    "sourceText": "У́тром я заправля́ю крова́ть, подмета́ю пол и выношу́ му́сор.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-chores-2",
+    "promptZh": "晚饭后我们洗碗并整理厨房。",
+    "practiceRu": "По́сле у́жина мы мое́м посу́ду и убира́ем ку́хню.",
+    "speechText": "После ужина мы моем посуду и убираем кухню.",
+    "theme": "chores",
+    "lexemeIDs": [
+      "lexeme-chores-мыть",
+      "lexeme-chores-посуда",
+      "lexeme-chores-убирать",
+      "lexeme-chores-чистый",
+      "lexeme-chores-порядок"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/chores",
+    "sourceText": "По́сле у́жина мы мое́м посу́ду и убира́ем ку́хню.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-services-1",
+    "promptZh": "我需要在邮局寄一个包裹。",
+    "practiceRu": "Мне ну́жно отпра́вить посы́лку на по́чте.",
+    "speechText": "Мне нужно отправить посылку на почте.",
+    "theme": "services",
+    "lexemeIDs": [
+      "lexeme-services-посылка",
+      "lexeme-services-почта",
+      "lexeme-services-отправлять",
+      "lexeme-services-адрес",
+      "lexeme-services-марка"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/services",
+    "sourceText": "Мне ну́жно отпра́вить посы́лку на по́чте.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-services-2",
+    "promptZh": "理发店的师傅今天下午有空。",
+    "practiceRu": "Ма́стер в парикма́херской свобо́ден сего́дня по́сле обе́да.",
+    "speechText": "Мастер в парикмахерской свободен сегодня после обеда.",
+    "theme": "services",
+    "lexemeIDs": [
+      "lexeme-services-мастер",
+      "lexeme-services-парикмахерская",
+      "lexeme-services-свободен",
+      "lexeme-services-стрижка",
+      "lexeme-services-услуга"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/services",
+    "sourceText": "Ма́стер в парикма́херской свобо́ден сего́дня по́сле обе́да.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-nature-1",
+    "promptZh": "森林里有一条清澈的河和高山。",
+    "practiceRu": "В лесу́ есть чи́стая река́ и высо́кие го́ры.",
+    "speechText": "В лесу есть чистая река и высокие горы.",
+    "theme": "nature",
+    "lexemeIDs": [
+      "lexeme-nature-лес",
+      "lexeme-nature-прозрачный",
+      "lexeme-nature-река",
+      "lexeme-nature-крутой",
+      "lexeme-nature-гора"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/nature",
+    "sourceText": "В лесу́ есть чи́стая река́ и высо́кие го́ры.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-nature-2",
+    "promptZh": "我们沿小路散步，听鸟鸣。",
+    "practiceRu": "Мы идём по тропи́нке и слу́шаем пе́ние пти́ц.",
+    "speechText": "Мы идём по тропинке и слушаем пение птиц.",
+    "theme": "nature",
+    "lexemeIDs": [
+      "lexeme-nature-тропинка",
+      "lexeme-nature-слышать",
+      "lexeme-nature-пение",
+      "lexeme-nature-птица",
+      "lexeme-nature-природа"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/nature",
+    "sourceText": "Мы идём по тропи́нке и слу́шаем пе́ние пти́ц.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-holidays-1",
+    "promptZh": "节日前我们装饰房间并买礼物。",
+    "practiceRu": "Пе́ред пра́здником мы украша́ем ко́мнату и покупа́ем пода́рки.",
+    "speechText": "Перед праздником мы украшаем комнату и покупаем подарки.",
+    "theme": "holidays",
+    "lexemeIDs": [
+      "lexeme-holidays-праздник",
+      "lexeme-holidays-украшать",
+      "lexeme-holidays-комната",
+      "lexeme-holidays-покупать",
+      "lexeme-holidays-подарок"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/holidays",
+    "sourceText": "Пе́ред пра́здником мы украша́ем ко́мнату и покупа́ем пода́рки.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-holidays-2",
+    "promptZh": "午夜大家互相祝福并合影。",
+    "practiceRu": "В по́лночь все поздравля́ют друг дру́га и де́лают о́бщее фо́то.",
+    "speechText": "В полночь все поздравляют друг друга и делают общее фото.",
+    "theme": "holidays",
+    "lexemeIDs": [
+      "lexeme-holidays-полночь",
+      "lexeme-holidays-поздравлять",
+      "lexeme-holidays-общий",
+      "lexeme-holidays-фото",
+      "lexeme-holidays-традиция"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/holidays",
+    "sourceText": "В по́лночь все поздравля́ют друг дру́га и де́лают о́бщее фо́то.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-emergencies-1",
+    "promptZh": "请帮忙，有人丢了钱包。",
+    "practiceRu": "Помоги́те, пожа́луйста: челове́к потеря́л кошелёк.",
+    "speechText": "Помогите, пожалуйста: человек потерял кошелёк.",
+    "theme": "emergencies",
+    "lexemeIDs": [
+      "lexeme-emergencies-помогать",
+      "lexeme-emergencies-человек",
+      "lexeme-emergencies-потерять",
+      "lexeme-emergencies-кошелек",
+      "lexeme-emergencies-срочно"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/emergencies",
+    "sourceText": "Помоги́те, пожа́луйста: челове́к потеря́л кошелёк.",
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "sentence-emergencies-2",
+    "promptZh": "紧急情况下拨打这个号码并清楚说明地址。",
+    "practiceRu": "В экстре́нной ситуа́ции позвони́те по э́тому но́меру и то́чно назови́те а́дрес.",
+    "speechText": "В экстренной ситуации позвоните по этому номеру и точно назовите адрес.",
+    "theme": "emergencies",
+    "lexemeIDs": [
+      "lexeme-emergencies-экстренный",
+      "lexeme-emergencies-ситуация",
+      "lexeme-emergencies-звонок",
+      "lexeme-emergencies-точно",
+      "lexeme-emergencies-местонахождение"
+    ],
+    "sourcePath": "curated://daily-russian-a1-b1/emergencies",
+    "sourceText": "В экстре́нной ситуа́ции позвони́те по э́тому но́меру и то́чно назови́те а́дрес.",
+    "reviewStatus": "reviewed"
+  }
+]

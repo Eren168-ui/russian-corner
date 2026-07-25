@@ -15,7 +15,10 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "RussianCornerCore"
+            name: "RussianCornerCore",
+            resources: [
+                .process("Resources"),
+            ]
         ),
         .testTarget(
             name: "RussianCornerCoreTests",
