@@ -257,6 +257,41 @@ final class PersistenceTests: XCTestCase {
         )
     }
 
+    func testRepairedDiagnosticBecomesLatestBaseline() throws {
+        let repository = ProgressRepository(
+            container: try ProgressRepository.makeInMemoryContainer()
+        )
+        let first = diagnosticMetrics(
+            recognitionRate: 70,
+            completedAt: now
+        )
+        let repaired = diagnosticMetrics(
+            recognitionRate: 80,
+            completedAt: now.addingTimeInterval(86_400)
+        )
+        let firstReport = DiagnosticEngine().report(
+            baseline: first,
+            current: first
+        )
+        let repairedReport = DiagnosticEngine().report(
+            baseline: first,
+            current: repaired,
+            sampleWasRepaired: true
+        )
+
+        try repository.saveDiagnosticReport(firstReport)
+        try repository.saveDiagnosticReport(repairedReport)
+
+        XCTAssertEqual(
+            try repository.diagnosticHistory().entries.map(\.kind),
+            [.baseline, .baseline]
+        )
+        XCTAssertEqual(
+            try repository.baselineDiagnosticReport(),
+            repairedReport
+        )
+    }
+
     func testDiagnosticHistorySkipsCorruptRecordsAndReportsIssueCount() throws {
         let container = try ProgressRepository.makeInMemoryContainer()
         let repository = ProgressRepository(container: container)

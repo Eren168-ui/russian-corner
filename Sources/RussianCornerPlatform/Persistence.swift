@@ -425,7 +425,9 @@ public final class ProgressRepository {
     ) throws {
         do {
             let kind: DiagnosticRunKind =
-                try diagnosticHistory().entries.contains {
+                report.sampleWasRepaired
+                ? .baseline
+                : try diagnosticHistory().entries.contains {
                     $0.kind == .baseline
                 }
                 == false
@@ -460,7 +462,7 @@ public final class ProgressRepository {
     }
 
     public func baselineDiagnosticReport() throws -> DiagnosticReport? {
-        try diagnosticHistory().entries.first(where: {
+        try diagnosticHistory().entries.last(where: {
             $0.kind == .baseline
         })?.report
     }

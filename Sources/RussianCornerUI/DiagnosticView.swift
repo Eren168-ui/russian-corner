@@ -56,6 +56,11 @@ public struct RussianCornerDiagnosticView: View {
                         .foregroundStyle(.secondary)
                         .accessibilityLabel(status)
                 }
+                if model.historyIssueCount > 0 {
+                    Text("已跳过\(model.historyIssueCount)条损坏历史，不影响练习")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                }
             }
             .padding(26)
         }
@@ -103,6 +108,10 @@ public struct RussianCornerDiagnosticView: View {
             )
             .foregroundStyle(.secondary)
             notice
+            if let reason = model.startBlockReason {
+                Label(reason, systemImage: "exclamationmark.triangle")
+                    .foregroundStyle(.orange)
+            }
             Spacer()
             Button(model.report == nil ? "开始基线诊断" : "开始本周复测") {
                 model.start()
@@ -252,6 +261,11 @@ public struct RussianCornerDiagnosticView: View {
         VStack(alignment: .leading, spacing: 16) {
             if let report = model.report {
                 metrics(report.current)
+                if let notice = model.comparisonNotice {
+                    Text(notice)
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                }
                 if !model.comparisonRows.isEmpty {
                     Text("相对基线")
                         .font(.headline)
@@ -276,7 +290,10 @@ public struct RussianCornerDiagnosticView: View {
                 Divider()
                 Text("提示与建议")
                     .font(.headline)
-                if report.findings.isEmpty {
+                if report.comparisonStatus == .invalidMetrics {
+                    Text("本次指标无效，已停止生成诊断提示、趋势与训练建议。")
+                        .foregroundStyle(.secondary)
+                } else if report.findings.isEmpty {
                     Text("本次没有指标触发关注阈值，继续每周复测。")
                         .foregroundStyle(.secondary)
                 } else {
@@ -293,16 +310,18 @@ public struct RussianCornerDiagnosticView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                 }
-                Text("训练建议")
-                    .font(.headline)
-                ForEach(model.trainingSuggestions, id: \.self) {
-                    Text("• \($0)")
+                if report.comparisonStatus != .invalidMetrics {
+                    Text("训练建议")
+                        .font(.headline)
+                    ForEach(model.trainingSuggestions, id: \.self) {
+                        Text("• \($0)")
+                    }
+                    Text("建议的新词上限：每天 \(model.recommendedNewWordUpperLimit) 个")
+                        .font(.subheadline.weight(.semibold))
+                    Text("该上限仅用于展示建议，不会改动复习调度规则。")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
-                Text("建议的新词上限：每天 \(model.recommendedNewWordUpperLimit) 个")
-                    .font(.subheadline.weight(.semibold))
-                Text("该上限仅用于展示建议，不会改动复习调度规则。")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
             }
             notice
             Button("重新测试") {
@@ -381,7 +400,14 @@ public struct RussianCornerDiagnosticView: View {
                 metrics.medianResponseSeconds,
                 suffix: " 秒"
             )
-            metricRow("听句理解", metrics.listeningRate, suffix: "%")
+            if let summary = model.listeningEvidenceSummary {
+                GridRow {
+                    Text("听句理解").foregroundStyle(.secondary)
+                    Text(summary).monospacedDigit()
+                }
+            } else {
+                metricRow("听句理解", metrics.listeningRate, suffix: "%")
+            }
             metricRow("搭配自评", metrics.collocationRate, suffix: "%")
             metricRow("卡顿/过度检查自评", metrics.selfMonitoringRate, suffix: "%")
         }

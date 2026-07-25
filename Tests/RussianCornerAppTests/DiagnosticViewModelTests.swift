@@ -207,7 +207,10 @@ final class DiagnosticViewModelTests: XCTestCase {
         try repository.saveDiagnosticReport(
             DiagnosticEngine().report(
                 baseline: baselineMetrics,
-                current: baselineMetrics
+                current: baselineMetrics,
+                seed: 10,
+                sampleLexemeIDs: ["lexeme-1"],
+                listeningSentenceIDs: ["sentence-1"]
             )
         )
         let model = try DiagnosticViewModel(
@@ -266,6 +269,44 @@ final class DiagnosticViewModelTests: XCTestCase {
         )
     }
 
+    func testSaveFailureKeepsGeneratedComparisonReportVisible() throws {
+        let baselineMetrics = DiagnosticMetrics(
+            recognitionRate: 20,
+            productionRate: 10,
+            medianResponseSeconds: 5,
+            listeningRate: 10,
+            listeningEvidenceCount: 5,
+            collocationRate: 20,
+            selfMonitoringRate: 80,
+            completedAt: start.addingTimeInterval(-86_400)
+        )
+        let baselineReport = DiagnosticEngine().report(
+            baseline: baselineMetrics,
+            current: baselineMetrics,
+            seed: 31,
+            sampleLexemeIDs: ["lexeme-1"],
+            listeningSentenceIDs: ["sentence-1"]
+        )
+        let repository = FailingDiagnosticStore(report: baselineReport)
+        let model = try DiagnosticViewModel(
+            catalog: makeCatalog(),
+            repository: repository,
+            recordingService: DiagnosticFakeRecordingService(),
+            speechService: makeSpeechService(),
+            seed: 31,
+            vocabularyCount: 1,
+            listeningCount: 1,
+            now: { self.start }
+        )
+
+        completeDiagnostic(model)
+
+        XCTAssertEqual(model.report?.baseline, baselineMetrics)
+        XCTAssertNotEqual(model.report?.baseline, model.report?.current)
+        XCTAssertFalse(model.comparisonRows.isEmpty)
+        XCTAssertTrue(model.statusMessage?.contains("保存失败") == true)
+    }
+
     func testCorruptDiagnosticHistoryDoesNotBlockRuntimePracticeOrSettings() throws {
         let container = try ProgressRepository.makeInMemoryContainer()
         let repository = ProgressRepository(container: container)
@@ -310,6 +351,8 @@ final class DiagnosticViewModelTests: XCTestCase {
         XCTAssertNotNil(runtime.diagnostics)
         XCTAssertNil(runtime.launchError)
         XCTAssertEqual(runtime.appModel.morningReminder.hour, 8)
+        XCTAssertEqual(runtime.diagnosticHistoryIssueCount, 1)
+        XCTAssertEqual(runtime.diagnostics?.historyIssueCount, 1)
     }
 
     func testDiagnosticViewStatesPronunciationBoundaryExplicitly() {
@@ -402,6 +445,35 @@ final class DiagnosticViewModelTests: XCTestCase {
                 $0.type == .listeningGap
             } ?? true
         )
+        XCTAssertEqual(model.listeningEvidenceSummary, "证据不足 0/10")
+        XCTAssertFalse(
+            model.comparisonRows.contains { $0.label == "听句理解" }
+        )
+    }
+
+    func testNonRussianFallbackVoiceIsNotAcceptedAsListeningEvidence() throws {
+        let model = try DiagnosticViewModel(
+            catalog: makeCatalog(),
+            repository: ProgressRepository(
+                container: try ProgressRepository.makeInMemoryContainer()
+            ),
+            recordingService: DiagnosticFakeRecordingService(),
+            speechService: makeFallbackSpeechService(),
+            seed: 141,
+            vocabularyCount: 1,
+            listeningCount: 1,
+            now: { self.start }
+        )
+        advanceToListening(model)
+
+        model.speakListeningSentence()
+
+        XCTAssertEqual(model.currentListeningState, .unavailable)
+        XCTAssertTrue(model.statusMessage?.contains("en-US") == true)
+        model.submitListening(understood: true)
+        XCTAssertEqual(model.step, .listening)
+        model.skipListening()
+        XCTAssertEqual(model.step, .collocation)
     }
 
     func testEmptyCatalogRefusesToStartWithExplicitError() throws {
@@ -420,6 +492,7 @@ final class DiagnosticViewModelTests: XCTestCase {
 
         XCTAssertEqual(model.step, .intro)
         XCTAssertFalse(model.canStart)
+        XCTAssertTrue(model.startBlockReason?.contains("没有可用") == true)
         XCTAssertTrue(model.statusMessage?.contains("没有可用") == true)
         XCTAssertNil(model.report)
     }
@@ -551,6 +624,28 @@ final class DiagnosticViewModelTests: XCTestCase {
             first.sample.listening.map(\.id).contains(missingSentenceID)
         )
         XCTAssertEqual(first.sample, second.sample)
+
+        completeDiagnostic(first)
+        XCTAssertEqual(first.report?.comparisonStatus, .sampleChanged)
+        XCTAssertNil(first.report?.deltas)
+        XCTAssertEqual(first.comparisonNotice, "题目变化，本次重建基线")
+        XCTAssertEqual(
+            try repository.diagnosticHistory().entries.map(\.kind),
+            [.baseline, .baseline]
+        )
+
+        let next = try DiagnosticViewModel(
+            catalog: reducedCatalog,
+            repository: repository,
+            recordingService: DiagnosticFakeRecordingService(),
+            speechService: makeSpeechService(),
+            seed: 5,
+            vocabularyCount: 3,
+            listeningCount: 3,
+            now: { self.start.addingTimeInterval(14 * 86_400) }
+        )
+        XCTAssertFalse(next.sampleWasRepaired)
+        XCTAssertEqual(next.sample, first.sample)
     }
 
     private func advanceToFirstRecording(_ model: DiagnosticViewModel) {
@@ -660,6 +755,16 @@ final class DiagnosticViewModelTests: XCTestCase {
             synthesizer: DiagnosticSpeechSynthesizer()
         )
     }
+
+    private func makeFallbackSpeechService() -> SpeechService {
+        SpeechService(
+            voiceProvider: DiagnosticVoiceProvider(
+                hasVoice: true,
+                language: "en-US"
+            ),
+            synthesizer: DiagnosticSpeechSynthesizer()
+        )
+    }
 }
 
 @MainActor
@@ -717,6 +822,40 @@ private enum DiagnosticRecordingFixtureError: Error {
     case discardFailed
 }
 
+@MainActor
+private final class FailingDiagnosticStore: DiagnosticReportStoring {
+    private let report: DiagnosticReport
+
+    init(report: DiagnosticReport) {
+        self.report = report
+    }
+
+    func saveDiagnosticReport(_ report: DiagnosticReport) throws {
+        throw DiagnosticRecordingFixtureError.discardFailed
+    }
+
+    func diagnosticHistory() throws -> DiagnosticHistorySnapshot {
+        DiagnosticHistorySnapshot(
+            entries: [
+                DiagnosticHistoryEntry(
+                    id: UUID(),
+                    kind: .baseline,
+                    report: report
+                )
+            ],
+            issueCount: 0
+        )
+    }
+
+    func baselineDiagnosticReport() throws -> DiagnosticReport? {
+        report
+    }
+
+    func latestDiagnosticReport() throws -> DiagnosticReport? {
+        report
+    }
+}
+
 private actor ControlledDiagnosticSleeper: DiagnosticSleeping {
     private var continuation: CheckedContinuation<Void, Error>?
     private var hasPendingTick = false
@@ -743,10 +882,11 @@ private actor ControlledDiagnosticSleeper: DiagnosticSleeping {
 
 private struct DiagnosticVoiceProvider: SpeechVoiceProviding {
     let hasVoice: Bool
+    var language = "ru-RU"
 
     func availableVoices() -> [SpeechVoice] {
         hasVoice
-            ? [SpeechVoice(identifier: "ru-fixture", language: "ru-RU")]
+            ? [SpeechVoice(identifier: "voice-fixture", language: language)]
             : []
     }
 }

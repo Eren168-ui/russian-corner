@@ -86,8 +86,10 @@ public final class DiagnosticViewModel {
     public let sample: DiagnosticSample
     public let seed: UInt64
     public let sampleWasRepaired: Bool
+    public let historyIssueCount: Int
 
     private let repository: any DiagnosticReportStoring
+    private let comparisonBaselineMetrics: DiagnosticMetrics?
     private let recordingService: any RecordingManaging
     private let speechService: SpeechService
     private let sleeper: any DiagnosticSleeping
@@ -118,7 +120,9 @@ public final class DiagnosticViewModel {
         sleeper: any DiagnosticSleeping = SystemDiagnosticSleeper(),
         now: @escaping () -> Date = Date.init
     ) throws {
-        let baseline = try repository.baselineDiagnosticReport()
+        let history = try repository.diagnosticHistory()
+        let baseline = history.entries.last(where: { $0.kind == .baseline })?
+            .report
         let baselineLexemeIDs = baseline?.sampleLexemeIDs ?? []
         let baselineListeningIDs = baseline?.listeningSentenceIDs ?? []
         let resolvedSeed =
@@ -151,6 +155,8 @@ public final class DiagnosticViewModel {
                     || selectedSample.listening.map(\.id)
                         != baselineListeningIDs
             )
+        historyIssueCount = history.issueCount
+        comparisonBaselineMetrics = baseline?.current
         listeningStates = Dictionary(
             uniqueKeysWithValues: selectedSample.listening.map {
                 ($0.id, ListeningEvidenceState.notPlayed)
@@ -162,11 +168,38 @@ public final class DiagnosticViewModel {
         self.sleeper = sleeper
         self.now = now
         itemStartedAt = now()
-        report = try repository.latestDiagnosticReport()
+        report = history.entries.last?.report
     }
 
     public var canStart: Bool {
         !sample.recognition.isEmpty && !sample.listening.isEmpty
+    }
+
+    public var startBlockReason: String? {
+        canStart
+            ? nil
+            : "没有可用的 reviewed 词条或听句，无法开始诊断。"
+    }
+
+    public var listeningEvidenceSummary: String? {
+        guard let metrics = report?.current else { return nil }
+        if metrics.listeningEvidenceCount
+            < DiagnosticThresholds.minimumListeningEvidenceCount
+        {
+            return "证据不足 \(metrics.listeningEvidenceCount)/\(DiagnosticThresholds.targetListeningEvidenceCount)"
+        }
+        return nil
+    }
+
+    public var comparisonNotice: String? {
+        switch report?.comparisonStatus {
+        case .sampleChanged:
+            "题目变化，本次重建基线"
+        case .invalidMetrics:
+            "指标无效，本次不生成诊断结论或趋势"
+        default:
+            nil
+        }
     }
 
     public var currentLexeme: Lexeme? {
@@ -220,6 +253,7 @@ public final class DiagnosticViewModel {
 
     public var trainingSuggestions: [String] {
         guard let report else { return [] }
+        guard report.comparisonStatus != .invalidMetrics else { return [] }
         var suggestions: [String] = []
         for finding in report.findings {
             switch finding.type {
@@ -245,12 +279,13 @@ public final class DiagnosticViewModel {
 
     public var comparisonRows: [DiagnosticComparisonRow] {
         guard let report,
-            report.baseline.completedAt != report.current.completedAt
+            report.baseline.completedAt != report.current.completedAt,
+            report.comparisonStatus == .comparable,
+            let deltas = report.deltas
         else {
             return []
         }
-        let deltas = report.deltas
-        return [
+        var rows = [
             DiagnosticComparisonRow(
                 label: "认词",
                 value: Self.signed(deltas.recognitionPoints)
@@ -272,12 +307,6 @@ public final class DiagnosticViewModel {
                 )
             ),
             DiagnosticComparisonRow(
-                label: "听句理解",
-                value: Self.signed(deltas.listeningPoints)
-                    + " 个百分点",
-                trend: Self.trend(deltas.listeningPoints)
-            ),
-            DiagnosticComparisonRow(
                 label: "搭配自评",
                 value: Self.signed(deltas.collocationPoints)
                     + " 个百分点",
@@ -293,6 +322,18 @@ public final class DiagnosticViewModel {
                 )
             ),
         ]
+        if let listeningPoints = deltas.listeningPoints {
+            rows.insert(
+                DiagnosticComparisonRow(
+                    label: "听句理解",
+                    value: Self.signed(listeningPoints)
+                        + " 个百分点",
+                    trend: Self.trend(listeningPoints)
+                ),
+                at: 3
+            )
+        }
+        return rows
     }
 
     public var recommendedNewWordUpperLimit: Int {
@@ -309,8 +350,7 @@ public final class DiagnosticViewModel {
     public func start() {
         guard canStart else {
             step = .intro
-            statusMessage =
-                "没有可用的 reviewed 词条或听句，无法开始诊断。"
+            statusMessage = startBlockReason
             return
         }
         resetMeasurements()
@@ -362,8 +402,8 @@ public final class DiagnosticViewModel {
             listeningStates[sentence.id] = .played
             statusMessage = "正在播放第 \(currentPosition) 条听句"
         case .fallbackVoice(_, let language):
-            listeningStates[sentence.id] = .played
-            statusMessage = "未找到俄语语音，使用 \(language) 播放"
+            listeningStates[sentence.id] = .unavailable
+            statusMessage = "未找到俄语语音（仅有 \(language)），请跳过本条听句"
         case .unavailable:
             listeningStates[sentence.id] = .unavailable
             statusMessage = "系统语音不可用，请跳过本条听句"
@@ -519,33 +559,25 @@ public final class DiagnosticViewModel {
             ),
             completedAt: instant
         )
+        let baseline = comparisonBaselineMetrics ?? current
+        let generated = DiagnosticEngine().report(
+            baseline: baseline,
+            current: current,
+            seed: seed,
+            sampleLexemeIDs: sample.recognition.map(\.id),
+            listeningSentenceIDs: sample.listening.map(\.id),
+            sampleWasRepaired: sampleWasRepaired
+        )
+        report = generated
         do {
-            let baseline =
-                try repository.baselineDiagnosticReport()?.baseline
-                ?? current
-            let generated = DiagnosticEngine().report(
-                baseline: baseline,
-                current: current,
-                seed: seed,
-                sampleLexemeIDs: sample.recognition.map(\.id),
-                listeningSentenceIDs: sample.listening.map(\.id),
-                sampleWasRepaired: sampleWasRepaired
-            )
             try repository.saveDiagnosticReport(generated)
-            report = generated
             statusMessage =
-                baseline == current
+                sampleWasRepaired
+                ? "题目变化，本次重建基线"
+                : baseline == current
                 ? "基线诊断已保存"
                 : "本周诊断已保存，并与基线比较"
         } catch {
-            report = DiagnosticEngine().report(
-                baseline: current,
-                current: current,
-                seed: seed,
-                sampleLexemeIDs: sample.recognition.map(\.id),
-                listeningSentenceIDs: sample.listening.map(\.id),
-                sampleWasRepaired: sampleWasRepaired
-            )
             statusMessage = "诊断已完成，但保存失败：\(error.localizedDescription)"
         }
         step = .summary

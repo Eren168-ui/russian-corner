@@ -1,5 +1,21 @@
 import Foundation
 
+public enum DiagnosticMetricField:
+    String,
+    Codable,
+    CaseIterable,
+    Hashable,
+    Sendable
+{
+    case recognitionRate
+    case productionRate
+    case medianResponseSeconds
+    case listeningRate
+    case listeningEvidenceCount
+    case collocationRate
+    case selfMonitoringRate
+}
+
 public struct DiagnosticMetrics: Codable, Equatable, Sendable {
     public let recognitionRate: Double
     public let productionRate: Double
@@ -9,6 +25,11 @@ public struct DiagnosticMetrics: Codable, Equatable, Sendable {
     public let collocationRate: Double
     public let selfMonitoringRate: Double
     public let completedAt: Date
+    public let invalidFields: [DiagnosticMetricField]
+
+    public var isValid: Bool {
+        invalidFields.isEmpty
+    }
 
     public init(
         recognitionRate: Double,
@@ -20,16 +41,44 @@ public struct DiagnosticMetrics: Codable, Equatable, Sendable {
         selfMonitoringRate: Double,
         completedAt: Date
     ) {
-        self.recognitionRate = Self.percentage(recognitionRate)
-        self.productionRate = Self.percentage(productionRate)
+        var invalidFields: [DiagnosticMetricField] = []
+        self.recognitionRate = Self.percentage(
+            recognitionRate,
+            field: .recognitionRate,
+            invalidFields: &invalidFields
+        )
+        self.productionRate = Self.percentage(
+            productionRate,
+            field: .productionRate,
+            invalidFields: &invalidFields
+        )
+        if !medianResponseSeconds.isFinite || medianResponseSeconds < 0 {
+            invalidFields.append(.medianResponseSeconds)
+        }
         self.medianResponseSeconds =
             medianResponseSeconds.isFinite && medianResponseSeconds >= 0
             ? medianResponseSeconds : 0
-        self.listeningRate = Self.percentage(listeningRate)
+        self.listeningRate = Self.percentage(
+            listeningRate,
+            field: .listeningRate,
+            invalidFields: &invalidFields
+        )
+        if listeningEvidenceCount < 0 {
+            invalidFields.append(.listeningEvidenceCount)
+        }
         self.listeningEvidenceCount = max(0, listeningEvidenceCount)
-        self.collocationRate = Self.percentage(collocationRate)
-        self.selfMonitoringRate = Self.percentage(selfMonitoringRate)
+        self.collocationRate = Self.percentage(
+            collocationRate,
+            field: .collocationRate,
+            invalidFields: &invalidFields
+        )
+        self.selfMonitoringRate = Self.percentage(
+            selfMonitoringRate,
+            field: .selfMonitoringRate,
+            invalidFields: &invalidFields
+        )
         self.completedAt = completedAt
+        self.invalidFields = invalidFields
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -41,11 +90,12 @@ public struct DiagnosticMetrics: Codable, Equatable, Sendable {
         case collocationRate
         case selfMonitoringRate
         case completedAt
+        case invalidFields
     }
 
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.init(
+        let metrics = DiagnosticMetrics(
             recognitionRate: try container.decode(
                 Double.self,
                 forKey: .recognitionRate
@@ -79,10 +129,34 @@ public struct DiagnosticMetrics: Codable, Equatable, Sendable {
                 forKey: .completedAt
             )
         )
+        self.recognitionRate = metrics.recognitionRate
+        self.productionRate = metrics.productionRate
+        self.medianResponseSeconds = metrics.medianResponseSeconds
+        self.listeningRate = metrics.listeningRate
+        self.listeningEvidenceCount = metrics.listeningEvidenceCount
+        self.collocationRate = metrics.collocationRate
+        self.selfMonitoringRate = metrics.selfMonitoringRate
+        self.completedAt = metrics.completedAt
+        let persistedInvalidFields = try container.decodeIfPresent(
+            [DiagnosticMetricField].self,
+            forKey: .invalidFields
+        ) ?? []
+        self.invalidFields = DiagnosticMetricField.allCases.filter {
+            metrics.invalidFields.contains($0)
+                || persistedInvalidFields.contains($0)
+        }
     }
 
-    private static func percentage(_ value: Double) -> Double {
-        guard value.isFinite else { return 0 }
+    private static func percentage(
+        _ value: Double,
+        field: DiagnosticMetricField,
+        invalidFields: inout [DiagnosticMetricField]
+    ) -> Double {
+        guard value.isFinite, (0...100).contains(value) else {
+            invalidFields.append(field)
+            guard value.isFinite else { return 0 }
+            return min(max(value, 0), 100)
+        }
         return min(max(value, 0), 100)
     }
 }
@@ -131,11 +205,17 @@ public struct DiagnosticFinding: Codable, Equatable, Sendable {
     }
 }
 
+public enum DiagnosticEvidenceAvailability: Codable, Equatable, Sendable {
+    case sufficient
+    case insufficient(required: Int, actual: Int)
+}
+
 public struct DiagnosticDeltas: Codable, Equatable, Sendable {
     public let recognitionPoints: Double
     public let productionPoints: Double
     public let responseSeconds: Double
-    public let listeningPoints: Double
+    public let listeningPoints: Double?
+    public let listeningAvailability: DiagnosticEvidenceAvailability
     public let collocationPoints: Double
     public let selfMonitoringPoints: Double
 
@@ -143,7 +223,8 @@ public struct DiagnosticDeltas: Codable, Equatable, Sendable {
         recognitionPoints: Double,
         productionPoints: Double,
         responseSeconds: Double,
-        listeningPoints: Double,
+        listeningPoints: Double?,
+        listeningAvailability: DiagnosticEvidenceAvailability = .sufficient,
         collocationPoints: Double,
         selfMonitoringPoints: Double
     ) {
@@ -151,9 +232,65 @@ public struct DiagnosticDeltas: Codable, Equatable, Sendable {
         self.productionPoints = productionPoints
         self.responseSeconds = responseSeconds
         self.listeningPoints = listeningPoints
+        self.listeningAvailability = listeningAvailability
         self.collocationPoints = collocationPoints
         self.selfMonitoringPoints = selfMonitoringPoints
     }
+
+    private enum CodingKeys: String, CodingKey {
+        case recognitionPoints
+        case productionPoints
+        case responseSeconds
+        case listeningPoints
+        case listeningAvailability
+        case collocationPoints
+        case selfMonitoringPoints
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(
+            recognitionPoints: try container.decode(
+                Double.self,
+                forKey: .recognitionPoints
+            ),
+            productionPoints: try container.decode(
+                Double.self,
+                forKey: .productionPoints
+            ),
+            responseSeconds: try container.decode(
+                Double.self,
+                forKey: .responseSeconds
+            ),
+            listeningPoints: try container.decodeIfPresent(
+                Double.self,
+                forKey: .listeningPoints
+            ),
+            listeningAvailability: try container.decodeIfPresent(
+                DiagnosticEvidenceAvailability.self,
+                forKey: .listeningAvailability
+            ) ?? .sufficient,
+            collocationPoints: try container.decode(
+                Double.self,
+                forKey: .collocationPoints
+            ),
+            selfMonitoringPoints: try container.decode(
+                Double.self,
+                forKey: .selfMonitoringPoints
+            )
+        )
+    }
+}
+
+public enum DiagnosticComparisonStatus:
+    String,
+    Codable,
+    Equatable,
+    Sendable
+{
+    case comparable
+    case sampleChanged
+    case invalidMetrics
 }
 
 public struct DiagnosticReport: Codable, Equatable, Sendable {
@@ -165,7 +302,8 @@ public struct DiagnosticReport: Codable, Equatable, Sendable {
     public let baseline: DiagnosticMetrics
     public let current: DiagnosticMetrics
     public let findings: [DiagnosticFinding]
-    public let deltas: DiagnosticDeltas
+    public let comparisonStatus: DiagnosticComparisonStatus
+    public let deltas: DiagnosticDeltas?
 
     public init(
         diagnosticVersion: Int = 2,
@@ -176,7 +314,8 @@ public struct DiagnosticReport: Codable, Equatable, Sendable {
         baseline: DiagnosticMetrics,
         current: DiagnosticMetrics,
         findings: [DiagnosticFinding],
-        deltas: DiagnosticDeltas
+        comparisonStatus: DiagnosticComparisonStatus = .comparable,
+        deltas: DiagnosticDeltas?
     ) {
         self.diagnosticVersion = diagnosticVersion
         self.seed = seed
@@ -186,6 +325,7 @@ public struct DiagnosticReport: Codable, Equatable, Sendable {
         self.baseline = baseline
         self.current = current
         self.findings = findings
+        self.comparisonStatus = comparisonStatus
         self.deltas = deltas
     }
 
@@ -198,6 +338,7 @@ public struct DiagnosticReport: Codable, Equatable, Sendable {
         case baseline
         case current
         case findings
+        case comparisonStatus
         case deltas
     }
 
@@ -236,7 +377,11 @@ public struct DiagnosticReport: Codable, Equatable, Sendable {
                 [DiagnosticFinding].self,
                 forKey: .findings
             ),
-            deltas: try container.decode(
+            comparisonStatus: try container.decodeIfPresent(
+                DiagnosticComparisonStatus.self,
+                forKey: .comparisonStatus
+            ) ?? .comparable,
+            deltas: try container.decodeIfPresent(
                 DiagnosticDeltas.self,
                 forKey: .deltas
             )
@@ -252,6 +397,8 @@ public struct DiagnosticThresholds: Equatable, Sendable {
     public static let collocationRecognitionMinimum = 70.0
     public static let collocationRateMinimum = 60.0
     public static let selfMonitoringMinimum = 60.0
+    public static let minimumListeningEvidenceCount = 5
+    public static let targetListeningEvidenceCount = 10
 
     public init() {}
 }
@@ -262,6 +409,7 @@ public struct DiagnosticEngine: Sendable {
     public func findings(
         for metrics: DiagnosticMetrics
     ) -> [DiagnosticFinding] {
+        guard metrics.isValid else { return [] }
         var findings: [DiagnosticFinding] = []
 
         if metrics.recognitionRate
@@ -300,7 +448,8 @@ public struct DiagnosticEngine: Sendable {
                 )
             )
         }
-        if metrics.listeningEvidenceCount > 0
+        if metrics.listeningEvidenceCount
+            >= DiagnosticThresholds.minimumListeningEvidenceCount
             && metrics.recognitionRate - metrics.listeningRate
             >= DiagnosticThresholds.listeningGapMinimum
         {
@@ -350,16 +499,25 @@ public struct DiagnosticEngine: Sendable {
         listeningSentenceIDs: [String] = [],
         sampleWasRepaired: Bool = false
     ) -> DiagnosticReport {
-        DiagnosticReport(
-            diagnosticVersion: 2,
-            seed: seed,
-            sampleLexemeIDs: sampleLexemeIDs,
-            listeningSentenceIDs: listeningSentenceIDs,
-            sampleWasRepaired: sampleWasRepaired,
-            baseline: baseline,
-            current: current,
-            findings: findings(for: current),
-            deltas: DiagnosticDeltas(
+        let comparisonStatus: DiagnosticComparisonStatus
+        if !baseline.isValid || !current.isValid {
+            comparisonStatus = .invalidMetrics
+        } else if sampleWasRepaired {
+            comparisonStatus = .sampleChanged
+        } else {
+            comparisonStatus = .comparable
+        }
+
+        let deltas: DiagnosticDeltas?
+        if comparisonStatus == .comparable {
+            let listeningEvidenceCount = min(
+                baseline.listeningEvidenceCount,
+                current.listeningEvidenceCount
+            )
+            let listeningIsSufficient =
+                listeningEvidenceCount
+                >= DiagnosticThresholds.minimumListeningEvidenceCount
+            deltas = DiagnosticDeltas(
                 recognitionPoints:
                     current.recognitionRate - baseline.recognitionRate,
                 productionPoints:
@@ -368,13 +526,38 @@ public struct DiagnosticEngine: Sendable {
                     current.medianResponseSeconds
                     - baseline.medianResponseSeconds,
                 listeningPoints:
-                    current.listeningRate - baseline.listeningRate,
+                    listeningIsSufficient
+                    ? current.listeningRate - baseline.listeningRate
+                    : nil,
+                listeningAvailability:
+                    listeningIsSufficient
+                    ? .sufficient
+                    : .insufficient(
+                        required: DiagnosticThresholds
+                            .minimumListeningEvidenceCount,
+                        actual: listeningEvidenceCount
+                    ),
                 collocationPoints:
                     current.collocationRate - baseline.collocationRate,
                 selfMonitoringPoints:
                     current.selfMonitoringRate
                     - baseline.selfMonitoringRate
             )
+        } else {
+            deltas = nil
+        }
+
+        return DiagnosticReport(
+            diagnosticVersion: 2,
+            seed: seed,
+            sampleLexemeIDs: sampleLexemeIDs,
+            listeningSentenceIDs: listeningSentenceIDs,
+            sampleWasRepaired: sampleWasRepaired,
+            baseline: baseline,
+            current: current,
+            findings: findings(for: current),
+            comparisonStatus: comparisonStatus,
+            deltas: deltas
         )
     }
 }

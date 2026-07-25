@@ -188,6 +188,7 @@ public final class AppRuntime {
   public private(set) var progress = LearningProgressSnapshot()
   public private(set) var launchError: String?
   public private(set) var diagnosticError: String?
+  public private(set) var diagnosticHistoryIssueCount = 0
 
   private var catalog: ContentCatalog?
   private var repository: ProgressRepository?
@@ -241,6 +242,7 @@ public final class AppRuntime {
         catalog: catalog,
         repository: repository
       )
+      diagnosticHistoryIssueCount = diagnostics?.historyIssueCount ?? 0
     } catch {
       diagnosticError = "诊断数据暂时无法载入：\(error.localizedDescription)"
     }

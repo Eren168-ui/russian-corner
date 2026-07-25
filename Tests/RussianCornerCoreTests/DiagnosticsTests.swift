@@ -95,18 +95,57 @@ final class DiagnosticsTests: XCTestCase {
         )
     }
 
-    func testListeningGapIsNotReportedWithoutPlayedEvidence() {
+    func testListeningEvidenceBoundarySuppressesGapAndDeltaBelowFive() {
         let engine = DiagnosticEngine()
 
-        let findings = engine.findings(
-            for: metrics(
+        for evidenceCount in [0, 1, 4] {
+            let current = metrics(
                 recognitionRate: 90,
                 listeningRate: 0,
-                listeningEvidenceCount: 0
+                listeningEvidenceCount: evidenceCount
             )
+            let findings = engine.findings(for: current)
+            let report = engine.report(
+                baseline: metrics(listeningEvidenceCount: 5),
+                current: current
+            )
+
+            XCTAssertFalse(findings.contains { $0.type == .listeningGap })
+            XCTAssertNil(report.deltas?.listeningPoints)
+            XCTAssertEqual(
+                report.deltas?.listeningAvailability,
+                .insufficient(
+                    required: DiagnosticThresholds
+                        .minimumListeningEvidenceCount,
+                    actual: evidenceCount
+                )
+            )
+        }
+    }
+
+    func testFivePlayedListeningItemsEnableGapAndDelta() {
+        let engine = DiagnosticEngine()
+        let baseline = metrics(
+            recognitionRate: 90,
+            listeningRate: 60,
+            listeningEvidenceCount: 5
+        )
+        let current = metrics(
+            recognitionRate: 90,
+            listeningRate: 40,
+            listeningEvidenceCount: 5
         )
 
-        XCTAssertFalse(findings.contains { $0.type == .listeningGap })
+        let report = engine.report(baseline: baseline, current: current)
+
+        XCTAssertTrue(
+            report.findings.contains { $0.type == .listeningGap }
+        )
+        XCTAssertEqual(report.deltas?.listeningPoints, -20)
+        XCTAssertEqual(
+            report.deltas?.listeningAvailability,
+            .sufficient
+        )
     }
 
     func testCollocationGapRequiresRecognitionAtLeastSeventyAndCollocationBelowSixty() {
@@ -142,7 +181,7 @@ final class DiagnosticsTests: XCTestCase {
         )
     }
 
-    func testDeltaUsesPercentagePointsAndResponseSeconds() {
+    func testDeltaUsesPercentagePointsAndResponseSeconds() throws {
         let baseline = metrics(
             recognitionRate: 70,
             productionRate: 50,
@@ -160,10 +199,10 @@ final class DiagnosticsTests: XCTestCase {
             selfMonitoringRate: 50
         )
 
-        let deltas = DiagnosticEngine().report(
+        let deltas = try XCTUnwrap(DiagnosticEngine().report(
             baseline: baseline,
             current: current
-        ).deltas
+        ).deltas)
 
         XCTAssertEqual(deltas.recognitionPoints, 10)
         XCTAssertEqual(deltas.productionPoints, 15)
@@ -200,7 +239,7 @@ final class DiagnosticsTests: XCTestCase {
         )
     }
 
-    func testMetricsNormalizeNonFiniteAndOutOfRangeValuesBeforeJSONAndDelta() throws {
+    func testMetricsExposeInvalidFieldsAndSuppressFindingsAndDeltas() throws {
         let invalid = DiagnosticMetrics(
             recognitionRate: .nan,
             productionRate: .infinity,
@@ -212,13 +251,19 @@ final class DiagnosticsTests: XCTestCase {
             completedAt: completedAt
         )
 
-        XCTAssertEqual(invalid.recognitionRate, 0)
-        XCTAssertEqual(invalid.productionRate, 0)
-        XCTAssertEqual(invalid.medianResponseSeconds, 0)
-        XCTAssertEqual(invalid.listeningRate, 0)
-        XCTAssertEqual(invalid.listeningEvidenceCount, 0)
-        XCTAssertEqual(invalid.collocationRate, 100)
-        XCTAssertEqual(invalid.selfMonitoringRate, 0)
+        XCTAssertEqual(
+            Set(invalid.invalidFields),
+            Set([
+                .recognitionRate,
+                .productionRate,
+                .medianResponseSeconds,
+                .listeningRate,
+                .listeningEvidenceCount,
+                .collocationRate,
+                .selfMonitoringRate,
+            ])
+        )
+        XCTAssertFalse(invalid.isValid)
 
         let report = DiagnosticEngine().report(
             baseline: invalid,
@@ -229,14 +274,24 @@ final class DiagnosticsTests: XCTestCase {
             DiagnosticReport.self,
             from: encoded
         )
-        let deltas = decoded.deltas
 
-        XCTAssertTrue(deltas.recognitionPoints.isFinite)
-        XCTAssertTrue(deltas.productionPoints.isFinite)
-        XCTAssertTrue(deltas.responseSeconds.isFinite)
-        XCTAssertTrue(deltas.listeningPoints.isFinite)
-        XCTAssertTrue(deltas.collocationPoints.isFinite)
-        XCTAssertTrue(deltas.selfMonitoringPoints.isFinite)
+        XCTAssertEqual(decoded.comparisonStatus, .invalidMetrics)
+        XCTAssertTrue(decoded.findings.isEmpty)
+        XCTAssertNil(decoded.deltas)
+    }
+
+    func testRepairedSampleIsNotComparableAndHasNoDeltas() {
+        let baseline = metrics(recognitionRate: 70)
+        let current = metrics(recognitionRate: 90)
+
+        let report = DiagnosticEngine().report(
+            baseline: baseline,
+            current: current,
+            sampleWasRepaired: true
+        )
+
+        XCTAssertEqual(report.comparisonStatus, .sampleChanged)
+        XCTAssertNil(report.deltas)
     }
 
     func testFindingsAreTentativeAndNeverClaimAutomaticPronunciationJudgment() {
