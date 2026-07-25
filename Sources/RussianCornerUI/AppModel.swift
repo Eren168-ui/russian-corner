@@ -39,6 +39,7 @@ public final class AppModel {
 
   private let defaults: UserDefaults
   private var isLoading = true
+  public private(set) var hasExplicitModePreference = false
 
   public var isCardVisible = true
   public var isCollapsed: Bool {
@@ -93,7 +94,11 @@ public final class AppModel {
     }
   }
   public var mode: PracticeMode {
-    didSet { persist(mode.rawValue, forKey: Key.mode) }
+    didSet {
+      guard !isLoading else { return }
+      hasExplicitModePreference = true
+      persist(mode.rawValue, forKey: Key.mode)
+    }
   }
   public var morningReminder: ReminderTime {
     didSet {
@@ -111,6 +116,8 @@ public final class AppModel {
 
   public init(defaults: UserDefaults = .standard) {
     self.defaults = defaults
+    hasExplicitModePreference =
+      defaults.object(forKey: Key.mode) != nil
     corner =
       FloatingCorner(
         rawValue: defaults.string(forKey: Key.corner) ?? ""
@@ -152,6 +159,13 @@ public final class AppModel {
 
   public func toggleCard() {
     isCardVisible.toggle()
+  }
+
+  public func applyDiagnosticDefaultMode(_ proposed: PracticeMode) {
+    guard !hasExplicitModePreference else { return }
+    isLoading = true
+    mode = proposed
+    isLoading = false
   }
 
   private func persist(_ value: Any, forKey key: String) {
@@ -250,11 +264,25 @@ public final class AppRuntime {
 
   public func reloadPractice() throws {
     guard let catalog, let repository else { return }
+    let latestValidReport = try repository
+      .diagnosticHistory()
+      .entries
+      .reversed()
+      .first { $0.report.current.isValid }?
+      .report
+    let findings = latestValidReport?.findings.map(\.type) ?? []
+    let prefersSpeaking = findings.contains {
+      $0 == .listeningGap || $0 == .selfMonitoring
+    }
+    appModel.applyDiagnosticDefaultMode(
+      prefersSpeaking ? .speaking : .quiet
+    )
     practice = try PracticeViewModel(
       catalog: catalog,
       repository: repository,
       targetCount: appModel.dailyCardCount,
-      mode: appModel.mode
+      mode: appModel.mode,
+      diagnosticFindings: findings
     )
   }
 
@@ -310,6 +338,16 @@ public final class AppRuntime {
       calendar.startOfDay(for: $0.createdAt) == today
     }
     let correct = todayEvents.filter { $0.grade != .again }.count
+    let completedItems = Set(
+      todayEvents.compactMap { event in
+        event.grade == .again
+          ? nil
+          : PracticeItemIdentity(
+            kind: event.itemType,
+            id: event.itemId
+          )
+      }
+    )
     let accuracy =
       todayEvents.isEmpty
       ? 0 : Double(correct) / Double(todayEvents.count)
@@ -331,6 +369,14 @@ public final class AppRuntime {
       cursor = previous
     }
     var mastered = 0
+    for lexeme in catalog.lexemes {
+      if try repository.progress(
+        itemType: .lexeme,
+        itemId: lexeme.id
+      )?.masteryLevel ?? 0 >= 3 {
+        mastered += 1
+      }
+    }
     for sentence in catalog.sentences {
       if try repository.progress(
         itemType: .sentence,
@@ -340,7 +386,7 @@ public final class AppRuntime {
       }
     }
     progress = LearningProgressSnapshot(
-      completedToday: todayEvents.count,
+      completedToday: completedItems.count,
       streakDays: streak,
       accuracy: accuracy,
       masteredCount: mastered

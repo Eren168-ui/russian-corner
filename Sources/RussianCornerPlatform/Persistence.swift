@@ -13,6 +13,8 @@ public enum ProgressRepositoryError: Error, Equatable, Sendable {
 
 @MainActor
 public protocol PracticeProgressStoring: AnyObject {
+    func reviewEvents() throws -> [ReviewEvent]
+
     func progress(
         itemType: PracticeItemKind,
         itemId: String

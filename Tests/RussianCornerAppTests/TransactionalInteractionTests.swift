@@ -18,6 +18,10 @@ private final class TransactionalPracticeStore: PracticeProgressStoring {
   private var states: [String: ReviewState] = [:]
   private var completed = 0
 
+  func reviewEvents() throws -> [ReviewEvent] {
+    events
+  }
+
   func progress(
     itemType: PracticeItemKind,
     itemId: String

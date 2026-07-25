@@ -111,7 +111,10 @@ public struct PracticeCardView: View {
         VStack(spacing: 1) {
           Text("Я")
             .font(.custom("PT Serif", size: 25))
-          Text("\(practice.currentIndex + 1)")
+          Text(
+            practice.isComplete
+              ? "✓" : "\(practice.currentIndex + 1)"
+          )
             .font(.system(size: 8, design: .monospaced))
         }
       }
@@ -128,11 +131,14 @@ public struct PracticeCardView: View {
         .tracking(1.3)
       Text("•")
         .foregroundStyle(CardPalette.rust)
-      Text(practice.currentCard?.theme.uppercased() ?? "ГОТОВО")
+      Text(practice.currentTheme.uppercased())
         .font(.system(size: 9, design: .monospaced))
         .foregroundStyle(CardPalette.mutedInk)
       Spacer()
-      Text("\(practice.currentIndex + 1) / \(max(practice.totalCount, 1))")
+      Text(
+        "\(min(practice.currentIndex + 1, max(practice.totalCount, 1)))"
+          + " / \(max(practice.totalCount, 1))"
+      )
         .font(.system(size: 10, design: .monospaced))
         .foregroundStyle(CardPalette.mutedInk)
       Button {
@@ -165,33 +171,46 @@ public struct PracticeCardView: View {
             )
         }
 
-        Text(practice.prompt ?? "今天的练习已经准备好。")
-          .font(.system(size: 17 * appModel.fontScale, weight: .regular))
-          .lineSpacing(5)
-          .fixedSize(horizontal: false, vertical: true)
-          .accessibilityLabel("提示：\(practice.prompt ?? "")")
-
-        if let answer = practice.answer {
-          VStack(alignment: .leading, spacing: 7) {
-            Text("ОТВЕТ")
-              .font(.system(size: 9, weight: .semibold, design: .monospaced))
-              .tracking(1.2)
-              .foregroundStyle(CardPalette.rust)
-            Text(answer)
-              .font(.custom("PT Serif", size: 24 * appModel.fontScale))
-              .lineSpacing(4)
-              .textSelection(.enabled)
-              .fixedSize(horizontal: false, vertical: true)
-              .accessibilityLabel("答案：\(answer)")
-          }
-          .transition(.opacity.combined(with: .move(edge: .bottom)))
+        if practice.isComplete {
+          completionMessage
         } else {
-          Button("显示答案") {
-            practice.reveal()
+          Text(practice.prompt ?? "")
+            .font(.system(size: 17 * appModel.fontScale, weight: .regular))
+            .lineSpacing(5)
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityLabel("提示：\(practice.prompt ?? "")")
+
+          if let answer = practice.answer {
+            VStack(alignment: .leading, spacing: 10) {
+              Text("ОТВЕТ")
+                .font(
+                  .system(
+                    size: 9,
+                    weight: .semibold,
+                    design: .monospaced
+                  )
+                )
+                .tracking(1.2)
+                .foregroundStyle(CardPalette.rust)
+              Text(answer)
+                .font(.custom("PT Serif", size: 24 * appModel.fontScale))
+                .lineSpacing(4)
+                .textSelection(.enabled)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityLabel("答案：\(answer)")
+              if practice.currentLexeme != nil {
+                lexemeDetails
+              }
+            }
+            .transition(.opacity.combined(with: .move(edge: .bottom)))
+          } else {
+            Button("显示答案") {
+              practice.reveal()
+            }
+            .buttonStyle(RustOutlineButtonStyle())
+            .keyboardShortcut(.space, modifiers: [])
+            .accessibilityHint("显示俄语答案")
           }
-          .buttonStyle(RustOutlineButtonStyle())
-          .keyboardShortcut(.space, modifiers: [])
-          .accessibilityHint("显示俄语答案")
         }
 
         if let status = practice.statusMessage ?? appModel.transientStatus {
@@ -207,6 +226,60 @@ public struct PracticeCardView: View {
     .padding(.horizontal, 22)
     .padding(.vertical, 17)
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+  }
+
+  private var completionMessage: some View {
+    VStack(alignment: .leading, spacing: 9) {
+      Text("Сегодня всё.")
+        .font(.custom("PT Serif", size: 28 * appModel.fontScale))
+      Text("今天的卡片已完成。Again 卡也已经重新练过。")
+        .font(.system(size: 14 * appModel.fontScale))
+        .foregroundStyle(CardPalette.mutedInk)
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .accessibilityElement(children: .combine)
+    .accessibilityLabel("今天的卡片已完成")
+  }
+
+  private var lexemeDetails: some View {
+    VStack(alignment: .leading, spacing: 9) {
+      if !practice.lexemeGrammarLabels.isEmpty {
+        Text(practice.lexemeGrammarLabels.joined(separator: " · "))
+          .font(.system(size: 11, weight: .medium))
+          .foregroundStyle(CardPalette.mutedInk)
+          .fixedSize(horizontal: false, vertical: true)
+      }
+      if let lexeme = practice.currentLexeme {
+        Text("中文：\(lexeme.glossZh)")
+          .font(.system(size: 12 * appModel.fontScale))
+        if !lexeme.collocations.isEmpty {
+          detailBlock(
+            title: "搭配",
+            value: lexeme.collocations.prefix(2).joined(separator: "  ·  ")
+          )
+        }
+        detailBlock(title: "例句", value: lexeme.example)
+      }
+      if let context = practice.currentContextSentence {
+        detailBlock(
+          title: "场景 · \(context.theme)",
+          value: context.practiceRu
+        )
+      }
+    }
+    .textSelection(.enabled)
+  }
+
+  private func detailBlock(title: String, value: String) -> some View {
+    VStack(alignment: .leading, spacing: 2) {
+      Text(title.uppercased())
+        .font(.system(size: 8, weight: .semibold, design: .monospaced))
+        .tracking(0.8)
+        .foregroundStyle(CardPalette.rust)
+      Text(value)
+        .font(.system(size: 12 * appModel.fontScale))
+        .fixedSize(horizontal: false, vertical: true)
+    }
   }
 
   private var controls: some View {
