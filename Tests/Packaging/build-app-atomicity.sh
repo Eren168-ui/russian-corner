@@ -134,6 +134,7 @@ run_packager() {
     RUSSIAN_CORNER_PACKAGING_TEST_MODE=1 \
     RUSSIAN_CORNER_TEST_BUILD_DELAY_SECONDS="${2:-0}" \
     RUSSIAN_CORNER_TEST_FORCE_PUBLISH_FAILURE="${4:-0}" \
+    RUSSIAN_CORNER_TEST_KILL_AFTER_OLD_MOVED="${5:-0}" \
     FAKE_BUILD_DELAY_SECONDS="${3:-0}" \
     bash "$SANDBOX_REPO/Scripts/build-app.sh" \
     >"$BUILD_LOG" 2>&1
@@ -157,7 +158,8 @@ assert_no_packaging_scratch() {
   scratch_count=$(
     find "$SANDBOX_REPO" -maxdepth 1 \
       \( -name '.build-app-stage.*' -o -name '.build-app-backup.*' \
-      -o -name '.build-app.lock' \) -print |
+      -o -name '.build-app.lock' -o -name '.build-app-transaction' \) \
+      -print |
       wc -l |
       tr -d '[:space:]'
   )
@@ -184,6 +186,21 @@ test_concurrent_build_is_rejected() {
   run_packager "$FAKE_CODESIGN_OK" 2 0 &
   first_pid=$!
   wait_for_path "$SANDBOX_REPO/.build-app.lock"
+  wait_for_path "$SANDBOX_REPO/.build-app.lock/pid"
+  wait_for_path "$SANDBOX_REPO/.build-app.lock/start_time"
+  lock_pid=$(sed -n '1p' "$SANDBOX_REPO/.build-app.lock/pid")
+  lock_start_time=$(
+    sed -n '1p' "$SANDBOX_REPO/.build-app.lock/start_time"
+  )
+  case "$lock_pid" in
+    "" | *[!0-9]*)
+      fail "live lock PID metadata is invalid"
+      ;;
+  esac
+  [ -n "$lock_start_time" ] ||
+    fail "live lock start-time metadata is empty"
+  kill -0 "$lock_pid" ||
+    fail "live lock PID is not running"
 
   second_log="$CASE_ROOT/second-build.log"
   if PATH="$FAKE_BIN:$PATH" \
@@ -213,27 +230,26 @@ test_dist_swap_never_touches_external_target() {
   mkdir -p "$external_target"
   printf 'external\n' >"$external_target/sentinel"
 
-  run_packager "$FAKE_CODESIGN_OK" 2 0 &
+  run_packager "$FAKE_CODESIGN_OK" 0 2 &
   packager_pid=$!
-  wait_for_path "$SANDBOX_REPO/.build-app.lock"
+  wait_for_path "$BUILD_MARKER"
   /bin/mv -h "$SANDBOX_REPO/dist" "$SANDBOX_REPO/old-dist-by-test"
   ln -s "$external_target" "$SANDBOX_REPO/dist"
 
-  wait "$packager_pid"
+  if wait "$packager_pid"; then
+    fail "packager accepted dist symlink introduced during build"
+  fi
   test -f "$external_target/sentinel" ||
     fail "external sentinel changed"
   test -f \
     "$SANDBOX_REPO/old-dist-by-test/Russian Corner.app/Contents/Resources/sentinel" ||
     fail "pre-swap old dist changed"
-  test -d "$SANDBOX_REPO/dist" ||
-    fail "safe repository dist was not published"
-  test ! -L "$SANDBOX_REPO/dist" ||
-    fail "final dist remains a symlink"
-  test -x \
-    "$SANDBOX_REPO/dist/Russian Corner.app/Contents/MacOS/RussianCornerApp" ||
-    fail "published app is missing"
+  test -L "$SANDBOX_REPO/dist" ||
+    fail "packager unexpectedly replaced swapped dist entry"
+  [ "$(readlink "$SANDBOX_REPO/dist")" = "$external_target" ] ||
+    fail "swapped dist symlink target changed"
   assert_no_packaging_scratch
-  printf 'dist_swap_external_sentinel_safe=PASS\n'
+  printf 'dist_swap_external_sentinel_safe_failure=PASS\n'
 }
 
 test_publish_failure_restores_old_dist() {
@@ -246,6 +262,81 @@ test_publish_failure_restores_old_dist() {
   assert_old_app_unchanged
   assert_no_packaging_scratch
   printf 'publish_failure_restores_old_dist=PASS\n'
+}
+
+test_unrelated_dist_entries_are_preserved() {
+  prepare_case "preserve-dist"
+  create_signed_old_app
+  printf 'keep-these-bytes\n' >"$SANDBOX_REPO/dist/unrelated-marker"
+  marker_sha=$(
+    shasum -a 256 "$SANDBOX_REPO/dist/unrelated-marker" | awk '{print $1}'
+  )
+  external_target="$CASE_ROOT/external-target"
+  mkdir -p "$external_target"
+  printf 'external-bytes\n' >"$external_target/sentinel"
+  ln -s "$external_target" "$SANDBOX_REPO/dist/unrelated-link"
+
+  run_packager "$FAKE_CODESIGN_OK"
+
+  final_marker_sha=$(
+    shasum -a 256 "$SANDBOX_REPO/dist/unrelated-marker" | awk '{print $1}'
+  )
+  [ "$final_marker_sha" = "$marker_sha" ] ||
+    fail "unrelated dist marker changed"
+  test -L "$SANDBOX_REPO/dist/unrelated-link" ||
+    fail "unrelated dist symlink was not preserved"
+  [ "$(readlink "$SANDBOX_REPO/dist/unrelated-link")" = "$external_target" ] ||
+    fail "unrelated dist symlink target changed"
+  test -f "$external_target/sentinel" ||
+    fail "external symlink target changed"
+  assert_no_packaging_scratch
+  printf 'unrelated_dist_entries_preserved=PASS\n'
+}
+
+test_sigkill_transaction_is_recovered() {
+  prepare_case "sigkill-recovery"
+  create_signed_old_app
+  printf 'recover-me\n' >"$SANDBOX_REPO/dist/unrelated-marker"
+  marker_sha=$(
+    shasum -a 256 "$SANDBOX_REPO/dist/unrelated-marker" | awk '{print $1}'
+  )
+
+  if run_packager "$FAKE_CODESIGN_OK" 0 0 0 1; then
+    fail "SIGKILL injection unexpectedly succeeded"
+  fi
+  test ! -e "$SANDBOX_REPO/dist" ||
+    fail "SIGKILL injection did not stop after old dist moved"
+  wait_for_path "$SANDBOX_REPO/.build-app.lock"
+  wait_for_path "$SANDBOX_REPO/.build-app-transaction"
+
+  run_packager "$FAKE_CODESIGN_OK"
+
+  final_marker_sha=$(
+    shasum -a 256 "$SANDBOX_REPO/dist/unrelated-marker" | awk '{print $1}'
+  )
+  [ "$final_marker_sha" = "$marker_sha" ] ||
+    fail "recovered unrelated marker changed"
+  test -x \
+    "$SANDBOX_REPO/dist/Russian Corner.app/Contents/MacOS/RussianCornerApp" ||
+    fail "recovery run did not publish new app"
+  assert_no_packaging_scratch
+  printf 'sigkill_transaction_recovered=PASS\n'
+}
+
+test_stale_lock_without_state_self_heals() {
+  prepare_case "stale-lock"
+  create_signed_old_app
+  mkdir "$SANDBOX_REPO/.build-app.lock"
+  printf '%s\n' "$$" >"$SANDBOX_REPO/.build-app.lock/pid"
+  printf 'stale-start-time\n' >"$SANDBOX_REPO/.build-app.lock/start_time"
+
+  run_packager "$FAKE_CODESIGN_OK"
+
+  test -x \
+    "$SANDBOX_REPO/dist/Russian Corner.app/Contents/MacOS/RussianCornerApp" ||
+    fail "stale-lock recovery did not publish"
+  assert_no_packaging_scratch
+  printf 'stale_lock_without_state_self_healed=PASS\n'
 }
 
 case "$TEST_CASE" in
@@ -261,11 +352,23 @@ case "$TEST_CASE" in
   publishfail)
     test_publish_failure_restores_old_dist
     ;;
+  preserve)
+    test_unrelated_dist_entries_are_preserved
+    ;;
+  sigkill)
+    test_sigkill_transaction_is_recovered
+    ;;
+  stale)
+    test_stale_lock_without_state_self_heals
+    ;;
   all)
     test_codesign_failure_preserves_old_app
     test_concurrent_build_is_rejected
     test_dist_swap_never_touches_external_target
     test_publish_failure_restores_old_dist
+    test_unrelated_dist_entries_are_preserved
+    test_sigkill_transaction_is_recovered
+    test_stale_lock_without_state_self_heals
     ;;
   *)
     fail "unknown PACKAGING_TEST_CASE: $TEST_CASE"

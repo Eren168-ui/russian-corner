@@ -17,6 +17,7 @@ RESOURCE_PROBE_NAME="RussianCornerResourceProbe"
 BUNDLE_IDENTIFIER="com.openclaw.russiancorner"
 DIST_DIR="$REPO_ROOT/dist"
 LOCK_DIR="$REPO_ROOT/.build-app.lock"
+STATE_FILE="$REPO_ROOT/.build-app-transaction"
 SOURCE_RESOURCES_DIR="$REPO_ROOT/Sources/RussianCornerCore/Resources"
 CODESIGN_BIN=${CODESIGN_BIN:-/usr/bin/codesign}
 
@@ -25,6 +26,7 @@ NEW_DIST=""
 STAGED_APP=""
 BACKUP_DIST=""
 LOCK_HELD=0
+LOCK_START_TIME=""
 OLD_MOVED=0
 NEW_PUBLISHED=0
 PUBLISH_COMMITTED=0
@@ -33,24 +35,356 @@ entry_exists() {
   [ -e "$1" ] || [ -L "$1" ]
 }
 
-remove_trusted_scratch_entry() {
-  scratch_entry=$1
-  case "$scratch_entry" in
-    "$REPO_ROOT"/.build-app-stage.* | "$REPO_ROOT"/.build-app-backup.*)
+is_trusted_root_entry() {
+  trusted_path=$1
+  [ "$(dirname -- "$trusted_path")" = "$REPO_ROOT" ] || return 1
+  trusted_name=$(basename -- "$trusted_path")
+  case "$trusted_name" in
+    .build-app-stage.* | .build-app-backup.* | .build-app-transaction)
+      return 0
       ;;
     *)
-      printf \
-        'error: refusing to clean unexpected scratch path: %s\n' \
-        "$scratch_entry" >&2
+      return 1
+      ;;
+  esac
+}
+
+validate_real_root_directory() {
+  directory_path=$1
+  directory_label=$2
+  if ! is_trusted_root_entry "$directory_path"; then
+    printf 'error: %s is outside trusted repository entries: %s\n' \
+      "$directory_label" "$directory_path" >&2
+    return 1
+  fi
+  if [ -L "$directory_path" ] || [ ! -d "$directory_path" ]; then
+    printf 'error: %s is not a real directory: %s\n' \
+      "$directory_label" "$directory_path" >&2
+    return 1
+  fi
+  real_directory=$(
+    CDPATH= cd -- "$directory_path"
+    pwd -P
+  )
+  if [ "$real_directory" != "$directory_path" ]; then
+    printf 'error: %s resolves outside its trusted path: %s\n' \
+      "$directory_label" "$directory_path" >&2
+    return 1
+  fi
+}
+
+remove_trusted_root_entry() {
+  scratch_entry=$1
+  if ! is_trusted_root_entry "$scratch_entry"; then
+    printf 'error: refusing to clean unexpected scratch path: %s\n' \
+      "$scratch_entry" >&2
+    return 1
+  fi
+
+  if [ -L "$scratch_entry" ]; then
+    /bin/rm -f -- "$scratch_entry"
+  elif [ -f "$scratch_entry" ]; then
+    /bin/rm -f -- "$scratch_entry"
+  elif [ -d "$scratch_entry" ]; then
+    validate_real_root_directory "$scratch_entry" "scratch entry" || return 1
+    /bin/rm -rf -- "$scratch_entry"
+  fi
+}
+
+current_process_start_time() {
+  process_id=$1
+  /bin/ps -p "$process_id" -o lstart= 2>/dev/null |
+    sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+}
+
+lock_metadata_is_complete() {
+  [ -f "$LOCK_DIR/pid" ] &&
+    [ ! -L "$LOCK_DIR/pid" ] &&
+    [ -f "$LOCK_DIR/start_time" ] &&
+    [ ! -L "$LOCK_DIR/start_time" ]
+}
+
+lock_owner_is_live() {
+  lock_metadata_is_complete || return 1
+  lock_pid=$(sed -n '1p' "$LOCK_DIR/pid")
+  lock_start_time=$(sed -n '1p' "$LOCK_DIR/start_time")
+  case "$lock_pid" in
+    "" | *[!0-9]*)
+      return 1
+      ;;
+  esac
+  live_start_time=$(current_process_start_time "$lock_pid")
+  [ -n "$live_start_time" ] && [ "$live_start_time" = "$lock_start_time" ]
+}
+
+validate_lock_directory() {
+  if [ -L "$LOCK_DIR" ] || [ ! -d "$LOCK_DIR" ]; then
+    printf 'error: build lock is not a real directory: %s\n' "$LOCK_DIR" >&2
+    return 1
+  fi
+  real_lock=$(
+    CDPATH= cd -- "$LOCK_DIR"
+    pwd -P
+  )
+  if [ "$real_lock" != "$LOCK_DIR" ]; then
+    printf 'error: build lock resolves outside repository: %s\n' "$LOCK_DIR" >&2
+    return 1
+  fi
+}
+
+remove_lock_directory() {
+  validate_lock_directory || return 1
+  for lock_metadata in "$LOCK_DIR/pid" "$LOCK_DIR/start_time"; do
+    if [ -L "$lock_metadata" ]; then
+      printf 'error: refusing symlinked lock metadata: %s\n' \
+        "$lock_metadata" >&2
+      return 1
+    fi
+    if [ -e "$lock_metadata" ]; then
+      if [ ! -f "$lock_metadata" ]; then
+        printf 'error: unexpected lock metadata type: %s\n' \
+          "$lock_metadata" >&2
+        return 1
+      fi
+      /bin/rm -f -- "$lock_metadata"
+    fi
+  done
+  if ! /bin/rmdir "$LOCK_DIR"; then
+    printf 'error: build lock contains unexpected entries: %s\n' \
+      "$LOCK_DIR" >&2
+    return 1
+  fi
+}
+
+acquire_lock() {
+  while ! /bin/mkdir "$LOCK_DIR" 2>/dev/null; do
+    validate_lock_directory || return 1
+
+    metadata_attempt=0
+    while [ "$metadata_attempt" -lt 20 ] &&
+      ! lock_metadata_is_complete; do
+      sleep 0.05
+      metadata_attempt=$((metadata_attempt + 1))
+    done
+
+    if lock_owner_is_live; then
+      printf 'error: another build-app process holds %s\n' "$LOCK_DIR" >&2
+      return 1
+    fi
+
+    printf 'Recovering stale build lock: %s\n' "$LOCK_DIR"
+    remove_lock_directory || return 1
+  done
+
+  LOCK_HELD=1
+  chmod 0700 "$LOCK_DIR"
+  LOCK_START_TIME=$(current_process_start_time "$$")
+  if [ -z "$LOCK_START_TIME" ]; then
+    printf 'error: could not determine build process start time\n' >&2
+    return 1
+  fi
+  printf '%s\n' "$$" >"$LOCK_DIR/pid"
+  printf '%s\n' "$LOCK_START_TIME" >"$LOCK_DIR/start_time"
+  chmod 0600 "$LOCK_DIR/pid" "$LOCK_DIR/start_time"
+}
+
+release_owned_lock() {
+  if [ "$LOCK_HELD" -ne 1 ]; then
+    return 0
+  fi
+  if lock_metadata_is_complete; then
+    owned_pid=$(sed -n '1p' "$LOCK_DIR/pid")
+    owned_start_time=$(sed -n '1p' "$LOCK_DIR/start_time")
+    if [ "$owned_pid" != "$$" ] ||
+      [ "$owned_start_time" != "$LOCK_START_TIME" ]; then
+      printf 'error: refusing to release lock owned by another process\n' >&2
+      return 1
+    fi
+  fi
+  remove_lock_directory || return 1
+  LOCK_HELD=0
+}
+
+validate_dist_directory() {
+  if [ -L "$DIST_DIR" ]; then
+    printf 'error: refusing symlinked dist path: %s\n' "$DIST_DIR" >&2
+    return 1
+  fi
+  if [ -e "$DIST_DIR" ] && [ ! -d "$DIST_DIR" ]; then
+    printf 'error: dist path is not a directory: %s\n' "$DIST_DIR" >&2
+    return 1
+  fi
+  if [ -d "$DIST_DIR" ]; then
+    real_dist=$(
+      CDPATH= cd -- "$DIST_DIR"
+      pwd -P
+    )
+    if [ "$real_dist" != "$DIST_DIR" ]; then
+      printf 'error: dist resolved outside repository: %s\n' "$real_dist" >&2
+      return 1
+    fi
+    existing_app="$DIST_DIR/$APP_NAME"
+    if [ -L "$existing_app" ]; then
+      printf 'error: refusing symlinked app path: %s\n' "$existing_app" >&2
+      return 1
+    fi
+  fi
+}
+
+validate_transaction_paths() {
+  state_staging_root=${STATE_NEW_DIST%/new-dist}
+  if [ "$state_staging_root/new-dist" != "$STATE_NEW_DIST" ] ||
+    [ "$(dirname -- "$state_staging_root")" != "$REPO_ROOT" ]; then
+    printf 'error: transaction new-dist path is untrusted\n' >&2
+    return 1
+  fi
+  state_stage_name=$(basename -- "$state_staging_root")
+  case "$state_stage_name" in
+    .build-app-stage.?*)
+      ;;
+    *)
+      printf 'error: transaction staging root is untrusted\n' >&2
       return 1
       ;;
   esac
 
-  if [ -L "$scratch_entry" ] || [ -f "$scratch_entry" ]; then
-    /bin/rm -f -- "$scratch_entry"
-  elif [ -d "$scratch_entry" ]; then
-    /bin/rm -rf -- "$scratch_entry"
+  if [ "$(dirname -- "$STATE_BACKUP_DIST")" != "$REPO_ROOT" ]; then
+    printf 'error: transaction backup path is untrusted\n' >&2
+    return 1
   fi
+  expected_backup_name=".build-app-backup.${state_stage_name#.build-app-stage.}"
+  if [ "$(basename -- "$STATE_BACKUP_DIST")" != "$expected_backup_name" ]; then
+    printf 'error: transaction backup does not match staging token\n' >&2
+    return 1
+  fi
+
+  if entry_exists "$state_staging_root"; then
+    validate_real_root_directory "$state_staging_root" \
+      "transaction staging root" || return 1
+  fi
+  if entry_exists "$STATE_NEW_DIST"; then
+    if [ -L "$STATE_NEW_DIST" ] || [ ! -d "$STATE_NEW_DIST" ]; then
+      printf 'error: transaction new-dist is not a real directory\n' >&2
+      return 1
+    fi
+  fi
+  if entry_exists "$STATE_BACKUP_DIST"; then
+    validate_real_root_directory "$STATE_BACKUP_DIST" \
+      "transaction backup" || return 1
+  fi
+}
+
+load_transaction_state() {
+  if [ -L "$STATE_FILE" ] || [ ! -f "$STATE_FILE" ]; then
+    printf 'error: transaction state is not a regular root file\n' >&2
+    return 1
+  fi
+  STATE_PHASE=$(sed -n '1p' "$STATE_FILE")
+  STATE_BACKUP_DIST=$(sed -n '2p' "$STATE_FILE")
+  STATE_NEW_DIST=$(sed -n '3p' "$STATE_FILE")
+  state_line_count=$(wc -l <"$STATE_FILE" | tr -d '[:space:]')
+  if [ "$state_line_count" != "3" ]; then
+    printf 'error: transaction state has an invalid line count\n' >&2
+    return 1
+  fi
+  case "$STATE_PHASE" in
+    prepared | old_moved | new_published)
+      ;;
+    *)
+      printf 'error: transaction phase is invalid: %s\n' "$STATE_PHASE" >&2
+      return 1
+      ;;
+  esac
+  validate_transaction_paths
+}
+
+write_transaction_phase() {
+  next_phase=$1
+  state_temp="$STAGING_ROOT/transaction-state.next"
+  printf '%s\n%s\n%s\n' \
+    "$next_phase" "$BACKUP_DIST" "$NEW_DIST" >"$state_temp"
+  chmod 0600 "$state_temp"
+  /bin/mv -f "$state_temp" "$STATE_FILE"
+}
+
+remove_transaction_state() {
+  if [ -L "$STATE_FILE" ]; then
+    printf 'error: refusing symlinked transaction state\n' >&2
+    return 1
+  fi
+  if [ -e "$STATE_FILE" ]; then
+    if [ ! -f "$STATE_FILE" ]; then
+      printf 'error: transaction state is not a regular file\n' >&2
+      return 1
+    fi
+    /bin/rm -f -- "$STATE_FILE"
+  fi
+}
+
+final_dist_is_valid() {
+  validate_dist_directory >/dev/null 2>&1 || return 1
+  recovery_app="$DIST_DIR/$APP_NAME"
+  recovery_executable="$recovery_app/Contents/MacOS/$EXECUTABLE_NAME"
+  recovery_resources="$recovery_app/Contents/Resources"
+  [ -d "$recovery_app" ] &&
+    [ ! -L "$recovery_app" ] &&
+    [ -x "$recovery_executable" ] &&
+    [ ! -L "$recovery_executable" ] &&
+    [ -f "$recovery_app/Contents/Info.plist" ] &&
+    [ ! -L "$recovery_app/Contents/Info.plist" ] &&
+    [ -f "$recovery_resources/lexemes.json" ] &&
+    [ ! -L "$recovery_resources/lexemes.json" ] &&
+    [ -f "$recovery_resources/sentences.json" ] &&
+    [ ! -L "$recovery_resources/sentences.json" ] &&
+    "$CODESIGN_BIN" --verify --deep --strict "$recovery_app" \
+      >/dev/null 2>&1
+}
+
+recover_transaction() {
+  entry_exists "$STATE_FILE" || return 0
+  load_transaction_state || return 1
+
+  recovery_staging_root=${STATE_NEW_DIST%/new-dist}
+  backup_exists=0
+  dist_exists=0
+  entry_exists "$STATE_BACKUP_DIST" && backup_exists=1
+  entry_exists "$DIST_DIR" && dist_exists=1
+
+  if [ "$dist_exists" -eq 0 ]; then
+    if [ "$backup_exists" -ne 1 ]; then
+      printf 'error: transaction has neither final dist nor backup\n' >&2
+      return 1
+    fi
+    /bin/mv -h "$STATE_BACKUP_DIST" "$DIST_DIR"
+    printf 'Recovered previous dist from interrupted transaction.\n'
+  elif [ "$backup_exists" -eq 1 ]; then
+    if final_dist_is_valid; then
+      remove_trusted_root_entry "$STATE_BACKUP_DIST" || return 1
+      printf 'Recovered committed dist from interrupted transaction.\n'
+    else
+      if ! entry_exists "$recovery_staging_root"; then
+        printf 'error: cannot quarantine invalid final dist without staging\n' >&2
+        return 1
+      fi
+      rejected_dist="$recovery_staging_root/rejected-dist"
+      if entry_exists "$rejected_dist"; then
+        printf 'error: recovery quarantine already exists\n' >&2
+        return 1
+      fi
+      /bin/mv -h "$DIST_DIR" "$rejected_dist"
+      /bin/mv -h "$STATE_BACKUP_DIST" "$DIST_DIR"
+      printf 'Restored backup after invalid interrupted publication.\n'
+    fi
+  elif [ "$STATE_PHASE" = "new_published" ] &&
+    ! final_dist_is_valid; then
+    printf 'error: interrupted publication has no valid final dist or backup\n' >&2
+    return 1
+  fi
+
+  if entry_exists "$recovery_staging_root"; then
+    remove_trusted_root_entry "$recovery_staging_root" || return 1
+  fi
+  remove_transaction_state
 }
 
 rollback_publish() {
@@ -59,12 +393,11 @@ rollback_publish() {
   fi
 
   if [ "$NEW_PUBLISHED" -eq 1 ] && entry_exists "$DIST_DIR"; then
-    rejected_dist="$STAGING_ROOT/rejected-dist"
-    if entry_exists "$rejected_dist"; then
-      printf 'error: rollback target already exists: %s\n' "$rejected_dist" >&2
+    if entry_exists "$NEW_DIST"; then
+      printf 'error: rollback new-dist target already exists\n' >&2
       return 1
     fi
-    /bin/mv -h "$DIST_DIR" "$rejected_dist"
+    /bin/mv -h "$DIST_DIR" "$NEW_DIST"
     NEW_PUBLISHED=0
   fi
 
@@ -76,6 +409,8 @@ rollback_publish() {
     /bin/mv -h "$BACKUP_DIST" "$DIST_DIR"
     OLD_MOVED=0
   fi
+
+  remove_transaction_state
 }
 
 cleanup() {
@@ -87,14 +422,11 @@ cleanup() {
   fi
 
   if [ -n "$STAGING_ROOT" ] && entry_exists "$STAGING_ROOT"; then
-    remove_trusted_scratch_entry "$STAGING_ROOT" || result=1
+    remove_trusted_root_entry "$STAGING_ROOT" || result=1
   fi
 
-  if [ "$LOCK_HELD" -eq 1 ]; then
-    if ! /bin/rmdir "$LOCK_DIR"; then
-      printf 'error: failed to release build lock: %s\n' "$LOCK_DIR" >&2
-      result=1
-    fi
+  if ! release_owned_lock; then
+    result=1
   fi
 
   exit "$result"
@@ -105,41 +437,47 @@ trap 'exit 129' HUP
 trap 'exit 130' INT
 trap 'exit 143' TERM
 
-if ! /bin/mkdir "$LOCK_DIR" 2>/dev/null; then
-  printf \
-    'error: another build-app process holds %s\n' \
-    "$LOCK_DIR" >&2
-  exit 1
-fi
-LOCK_HELD=1
+acquire_lock
 
 if [ ! -x "$CODESIGN_BIN" ]; then
   printf 'error: codesign command is not executable: %s\n' "$CODESIGN_BIN" >&2
   exit 1
 fi
 
-if [ -L "$DIST_DIR" ]; then
-  printf 'error: refusing symlinked dist path: %s\n' "$DIST_DIR" >&2
+recover_transaction
+validate_dist_directory
+
+STAGING_ROOT=$(mktemp -d "$REPO_ROOT/.build-app-stage.XXXXXX")
+chmod 0700 "$STAGING_ROOT"
+validate_real_root_directory "$STAGING_ROOT" "staging root"
+
+NEW_DIST="$STAGING_ROOT/new-dist"
+if entry_exists "$DIST_DIR"; then
+  /bin/cp -a "$DIST_DIR" "$NEW_DIST"
+else
+  mkdir -m 0755 "$NEW_DIST"
+fi
+if [ -L "$NEW_DIST" ] || [ ! -d "$NEW_DIST" ]; then
+  printf 'error: staged dist snapshot is not a real directory\n' >&2
   exit 1
 fi
-if [ -e "$DIST_DIR" ] && [ ! -d "$DIST_DIR" ]; then
-  printf 'error: dist path is not a directory: %s\n' "$DIST_DIR" >&2
+REAL_NEW_DIST=$(
+  CDPATH= cd -- "$NEW_DIST"
+  pwd -P
+)
+if [ "$REAL_NEW_DIST" != "$NEW_DIST" ]; then
+  printf 'error: staged dist snapshot resolves outside staging\n' >&2
   exit 1
 fi
-if [ -d "$DIST_DIR" ]; then
-  REAL_DIST=$(
-    CDPATH= cd -- "$DIST_DIR"
-    pwd -P
-  )
-  if [ "$REAL_DIST" != "$REPO_ROOT/dist" ]; then
-    printf 'error: dist resolved outside repository: %s\n' "$REAL_DIST" >&2
+
+STAGED_APP="$NEW_DIST/$APP_NAME"
+if entry_exists "$STAGED_APP"; then
+  REPLACED_APP="$STAGING_ROOT/replaced-app"
+  if entry_exists "$REPLACED_APP"; then
+    printf 'error: staged replaced-app entry already exists\n' >&2
     exit 1
   fi
-  EXISTING_APP="$DIST_DIR/$APP_NAME"
-  if [ -L "$EXISTING_APP" ]; then
-    printf 'error: refusing symlinked app path: %s\n' "$EXISTING_APP" >&2
-    exit 1
-  fi
+  /bin/mv -h "$STAGED_APP" "$REPLACED_APP"
 fi
 
 if [ -n "${RUSSIAN_CORNER_TEST_BUILD_DELAY_SECONDS:-}" ]; then
@@ -150,19 +488,6 @@ if [ -n "${RUSSIAN_CORNER_TEST_BUILD_DELAY_SECONDS:-}" ]; then
   sleep "$RUSSIAN_CORNER_TEST_BUILD_DELAY_SECONDS"
 fi
 
-STAGING_ROOT=$(mktemp -d "$REPO_ROOT/.build-app-stage.XXXXXX")
-chmod 0700 "$STAGING_ROOT"
-STAGING_PARENT=$(
-  CDPATH= cd -- "$(dirname -- "$STAGING_ROOT")"
-  pwd -P
-)
-if [ "$STAGING_PARENT" != "$REPO_ROOT" ] || [ -L "$STAGING_ROOT" ]; then
-  printf 'error: staging root is not a trusted repository entry\n' >&2
-  exit 1
-fi
-
-NEW_DIST="$STAGING_ROOT/new-dist"
-STAGED_APP="$NEW_DIST/$APP_NAME"
 STAGED_CONTENTS="$STAGED_APP/Contents"
 STAGED_MACOS="$STAGED_CONTENTS/MacOS"
 STAGED_RESOURCES="$STAGED_CONTENTS/Resources"
@@ -314,16 +639,31 @@ if [ "$(stat -f '%Lp' "$STAGED_RESOURCES")" != "755" ] ||
 fi
 printf 'permissions=PASS resources=0755 executable=0755 json=0644\n'
 
+validate_dist_directory
 stage_token=$(basename -- "$STAGING_ROOT")
 BACKUP_DIST="$REPO_ROOT/.build-app-backup.${stage_token##*.}"
 if entry_exists "$BACKUP_DIST"; then
   printf 'error: backup entry already exists: %s\n' "$BACKUP_DIST" >&2
   exit 1
 fi
+if entry_exists "$STATE_FILE"; then
+  printf 'error: transaction state reappeared before publication\n' >&2
+  exit 1
+fi
 
+write_transaction_phase "prepared"
 if entry_exists "$DIST_DIR"; then
   /bin/mv -h "$DIST_DIR" "$BACKUP_DIST"
   OLD_MOVED=1
+fi
+write_transaction_phase "old_moved"
+
+if [ "${RUSSIAN_CORNER_TEST_KILL_AFTER_OLD_MOVED:-0}" = "1" ]; then
+  if [ "${RUSSIAN_CORNER_PACKAGING_TEST_MODE:-}" != "1" ]; then
+    printf 'error: SIGKILL injection requires packaging test mode\n' >&2
+    exit 1
+  fi
+  /bin/kill -KILL "$$"
 fi
 if [ "${RUSSIAN_CORNER_TEST_FORCE_PUBLISH_FAILURE:-0}" = "1" ]; then
   if [ "${RUSSIAN_CORNER_PACKAGING_TEST_MODE:-}" != "1" ]; then
@@ -339,6 +679,7 @@ if entry_exists "$DIST_DIR"; then
 fi
 /bin/mv -h "$NEW_DIST" "$DIST_DIR"
 NEW_PUBLISHED=1
+write_transaction_phase "new_published"
 
 if [ -L "$DIST_DIR" ] || [ ! -d "$DIST_DIR" ]; then
   printf 'error: published dist is not a real directory\n' >&2
@@ -348,7 +689,7 @@ FINAL_REAL_DIST=$(
   CDPATH= cd -- "$DIST_DIR"
   pwd -P
 )
-if [ "$FINAL_REAL_DIST" != "$REPO_ROOT/dist" ]; then
+if [ "$FINAL_REAL_DIST" != "$DIST_DIR" ]; then
   printf 'error: published dist resolved outside repository\n' >&2
   exit 1
 fi
@@ -386,12 +727,17 @@ if [ "$(stat -f '%Lp' "$FINAL_RESOURCES")" != "755" ] ||
   exit 1
 fi
 
-if [ "$OLD_MOVED" -eq 1 ]; then
-  remove_trusted_scratch_entry "$BACKUP_DIST"
-  OLD_MOVED=0
-fi
 PUBLISH_COMMITTED=1
 NEW_PUBLISHED=0
+if [ "$OLD_MOVED" -eq 1 ]; then
+  remove_trusted_root_entry "$BACKUP_DIST"
+  OLD_MOVED=0
+fi
+if entry_exists "$STAGING_ROOT"; then
+  remove_trusted_root_entry "$STAGING_ROOT"
+fi
+STAGING_ROOT=""
+remove_transaction_state
 
 printf \
   'resource_sha256=PASS lexemes=%s sentences=%s\n' \
