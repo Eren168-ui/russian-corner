@@ -218,12 +218,22 @@ final class RecordingServiceTests: XCTestCase {
 }
 
 private actor FakeReminderScheduler: ReminderNotificationScheduling {
+    private enum FakeError: Error {
+        case addFailed
+    }
+
     private let status: ReminderPermissionStatus
+    private let failingAddAttempt: Int?
     private var removedIdentifierBatches: [[String]] = []
     private var requests: [DailyReminderRequest] = []
+    private var addAttemptCount = 0
 
-    init(status: ReminderPermissionStatus) {
+    init(
+        status: ReminderPermissionStatus,
+        failingAddAttempt: Int? = nil
+    ) {
         self.status = status
+        self.failingAddAttempt = failingAddAttempt
     }
 
     func authorizationStatus() async -> ReminderPermissionStatus {
@@ -236,13 +246,21 @@ private actor FakeReminderScheduler: ReminderNotificationScheduling {
 
     func removePendingRequests(withIdentifiers identifiers: [String]) async {
         removedIdentifierBatches.append(identifiers)
+        let identifierSet = Set(identifiers)
+        requests.removeAll {
+            identifierSet.contains($0.identifier)
+        }
     }
 
     func add(_ request: DailyReminderRequest) async throws {
+        addAttemptCount += 1
+        if addAttemptCount == failingAddAttempt {
+            throw FakeError.addFailed
+        }
         requests.append(request)
     }
 
-    func snapshot() -> (removed: [[String]], added: [DailyReminderRequest]) {
+    func snapshot() -> (removed: [[String]], pending: [DailyReminderRequest]) {
         (removedIdentifierBatches, requests)
     }
 }
@@ -261,13 +279,13 @@ final class ReminderServiceTests: XCTestCase {
 
         XCTAssertEqual(result, .scheduled(ReminderService.pendingRequestIDs))
         XCTAssertEqual(snapshot.removed, [ReminderService.pendingRequestIDs])
-        XCTAssertEqual(snapshot.added.map(\.identifier), [
+        XCTAssertEqual(snapshot.pending.map(\.identifier), [
             "russian-corner.reminder.morning",
             "russian-corner.reminder.evening",
         ])
-        XCTAssertEqual(snapshot.added.map(\.time), settings.reminderTimes)
-        XCTAssertTrue(snapshot.added.allSatisfy(\.repeatsDaily))
-        XCTAssertEqual(snapshot.added.count, 2)
+        XCTAssertEqual(snapshot.pending.map(\.time), settings.reminderTimes)
+        XCTAssertTrue(snapshot.pending.allSatisfy(\.repeatsDaily))
+        XCTAssertEqual(snapshot.pending.count, 2)
     }
 
     func testDeniedReminderPermissionReturnsStatusWithoutScheduling() async {
@@ -279,7 +297,29 @@ final class ReminderServiceTests: XCTestCase {
 
         XCTAssertEqual(result, .permissionDenied)
         XCTAssertTrue(snapshot.removed.isEmpty)
-        XCTAssertTrue(snapshot.added.isEmpty)
+        XCTAssertTrue(snapshot.pending.isEmpty)
+    }
+
+    func testSecondAddFailureRollsBackOwnPendingReminders() async {
+        let scheduler = FakeReminderScheduler(
+            status: .authorized,
+            failingAddAttempt: 2
+        )
+        let service = ReminderService(scheduler: scheduler)
+
+        let result = await service.schedule(
+            settings: RussianCornerSettings()
+        )
+        let snapshot = await scheduler.snapshot()
+
+        guard case .failed = result else {
+            return XCTFail("expected failed result, got \(result)")
+        }
+        XCTAssertEqual(snapshot.removed, [
+            ReminderService.pendingRequestIDs,
+            ReminderService.pendingRequestIDs,
+        ])
+        XCTAssertTrue(snapshot.pending.isEmpty)
     }
 }
 

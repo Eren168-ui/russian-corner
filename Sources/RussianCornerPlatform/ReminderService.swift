@@ -173,7 +173,11 @@ public struct ReminderService: Sendable {
             }
             return .scheduled(Self.pendingRequestIDs)
         } catch {
-            return .failed(error.localizedDescription)
+            let message = error.localizedDescription
+            await scheduler.removePendingRequests(
+                withIdentifiers: Self.pendingRequestIDs
+            )
+            return .failed(message)
         }
     }
 }
