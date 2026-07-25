@@ -215,8 +215,12 @@ final class PersistenceTests: XCTestCase {
         let reader = ProgressRepository(container: container)
         let history = try reader.diagnosticHistory()
 
-        XCTAssertEqual(history.map(\.kind), [.baseline, .weekly])
-        XCTAssertEqual(history.map(\.report), [baselineReport, weeklyReport])
+        XCTAssertEqual(history.issueCount, 0)
+        XCTAssertEqual(history.entries.map(\.kind), [.baseline, .weekly])
+        XCTAssertEqual(
+            history.entries.map(\.report),
+            [baselineReport, weeklyReport]
+        )
         XCTAssertEqual(try reader.baselineDiagnosticReport(), baselineReport)
         XCTAssertEqual(try reader.latestDiagnosticReport(), weeklyReport)
     }
@@ -248,8 +252,52 @@ final class PersistenceTests: XCTestCase {
         )
 
         XCTAssertEqual(
-            try repository.diagnosticHistory().map(\.kind),
+            try repository.diagnosticHistory().entries.map(\.kind),
             [.baseline, .weekly]
+        )
+    }
+
+    func testDiagnosticHistorySkipsCorruptRecordsAndReportsIssueCount() throws {
+        let container = try ProgressRepository.makeInMemoryContainer()
+        let repository = ProgressRepository(container: container)
+        let metrics = diagnosticMetrics(
+            recognitionRate: 72,
+            completedAt: now
+        )
+        let validReport = DiagnosticEngine().report(
+            baseline: metrics,
+            current: metrics
+        )
+        try repository.saveDiagnosticReport(validReport)
+
+        let badKind = try DiagnosticReportRecord(
+            kind: .weekly,
+            report: validReport
+        )
+        badKind.kindRawValue = "broken-kind"
+        let badJSON = try DiagnosticReportRecord(
+            kind: .weekly,
+            report: validReport
+        )
+        badJSON.reportJSON = Data("not-json".utf8)
+        let context = ModelContext(container)
+        context.insert(badKind)
+        context.insert(badJSON)
+        try context.save()
+
+        let history = try ProgressRepository(
+            container: container
+        ).diagnosticHistory()
+
+        XCTAssertEqual(history.entries.map(\.report), [validReport])
+        XCTAssertEqual(history.issueCount, 2)
+        XCTAssertEqual(
+            try repository.baselineDiagnosticReport(),
+            validReport
+        )
+        XCTAssertEqual(
+            try repository.latestDiagnosticReport(),
+            validReport
         )
     }
 

@@ -57,10 +57,23 @@ public struct DiagnosticHistoryEntry: Equatable, Sendable {
     }
 }
 
+public struct DiagnosticHistorySnapshot: Equatable, Sendable {
+    public let entries: [DiagnosticHistoryEntry]
+    public let issueCount: Int
+
+    public init(
+        entries: [DiagnosticHistoryEntry],
+        issueCount: Int
+    ) {
+        self.entries = entries
+        self.issueCount = issueCount
+    }
+}
+
 @MainActor
 public protocol DiagnosticReportStoring: AnyObject {
     func saveDiagnosticReport(_ report: DiagnosticReport) throws
-    func diagnosticHistory() throws -> [DiagnosticHistoryEntry]
+    func diagnosticHistory() throws -> DiagnosticHistorySnapshot
     func baselineDiagnosticReport() throws -> DiagnosticReport?
     func latestDiagnosticReport() throws -> DiagnosticReport?
 }
@@ -411,9 +424,11 @@ public final class ProgressRepository {
         _ report: DiagnosticReport
     ) throws {
         do {
-            let descriptor = FetchDescriptor<DiagnosticReportRecord>()
             let kind: DiagnosticRunKind =
-                try context.fetchCount(descriptor) == 0
+                try diagnosticHistory().entries.contains {
+                    $0.kind == .baseline
+                }
+                == false
                 ? .baseline : .weekly
             context.insert(
                 try DiagnosticReportRecord(kind: kind, report: report)
@@ -425,21 +440,33 @@ public final class ProgressRepository {
         }
     }
 
-    public func diagnosticHistory() throws -> [DiagnosticHistoryEntry] {
+    public func diagnosticHistory() throws -> DiagnosticHistorySnapshot {
         let descriptor = FetchDescriptor<DiagnosticReportRecord>(
             sortBy: [SortDescriptor(\.completedAt)]
         )
-        return try context.fetch(descriptor).map {
-            try $0.decodedEntry()
+        var entries: [DiagnosticHistoryEntry] = []
+        var issueCount = 0
+        for record in try context.fetch(descriptor) {
+            do {
+                entries.append(try record.decodedEntry())
+            } catch {
+                issueCount += 1
+            }
         }
+        return DiagnosticHistorySnapshot(
+            entries: entries,
+            issueCount: issueCount
+        )
     }
 
     public func baselineDiagnosticReport() throws -> DiagnosticReport? {
-        try diagnosticHistory().first(where: { $0.kind == .baseline })?.report
+        try diagnosticHistory().entries.first(where: {
+            $0.kind == .baseline
+        })?.report
     }
 
     public func latestDiagnosticReport() throws -> DiagnosticReport? {
-        try diagnosticHistory().last?.report
+        try diagnosticHistory().entries.last?.report
     }
 
     private func upsertProgress(

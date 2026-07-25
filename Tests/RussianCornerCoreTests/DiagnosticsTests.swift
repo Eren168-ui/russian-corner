@@ -18,7 +18,11 @@ final class DiagnosticsTests: XCTestCase {
         )
         let report = DiagnosticEngine().report(
             baseline: baseline,
-            current: current
+            current: current,
+            seed: 42,
+            sampleLexemeIDs: ["lexeme-1", "lexeme-2"],
+            listeningSentenceIDs: ["sentence-1"],
+            sampleWasRepaired: false
         )
 
         let data = try JSONEncoder().encode(report)
@@ -28,6 +32,11 @@ final class DiagnosticsTests: XCTestCase {
         )
 
         XCTAssertEqual(restored, report)
+        XCTAssertEqual(restored.diagnosticVersion, 2)
+        XCTAssertEqual(restored.seed, 42)
+        XCTAssertEqual(restored.sampleLexemeIDs, ["lexeme-1", "lexeme-2"])
+        XCTAssertEqual(restored.listeningSentenceIDs, ["sentence-1"])
+        XCTAssertFalse(restored.sampleWasRepaired)
     }
 
     func testVocabularyBreadthTriggersBelowSeventyOnly() {
@@ -84,6 +93,20 @@ final class DiagnosticsTests: XCTestCase {
                 for: metrics(recognitionRate: 80, listeningRate: 60)
             ).contains { $0.type == .listeningGap }
         )
+    }
+
+    func testListeningGapIsNotReportedWithoutPlayedEvidence() {
+        let engine = DiagnosticEngine()
+
+        let findings = engine.findings(
+            for: metrics(
+                recognitionRate: 90,
+                listeningRate: 0,
+                listeningEvidenceCount: 0
+            )
+        )
+
+        XCTAssertFalse(findings.contains { $0.type == .listeningGap })
     }
 
     func testCollocationGapRequiresRecognitionAtLeastSeventyAndCollocationBelowSixty() {
@@ -171,6 +194,49 @@ final class DiagnosticsTests: XCTestCase {
         XCTAssertEqual(Set(first.listening.map(\.theme)).count, 3)
         XCTAssertEqual(first.recognition.count, 4)
         XCTAssertEqual(first.production.count, 4)
+        XCTAssertEqual(
+            first.recognition.map(\.id),
+            first.production.map(\.id)
+        )
+    }
+
+    func testMetricsNormalizeNonFiniteAndOutOfRangeValuesBeforeJSONAndDelta() throws {
+        let invalid = DiagnosticMetrics(
+            recognitionRate: .nan,
+            productionRate: .infinity,
+            medianResponseSeconds: -.infinity,
+            listeningRate: -10,
+            listeningEvidenceCount: -3,
+            collocationRate: 120,
+            selfMonitoringRate: .nan,
+            completedAt: completedAt
+        )
+
+        XCTAssertEqual(invalid.recognitionRate, 0)
+        XCTAssertEqual(invalid.productionRate, 0)
+        XCTAssertEqual(invalid.medianResponseSeconds, 0)
+        XCTAssertEqual(invalid.listeningRate, 0)
+        XCTAssertEqual(invalid.listeningEvidenceCount, 0)
+        XCTAssertEqual(invalid.collocationRate, 100)
+        XCTAssertEqual(invalid.selfMonitoringRate, 0)
+
+        let report = DiagnosticEngine().report(
+            baseline: invalid,
+            current: invalid
+        )
+        let encoded = try JSONEncoder().encode(report)
+        let decoded = try JSONDecoder().decode(
+            DiagnosticReport.self,
+            from: encoded
+        )
+        let deltas = decoded.deltas
+
+        XCTAssertTrue(deltas.recognitionPoints.isFinite)
+        XCTAssertTrue(deltas.productionPoints.isFinite)
+        XCTAssertTrue(deltas.responseSeconds.isFinite)
+        XCTAssertTrue(deltas.listeningPoints.isFinite)
+        XCTAssertTrue(deltas.collocationPoints.isFinite)
+        XCTAssertTrue(deltas.selfMonitoringPoints.isFinite)
     }
 
     func testFindingsAreTentativeAndNeverClaimAutomaticPronunciationJudgment() {
@@ -198,6 +264,7 @@ final class DiagnosticsTests: XCTestCase {
         productionRate: Double = 70,
         medianResponseSeconds: Double = 2,
         listeningRate: Double = 75,
+        listeningEvidenceCount: Int = 10,
         collocationRate: Double = 70,
         selfMonitoringRate: Double = 30
     ) -> DiagnosticMetrics {
@@ -206,6 +273,7 @@ final class DiagnosticsTests: XCTestCase {
             productionRate: productionRate,
             medianResponseSeconds: medianResponseSeconds,
             listeningRate: listeningRate,
+            listeningEvidenceCount: listeningEvidenceCount,
             collocationRate: collocationRate,
             selfMonitoringRate: selfMonitoringRate,
             completedAt: completedAt

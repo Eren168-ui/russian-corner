@@ -105,13 +105,15 @@ struct RussianCornerApp: App {
           "诊断暂时无法载入",
           systemImage: "exclamationmark.triangle",
           description: Text(
-            runtime.launchError ?? "请稍后重新打开应用"
+            runtime.diagnosticError
+              ?? runtime.launchError
+              ?? "请稍后重新打开应用"
           )
         )
         .frame(width: 440, height: 300)
       }
     }
-    .windowResizability(.contentSize)
+    .windowResizability(.contentMinSize)
   }
 }
 

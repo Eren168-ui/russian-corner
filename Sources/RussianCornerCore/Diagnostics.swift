@@ -5,6 +5,7 @@ public struct DiagnosticMetrics: Codable, Equatable, Sendable {
     public let productionRate: Double
     public let medianResponseSeconds: Double
     public let listeningRate: Double
+    public let listeningEvidenceCount: Int
     public let collocationRate: Double
     public let selfMonitoringRate: Double
     public let completedAt: Date
@@ -14,17 +15,75 @@ public struct DiagnosticMetrics: Codable, Equatable, Sendable {
         productionRate: Double,
         medianResponseSeconds: Double,
         listeningRate: Double,
+        listeningEvidenceCount: Int = 10,
         collocationRate: Double,
         selfMonitoringRate: Double,
         completedAt: Date
     ) {
-        self.recognitionRate = recognitionRate
-        self.productionRate = productionRate
-        self.medianResponseSeconds = medianResponseSeconds
-        self.listeningRate = listeningRate
-        self.collocationRate = collocationRate
-        self.selfMonitoringRate = selfMonitoringRate
+        self.recognitionRate = Self.percentage(recognitionRate)
+        self.productionRate = Self.percentage(productionRate)
+        self.medianResponseSeconds =
+            medianResponseSeconds.isFinite && medianResponseSeconds >= 0
+            ? medianResponseSeconds : 0
+        self.listeningRate = Self.percentage(listeningRate)
+        self.listeningEvidenceCount = max(0, listeningEvidenceCount)
+        self.collocationRate = Self.percentage(collocationRate)
+        self.selfMonitoringRate = Self.percentage(selfMonitoringRate)
         self.completedAt = completedAt
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case recognitionRate
+        case productionRate
+        case medianResponseSeconds
+        case listeningRate
+        case listeningEvidenceCount
+        case collocationRate
+        case selfMonitoringRate
+        case completedAt
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(
+            recognitionRate: try container.decode(
+                Double.self,
+                forKey: .recognitionRate
+            ),
+            productionRate: try container.decode(
+                Double.self,
+                forKey: .productionRate
+            ),
+            medianResponseSeconds: try container.decode(
+                Double.self,
+                forKey: .medianResponseSeconds
+            ),
+            listeningRate: try container.decode(
+                Double.self,
+                forKey: .listeningRate
+            ),
+            listeningEvidenceCount: try container.decodeIfPresent(
+                Int.self,
+                forKey: .listeningEvidenceCount
+            ) ?? 0,
+            collocationRate: try container.decode(
+                Double.self,
+                forKey: .collocationRate
+            ),
+            selfMonitoringRate: try container.decode(
+                Double.self,
+                forKey: .selfMonitoringRate
+            ),
+            completedAt: try container.decode(
+                Date.self,
+                forKey: .completedAt
+            )
+        )
+    }
+
+    private static func percentage(_ value: Double) -> Double {
+        guard value.isFinite else { return 0 }
+        return min(max(value, 0), 100)
     }
 }
 
@@ -98,21 +157,90 @@ public struct DiagnosticDeltas: Codable, Equatable, Sendable {
 }
 
 public struct DiagnosticReport: Codable, Equatable, Sendable {
+    public let diagnosticVersion: Int
+    public let seed: UInt64
+    public let sampleLexemeIDs: [String]
+    public let listeningSentenceIDs: [String]
+    public let sampleWasRepaired: Bool
     public let baseline: DiagnosticMetrics
     public let current: DiagnosticMetrics
     public let findings: [DiagnosticFinding]
     public let deltas: DiagnosticDeltas
 
     public init(
+        diagnosticVersion: Int = 2,
+        seed: UInt64 = 0,
+        sampleLexemeIDs: [String] = [],
+        listeningSentenceIDs: [String] = [],
+        sampleWasRepaired: Bool = false,
         baseline: DiagnosticMetrics,
         current: DiagnosticMetrics,
         findings: [DiagnosticFinding],
         deltas: DiagnosticDeltas
     ) {
+        self.diagnosticVersion = diagnosticVersion
+        self.seed = seed
+        self.sampleLexemeIDs = sampleLexemeIDs
+        self.listeningSentenceIDs = listeningSentenceIDs
+        self.sampleWasRepaired = sampleWasRepaired
         self.baseline = baseline
         self.current = current
         self.findings = findings
         self.deltas = deltas
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case diagnosticVersion
+        case seed
+        case sampleLexemeIDs
+        case listeningSentenceIDs
+        case sampleWasRepaired
+        case baseline
+        case current
+        case findings
+        case deltas
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(
+            diagnosticVersion: try container.decodeIfPresent(
+                Int.self,
+                forKey: .diagnosticVersion
+            ) ?? 1,
+            seed: try container.decodeIfPresent(
+                UInt64.self,
+                forKey: .seed
+            ) ?? 0,
+            sampleLexemeIDs: try container.decodeIfPresent(
+                [String].self,
+                forKey: .sampleLexemeIDs
+            ) ?? [],
+            listeningSentenceIDs: try container.decodeIfPresent(
+                [String].self,
+                forKey: .listeningSentenceIDs
+            ) ?? [],
+            sampleWasRepaired: try container.decodeIfPresent(
+                Bool.self,
+                forKey: .sampleWasRepaired
+            ) ?? false,
+            baseline: try container.decode(
+                DiagnosticMetrics.self,
+                forKey: .baseline
+            ),
+            current: try container.decode(
+                DiagnosticMetrics.self,
+                forKey: .current
+            ),
+            findings: try container.decode(
+                [DiagnosticFinding].self,
+                forKey: .findings
+            ),
+            deltas: try container.decode(
+                DiagnosticDeltas.self,
+                forKey: .deltas
+            )
+        )
     }
 }
 
@@ -172,7 +300,8 @@ public struct DiagnosticEngine: Sendable {
                 )
             )
         }
-        if metrics.recognitionRate - metrics.listeningRate
+        if metrics.listeningEvidenceCount > 0
+            && metrics.recognitionRate - metrics.listeningRate
             >= DiagnosticThresholds.listeningGapMinimum
         {
             findings.append(
@@ -215,9 +344,18 @@ public struct DiagnosticEngine: Sendable {
 
     public func report(
         baseline: DiagnosticMetrics,
-        current: DiagnosticMetrics
+        current: DiagnosticMetrics,
+        seed: UInt64 = 0,
+        sampleLexemeIDs: [String] = [],
+        listeningSentenceIDs: [String] = [],
+        sampleWasRepaired: Bool = false
     ) -> DiagnosticReport {
         DiagnosticReport(
+            diagnosticVersion: 2,
+            seed: seed,
+            sampleLexemeIDs: sampleLexemeIDs,
+            listeningSentenceIDs: listeningSentenceIDs,
+            sampleWasRepaired: sampleWasRepaired,
             baseline: baseline,
             current: current,
             findings: findings(for: current),
@@ -264,33 +402,72 @@ public struct DiagnosticSampler: Sendable {
         from catalog: ContentCatalog,
         seed: UInt64,
         vocabularyCount: Int = 10,
-        listeningCount: Int = 10
+        listeningCount: Int = 10,
+        preferredLexemeIDs: [String] = [],
+        preferredListeningSentenceIDs: [String] = []
     ) -> DiagnosticSample {
         var generator = SeededDiagnosticGenerator(seed: seed)
-        let listening = themeRoundRobin(
+        let fallbackListening = themeRoundRobin(
             catalog.sentences,
             count: listeningCount,
             generator: &generator
         )
-        let themedLexemes = themeRoundRobin(
+        let fallbackLexemes = themeRoundRobin(
             catalog.lexemes,
             sentences: catalog.sentences,
-            count: min(catalog.lexemes.count, vocabularyCount * 2),
+            count: min(catalog.lexemes.count, vocabularyCount),
             generator: &generator
         )
-        let recognition = Array(themedLexemes.prefix(vocabularyCount))
-        var production = Array(
-            themedLexemes.dropFirst(vocabularyCount).prefix(vocabularyCount)
+        let lexemesByID = Dictionary(
+            uniqueKeysWithValues: catalog.lexemes.map { ($0.id, $0) }
         )
-        if production.count < vocabularyCount {
-            let needed = vocabularyCount - production.count
-            production.append(contentsOf: recognition.prefix(needed))
-        }
+        let sentencesByID = Dictionary(
+            uniqueKeysWithValues: catalog.sentences.map { ($0.id, $0) }
+        )
+        let recognition = resolve(
+            preferredIDs: preferredLexemeIDs,
+            itemsByID: lexemesByID,
+            fallback: fallbackLexemes,
+            count: vocabularyCount
+        )
+        let listening = resolve(
+            preferredIDs: preferredListeningSentenceIDs,
+            itemsByID: sentencesByID,
+            fallback: fallbackListening,
+            count: listeningCount
+        )
         return DiagnosticSample(
             recognition: recognition,
-            production: production,
+            production: recognition,
             listening: listening
         )
+    }
+
+    private func resolve<Element: Identifiable>(
+        preferredIDs: [String],
+        itemsByID: [String: Element],
+        fallback: [Element],
+        count: Int
+    ) -> [Element] where Element.ID == String {
+        guard count > 0 else { return [] }
+        var seen: Set<String> = []
+        var result: [Element] = []
+        for id in preferredIDs {
+            guard let item = itemsByID[id], seen.insert(id).inserted else {
+                continue
+            }
+            result.append(item)
+            if result.count == count {
+                return result
+            }
+        }
+        for item in fallback where seen.insert(item.id).inserted {
+            result.append(item)
+            if result.count == count {
+                break
+            }
+        }
+        return result
     }
 
     private func themeRoundRobin(

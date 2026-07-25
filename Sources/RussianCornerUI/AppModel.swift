@@ -187,31 +187,43 @@ public final class AppRuntime {
   public private(set) var diagnostics: DiagnosticViewModel?
   public private(set) var progress = LearningProgressSnapshot()
   public private(set) var launchError: String?
+  public private(set) var diagnosticError: String?
 
   private var catalog: ContentCatalog?
   private var repository: ProgressRepository?
   private let reminderService: ReminderService?
   private var reminderSettingsCoordinator: ReminderSettingsCoordinator?
 
-  public init(defaults: UserDefaults = .standard) {
+  public init(
+    defaults: UserDefaults = .standard,
+    catalog injectedCatalog: ContentCatalog? = nil,
+    repository injectedRepository: ProgressRepository? = nil,
+    enableSystemReminders: Bool = true
+  ) {
     appModel = AppModel(defaults: defaults)
     reminderService =
-      Bundle.main.bundleIdentifier == nil
+      !enableSystemReminders || Bundle.main.bundleIdentifier == nil
       ? nil : ReminderService()
     do {
-      let catalog = try ContentCatalog()
-      let repository = ProgressRepository(
-        container: try ProgressRepository.makeContainer()
-      )
+      let catalog: ContentCatalog
+      if let injectedCatalog {
+        catalog = injectedCatalog
+      } else {
+        catalog = try ContentCatalog()
+      }
+      let repository: ProgressRepository
+      if let injectedRepository {
+        repository = injectedRepository
+      } else {
+        repository = ProgressRepository(
+          container: try ProgressRepository.makeContainer()
+        )
+      }
       self.catalog = catalog
       self.repository = repository
       reminderSettingsCoordinator = ReminderSettingsCoordinator(
         store: repository,
         scheduler: reminderService
-      )
-      diagnostics = try DiagnosticViewModel(
-        catalog: catalog,
-        repository: repository
       )
       let persistedSettings = try repository.settings()
       appModel.morningReminder = persistedSettings.morningReminder
@@ -220,6 +232,17 @@ public final class AppRuntime {
       try refreshProgress()
     } catch {
       launchError = "学习数据暂时无法载入：\(error.localizedDescription)"
+      return
+    }
+
+    do {
+      guard let catalog, let repository else { return }
+      diagnostics = try DiagnosticViewModel(
+        catalog: catalog,
+        repository: repository
+      )
+    } catch {
+      diagnosticError = "诊断数据暂时无法载入：\(error.localizedDescription)"
     }
   }
 
