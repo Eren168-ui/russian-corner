@@ -61,6 +61,13 @@ struct RussianCornerApp: App {
     Task {
       await runtime.reconcileRemindersOnLaunch()
     }
+    Task { [weak runtime] in
+      while !Task.isCancelled {
+        try? await Task.sleep(for: .seconds(60))
+        guard !Task.isCancelled else { return }
+        runtime?.refreshPracticeForTemporalBoundary()
+      }
+    }
   }
 
   private static func grade(

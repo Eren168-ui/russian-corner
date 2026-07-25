@@ -261,6 +261,38 @@ final class PracticeViewModelTests: XCTestCase {
     XCTAssertEqual(model.queue.filter { $0.kind == .lexeme }.count, 6)
   }
 
+  func testSundayReviewsMultipleLearnedLexemesWithoutAddingFreshItems()
+    throws
+  {
+    let sunday = Date(timeIntervalSince1970: 1_700_352_000)
+    let repository = try makeRepository()
+    let catalog = makeCatalog(lexemeCount: 12, sentenceCount: 5)
+    for lexeme in catalog.lexemes.prefix(5) {
+      try repository.saveProgress(
+        itemType: .lexeme,
+        itemId: lexeme.id,
+        state: ReviewState(
+          masteryLevel: 2,
+          dueAt: sunday.addingTimeInterval(86_400)
+        )
+      )
+    }
+
+    let model = try PracticeViewModel(
+      catalog: catalog,
+      repository: repository,
+      now: { sunday },
+      calendar: utcCalendar
+    )
+
+    XCTAssertEqual(model.newWordLimit, 0)
+    XCTAssertEqual(
+      Set(model.queue.filter { $0.kind == .lexeme }.map(\.id)),
+      Set(catalog.lexemes.prefix(5).map(\.id))
+    )
+    XCTAssertTrue(model.queue.allSatisfy { $0.kind == .lexeme })
+  }
+
   func testLexemeCardExposesStressMeaningGrammarCollocationsAndContext() throws {
     let model = try makeModel(
       repository: try makeRepository(),
@@ -312,6 +344,42 @@ final class PracticeViewModelTests: XCTestCase {
     XCTAssertEqual(model.lexemeDirection, .production)
     XCTAssertEqual(model.prompt, "词义 0")
     XCTAssertNil(model.answer)
+  }
+
+  func testTemporalBoundaryRequiresReloadAtNoonAndAfterMidnight() throws {
+    let beforeNoon = try XCTUnwrap(
+      utcCalendar.date(
+        from: DateComponents(
+          year: 2026,
+          month: 7,
+          day: 27,
+          hour: 11,
+          minute: 59
+        )
+      )
+    )
+    let model = try PracticeViewModel(
+      catalog: makeCatalog(lexemeCount: 1, sentenceCount: 1),
+      repository: try makeRepository(),
+      now: { beforeNoon },
+      calendar: utcCalendar
+    )
+
+    XCTAssertFalse(
+      model.needsTemporalReload(
+        at: beforeNoon.addingTimeInterval(30)
+      )
+    )
+    XCTAssertTrue(
+      model.needsTemporalReload(
+        at: beforeNoon.addingTimeInterval(60)
+      )
+    )
+    XCTAssertTrue(
+      model.needsTemporalReload(
+        at: beforeNoon.addingTimeInterval(13 * 60 * 60)
+      )
+    )
   }
 
   func testSentenceCardOffersTwoTurnThemeMicroDialogue() throws {
@@ -669,6 +737,30 @@ private actor RuntimeReminderScheduler: ReminderSettingsScheduling {
 
 @MainActor
 final class AppModelTests: XCTestCase {
+  func testRuntimeReloadsPracticeAfterTemporalBoundary() throws {
+    let repository = ProgressRepository(
+      container: try ProgressRepository.makeInMemoryContainer()
+    )
+    let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+    let runtime = AppRuntime(
+      defaults: defaults,
+      catalog: ContentCatalog(lexemes: [], sentences: []),
+      repository: repository,
+      enableSystemReminders: false
+    )
+    let initialPractice = try XCTUnwrap(runtime.practice)
+
+    runtime.refreshPracticeForTemporalBoundary(
+      now: Date().addingTimeInterval(48 * 60 * 60)
+    )
+
+    let refreshedPractice = try XCTUnwrap(runtime.practice)
+    XCTAssertFalse(initialPractice === refreshedPractice)
+    XCTAssertNil(runtime.appModel.transientStatus)
+  }
+
   func testSavedDiagnosticImmediatelyReloadsPracticeStrategy() throws {
     let repository = ProgressRepository(
       container: try ProgressRepository.makeInMemoryContainer()

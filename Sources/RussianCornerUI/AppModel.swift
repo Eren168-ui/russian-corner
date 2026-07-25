@@ -271,7 +271,9 @@ public final class AppRuntime {
     }
   }
 
-  public func reloadPractice() throws {
+  public func reloadPractice(
+    now: @escaping () -> Date = Date.init
+  ) throws {
     guard let catalog, let repository else { return }
     let latestValidReport = try repository
       .diagnosticHistory()
@@ -291,10 +293,26 @@ public final class AppRuntime {
       repository: repository,
       targetCount: appModel.dailyCardCount,
       mode: appModel.mode,
+      now: now,
       diagnosticFindings: findings
     )
     practice?.handleDisappear()
     practice = nextPractice
+  }
+
+  public func refreshPracticeForTemporalBoundary(
+    now instant: Date = Date()
+  ) {
+    guard practice?.needsTemporalReload(at: instant) == true else {
+      return
+    }
+    do {
+      try reloadPractice(now: { instant })
+      try refreshProgress(now: instant)
+    } catch {
+      appModel.transientStatus =
+        "跨时段队列刷新失败：\(error.localizedDescription)"
+    }
   }
 
   private func applyLatestDiagnosticStrategy() {

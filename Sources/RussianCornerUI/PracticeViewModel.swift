@@ -105,6 +105,8 @@ public final class PracticeViewModel {
   private let recordingsDirectory: URL
   private let now: () -> Date
   private let calendar: Calendar
+  private let sessionDayStart: Date
+  private let automaticDirectionAtCreation: LexemePromptDirection
   private let sentencesByID: [String: SentenceCard]
   private let sentencesByTheme: [String: [SentenceCard]]
   private var states: [PracticeItemIdentity: ReviewState]
@@ -254,9 +256,11 @@ public final class PracticeViewModel {
     self.recordingsDirectory =
       recordingsDirectory ?? Self.defaultRecordingsDirectory
     let instant = now()
-    lexemeDirection =
+    sessionDayStart = calendar.startOfDay(for: instant)
+    automaticDirectionAtCreation =
       calendar.component(.hour, from: instant) < 12
       ? .recognition : .production
+    lexemeDirection = automaticDirectionAtCreation
     recallStartedAt = instant
     sentencesByID = Dictionary(
       uniqueKeysWithValues: catalog.sentences.map { ($0.id, $0) }
@@ -267,7 +271,7 @@ public final class PracticeViewModel {
     )
 
     let events = try repository.reviewEvents()
-    let todayStart = calendar.startOfDay(for: instant)
+    let todayStart = sessionDayStart
     let todayEvents = events.filter {
       calendar.startOfDay(for: $0.createdAt) == todayStart
     }
@@ -450,7 +454,7 @@ public final class PracticeViewModel {
       .map { PracticeQueueEntry(content: .lexeme($0), isRetry: true) }
     if weeklyReviewDay && hasLearnedContent {
       lexemeEntries += orderedLearnedLexemes
-        .prefix(max(adaptiveNewWordLimit, retryToday.isEmpty ? 1 : 0))
+        .prefix(max(diagnosedNewWordLimit, 1))
         .map { PracticeQueueEntry(content: .lexeme($0)) }
     } else {
       lexemeEntries += orderedDueLexemes.prefix(20).map {
@@ -524,6 +528,16 @@ public final class PracticeViewModel {
     successfulToday = successfulTodaySet
     completedToday = successfulTodaySet.count
     queue = lexemeEntries + sentenceEntries
+  }
+
+  public func needsTemporalReload(at instant: Date) -> Bool {
+    if calendar.startOfDay(for: instant) != sessionDayStart {
+      return true
+    }
+    let expectedDirection: LexemePromptDirection =
+      calendar.component(.hour, from: instant) < 12
+      ? .recognition : .production
+    return expectedDirection != automaticDirectionAtCreation
   }
 
   public func reveal() {
