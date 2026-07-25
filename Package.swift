@@ -12,6 +12,10 @@ let package = Package(
             name: "RussianCornerCore",
             targets: ["RussianCornerCore"]
         ),
+        .library(
+            name: "RussianCornerPlatform",
+            targets: ["RussianCornerPlatform"]
+        ),
     ],
     targets: [
         .target(
@@ -20,9 +24,20 @@ let package = Package(
                 .process("Resources"),
             ]
         ),
+        .target(
+            name: "RussianCornerPlatform",
+            dependencies: ["RussianCornerCore"]
+        ),
         .testTarget(
             name: "RussianCornerCoreTests",
             dependencies: ["RussianCornerCore"]
+        ),
+        .testTarget(
+            name: "RussianCornerPlatformTests",
+            dependencies: [
+                "RussianCornerCore",
+                "RussianCornerPlatform",
+            ]
         ),
     ]
 )

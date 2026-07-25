@@ -6,6 +6,63 @@ public enum ReviewGrade: String, Codable, Equatable, Sendable {
     case easy
 }
 
+public enum PracticeMode: String, Codable, Equatable, Sendable {
+    case quiet
+    case speaking
+}
+
+public struct ReviewEvent: Codable, Equatable, Sendable {
+    public let itemType: PracticeItemKind
+    public let itemId: String
+    public let grade: ReviewGrade
+    public let responseTimeMs: Int
+    public let practiceMode: PracticeMode
+    public let createdAt: Date
+
+    public init(
+        itemType: PracticeItemKind,
+        itemId: String,
+        grade: ReviewGrade,
+        responseTimeMs: Int,
+        practiceMode: PracticeMode,
+        createdAt: Date
+    ) {
+        self.itemType = itemType
+        self.itemId = itemId
+        self.grade = grade
+        self.responseTimeMs = responseTimeMs
+        self.practiceMode = practiceMode
+        self.createdAt = createdAt
+    }
+}
+
+public struct ReminderTime: Codable, Equatable, Sendable {
+    public let hour: Int
+    public let minute: Int
+
+    public init(hour: Int, minute: Int) {
+        self.hour = hour
+        self.minute = minute
+    }
+}
+
+public struct RussianCornerSettings: Codable, Equatable, Sendable {
+    public var morningReminder: ReminderTime
+    public var eveningReminder: ReminderTime
+
+    public var reminderTimes: [ReminderTime] {
+        [morningReminder, eveningReminder]
+    }
+
+    public init(
+        morningReminder: ReminderTime = ReminderTime(hour: 11, minute: 30),
+        eveningReminder: ReminderTime = ReminderTime(hour: 17, minute: 30)
+    ) {
+        self.morningReminder = morningReminder
+        self.eveningReminder = eveningReminder
+    }
+}
+
 public struct ReviewState: Codable, Equatable, Sendable {
     public var masteryLevel: Int
     public var dueAt: Date
