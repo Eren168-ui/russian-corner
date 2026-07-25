@@ -2,6 +2,14 @@ import Foundation
 import RussianCornerCore
 import SwiftData
 
+public enum ProgressRepositoryError: Error, Equatable, Sendable {
+    case corruptedRecord(
+        recordID: UUID,
+        field: String,
+        value: String
+    )
+}
+
 @Model
 public final class ReviewEventRecord {
     @Attribute(.unique) public var id: UUID
@@ -22,13 +30,29 @@ public final class ReviewEventRecord {
         createdAt = event.createdAt
     }
 
-    public var event: ReviewEvent? {
+    public func decodedEvent() throws -> ReviewEvent {
+        guard let itemType = PracticeItemKind(rawValue: itemTypeRawValue) else {
+            throw ProgressRepositoryError.corruptedRecord(
+                recordID: id,
+                field: "itemTypeRawValue",
+                value: itemTypeRawValue
+            )
+        }
+        guard let grade = ReviewGrade(rawValue: gradeRawValue) else {
+            throw ProgressRepositoryError.corruptedRecord(
+                recordID: id,
+                field: "gradeRawValue",
+                value: gradeRawValue
+            )
+        }
         guard
-            let itemType = PracticeItemKind(rawValue: itemTypeRawValue),
-            let grade = ReviewGrade(rawValue: gradeRawValue),
             let practiceMode = PracticeMode(rawValue: practiceModeRawValue)
         else {
-            return nil
+            throw ProgressRepositoryError.corruptedRecord(
+                recordID: id,
+                field: "practiceModeRawValue",
+                value: practiceModeRawValue
+            )
         }
 
         return ReviewEvent(
@@ -160,7 +184,9 @@ public final class ProgressRepository {
         let descriptor = FetchDescriptor<ReviewEventRecord>(
             sortBy: [SortDescriptor(\.createdAt)]
         )
-        return try context.fetch(descriptor).compactMap(\.event)
+        return try context.fetch(descriptor).map {
+            try $0.decodedEvent()
+        }
     }
 
     public func saveProgress(

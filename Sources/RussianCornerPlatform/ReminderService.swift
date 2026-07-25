@@ -34,6 +34,9 @@ public struct DailyReminderRequest: Equatable, Sendable {
 public protocol ReminderNotificationScheduling: Sendable {
     func authorizationStatus() async -> ReminderPermissionStatus
     func requestAuthorization() async -> ReminderPermissionStatus
+    func pendingRequests(
+        withIdentifiers identifiers: [String]
+    ) async throws -> [DailyReminderRequest]
     func removePendingRequests(withIdentifiers identifiers: [String]) async
     func add(_ request: DailyReminderRequest) async throws
 }
@@ -76,6 +79,37 @@ public final class SystemReminderNotificationScheduler:
         }
     }
 
+    public func pendingRequests(
+        withIdentifiers identifiers: [String]
+    ) async throws -> [DailyReminderRequest] {
+        let requests = await center.pendingNotificationRequests()
+        let requestsByID = Dictionary(
+            uniqueKeysWithValues: requests.map {
+                ($0.identifier, $0)
+            }
+        )
+
+        return identifiers.compactMap { identifier in
+            guard
+                let request = requestsByID[identifier],
+                let trigger = request.trigger
+                    as? UNCalendarNotificationTrigger,
+                let hour = trigger.dateComponents.hour,
+                let minute = trigger.dateComponents.minute
+            else {
+                return nil
+            }
+
+            return DailyReminderRequest(
+                identifier: identifier,
+                time: ReminderTime(hour: hour, minute: minute),
+                title: request.content.title,
+                body: request.content.body,
+                repeatsDaily: trigger.repeats
+            )
+        }
+    }
+
     public func removePendingRequests(
         withIdentifiers identifiers: [String]
     ) async {
@@ -114,13 +148,15 @@ public enum ReminderScheduleResult: Equatable, Sendable {
     case failed(String)
 }
 
-public struct ReminderService: Sendable {
+public actor ReminderService {
     public static let pendingRequestIDs = [
         "russian-corner.reminder.morning",
         "russian-corner.reminder.evening",
     ]
 
     private let scheduler: any ReminderNotificationScheduling
+    private var isReplacing = false
+    private var replacementWaiters: [CheckedContinuation<Void, Never>] = []
 
     public init(
         scheduler: any ReminderNotificationScheduling =
@@ -140,6 +176,15 @@ public struct ReminderService: Sendable {
     public func schedule(
         settings: RussianCornerSettings
     ) async -> ReminderScheduleResult {
+        await acquireReplacementSlot()
+        let result = await replace(settings: settings)
+        releaseReplacementSlot()
+        return result
+    }
+
+    private func replace(
+        settings: RussianCornerSettings
+    ) async -> ReminderScheduleResult {
         switch await scheduler.authorizationStatus() {
         case .authorized:
             break
@@ -149,6 +194,15 @@ public struct ReminderService: Sendable {
             return .permissionUndetermined
         case .unavailable:
             return .unavailable
+        }
+
+        let oldRequests: [DailyReminderRequest]
+        do {
+            oldRequests = try await scheduler.pendingRequests(
+                withIdentifiers: Self.pendingRequestIDs
+            )
+        } catch {
+            return .failed(error.localizedDescription)
         }
 
         await scheduler.removePendingRequests(
@@ -177,7 +231,39 @@ public struct ReminderService: Sendable {
             await scheduler.removePendingRequests(
                 withIdentifiers: Self.pendingRequestIDs
             )
+            do {
+                for oldRequest in oldRequests {
+                    try await scheduler.add(oldRequest)
+                }
+            } catch {
+                let restorationMessage = error.localizedDescription
+                await scheduler.removePendingRequests(
+                    withIdentifiers: Self.pendingRequestIDs
+                )
+                return .failed(
+                    "\(message) Restore failed: \(restorationMessage)"
+                )
+            }
             return .failed(message)
         }
+    }
+
+    private func acquireReplacementSlot() async {
+        if !isReplacing {
+            isReplacing = true
+            return
+        }
+
+        await withCheckedContinuation {
+            replacementWaiters.append($0)
+        }
+    }
+
+    private func releaseReplacementSlot() {
+        guard !replacementWaiters.isEmpty else {
+            isReplacing = false
+            return
+        }
+        replacementWaiters.removeFirst().resume()
     }
 }

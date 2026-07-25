@@ -115,9 +115,39 @@ public enum RecordingServiceError: Error, Equatable, Sendable {
 }
 
 @MainActor
+public protocol RecordingFileManaging {
+    func fileExists(at url: URL) -> Bool
+    func removeItem(at url: URL) throws
+    func moveItem(at sourceURL: URL, to destinationURL: URL) throws
+}
+
+public struct SystemRecordingFileManager: RecordingFileManaging {
+    public init() {}
+
+    public func fileExists(at url: URL) -> Bool {
+        FileManager.default.fileExists(atPath: url.path)
+    }
+
+    public func removeItem(at url: URL) throws {
+        try FileManager.default.removeItem(at: url)
+    }
+
+    public func moveItem(
+        at sourceURL: URL,
+        to destinationURL: URL
+    ) throws {
+        try FileManager.default.moveItem(
+            at: sourceURL,
+            to: destinationURL
+        )
+    }
+}
+
+@MainActor
 public final class RecordingService {
     private let permissionProvider: any MicrophonePermissionProviding
     private let engineFactory: any RecordingEngineFactory
+    private let fileManager: any RecordingFileManaging
     private let temporaryDirectory: URL
     private var engine: (any RecordingEngine)?
 
@@ -131,10 +161,13 @@ public final class RecordingService {
         permissionProvider: any MicrophonePermissionProviding =
             SystemMicrophonePermissionProvider(),
         engineFactory: any RecordingEngineFactory = AVAudioRecorderFactory(),
+        fileManager: any RecordingFileManaging =
+            SystemRecordingFileManager(),
         temporaryDirectory: URL = FileManager.default.temporaryDirectory
     ) {
         self.permissionProvider = permissionProvider
         self.engineFactory = engineFactory
+        self.fileManager = fileManager
         self.temporaryDirectory = temporaryDirectory
     }
 
@@ -164,7 +197,11 @@ public final class RecordingService {
             return .unavailable
         }
 
-        discard()
+        do {
+            try discard()
+        } catch {
+            return .failed(error.localizedDescription)
+        }
         let outputURL = temporaryDirectory
             .appendingPathComponent("russian-corner-\(UUID().uuidString)")
             .appendingPathExtension("m4a")
@@ -172,14 +209,14 @@ public final class RecordingService {
         do {
             let newEngine = try engineFactory.makeEngine(outputURL: outputURL)
             guard newEngine.record() else {
-                try? FileManager.default.removeItem(at: outputURL)
+                try? fileManager.removeItem(at: outputURL)
                 return .failed("Audio recorder did not start.")
             }
             engine = newEngine
             temporaryRecordingURL = outputURL
             return .started(outputURL)
         } catch {
-            try? FileManager.default.removeItem(at: outputURL)
+            try? fileManager.removeItem(at: outputURL)
             return .failed(error.localizedDescription)
         }
     }
@@ -189,12 +226,15 @@ public final class RecordingService {
         engine = nil
     }
 
-    public func discard() {
+    public func discard() throws {
         stop()
-        if let temporaryRecordingURL {
-            try? FileManager.default.removeItem(at: temporaryRecordingURL)
+        guard let temporaryRecordingURL else {
+            return
         }
-        temporaryRecordingURL = nil
+        if fileManager.fileExists(at: temporaryRecordingURL) {
+            try fileManager.removeItem(at: temporaryRecordingURL)
+        }
+        self.temporaryRecordingURL = nil
     }
 
     @discardableResult
@@ -205,15 +245,14 @@ public final class RecordingService {
         guard let temporaryRecordingURL else {
             throw RecordingServiceError.noTemporaryRecording
         }
-        guard !FileManager.default.fileExists(atPath: destinationURL.path) else {
+        guard !fileManager.fileExists(at: destinationURL) else {
             throw RecordingServiceError.destinationAlreadyExists
         }
 
-        try FileManager.default.copyItem(
+        try fileManager.moveItem(
             at: temporaryRecordingURL,
             to: destinationURL
         )
-        try FileManager.default.removeItem(at: temporaryRecordingURL)
         self.temporaryRecordingURL = nil
         return destinationURL
     }
