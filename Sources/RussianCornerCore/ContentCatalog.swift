@@ -19,18 +19,61 @@ public struct ContentCatalog: Sendable {
     public let sentences: [SentenceCard]
 
     public init() throws {
+        try self.init(
+            resourceDirectory: Self.defaultResourceDirectory(
+                bundleIdentifier: Bundle.main.bundleIdentifier,
+                bundleResourceURL: Bundle.main.resourceURL,
+                environment: ProcessInfo.processInfo.environment,
+                currentDirectoryURL: URL(
+                    fileURLWithPath: FileManager.default.currentDirectoryPath,
+                    isDirectory: true
+                )
+            )
+        )
+    }
+
+    public init(resourceDirectory: URL) throws {
         let decoder = JSONDecoder()
         let lexemes = try Self.decode(
             [Lexeme].self,
             resource: "lexemes",
+            resourceDirectory: resourceDirectory,
             decoder: decoder
         )
         let sentences = try Self.decode(
             [SentenceCard].self,
             resource: "sentences",
+            resourceDirectory: resourceDirectory,
             decoder: decoder
         )
         self.init(lexemes: lexemes, sentences: sentences)
+    }
+
+    static func defaultResourceDirectory(
+        bundleIdentifier: String?,
+        bundleResourceURL: URL?,
+        environment: [String: String],
+        currentDirectoryURL: URL
+    ) throws -> URL {
+        if bundleIdentifier != nil {
+            guard let bundleResourceURL else {
+                throw ContentCatalogError.missingResource(
+                    "resourceDirectory"
+                )
+            }
+            return bundleResourceURL
+        }
+
+        if let override = environment[
+            "RUSSIAN_CORNER_RESOURCE_DIRECTORY"
+        ], !override.isEmpty {
+            return URL(fileURLWithPath: override, isDirectory: true)
+        }
+
+        return currentDirectoryURL
+            .appendingPathComponent("Sources", isDirectory: true)
+            .appendingPathComponent("RussianCornerCore", isDirectory: true)
+            .appendingPathComponent("Resources", isDirectory: true)
     }
 
     public init(lexemes: [Lexeme], sentences: [SentenceCard]) {
@@ -405,12 +448,13 @@ public struct ContentCatalog: Sendable {
     private static func decode<Value: Decodable>(
         _ type: Value.Type,
         resource: String,
+        resourceDirectory: URL,
         decoder: JSONDecoder
     ) throws -> Value {
-        guard let url = Bundle.module.url(
-            forResource: resource,
-            withExtension: "json"
-        ) else {
+        let url = resourceDirectory
+            .appendingPathComponent(resource, isDirectory: false)
+            .appendingPathExtension("json")
+        guard FileManager.default.isReadableFile(atPath: url.path) else {
             throw ContentCatalogError.missingResource(resource)
         }
         return try decoder.decode(Value.self, from: Data(contentsOf: url))

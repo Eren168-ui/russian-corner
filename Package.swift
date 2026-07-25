@@ -28,8 +28,8 @@ let package = Package(
     targets: [
         .target(
             name: "RussianCornerCore",
-            resources: [
-                .process("Resources"),
+            exclude: [
+                "Resources",
             ]
         ),
         .target(
@@ -50,6 +50,10 @@ let package = Package(
                 "RussianCornerPlatform",
                 "RussianCornerUI",
             ]
+        ),
+        .executableTarget(
+            name: "RussianCornerResourceProbe",
+            dependencies: ["RussianCornerCore"]
         ),
         .testTarget(
             name: "RussianCornerCoreTests",

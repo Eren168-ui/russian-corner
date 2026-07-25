@@ -2,6 +2,89 @@ import XCTest
 @testable import RussianCornerCore
 
 final class ContentCatalogTests: XCTestCase {
+    private var sourceResourceDirectory: URL {
+        URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("Sources", isDirectory: true)
+            .appendingPathComponent("RussianCornerCore", isDirectory: true)
+            .appendingPathComponent("Resources", isDirectory: true)
+    }
+
+    func testExplicitResourceDirectoryLoadsReviewedCatalog() throws {
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
+
+        XCTAssertEqual(catalog.lexemes.count, 360)
+        XCTAssertEqual(catalog.sentences.count, 72)
+    }
+
+    func testMissingExplicitResourcesFailWithoutFallback() throws {
+        let emptyDirectory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(
+            at: emptyDirectory,
+            withIntermediateDirectories: true
+        )
+        addTeardownBlock {
+            try? FileManager.default.removeItem(at: emptyDirectory)
+        }
+
+        XCTAssertThrowsError(
+            try ContentCatalog(resourceDirectory: emptyDirectory)
+        ) { error in
+            XCTAssertEqual(
+                error as? ContentCatalogError,
+                .missingResource("lexemes")
+            )
+        }
+    }
+
+    func testProductionResourceResolutionIgnoresDevelopmentFallbacks() throws {
+        let productionResources = URL(
+            fileURLWithPath: "/Applications/Russian Corner.app/Contents/Resources",
+            isDirectory: true
+        )
+
+        let result = try ContentCatalog.defaultResourceDirectory(
+            bundleIdentifier: "com.openclaw.russiancorner",
+            bundleResourceURL: productionResources,
+            environment: [
+                "RUSSIAN_CORNER_RESOURCE_DIRECTORY": "/tmp/development"
+            ],
+            currentDirectoryURL: URL(
+                fileURLWithPath: "/tmp/repository",
+                isDirectory: true
+            )
+        )
+
+        XCTAssertEqual(result, productionResources)
+    }
+
+    func testBareBinaryResourceResolutionUsesEnvironmentOverride() throws {
+        let result = try ContentCatalog.defaultResourceDirectory(
+            bundleIdentifier: nil,
+            bundleResourceURL: nil,
+            environment: [
+                "RUSSIAN_CORNER_RESOURCE_DIRECTORY": "/tmp/explicit-resources"
+            ],
+            currentDirectoryURL: URL(
+                fileURLWithPath: "/tmp/repository",
+                isDirectory: true
+            )
+        )
+
+        XCTAssertEqual(
+            result,
+            URL(
+                fileURLWithPath: "/tmp/explicit-resources",
+                isDirectory: true
+            )
+        )
+    }
+
     func testLegacySentenceWithoutRussianCueDecodesWithAnswerFallback() throws {
         let legacyJSON = """
             {
@@ -44,7 +127,9 @@ final class ContentCatalogTests: XCTestCase {
     }
 
     func testPomogiteBelongsToCanonicalPomochLexeme() throws {
-        let catalog = try ContentCatalog()
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
         let pomochEntries = catalog.lexemes.filter { $0.lemma == "помочь" }
         let pomoch = try XCTUnwrap(pomochEntries.first)
 
@@ -64,7 +149,9 @@ final class ContentCatalogTests: XCTestCase {
     }
 
     func testBundleCatalogMeetsReviewedDailyContentContract() throws {
-        let catalog = try ContentCatalog()
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
 
         XCTAssertGreaterThanOrEqual(catalog.lexemes.count, 350)
         XCTAssertTrue((60...80).contains(catalog.sentences.count))
@@ -112,7 +199,9 @@ final class ContentCatalogTests: XCTestCase {
     }
 
     func testEveryLexemeHasRequiredLearningFieldsAndReciprocalSentenceLink() throws {
-        let catalog = try ContentCatalog()
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
         let sentencesByID = Dictionary(
             uniqueKeysWithValues: catalog.sentences.map { ($0.id, $0) }
         )
@@ -141,7 +230,9 @@ final class ContentCatalogTests: XCTestCase {
     }
 
     func testEverySentenceHasRequiredSourceAndLexemeLinks() throws {
-        let catalog = try ContentCatalog()
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
         let lexemeIDs = Set(catalog.lexemes.map(\.id))
 
         for sentence in catalog.sentences {
@@ -170,7 +261,9 @@ final class ContentCatalogTests: XCTestCase {
     }
 
     func testEveryRussianCueIsReviewedQuestionOrGuidance() throws {
-        let catalog = try ContentCatalog()
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
 
         XCTAssertEqual(catalog.sentences.count, 72)
         for sentence in catalog.sentences {
@@ -190,7 +283,9 @@ final class ContentCatalogTests: XCTestCase {
     }
 
     func testProfessionalConflictAndGeneratedReportSourcesAreExcluded() throws {
-        let catalog = try ContentCatalog()
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
         let excludedFragments = [
             "professional", "生物", "化学", "物理", "组织学",
             "conflict", "双链报告", "ai计划",
@@ -206,13 +301,17 @@ final class ContentCatalogTests: XCTestCase {
     }
 
     func testBundleCatalogValidatesWithoutIssues() throws {
-        let catalog = try ContentCatalog()
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
 
         XCTAssertEqual(catalog.validate(), [])
     }
 
     func testBundleCollocationsAreShortCompleteAndBalanced() throws {
-        let catalog = try ContentCatalog()
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
         let forbiddenEndings: Set<String> = [
             "в", "на", "к", "с", "из", "от", "до", "для", "без",
             "о", "об", "по", "за", "у", "при", "через", "перед",
@@ -245,7 +344,9 @@ final class ContentCatalogTests: XCTestCase {
     }
 
     func testBundleExamplesAreUniqueAndContainOwnLexicalForm() throws {
-        let catalog = try ContentCatalog()
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
         let normalizedExamples = catalog.lexemes.map {
             normalizedRussianText($0.example)
         }
@@ -264,7 +365,9 @@ final class ContentCatalogTests: XCTestCase {
     }
 
     func testBundleSentenceLinksVaryAndEveryLinkedLexemeAppears() throws {
-        let catalog = try ContentCatalog()
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
         let lexemesByID = Dictionary(
             uniqueKeysWithValues: catalog.lexemes.map { ($0.id, $0) }
         )
