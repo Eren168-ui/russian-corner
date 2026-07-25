@@ -16,17 +16,42 @@ EXECUTABLE_NAME="RussianCornerApp"
 RESOURCE_PROBE_NAME="RussianCornerResourceProbe"
 BUNDLE_IDENTIFIER="com.openclaw.russiancorner"
 DIST_DIR="$REPO_ROOT/dist"
-LOCK_DIR="$REPO_ROOT/.build-app.lock"
 STATE_FILE="$REPO_ROOT/.build-app-transaction"
 SOURCE_RESOURCES_DIR="$REPO_ROOT/Sources/RussianCornerCore/Resources"
 CODESIGN_BIN=${CODESIGN_BIN:-/usr/bin/codesign}
+
+if [ "${RUSSIAN_CORNER_LOCK_HELD:-0}" != "1" ]; then
+  GIT_ADMIN_DIR=$(
+    /usr/bin/git -C "$REPO_ROOT" rev-parse --absolute-git-dir
+  )
+  LOCK_FILE=$(
+    /usr/bin/git -C "$REPO_ROOT" rev-parse \
+      --path-format=absolute \
+      --git-path russian-corner-build.lock
+  )
+  if [ "$LOCK_FILE" != "$GIT_ADMIN_DIR/russian-corner-build.lock" ] ||
+    [ -L "$LOCK_FILE" ] ||
+    { [ -e "$LOCK_FILE" ] && [ ! -f "$LOCK_FILE" ]; }; then
+    printf 'error: unsafe build lock file: %s\n' "$LOCK_FILE" >&2
+    exit 1
+  fi
+  if [ -n "${ZSH_VERSION:-}" ]; then
+    LOCK_SHELL=/bin/zsh
+  else
+    LOCK_SHELL=/bin/bash
+  fi
+  exec /usr/bin/lockf -k -t 0 "$LOCK_FILE" \
+    /usr/bin/env RUSSIAN_CORNER_LOCK_HELD=1 \
+    "$LOCK_SHELL" "$SCRIPT_DIR/$(basename -- "$0")" "$@"
+fi
 
 STAGING_ROOT=""
 NEW_DIST=""
 STAGED_APP=""
 BACKUP_DIST=""
-LOCK_HELD=0
-LOCK_START_TIME=""
+LOCK_HELD=1
+TRANSACTION_OWNER_TOKEN=""
+TRANSACTION_OWNED=0
 OLD_MOVED=0
 NEW_PUBLISHED=0
 PUBLISH_COMMITTED=0
@@ -89,120 +114,6 @@ remove_trusted_root_entry() {
     validate_real_root_directory "$scratch_entry" "scratch entry" || return 1
     /bin/rm -rf -- "$scratch_entry"
   fi
-}
-
-current_process_start_time() {
-  process_id=$1
-  /bin/ps -p "$process_id" -o lstart= 2>/dev/null |
-    sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
-}
-
-lock_metadata_is_complete() {
-  [ -f "$LOCK_DIR/pid" ] &&
-    [ ! -L "$LOCK_DIR/pid" ] &&
-    [ -f "$LOCK_DIR/start_time" ] &&
-    [ ! -L "$LOCK_DIR/start_time" ]
-}
-
-lock_owner_is_live() {
-  lock_metadata_is_complete || return 1
-  lock_pid=$(sed -n '1p' "$LOCK_DIR/pid")
-  lock_start_time=$(sed -n '1p' "$LOCK_DIR/start_time")
-  case "$lock_pid" in
-    "" | *[!0-9]*)
-      return 1
-      ;;
-  esac
-  live_start_time=$(current_process_start_time "$lock_pid")
-  [ -n "$live_start_time" ] && [ "$live_start_time" = "$lock_start_time" ]
-}
-
-validate_lock_directory() {
-  if [ -L "$LOCK_DIR" ] || [ ! -d "$LOCK_DIR" ]; then
-    printf 'error: build lock is not a real directory: %s\n' "$LOCK_DIR" >&2
-    return 1
-  fi
-  real_lock=$(
-    CDPATH= cd -- "$LOCK_DIR"
-    pwd -P
-  )
-  if [ "$real_lock" != "$LOCK_DIR" ]; then
-    printf 'error: build lock resolves outside repository: %s\n' "$LOCK_DIR" >&2
-    return 1
-  fi
-}
-
-remove_lock_directory() {
-  validate_lock_directory || return 1
-  for lock_metadata in "$LOCK_DIR/pid" "$LOCK_DIR/start_time"; do
-    if [ -L "$lock_metadata" ]; then
-      printf 'error: refusing symlinked lock metadata: %s\n' \
-        "$lock_metadata" >&2
-      return 1
-    fi
-    if [ -e "$lock_metadata" ]; then
-      if [ ! -f "$lock_metadata" ]; then
-        printf 'error: unexpected lock metadata type: %s\n' \
-          "$lock_metadata" >&2
-        return 1
-      fi
-      /bin/rm -f -- "$lock_metadata"
-    fi
-  done
-  if ! /bin/rmdir "$LOCK_DIR"; then
-    printf 'error: build lock contains unexpected entries: %s\n' \
-      "$LOCK_DIR" >&2
-    return 1
-  fi
-}
-
-acquire_lock() {
-  while ! /bin/mkdir "$LOCK_DIR" 2>/dev/null; do
-    validate_lock_directory || return 1
-
-    metadata_attempt=0
-    while [ "$metadata_attempt" -lt 20 ] &&
-      ! lock_metadata_is_complete; do
-      sleep 0.05
-      metadata_attempt=$((metadata_attempt + 1))
-    done
-
-    if lock_owner_is_live; then
-      printf 'error: another build-app process holds %s\n' "$LOCK_DIR" >&2
-      return 1
-    fi
-
-    printf 'Recovering stale build lock: %s\n' "$LOCK_DIR"
-    remove_lock_directory || return 1
-  done
-
-  LOCK_HELD=1
-  chmod 0700 "$LOCK_DIR"
-  LOCK_START_TIME=$(current_process_start_time "$$")
-  if [ -z "$LOCK_START_TIME" ]; then
-    printf 'error: could not determine build process start time\n' >&2
-    return 1
-  fi
-  printf '%s\n' "$$" >"$LOCK_DIR/pid"
-  printf '%s\n' "$LOCK_START_TIME" >"$LOCK_DIR/start_time"
-  chmod 0600 "$LOCK_DIR/pid" "$LOCK_DIR/start_time"
-}
-
-release_owned_lock() {
-  if [ "$LOCK_HELD" -ne 1 ]; then
-    return 0
-  fi
-  if lock_metadata_is_complete; then
-    owned_pid=$(sed -n '1p' "$LOCK_DIR/pid")
-    owned_start_time=$(sed -n '1p' "$LOCK_DIR/start_time")
-    if [ "$owned_pid" != "$$" ] ||
-      [ "$owned_start_time" != "$LOCK_START_TIME" ]; then
-      printf 'error: refusing to release lock owned by another process\n' >&2
-      return 1
-    fi
-  fi
-  remove_lock_directory || return 1
-  LOCK_HELD=0
 }
 
 validate_dist_directory() {
@@ -280,13 +191,20 @@ load_transaction_state() {
     return 1
   fi
   STATE_PHASE=$(sed -n '1p' "$STATE_FILE")
-  STATE_BACKUP_DIST=$(sed -n '2p' "$STATE_FILE")
-  STATE_NEW_DIST=$(sed -n '3p' "$STATE_FILE")
+  STATE_OWNER_TOKEN=$(sed -n '2p' "$STATE_FILE")
+  STATE_BACKUP_DIST=$(sed -n '3p' "$STATE_FILE")
+  STATE_NEW_DIST=$(sed -n '4p' "$STATE_FILE")
   state_line_count=$(wc -l <"$STATE_FILE" | tr -d '[:space:]')
-  if [ "$state_line_count" != "3" ]; then
+  if [ "$state_line_count" != "4" ]; then
     printf 'error: transaction state has an invalid line count\n' >&2
     return 1
   fi
+  case "$STATE_OWNER_TOKEN" in
+    "" | *[!A-Za-z0-9._-]*)
+      printf 'error: transaction owner token is invalid\n' >&2
+      return 1
+      ;;
+  esac
   case "$STATE_PHASE" in
     prepared | old_moved | new_published)
       ;;
@@ -298,16 +216,37 @@ load_transaction_state() {
   validate_transaction_paths
 }
 
-write_transaction_phase() {
-  next_phase=$1
-  state_temp="$STAGING_ROOT/transaction-state.next"
-  printf '%s\n%s\n%s\n' \
-    "$next_phase" "$BACKUP_DIST" "$NEW_DIST" >"$state_temp"
-  chmod 0600 "$state_temp"
-  /bin/mv -f "$state_temp" "$STATE_FILE"
+transaction_state_owner_matches() {
+  expected_owner=$1
+  [ -f "$STATE_FILE" ] &&
+    [ ! -L "$STATE_FILE" ] &&
+    [ "$(sed -n '2p' "$STATE_FILE")" = "$expected_owner" ]
 }
 
-remove_transaction_state() {
+write_transaction_phase() {
+  next_phase=$1
+  if [ "$TRANSACTION_OWNED" -eq 1 ] &&
+    ! transaction_state_owner_matches "$TRANSACTION_OWNER_TOKEN"; then
+    printf 'error: transaction ownership changed before phase update\n' >&2
+    return 1
+  fi
+  state_temp="$STAGING_ROOT/transaction-state.next"
+  printf '%s\n%s\n%s\n%s\n' \
+    "$next_phase" \
+    "$TRANSACTION_OWNER_TOKEN" \
+    "$BACKUP_DIST" \
+    "$NEW_DIST" >"$state_temp"
+  chmod 0600 "$state_temp"
+  /bin/mv -f "$state_temp" "$STATE_FILE"
+  if ! transaction_state_owner_matches "$TRANSACTION_OWNER_TOKEN"; then
+    printf 'error: transaction ownership could not be established\n' >&2
+    return 1
+  fi
+  TRANSACTION_OWNED=1
+}
+
+remove_transaction_state_for_owner() {
+  expected_owner=$1
   if [ -L "$STATE_FILE" ]; then
     printf 'error: refusing symlinked transaction state\n' >&2
     return 1
@@ -317,8 +256,21 @@ remove_transaction_state() {
       printf 'error: transaction state is not a regular file\n' >&2
       return 1
     fi
+    if ! transaction_state_owner_matches "$expected_owner"; then
+      printf 'error: refusing transaction state owned by another process\n' >&2
+      return 1
+    fi
     /bin/rm -f -- "$STATE_FILE"
   fi
+}
+
+remove_owned_transaction_state() {
+  if [ "$TRANSACTION_OWNED" -ne 1 ]; then
+    printf 'error: current process does not own transaction state\n' >&2
+    return 1
+  fi
+  remove_transaction_state_for_owner "$TRANSACTION_OWNER_TOKEN"
+  TRANSACTION_OWNED=0
 }
 
 final_dist_is_valid() {
@@ -343,6 +295,7 @@ final_dist_is_valid() {
 recover_transaction() {
   entry_exists "$STATE_FILE" || return 0
   load_transaction_state || return 1
+  recovery_owner_token=$STATE_OWNER_TOKEN
 
   recovery_staging_root=${STATE_NEW_DIST%/new-dist}
   backup_exists=0
@@ -384,12 +337,20 @@ recover_transaction() {
   if entry_exists "$recovery_staging_root"; then
     remove_trusted_root_entry "$recovery_staging_root" || return 1
   fi
-  remove_transaction_state
+  remove_transaction_state_for_owner "$recovery_owner_token"
 }
 
 rollback_publish() {
+  if [ "$LOCK_HELD" -ne 1 ] || [ "$TRANSACTION_OWNED" -ne 1 ]; then
+    printf 'error: refusing rollback without lock and transaction ownership\n' >&2
+    return 1
+  fi
   if [ "$PUBLISH_COMMITTED" -eq 1 ]; then
     return 0
+  fi
+  if ! transaction_state_owner_matches "$TRANSACTION_OWNER_TOKEN"; then
+    printf 'error: refusing rollback after transaction ownership changed\n' >&2
+    return 1
   fi
 
   if [ "$NEW_PUBLISHED" -eq 1 ] && entry_exists "$DIST_DIR"; then
@@ -410,23 +371,26 @@ rollback_publish() {
     OLD_MOVED=0
   fi
 
-  remove_transaction_state
+  remove_owned_transaction_state
 }
 
 cleanup() {
   result=$?
   trap - EXIT HUP INT TERM
 
-  if [ "$result" -ne 0 ]; then
+  if [ "$LOCK_HELD" -ne 1 ]; then
+    exit "$result"
+  fi
+
+  if [ "$result" -ne 0 ] && [ "$TRANSACTION_OWNED" -eq 1 ]; then
     rollback_publish || result=1
   fi
 
-  if [ -n "$STAGING_ROOT" ] && entry_exists "$STAGING_ROOT"; then
+  if [ "$TRANSACTION_OWNED" -eq 0 ] &&
+    ! entry_exists "$STATE_FILE" &&
+    [ -n "$STAGING_ROOT" ] &&
+    entry_exists "$STAGING_ROOT"; then
     remove_trusted_root_entry "$STAGING_ROOT" || result=1
-  fi
-
-  if ! release_owned_lock; then
-    result=1
   fi
 
   exit "$result"
@@ -436,8 +400,6 @@ trap cleanup EXIT
 trap 'exit 129' HUP
 trap 'exit 130' INT
 trap 'exit 143' TERM
-
-acquire_lock
 
 if [ ! -x "$CODESIGN_BIN" ]; then
   printf 'error: codesign command is not executable: %s\n' "$CODESIGN_BIN" >&2
@@ -651,6 +613,15 @@ if entry_exists "$STATE_FILE"; then
   exit 1
 fi
 
+TRANSACTION_OWNER_TOKEN=$(
+  /usr/bin/uuidgen | tr '[:upper:]' '[:lower:]'
+)
+case "$TRANSACTION_OWNER_TOKEN" in
+  "" | *[!A-Za-z0-9._-]*)
+    printf 'error: generated transaction owner token is invalid\n' >&2
+    exit 1
+    ;;
+esac
 write_transaction_phase "prepared"
 if entry_exists "$DIST_DIR"; then
   /bin/mv -h "$DIST_DIR" "$BACKUP_DIST"
@@ -658,6 +629,13 @@ if entry_exists "$DIST_DIR"; then
 fi
 write_transaction_phase "old_moved"
 
+if [ -n "${RUSSIAN_CORNER_TEST_PAUSE_AFTER_OLD_MOVED_SECONDS:-}" ]; then
+  if [ "${RUSSIAN_CORNER_PACKAGING_TEST_MODE:-}" != "1" ]; then
+    printf 'error: transaction pause requires packaging test mode\n' >&2
+    exit 1
+  fi
+  sleep "$RUSSIAN_CORNER_TEST_PAUSE_AFTER_OLD_MOVED_SECONDS"
+fi
 if [ "${RUSSIAN_CORNER_TEST_KILL_AFTER_OLD_MOVED:-0}" = "1" ]; then
   if [ "${RUSSIAN_CORNER_PACKAGING_TEST_MODE:-}" != "1" ]; then
     printf 'error: SIGKILL injection requires packaging test mode\n' >&2
@@ -737,7 +715,7 @@ if entry_exists "$STAGING_ROOT"; then
   remove_trusted_root_entry "$STAGING_ROOT"
 fi
 STAGING_ROOT=""
-remove_transaction_state
+remove_owned_transaction_state
 
 printf \
   'resource_sha256=PASS lexemes=%s sentences=%s\n' \

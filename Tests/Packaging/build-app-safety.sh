@@ -20,6 +20,7 @@ prepare_case() {
     "$SANDBOX_REPO/Scripts" \
     "$FAKE_BIN" \
     "$FAKE_BUILD"
+  git -C "$SANDBOX_REPO" init -q
   cp "$SCRIPT_UNDER_TEST" "$SANDBOX_REPO/Scripts/build-app.sh"
 
   cat >"$FAKE_BIN/swift" <<'SH'

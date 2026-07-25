@@ -5,8 +5,13 @@ set -euo pipefail
 TEST_ROOT=$(mktemp -d "${TMPDIR:-/tmp}/russian-corner-atomic-test.XXXXXX")
 SOURCE_SCRIPT=${PACKAGING_SCRIPT_UNDER_TEST:-Scripts/build-app.sh}
 TEST_CASE=${PACKAGING_TEST_CASE:-all}
+BACKGROUND_PIDS=""
 
 cleanup() {
+  for background_pid in $BACKGROUND_PIDS; do
+    kill "$background_pid" 2>/dev/null || true
+    wait "$background_pid" 2>/dev/null || true
+  done
   rm -rf -- "$TEST_ROOT"
 }
 trap cleanup EXIT HUP INT TERM
@@ -29,6 +34,19 @@ wait_for_path() {
   fail "timed out waiting for $path"
 }
 
+wait_for_absence() {
+  path=$1
+  attempts=0
+  while [ "$attempts" -lt 100 ]; do
+    if [ ! -e "$path" ] && [ ! -L "$path" ]; then
+      return 0
+    fi
+    sleep 0.05
+    attempts=$((attempts + 1))
+  done
+  fail "timed out waiting for removal of $path"
+}
+
 prepare_case() {
   case_name=$1
   CASE_ROOT="$TEST_ROOT/$case_name"
@@ -45,6 +63,12 @@ prepare_case() {
     "$SANDBOX_REPO/Sources/RussianCornerCore/Resources" \
     "$FAKE_BIN" \
     "$FAKE_BUILD"
+  git -C "$SANDBOX_REPO" init -q
+  LOCK_FILE=$(
+    git -C "$SANDBOX_REPO" rev-parse \
+      --path-format=absolute \
+      --git-path russian-corner-build.lock
+  )
   cp "$SOURCE_SCRIPT" "$SANDBOX_REPO/Scripts/build-app.sh"
   cp Sources/RussianCornerCore/Resources/lexemes.json \
     "$SANDBOX_REPO/Sources/RussianCornerCore/Resources/lexemes.json"
@@ -59,7 +83,7 @@ for argument in "$@"; do
     exit 0
   fi
 done
-touch "$FAKE_BUILD_MARKER"
+printf 'internal-build\n' >>"$FAKE_BUILD_MARKER"
 if [ "${FAKE_BUILD_DELAY_SECONDS:-0}" != "0" ]; then
   sleep "$FAKE_BUILD_DELAY_SECONDS"
 fi
@@ -135,6 +159,7 @@ run_packager() {
     RUSSIAN_CORNER_TEST_BUILD_DELAY_SECONDS="${2:-0}" \
     RUSSIAN_CORNER_TEST_FORCE_PUBLISH_FAILURE="${4:-0}" \
     RUSSIAN_CORNER_TEST_KILL_AFTER_OLD_MOVED="${5:-0}" \
+    RUSSIAN_CORNER_TEST_PAUSE_AFTER_OLD_MOVED_SECONDS="${6:-0}" \
     FAKE_BUILD_DELAY_SECONDS="${3:-0}" \
     bash "$SANDBOX_REPO/Scripts/build-app.sh" \
     >"$BUILD_LOG" 2>&1
@@ -183,24 +208,13 @@ test_concurrent_build_is_rejected() {
   prepare_case "concurrency"
   create_signed_old_app
 
-  run_packager "$FAKE_CODESIGN_OK" 2 0 &
+  run_packager "$FAKE_CODESIGN_OK" 0 2 &
   first_pid=$!
-  wait_for_path "$SANDBOX_REPO/.build-app.lock"
-  wait_for_path "$SANDBOX_REPO/.build-app.lock/pid"
-  wait_for_path "$SANDBOX_REPO/.build-app.lock/start_time"
-  lock_pid=$(sed -n '1p' "$SANDBOX_REPO/.build-app.lock/pid")
-  lock_start_time=$(
-    sed -n '1p' "$SANDBOX_REPO/.build-app.lock/start_time"
-  )
-  case "$lock_pid" in
-    "" | *[!0-9]*)
-      fail "live lock PID metadata is invalid"
-      ;;
-  esac
-  [ -n "$lock_start_time" ] ||
-    fail "live lock start-time metadata is empty"
-  kill -0 "$lock_pid" ||
-    fail "live lock PID is not running"
+  BACKGROUND_PIDS="$BACKGROUND_PIDS $first_pid"
+  wait_for_path "$BUILD_MARKER"
+  wait_for_path "$LOCK_FILE"
+  test -f "$LOCK_FILE" && test ! -L "$LOCK_FILE" ||
+    fail "lockf lock is not a regular file"
 
   second_log="$CASE_ROOT/second-build.log"
   if PATH="$FAKE_BIN:$PATH" \
@@ -212,15 +226,19 @@ test_concurrent_build_is_rejected() {
     >"$second_log" 2>&1; then
     fail "concurrent packager unexpectedly succeeded"
   fi
-  grep -F 'error: another build-app process holds' "$second_log" >/dev/null ||
-    fail "concurrent packager did not report lock contention"
+  if grep -F 'Building release executable' "$second_log" >/dev/null; then
+    fail "concurrent packager entered the internal build"
+  fi
   assert_old_app_unchanged
 
   wait "$first_pid"
+  build_count=$(wc -l <"$BUILD_MARKER" | tr -d '[:space:]')
+  [ "$build_count" -eq 1 ] ||
+    fail "more than one concurrent process entered the internal build"
   test -d "$SANDBOX_REPO/dist/Russian Corner.app" ||
     fail "first packager did not publish"
   assert_no_packaging_scratch
-  printf 'concurrent_build_rejected=PASS\n'
+  printf 'lockf_concurrent_build_rejected=PASS\n'
 }
 
 test_dist_swap_never_touches_external_target() {
@@ -232,6 +250,7 @@ test_dist_swap_never_touches_external_target() {
 
   run_packager "$FAKE_CODESIGN_OK" 0 2 &
   packager_pid=$!
+  BACKGROUND_PIDS="$BACKGROUND_PIDS $packager_pid"
   wait_for_path "$BUILD_MARKER"
   /bin/mv -h "$SANDBOX_REPO/dist" "$SANDBOX_REPO/old-dist-by-test"
   ln -s "$external_target" "$SANDBOX_REPO/dist"
@@ -301,13 +320,49 @@ test_sigkill_transaction_is_recovered() {
     shasum -a 256 "$SANDBOX_REPO/dist/unrelated-marker" | awk '{print $1}'
   )
 
-  if run_packager "$FAKE_CODESIGN_OK" 0 0 0 1; then
+  run_packager "$FAKE_CODESIGN_OK" 0 0 0 1 3 &
+  interrupted_pid=$!
+  BACKGROUND_PIDS="$BACKGROUND_PIDS $interrupted_pid"
+  wait_for_path "$LOCK_FILE"
+  wait_for_path "$SANDBOX_REPO/.build-app-transaction"
+  wait_for_absence "$SANDBOX_REPO/dist"
+  state_line_count=$(
+    wc -l <"$SANDBOX_REPO/.build-app-transaction" |
+      tr -d '[:space:]'
+  )
+  [ "$state_line_count" -eq 4 ] ||
+    fail "transaction state does not include an owner token"
+  state_owner=$(sed -n '2p' "$SANDBOX_REPO/.build-app-transaction")
+  case "$state_owner" in
+    "" | */*)
+      fail "transaction owner token is invalid"
+      ;;
+  esac
+  state_sha_before=$(
+    shasum -a 256 "$SANDBOX_REPO/.build-app-transaction" |
+      awk '{print $1}'
+  )
+
+  contender_log="$CASE_ROOT/contender.log"
+  if PATH="$FAKE_BIN:$PATH" \
+    FAKE_BUILD="$FAKE_BUILD" \
+    FAKE_BUILD_MARKER="$BUILD_MARKER" \
+    CODESIGN_BIN="$FAKE_CODESIGN_OK" \
+    RUSSIAN_CORNER_PACKAGING_TEST_MODE=1 \
+    bash "$SANDBOX_REPO/Scripts/build-app.sh" \
+    >"$contender_log" 2>&1; then
+    fail "lockf contender unexpectedly succeeded"
+  fi
+  state_sha_after=$(
+    shasum -a 256 "$SANDBOX_REPO/.build-app-transaction" |
+      awk '{print $1}'
+  )
+  [ "$state_sha_after" = "$state_sha_before" ] ||
+    fail "rejected lockf contender changed transaction state"
+
+  if wait "$interrupted_pid"; then
     fail "SIGKILL injection unexpectedly succeeded"
   fi
-  test ! -e "$SANDBOX_REPO/dist" ||
-    fail "SIGKILL injection did not stop after old dist moved"
-  wait_for_path "$SANDBOX_REPO/.build-app.lock"
-  wait_for_path "$SANDBOX_REPO/.build-app-transaction"
 
   run_packager "$FAKE_CODESIGN_OK"
 
@@ -323,20 +378,21 @@ test_sigkill_transaction_is_recovered() {
   printf 'sigkill_transaction_recovered=PASS\n'
 }
 
-test_stale_lock_without_state_self_heals() {
-  prepare_case "stale-lock"
+test_persistent_empty_lockfile_does_not_block() {
+  prepare_case "persistent-lockfile"
   create_signed_old_app
-  mkdir "$SANDBOX_REPO/.build-app.lock"
-  printf '%s\n' "$$" >"$SANDBOX_REPO/.build-app.lock/pid"
-  printf 'stale-start-time\n' >"$SANDBOX_REPO/.build-app.lock/start_time"
+  mkdir -p "$(dirname -- "$LOCK_FILE")"
+  printf '' >"$LOCK_FILE"
 
   run_packager "$FAKE_CODESIGN_OK"
 
   test -x \
     "$SANDBOX_REPO/dist/Russian Corner.app/Contents/MacOS/RussianCornerApp" ||
-    fail "stale-lock recovery did not publish"
+    fail "persistent empty lockfile prevented publication"
+  test -f "$LOCK_FILE" && test ! -L "$LOCK_FILE" ||
+    fail "persistent lockfile changed type"
   assert_no_packaging_scratch
-  printf 'stale_lock_without_state_self_healed=PASS\n'
+  printf 'persistent_empty_lockfile_nonblocking=PASS\n'
 }
 
 case "$TEST_CASE" in
@@ -358,8 +414,8 @@ case "$TEST_CASE" in
   sigkill)
     test_sigkill_transaction_is_recovered
     ;;
-  stale)
-    test_stale_lock_without_state_self_heals
+  emptylock)
+    test_persistent_empty_lockfile_does_not_block
     ;;
   all)
     test_codesign_failure_preserves_old_app
@@ -368,7 +424,7 @@ case "$TEST_CASE" in
     test_publish_failure_restores_old_dist
     test_unrelated_dist_entries_are_preserved
     test_sigkill_transaction_is_recovered
-    test_stale_lock_without_state_self_heals
+    test_persistent_empty_lockfile_does_not_block
     ;;
   *)
     fail "unknown PACKAGING_TEST_CASE: $TEST_CASE"
