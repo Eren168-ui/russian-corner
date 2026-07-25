@@ -5,6 +5,7 @@ import XCTest
 final class SchedulerTests: XCTestCase {
     private let now = Date(timeIntervalSince1970: 1_700_000_000)
     private let day: TimeInterval = 24 * 60 * 60
+    private let scheduler = ReviewScheduler()
 
     func testAgainResetsMasteryAndSchedulesTomorrow() {
         let state = ReviewState(
@@ -12,7 +13,7 @@ final class SchedulerTests: XCTestCase {
             dueAt: now.addingTimeInterval(-day)
         )
 
-        let next = ReviewScheduler.next(state: state, grade: .again, now: now)
+        let next = scheduler.next(state: state, grade: .again, now: now)
 
         XCTAssertEqual(next.masteryLevel, 0)
         XCTAssertEqual(next.dueAt, now.addingTimeInterval(day))
@@ -21,7 +22,7 @@ final class SchedulerTests: XCTestCase {
     func testHardKeepsMasteryAndUsesOneDayInterval() {
         let state = ReviewState(masteryLevel: 3, dueAt: now)
 
-        let next = ReviewScheduler.next(state: state, grade: .hard, now: now)
+        let next = scheduler.next(state: state, grade: .hard, now: now)
 
         XCTAssertEqual(next.masteryLevel, 3)
         XCTAssertEqual(next.dueAt, now.addingTimeInterval(day))
@@ -33,7 +34,7 @@ final class SchedulerTests: XCTestCase {
         for (currentLevel, intervalDays) in expectedIntervals.enumerated() {
             let state = ReviewState(masteryLevel: currentLevel, dueAt: now)
 
-            let next = ReviewScheduler.next(state: state, grade: .easy, now: now)
+            let next = scheduler.next(state: state, grade: .easy, now: now)
 
             XCTAssertEqual(next.masteryLevel, currentLevel + 1)
             XCTAssertEqual(
@@ -46,7 +47,7 @@ final class SchedulerTests: XCTestCase {
     func testEasyCapsAtHighestMasteryAndThirtyDayInterval() {
         let state = ReviewState(masteryLevel: 5, dueAt: now)
 
-        let next = ReviewScheduler.next(state: state, grade: .easy, now: now)
+        let next = scheduler.next(state: state, grade: .easy, now: now)
 
         XCTAssertEqual(next.masteryLevel, 5)
         XCTAssertEqual(next.dueAt, now.addingTimeInterval(30 * day))
@@ -69,9 +70,24 @@ final class SchedulerTests: XCTestCase {
         XCTAssertEqual(decodedState, state)
     }
 
+    func testReviewStateCanBeUpdated() {
+        var state = ReviewState(masteryLevel: 1, dueAt: now)
+
+        state.masteryLevel = 2
+        state.dueAt = now.addingTimeInterval(day)
+
+        XCTAssertEqual(
+            state,
+            ReviewState(
+                masteryLevel: 2,
+                dueAt: now.addingTimeInterval(day)
+            )
+        )
+    }
+
     func testLowRecallReducesNewWordLimit() {
         XCTAssertEqual(
-            adaptiveNewWordLimit(
+            scheduler.adaptiveNewWordLimit(
                 previousRecallRate: 0.749,
                 strongDayStreak: 10,
                 overdueCount: 0
@@ -82,7 +98,7 @@ final class SchedulerTests: XCTestCase {
 
     func testRecallRateBoundaryAtSeventyFivePercentUsesStandardLimit() {
         XCTAssertEqual(
-            adaptiveNewWordLimit(
+            scheduler.adaptiveNewWordLimit(
                 previousRecallRate: 0.75,
                 strongDayStreak: 0,
                 overdueCount: 0
@@ -93,7 +109,7 @@ final class SchedulerTests: XCTestCase {
 
     func testNinetyPercentRecallStillUsesStandardLimit() {
         XCTAssertEqual(
-            adaptiveNewWordLimit(
+            scheduler.adaptiveNewWordLimit(
                 previousRecallRate: 0.90,
                 strongDayStreak: 3,
                 overdueCount: 0
@@ -102,12 +118,23 @@ final class SchedulerTests: XCTestCase {
         )
     }
 
+    func testTwoStrongDaysStillUseStandardLimit() {
+        XCTAssertEqual(
+            scheduler.adaptiveNewWordLimit(
+                previousRecallRate: 0.91,
+                strongDayStreak: 2,
+                overdueCount: ReviewScheduler.significantOverdueThreshold - 1
+            ),
+            10
+        )
+    }
+
     func testThreeStrongDaysWithFewOverdueWordsRaisesLimit() {
         XCTAssertEqual(
-            adaptiveNewWordLimit(
+            scheduler.adaptiveNewWordLimit(
                 previousRecallRate: 0.91,
                 strongDayStreak: 3,
-                overdueCount: significantOverdueThreshold - 1
+                overdueCount: ReviewScheduler.significantOverdueThreshold - 1
             ),
             12
         )
@@ -115,10 +142,10 @@ final class SchedulerTests: XCTestCase {
 
     func testSignificantOverdueBoundaryReducesLimit() {
         XCTAssertEqual(
-            adaptiveNewWordLimit(
+            scheduler.adaptiveNewWordLimit(
                 previousRecallRate: 0.91,
                 strongDayStreak: 3,
-                overdueCount: significantOverdueThreshold
+                overdueCount: ReviewScheduler.significantOverdueThreshold
             ),
             6
         )
