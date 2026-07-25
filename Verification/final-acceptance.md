@@ -1,8 +1,8 @@
 # Russian Corner 最终验收记录
 
-本记录绑定代码提交 `185e0151c9be94aac848def51f963c3ec5a36afb`
+本记录绑定代码提交 `28ef9d217e24e7e7fbe52156b72909609f3bcb38`
 （`fix: publish app bundles atomically`）。验收在该提交内容上执行，时间为
-2026-07-26 05:07–05:09 CST。
+2026-07-26 05:24–05:26 CST。
 
 ## 验收环境
 
@@ -45,8 +45,11 @@ bash Tests/Packaging/build-app-safety.sh
 ```text
 codesign_failure_preserves_old_app=PASS
 concurrent_build_rejected=PASS
-dist_swap_external_sentinel_safe=PASS
+dist_swap_external_sentinel_safe_failure=PASS
 publish_failure_restores_old_dist=PASS
+unrelated_dist_entries_preserved=PASS
+sigkill_transaction_recovered=PASS
+stale_lock_without_state_self_healed=PASS
 build_app_symlink_safety=PASS
 ```
 
@@ -54,12 +57,18 @@ build_app_symlink_safety=PASS
 
 - 注入的 `CODESIGN_BIN` 签名失败不会替换旧 App；旧 executable SHA、
   sentinel 和有效签名均保持不变；
-- 仓库根目录的原子 `mkdir` 锁拒绝第二个并发构建；
-- 构建期间将 `dist` 换成外部目录 symlink，外部 sentinel 不变，发布结果
-  仍为仓库内真实目录；
+- 仓库根目录的原子 `mkdir` 锁写入 PID 和进程启动时间；live lock
+  拒绝第二个构建，PID 存活但启动时间不符的 stale lock 可自愈；
+- staging 先用 `cp -a` 快照真实 `dist`，保留无关 marker 的字节和无关
+  symlink 本身，只替换 `Russian Corner.app`；
+- 构建期间将 `dist` 换成外部目录 symlink，脚本安全拒绝发布，外部
+  sentinel、symlink 和移出的旧 `dist` 均不变；
 - 旧 `dist` 移入可信根目录备份后注入发布失败，trap 会恢复旧 `dist`；
+- root 内事务状态记录 `prepared`、`old_moved`、`new_published` 阶段以及
+  backup / new-dist 路径；`old_moved` 后真实 SIGKILL 留下的 stale lock
+  和事务会在下一次运行中自动恢复，再完成新构建；
 - 每个失败用例结束后 `.build-app-stage.*`、`.build-app-backup.*` 和
-  `.build-app.lock` 数量均为 0。
+  `.build-app.lock`、`.build-app-transaction` 数量均为 0。
 
 ### 4. bash / zsh 与真实打包
 
@@ -80,9 +89,10 @@ permissions=PASS resources=0755 executable=0755 json=0644
 resource_sha256=PASS lexemes=8ba11a40227ce02b09a698d0b475487513d400d3f3255c972e65fc67cc18098e sentences=c950c3adafd19a39aa4e028c160b44c5e44082fb441c661fe08285f41f750ba3
 ```
 
-脚本先在仓库根目录的独立 staging 中构造、探针检查和签名完整
-`new-dist`，验证成功后才通过 `/bin/mv -h` 发布整个 `dist`。最终检查结束
-后才删除旧备份。
+脚本先把现有真实 `dist` 安全复制为仓库根目录 staging 中的 `new-dist`，
+仅替换其中的 App，再完成探针检查和签名。发布前写入可恢复事务状态；
+验证成功后才通过 `/bin/mv -h` 发布整个 `dist`，最终检查结束后清理
+backup、staging 和事务状态。
 
 ### 5. Executable 身份与无 fallback
 
@@ -134,7 +144,7 @@ sleep 5
 pgrep -f '/Russian Corner.app/Contents/MacOS/RussianCornerApp'
 ```
 
-2026-07-26 05:08:55 CST 的结果：PID `24842` 在启动 5 秒后仍运行。
+2026-07-26 05:26:10 CST 的结果：PID `40464` 在启动 5 秒后仍运行。
 启动前后 10 分钟窗口中的 `RussianCornerApp*.crash` /
 `RussianCornerApp*.ips` 文件数均为 0。
 
