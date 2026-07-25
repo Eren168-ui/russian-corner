@@ -1,8 +1,8 @@
 # Russian Corner 最终验收记录
 
-本记录绑定代码提交 `018eb126cbe6a792289b04f0e7530a1a8dcac27c`
+本记录绑定代码提交 `e61847e72164d25639388c443d47e39344bef645`
 （`fix: publish app bundles atomically`）。验收在该提交内容上执行，时间为
-2026-07-26 05:38–05:41 CST。
+2026-07-26 05:53–05:56 CST。
 
 ## 验收环境
 
@@ -57,9 +57,10 @@ build_app_symlink_safety=PASS
 
 - 注入的 `CODESIGN_BIN` 签名失败不会替换旧 App；旧 executable SHA、
   sentinel 和有效签名均保持不变；
-- 外层脚本解析 Git 管理目录中的安全 lockfile，并用系统
-  `/usr/bin/lockf -k -t 0` 取得排他锁后重执行内层脚本；两个并发进程
-  只有一个进入 internal build；
+- 当前事务 shell 解析 Git 管理目录中的安全 lockfile，通过
+  `exec 9>"$LOCK_FILE"` 打开 FD9，并用系统
+  `/usr/bin/lockf -s -t 0 9` 取得排他锁；不经 wrapper、子 shell 或
+  command-mode 重执行，两个并发进程只有一个进入 internal build；
 - 空 lockfile 会保留在 Git 管理目录中且不会阻塞后续构建；锁由内核随
   进程退出或 SIGKILL 自动释放，不使用 PID、启动时间或 stale-lock 删除；
 - staging 先用 `cp -a` 快照真实 `dist`，保留无关 marker 的字节和无关
@@ -70,9 +71,10 @@ build_app_symlink_safety=PASS
 - root 内四行事务状态记录 `prepared`、`old_moved`、`new_published`
   阶段、随机 owner token 以及 backup / new-dist 路径；rollback 和状态
   删除前都读回核对 owner token；
-- 首进程在 `old_moved` 后暂停时，第二进程被 `lockf` 拒绝且事务文件
-  SHA 不变；首进程真实 SIGKILL 后，第三次运行取得锁、恢复事务并完成
-  新构建；
+- 用户直接启动的首进程在 `old_moved` 后暂停时，第二进程被 `lockf`
+  拒绝且事务文件 SHA 不变；测试对用户拿到的 `$!` PID 发送真实
+  SIGKILL 后，没有子进程继续发布，也没有遗留 `build-app.sh` 进程；
+  后续 shell 随即取得锁、恢复事务并完成新构建；
 - 每个失败用例结束后 `.build-app-stage.*`、`.build-app-backup.*` 和
   `.build-app.lock`、`.build-app-transaction` 数量均为 0。
 
@@ -98,8 +100,8 @@ resource_sha256=PASS lexemes=8ba11a40227ce02b09a698d0b475487513d400d3f3255c972e6
 脚本先把现有真实 `dist` 安全复制为仓库根目录 staging 中的 `new-dist`，
 仅替换其中的 App，再完成探针检查和签名。发布前写入可恢复事务状态；
 验证成功后才通过 `/bin/mv -h` 发布整个 `dist`，最终检查结束后清理
-backup、staging 和事务状态。竞争失败发生在内层 trap 安装前，因此不会
-执行 rollback 或修改事务。
+backup、staging 和事务状态。脚本只在成功持锁后安装 trap；被拒绝的
+竞争进程不会执行 rollback 或修改事务。
 
 ### 5. Executable 身份与无 fallback
 
@@ -151,7 +153,7 @@ sleep 5
 pgrep -f '/Russian Corner.app/Contents/MacOS/RussianCornerApp'
 ```
 
-2026-07-26 05:41:09 CST 的结果：PID `58857` 在启动 5 秒后仍运行。
+2026-07-26 05:56:20 CST 的结果：PID `79579` 在启动 5 秒后仍运行。
 启动前后 10 分钟窗口中的 `RussianCornerApp*.crash` /
 `RussianCornerApp*.ips` 文件数均为 0。
 
