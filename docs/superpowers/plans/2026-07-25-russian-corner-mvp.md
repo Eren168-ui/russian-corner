@@ -18,7 +18,8 @@
 - `Sources/RussianCornerCore/DailyQueue.swift`: due/new/random queue composition.
 - `Sources/RussianCornerCore/Diagnostics.swift`: baseline and weekly bottleneck metrics.
 - `Sources/RussianCornerCore/ContentCatalog.swift`: bundle loading and content validation.
-- `Sources/RussianCornerApp/`: SwiftUI application, SwiftData adapter, panel, services, and views.
+- `Sources/RussianCornerPlatform/`: testable SwiftData adapter, speech, recording, and reminder services.
+- `Sources/RussianCornerApp/`: SwiftUI executable, panel, app model, and views.
 - `Sources/RussianCornerCore/Resources/lexemes.json`: reviewed daily vocabulary shared by tests and the app.
 - `Sources/RussianCornerCore/Resources/sentences.json`: reviewed sentence/chunk cards shared by tests and the app.
 - `Tests/RussianCornerCoreTests/`: behavior-first tests for all core rules.
@@ -158,11 +159,11 @@ git commit -m "feat: add linked vocabulary and sentence catalog"
 ### Task 3: SwiftData progress and system services
 
 **Files:**
-- Create: `Sources/RussianCornerApp/Persistence.swift`
-- Create: `Sources/RussianCornerApp/SpeechService.swift`
-- Create: `Sources/RussianCornerApp/RecordingService.swift`
-- Create: `Sources/RussianCornerApp/ReminderService.swift`
-- Test: `Tests/RussianCornerCoreTests/ReviewSessionTests.swift`
+- Create: `Sources/RussianCornerPlatform/Persistence.swift`
+- Create: `Sources/RussianCornerPlatform/SpeechService.swift`
+- Create: `Sources/RussianCornerPlatform/RecordingService.swift`
+- Create: `Sources/RussianCornerPlatform/ReminderService.swift`
+- Test: `Tests/RussianCornerPlatformTests/ReviewSessionTests.swift`
 
 - [ ] **Step 1: Write failing session-state tests**
 
@@ -176,7 +177,7 @@ Expected: failure because session and settings types do not exist.
 
 - [ ] **Step 3: Implement core session/settings types and app adapters**
 
-Use SwiftData models only in the app target. Keep core types `Codable` and testable. `SpeechService` uses a `ru-RU` `AVSpeechSynthesisVoice` when present and a safe fallback otherwise. `RecordingService` records to a temporary file and deletes it unless the user explicitly saves. `ReminderService` schedules exactly two configurable local notifications.
+Use SwiftData models only in the platform target. Keep core types `Codable` and testable. `SpeechService` uses a `ru-RU` `AVSpeechSynthesisVoice` when present and a safe fallback otherwise. `RecordingService` records to a temporary file and deletes it unless the user explicitly saves. `ReminderService` schedules exactly two configurable local notifications.
 
 - [ ] **Step 4: Run tests and build**
 
@@ -187,7 +188,7 @@ Expected: tests pass and both targets compile.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add Sources/RussianCornerCore Sources/RussianCornerApp Tests/RussianCornerCoreTests
+git add Sources/RussianCornerCore Sources/RussianCornerPlatform Tests/RussianCornerPlatformTests
 git commit -m "feat: add local progress and system services"
 ```
 
