@@ -3,7 +3,7 @@ import Observation
 import SwiftUI
 
 private final class PassiveFloatingPanel: NSPanel {
-  override var canBecomeKey: Bool { false }
+  override var canBecomeKey: Bool { true }
   override var canBecomeMain: Bool { false }
 }
 
@@ -31,6 +31,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       .stationary,
     ]
     panel.isFloatingPanel = true
+    panel.becomesKeyOnlyIfNeeded = true
     panel.hidesOnDeactivate = false
     panel.isReleasedWhenClosed = false
     panel.isOpaque = false

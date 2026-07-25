@@ -2,6 +2,29 @@ import XCTest
 @testable import RussianCornerCore
 
 final class ContentCatalogTests: XCTestCase {
+    func testLegacySentenceWithoutRussianCueDecodesWithAnswerFallback() throws {
+        let legacyJSON = """
+            {
+              "id": "sentence-legacy",
+              "promptZh": "说：我今天在家工作。",
+              "practiceRu": "Я сегодня работаю дома.",
+              "speechText": "Я сегодня работаю дома.",
+              "theme": "home",
+              "lexemeIDs": ["lexeme-work"],
+              "sourcePath": "legacy.json",
+              "sourceText": "legacy",
+              "reviewStatus": "reviewed"
+            }
+            """
+
+        let card = try JSONDecoder().decode(
+            SentenceCard.self,
+            from: Data(legacyJSON.utf8)
+        )
+
+        XCTAssertEqual(card.cueRu, card.practiceRu)
+    }
+
     func testLexemeDeclaresSurfaceForms() {
         let item = Lexeme(
             id: "lexeme-svobodnyy",

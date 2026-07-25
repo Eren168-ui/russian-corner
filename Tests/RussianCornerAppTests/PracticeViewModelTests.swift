@@ -39,6 +39,7 @@ final class PracticeViewModelTests: XCTestCase {
   func testGradePersistsEventAndScheduledState() throws {
     var now = start
     let fixture = try makeFixture(now: { now })
+    fixture.model.reveal()
     now = start.addingTimeInterval(2.25)
 
     try fixture.model.grade(.easy)
@@ -56,6 +57,10 @@ final class PracticeViewModelTests: XCTestCase {
       )?.masteryLevel,
       1
     )
+    XCTAssertEqual(
+      try fixture.repository.dailyCompletedCount(on: now),
+      1
+    )
   }
 
   func testPromptSwitchesFromChineseToRussianCueAtMasteryThree() throws {
@@ -65,6 +70,15 @@ final class PracticeViewModelTests: XCTestCase {
 
     XCTAssertEqual(fixture.model.prompt, "Что вы скажете о работе сегодня?")
     XCTAssertNotEqual(fixture.model.prompt, fixture.model.answer)
+  }
+
+  func testLegacyCueEqualToAnswerKeepsChinesePromptAtMasteryThree() throws {
+    let fixture = try makeFixture(
+      initialState: ReviewState(masteryLevel: 3, dueAt: start),
+      cueRu: "Я сегодня работаю дома."
+    )
+
+    XCTAssertEqual(fixture.model.prompt, "说：我今天在家工作。")
   }
 
   func testModeCanSwitchBetweenQuietAndSpeaking() throws {
@@ -106,6 +120,7 @@ final class PracticeViewModelTests: XCTestCase {
     targetCount: Int = 7,
     sentenceCount: Int = 1,
     initialState: ReviewState? = nil,
+    cueRu: String = "Что вы скажете о работе сегодня?",
     now: @escaping () -> Date = { Date(timeIntervalSince1970: 1_700_000_000) }
   ) throws -> (
     model: PracticeViewModel,
@@ -125,7 +140,7 @@ final class PracticeViewModelTests: XCTestCase {
       SentenceCard(
         id: index == 0 ? "sentence-home" : "sentence-\(index)",
         promptZh: "说：我今天在家工作。",
-        cueRu: "Что вы скажете о работе сегодня?",
+        cueRu: cueRu,
         practiceRu: "Я сегодня работаю дома.",
         speechText: "Я сегодня работаю дома.",
         theme: "日常",

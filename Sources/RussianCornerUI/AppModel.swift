@@ -190,6 +190,7 @@ public final class AppRuntime {
   private var catalog: ContentCatalog?
   private var repository: ProgressRepository?
   private let reminderService: ReminderService?
+  private var reminderSettingsCoordinator: ReminderSettingsCoordinator?
 
   public init(defaults: UserDefaults = .standard) {
     appModel = AppModel(defaults: defaults)
@@ -203,6 +204,12 @@ public final class AppRuntime {
       )
       self.catalog = catalog
       self.repository = repository
+      if let reminderService {
+        reminderSettingsCoordinator = ReminderSettingsCoordinator(
+          store: repository,
+          scheduler: reminderService
+        )
+      }
       let persistedSettings = try repository.settings()
       appModel.morningReminder = persistedSettings.morningReminder
       appModel.eveningReminder = persistedSettings.eveningReminder
@@ -223,37 +230,39 @@ public final class AppRuntime {
     )
   }
 
-  public func saveReminderSettings() async {
-    guard let repository else { return }
-    let settings = RussianCornerSettings(
-      morningReminder: appModel.morningReminder,
-      eveningReminder: appModel.eveningReminder
+  @discardableResult
+  public func saveReminderSettings(
+    _ proposed: RussianCornerSettings
+  ) async -> Bool {
+    guard
+      let reminderService,
+      let reminderSettingsCoordinator
+    else {
+      appModel.transientStatus =
+        "当前运行方式无法启用系统通知，原设置保持不变"
+      return false
+    }
+    if await reminderService.permissionStatus() == .undetermined {
+      _ = await reminderService.requestPermission()
+    }
+    let result = await reminderSettingsCoordinator.apply(
+      proposed: proposed,
+      to: appModel
     )
-    do {
-      try repository.save(settings: settings)
-      guard let reminderService else {
-        appModel.transientStatus =
-          "提醒时间已保存；应用打包后可启用系统通知"
-        return
-      }
-      if await reminderService.permissionStatus() == .undetermined {
-        _ = await reminderService.requestPermission()
-      }
-      let result = await reminderService.schedule(settings: settings)
-      switch result {
-      case .scheduled:
-        appModel.transientStatus = "提醒时间已保存"
-      case .permissionDenied:
-        appModel.transientStatus = "通知权限未开启，时间已保存"
-      case .permissionUndetermined:
-        appModel.transientStatus = "提醒时间已保存，可在系统设置中开启通知"
-      case .unavailable:
-        appModel.transientStatus = "当前系统不支持提醒，时间已保存"
-      case .failed(let message):
-        appModel.transientStatus = "提醒暂未更新：\(message)"
-      }
-    } catch {
-      appModel.transientStatus = "设置保存失败：\(error.localizedDescription)"
+    switch result {
+    case .applied:
+      appModel.transientStatus = "提醒时间已更新"
+      return true
+    case .scheduleFailed(let message):
+      appModel.transientStatus =
+        "提醒未更新，原设置保持不变：\(message)"
+      return false
+    case .databaseFailed(let message, let rollbackSucceeded):
+      appModel.transientStatus =
+        rollbackSucceeded
+        ? "提醒保存失败，系统时间已恢复：\(message)"
+        : "提醒保存失败，系统回滚也未完成：\(message)"
+      return false
     }
   }
 

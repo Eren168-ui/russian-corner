@@ -181,4 +181,52 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
         self.sourceText = sourceText
         self.reviewStatus = reviewStatus
     }
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case promptZh
+        case cueRu
+        case practiceRu
+        case speechText
+        case theme
+        case lexemeIDs
+        case sourcePath
+        case sourceText
+        case reviewStatus
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        promptZh = try container.decode(String.self, forKey: .promptZh)
+        practiceRu = try container.decode(
+            String.self,
+            forKey: .practiceRu
+        )
+        cueRu = try container.decodeIfPresent(
+            String.self,
+            forKey: .cueRu
+        ) ?? practiceRu
+        speechText = try container.decode(
+            String.self,
+            forKey: .speechText
+        )
+        theme = try container.decode(String.self, forKey: .theme)
+        lexemeIDs = try container.decode(
+            [String].self,
+            forKey: .lexemeIDs
+        )
+        sourcePath = try container.decode(
+            String.self,
+            forKey: .sourcePath
+        )
+        sourceText = try container.decode(
+            String.self,
+            forKey: .sourceText
+        )
+        reviewStatus = try container.decode(
+            ReviewStatus.self,
+            forKey: .reviewStatus
+        )
+    }
 }

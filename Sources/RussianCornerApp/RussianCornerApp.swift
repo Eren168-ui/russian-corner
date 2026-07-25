@@ -1,4 +1,5 @@
 import AppKit
+import RussianCornerCore
 import RussianCornerUI
 import SwiftUI
 
@@ -18,18 +19,35 @@ struct RussianCornerApp: App {
     self.hotKeyService = hotKeyService
 
     let issues = hotKeyService.registerDefaults(
-      toggleCard: { [weak panelController] in
-        panelController?.toggle()
-      },
-      nextCard: { [weak runtime] in
-        runtime?.practice?.next()
-      },
-      speak: { [weak runtime] in
-        runtime?.practice?.speak()
-      },
-      reveal: { [weak runtime] in
-        runtime?.practice?.reveal()
-      }
+      actions: [
+        .toggleCard: { [weak panelController] in
+          panelController?.toggle()
+        },
+        .nextCard: { [weak runtime] in
+          runtime?.practice?.next()
+        },
+        .speak: { [weak runtime] in
+          runtime?.practice?.speak()
+        },
+        .reveal: { [weak runtime] in
+          runtime?.practice?.reveal()
+        },
+        .gradeAgain: { [weak runtime] in
+          Self.grade(.again, runtime: runtime)
+        },
+        .gradeHard: { [weak runtime] in
+          Self.grade(.hard, runtime: runtime)
+        },
+        .gradeEasy: { [weak runtime] in
+          Self.grade(.easy, runtime: runtime)
+        },
+        .toggleRecording: { [weak runtime] in
+          Task { await runtime?.practice?.toggleRecording() }
+        },
+        .toggleCollapsed: { [weak runtime] in
+          runtime?.appModel.isCollapsed.toggle()
+        },
+      ]
     )
     if !issues.isEmpty {
       let names = issues.map(\.action.title).joined(separator: "、")
@@ -39,6 +57,19 @@ struct RussianCornerApp: App {
 
     DispatchQueue.main.async {
       panelController.show()
+    }
+  }
+
+  private static func grade(
+    _ grade: RussianCornerCore.ReviewGrade,
+    runtime: AppRuntime?
+  ) {
+    do {
+      try runtime?.practice?.grade(grade)
+    } catch {
+      runtime?.practice?.showStatus(
+        "评分未提交：\(error.localizedDescription)"
+      )
     }
   }
 
@@ -126,6 +157,7 @@ private struct MenuBarContent: View {
     Divider()
 
     Button("退出 Russian Corner", systemImage: "power") {
+      runtime.practice?.discardRecording()
       NSApplication.shared.terminate(nil)
     }
     .keyboardShortcut("q")

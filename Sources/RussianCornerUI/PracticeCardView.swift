@@ -143,62 +143,66 @@ public struct PracticeCardView: View {
       }
       .buttonStyle(.plain)
       .accessibilityLabel("收起练习卡")
+      .accessibilityHint("全局快捷键 Control Option C")
     }
     .padding(.horizontal, 20)
     .frame(height: 43)
   }
 
   private var promptArea: some View {
-    VStack(alignment: .leading, spacing: 14) {
-      HStack {
-        Text(practice.mode == .quiet ? "默读 · 主动回忆" : "开口 · 主动回忆")
-          .font(.system(size: 10, weight: .medium, design: .monospaced))
-          .foregroundStyle(CardPalette.rust)
-        Spacer()
-        Text("\(practice.remainingRecallSeconds) SEC")
-          .font(.system(size: 10, design: .monospaced))
-          .foregroundStyle(
-            practice.remainingRecallSeconds == 0
-              ? CardPalette.rust : CardPalette.mutedInk
-          )
-      }
-
-      Text(practice.prompt ?? "今天的练习已经准备好。")
-        .font(.system(size: 17 * appModel.fontScale, weight: .regular))
-        .lineSpacing(5)
-        .fixedSize(horizontal: false, vertical: true)
-        .accessibilityLabel("提示：\(practice.prompt ?? "")")
-
-      if let answer = practice.answer {
-        VStack(alignment: .leading, spacing: 7) {
-          Text("ОТВЕТ")
-            .font(.system(size: 9, weight: .semibold, design: .monospaced))
-            .tracking(1.2)
+    ScrollView {
+      VStack(alignment: .leading, spacing: 14) {
+        HStack {
+          Text(practice.mode == .quiet ? "默读 · 主动回忆" : "开口 · 主动回忆")
+            .font(.system(size: 10, weight: .medium, design: .monospaced))
             .foregroundStyle(CardPalette.rust)
-          Text(answer)
-            .font(.custom("PT Serif", size: 24 * appModel.fontScale))
-            .lineSpacing(4)
-            .textSelection(.enabled)
-            .accessibilityLabel("答案：\(answer)")
+          Spacer()
+          Text("\(practice.remainingRecallSeconds) SEC")
+            .font(.system(size: 10, design: .monospaced))
+            .foregroundStyle(
+              practice.remainingRecallSeconds == 0
+                ? CardPalette.rust : CardPalette.mutedInk
+            )
         }
-        .transition(.opacity.combined(with: .move(edge: .bottom)))
-      } else {
-        Button("显示答案") {
-          practice.reveal()
-        }
-        .buttonStyle(RustOutlineButtonStyle())
-        .keyboardShortcut(.space, modifiers: [])
-        .accessibilityHint("显示俄语答案")
-      }
 
-      if let status = practice.statusMessage ?? appModel.transientStatus {
-        Text(status)
-          .font(.system(size: 10, design: .monospaced))
-          .foregroundStyle(CardPalette.mutedInk)
-          .lineLimit(2)
-          .accessibilityLabel(status)
+        Text(practice.prompt ?? "今天的练习已经准备好。")
+          .font(.system(size: 17 * appModel.fontScale, weight: .regular))
+          .lineSpacing(5)
+          .fixedSize(horizontal: false, vertical: true)
+          .accessibilityLabel("提示：\(practice.prompt ?? "")")
+
+        if let answer = practice.answer {
+          VStack(alignment: .leading, spacing: 7) {
+            Text("ОТВЕТ")
+              .font(.system(size: 9, weight: .semibold, design: .monospaced))
+              .tracking(1.2)
+              .foregroundStyle(CardPalette.rust)
+            Text(answer)
+              .font(.custom("PT Serif", size: 24 * appModel.fontScale))
+              .lineSpacing(4)
+              .textSelection(.enabled)
+              .fixedSize(horizontal: false, vertical: true)
+              .accessibilityLabel("答案：\(answer)")
+          }
+          .transition(.opacity.combined(with: .move(edge: .bottom)))
+        } else {
+          Button("显示答案") {
+            practice.reveal()
+          }
+          .buttonStyle(RustOutlineButtonStyle())
+          .keyboardShortcut(.space, modifiers: [])
+          .accessibilityHint("显示俄语答案")
+        }
+
+        if let status = practice.statusMessage ?? appModel.transientStatus {
+          Text(status)
+            .font(.system(size: 10, design: .monospaced))
+            .foregroundStyle(CardPalette.mutedInk)
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityLabel(status)
+        }
       }
-      Spacer(minLength: 0)
+      .frame(maxWidth: .infinity, alignment: .topLeading)
     }
     .padding(.horizontal, 22)
     .padding(.vertical, 17)
@@ -217,10 +221,32 @@ public struct PracticeCardView: View {
         ) {
           Task { await practice.toggleRecording() }
         }
+        .accessibilityHint("全局快捷键 Control Option M")
         utilityButton("下一项", systemImage: "arrow.right") {
           practice.next()
         }
         Spacer()
+      }
+
+      if practice.hasRecording {
+        HStack(spacing: 12) {
+          utilityButton("播放", systemImage: "play.circle") {
+            practice.playRecording()
+          }
+          utilityButton("保存", systemImage: "square.and.arrow.down") {
+            do {
+              try practice.saveRecording()
+            } catch {
+              practice.showStatus(
+                "录音保存失败：\(error.localizedDescription)"
+              )
+            }
+          }
+          utilityButton("丢弃", systemImage: "trash") {
+            practice.discardRecording()
+          }
+          Spacer()
+        }
       }
 
       HStack(spacing: 8) {
@@ -273,7 +299,17 @@ public struct PracticeCardView: View {
     )
     .disabled(!practice.isRevealed)
     .accessibilityLabel("评分 \(title)")
-    .accessibilityHint("显示答案后可评分并进入下一项")
+    .accessibilityHint(
+      "显示答案后可评分；全局快捷键 Control Option \(gradeShortcut(grade))"
+    )
+  }
+
+  private func gradeShortcut(_ grade: ReviewGrade) -> String {
+    switch grade {
+    case .again: "1"
+    case .hard: "2"
+    case .easy: "3"
+    }
   }
 }
 

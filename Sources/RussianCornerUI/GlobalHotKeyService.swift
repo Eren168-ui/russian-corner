@@ -6,6 +6,11 @@ public enum GlobalHotKeyAction: UInt32, CaseIterable, Sendable {
   case nextCard = 2
   case speak = 3
   case reveal = 4
+  case gradeAgain = 5
+  case gradeHard = 6
+  case gradeEasy = 7
+  case toggleRecording = 8
+  case toggleCollapsed = 9
 
   public var title: String {
     switch self {
@@ -13,7 +18,37 @@ public enum GlobalHotKeyAction: UInt32, CaseIterable, Sendable {
     case .nextCard: "下一句"
     case .speak: "朗读"
     case .reveal: "显示答案"
+    case .gradeAgain: "评分 Again"
+    case .gradeHard: "评分 Hard"
+    case .gradeEasy: "评分 Easy"
+    case .toggleRecording: "录音或停止"
+    case .toggleCollapsed: "收起或展开"
     }
+  }
+
+  public static let defaultShortcuts: [Self: GlobalHotKeyShortcut] = [
+    .toggleCard: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_R)),
+    .nextCard: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_N)),
+    .speak: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_S)),
+    .reveal: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_A)),
+    .gradeAgain: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_1)),
+    .gradeHard: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_2)),
+    .gradeEasy: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_3)),
+    .toggleRecording: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_M)),
+    .toggleCollapsed: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_C)),
+  ]
+}
+
+public struct GlobalHotKeyShortcut: Hashable, Sendable {
+  public let keyCode: UInt32
+  public let modifiers: UInt32
+
+  public init(
+    keyCode: UInt32,
+    modifiers: UInt32 = UInt32(controlKey | optionKey)
+  ) {
+    self.keyCode = keyCode
+    self.modifiers = modifiers
   }
 }
 
@@ -61,33 +96,30 @@ public final class GlobalHotKeyService {
 
   @discardableResult
   public func registerDefaults(
-    toggleCard: @escaping () -> Void,
-    nextCard: @escaping () -> Void,
-    speak: @escaping () -> Void,
-    reveal: @escaping () -> Void
+    actions: [GlobalHotKeyAction: () -> Void]
   ) -> [GlobalHotKeyRegistrationIssue] {
-    actions = [
-      .toggleCard: toggleCard,
-      .nextCard: nextCard,
-      .speak: speak,
-      .reveal: reveal,
-    ]
+    self.actions = actions
     registrationIssues.removeAll()
     for hotKeyRef in hotKeyRefs {
       UnregisterEventHotKey(hotKeyRef)
     }
     hotKeyRefs.removeAll()
 
-    register(.toggleCard, keyCode: UInt32(kVK_ANSI_R))
-    register(.nextCard, keyCode: UInt32(kVK_ANSI_N))
-    register(.speak, keyCode: UInt32(kVK_ANSI_S))
-    register(.reveal, keyCode: UInt32(kVK_ANSI_A))
+    for action in GlobalHotKeyAction.allCases {
+      guard
+        actions[action] != nil,
+        let shortcut = GlobalHotKeyAction.defaultShortcuts[action]
+      else {
+        continue
+      }
+      register(action, shortcut: shortcut)
+    }
     return registrationIssues
   }
 
   private func register(
     _ action: GlobalHotKeyAction,
-    keyCode: UInt32
+    shortcut: GlobalHotKeyShortcut
   ) {
     var reference: EventHotKeyRef?
     let identifier = EventHotKeyID(
@@ -95,8 +127,8 @@ public final class GlobalHotKeyService {
       id: action.rawValue
     )
     let status = RegisterEventHotKey(
-      keyCode,
-      UInt32(controlKey | optionKey),
+      shortcut.keyCode,
+      shortcut.modifiers,
       identifier,
       GetApplicationEventTarget(),
       0,

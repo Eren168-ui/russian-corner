@@ -122,6 +122,18 @@ public enum RecordingSaveOutcome: Equatable, Sendable {
 }
 
 @MainActor
+public protocol RecordingManaging: AnyObject {
+    var isRecording: Bool { get }
+    var temporaryRecordingURL: URL? { get }
+    func permissionStatus() -> MicrophonePermissionStatus
+    func requestPermission() async -> MicrophonePermissionStatus
+    func start() async -> RecordingStartResult
+    func stop()
+    func discard() throws
+    func save(to destinationURL: URL) throws -> RecordingSaveOutcome
+}
+
+@MainActor
 public protocol RecordingFileManaging {
     func fileExists(at url: URL) -> Bool
     func removeItem(at url: URL) throws
@@ -300,3 +312,5 @@ public final class RecordingService {
         }
     }
 }
+
+extension RecordingService: RecordingManaging {}

@@ -10,6 +10,26 @@ public enum ProgressRepositoryError: Error, Equatable, Sendable {
     )
 }
 
+@MainActor
+public protocol PracticeProgressStoring: AnyObject {
+    func progress(
+        itemType: PracticeItemKind,
+        itemId: String
+    ) throws -> ReviewState?
+
+    func dailyCompletedCount(
+        on date: Date,
+        calendar: Calendar
+    ) throws -> Int?
+
+    func commitReview(
+        event: ReviewEvent,
+        state: ReviewState,
+        dailyCompletedCount: Int,
+        calendar: Calendar
+    ) throws
+}
+
 @Model
 public final class ReviewEventRecord {
     @Attribute(.unique) public var id: UUID
@@ -180,6 +200,31 @@ public final class ProgressRepository {
         try context.save()
     }
 
+    public func commitReview(
+        event: ReviewEvent,
+        state: ReviewState,
+        dailyCompletedCount: Int,
+        calendar: Calendar = .current
+    ) throws {
+        do {
+            context.insert(ReviewEventRecord(event: event))
+            try upsertProgress(
+                itemType: event.itemType,
+                itemId: event.itemId,
+                state: state
+            )
+            try upsertDailyCompletion(
+                date: event.createdAt,
+                completedCount: dailyCompletedCount,
+                calendar: calendar
+            )
+            try context.save()
+        } catch {
+            context.rollback()
+            throw error
+        }
+    }
+
     public func reviewEvents() throws -> [ReviewEvent] {
         let descriptor = FetchDescriptor<ReviewEventRecord>(
             sortBy: [SortDescriptor(\.createdAt)]
@@ -194,26 +239,11 @@ public final class ProgressRepository {
         itemId: String,
         state: ReviewState
     ) throws {
-        let key = ItemProgressRecord.key(
+        try upsertProgress(
             itemType: itemType,
-            itemId: itemId
+            itemId: itemId,
+            state: state
         )
-        let descriptor = FetchDescriptor<ItemProgressRecord>(
-            predicate: #Predicate { $0.storageKey == key }
-        )
-
-        if let record = try context.fetch(descriptor).first {
-            record.masteryLevel = state.masteryLevel
-            record.dueAt = state.dueAt
-        } else {
-            context.insert(
-                ItemProgressRecord(
-                    itemType: itemType,
-                    itemId: itemId,
-                    state: state
-                )
-            )
-        }
         try context.save()
     }
 
@@ -236,21 +266,11 @@ public final class ProgressRepository {
         completedCount: Int,
         calendar: Calendar = .current
     ) throws {
-        let day = calendar.startOfDay(for: date)
-        let descriptor = FetchDescriptor<DailyCompletionRecord>(
-            predicate: #Predicate { $0.day == day }
+        try upsertDailyCompletion(
+            date: date,
+            completedCount: completedCount,
+            calendar: calendar
         )
-
-        if let record = try context.fetch(descriptor).first {
-            record.completedCount = completedCount
-        } else {
-            context.insert(
-                DailyCompletionRecord(
-                    day: day,
-                    completedCount: completedCount
-                )
-            )
-        }
         try context.save()
     }
 
@@ -290,4 +310,53 @@ public final class ProgressRepository {
         return try context.fetch(descriptor).first?.settings
             ?? RussianCornerSettings()
     }
+
+    private func upsertProgress(
+        itemType: PracticeItemKind,
+        itemId: String,
+        state: ReviewState
+    ) throws {
+        let key = ItemProgressRecord.key(
+            itemType: itemType,
+            itemId: itemId
+        )
+        let descriptor = FetchDescriptor<ItemProgressRecord>(
+            predicate: #Predicate { $0.storageKey == key }
+        )
+        if let record = try context.fetch(descriptor).first {
+            record.masteryLevel = state.masteryLevel
+            record.dueAt = state.dueAt
+        } else {
+            context.insert(
+                ItemProgressRecord(
+                    itemType: itemType,
+                    itemId: itemId,
+                    state: state
+                )
+            )
+        }
+    }
+
+    private func upsertDailyCompletion(
+        date: Date,
+        completedCount: Int,
+        calendar: Calendar
+    ) throws {
+        let day = calendar.startOfDay(for: date)
+        let descriptor = FetchDescriptor<DailyCompletionRecord>(
+            predicate: #Predicate { $0.day == day }
+        )
+        if let record = try context.fetch(descriptor).first {
+            record.completedCount = completedCount
+        } else {
+            context.insert(
+                DailyCompletionRecord(
+                    day: day,
+                    completedCount: completedCount
+                )
+            )
+        }
+    }
 }
+
+extension ProgressRepository: PracticeProgressStoring {}

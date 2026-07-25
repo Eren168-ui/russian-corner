@@ -3,6 +3,21 @@ import Observation
 import RussianCornerCore
 import RussianCornerPlatform
 
+public enum PracticeViewModelError:
+  LocalizedError,
+  Equatable,
+  Sendable
+{
+  case answerNotRevealed
+
+  public var errorDescription: String? {
+    switch self {
+    case .answerNotRevealed:
+      return "请先显示答案，再提交评分"
+    }
+  }
+}
+
 @MainActor
 @Observable
 public final class PracticeViewModel {
@@ -15,10 +30,12 @@ public final class PracticeViewModel {
   public let targetCount: Int
   public var mode: PracticeMode
 
-  private let repository: ProgressRepository
+  private let repository: any PracticeProgressStoring
   private let scheduler: ReviewScheduler
   private let speechService: SpeechService
-  private let recordingService: RecordingService
+  private let recordingService: any RecordingManaging
+  private let playbackService: any RecordingPlaying
+  private let recordingsDirectory: URL
   private let now: () -> Date
   private var states: [String: ReviewState]
   private var recallStartedAt: Date
@@ -34,7 +51,13 @@ public final class PracticeViewModel {
   public var prompt: String? {
     guard let card = currentCard else { return nil }
     let mastery = states[card.id]?.masteryLevel ?? 0
-    return mastery >= 3 ? card.cueRu : card.promptZh
+    let cueDiffersFromAnswer =
+      card.cueRu.trimmingCharacters(in: .whitespacesAndNewlines)
+      .caseInsensitiveCompare(
+        card.practiceRu.trimmingCharacters(in: .whitespacesAndNewlines)
+      ) != .orderedSame
+    return mastery >= 3 && cueDiffersFromAnswer
+      ? card.cueRu : card.promptZh
   }
 
   public var answer: String? {
@@ -43,13 +66,15 @@ public final class PracticeViewModel {
 
   public init(
     catalog: ContentCatalog,
-    repository: ProgressRepository,
+    repository: any PracticeProgressStoring,
     targetCount: Int = 7,
     mode: PracticeMode = .quiet,
     now: @escaping () -> Date = Date.init,
     scheduler: ReviewScheduler = ReviewScheduler(),
     speechService: SpeechService = SpeechService(),
-    recordingService: RecordingService = RecordingService()
+    recordingService: any RecordingManaging = RecordingService(),
+    playbackService: any RecordingPlaying = RecordingPlaybackService(),
+    recordingsDirectory: URL? = nil
   ) throws {
     self.repository = repository
     self.targetCount = min(max(targetCount, 5), 10)
@@ -58,9 +83,16 @@ public final class PracticeViewModel {
     self.scheduler = scheduler
     self.speechService = speechService
     self.recordingService = recordingService
+    self.playbackService = playbackService
+    self.recordingsDirectory =
+      recordingsDirectory ?? Self.defaultRecordingsDirectory
     let instant = now()
     recallStartedAt = instant
-    completedToday = try repository.dailyCompletedCount(on: instant) ?? 0
+    completedToday =
+      try repository.dailyCompletedCount(
+        on: instant,
+        calendar: .current
+      ) ?? 0
 
     var restored: [String: ReviewState] = [:]
     var due: [PracticeItem] = []
@@ -107,7 +139,11 @@ public final class PracticeViewModel {
   }
 
   public func grade(_ grade: ReviewGrade) throws {
+    guard isRevealed else {
+      throw PracticeViewModelError.answerNotRevealed
+    }
     guard let card = currentCard else { return }
+    let cleanupMessage = cleanupRecordingForTransition()
     let instant = now()
     let elapsed = max(0, instant.timeIntervalSince(recallStartedAt))
     let event = ReviewEvent(
@@ -126,28 +162,30 @@ public final class PracticeViewModel {
       grade: grade,
       now: instant
     )
-    try repository.save(reviewEvent: event)
-    try repository.saveProgress(
-      itemType: .sentence,
-      itemId: card.id,
-      state: newState
+    let newCompletedCount = completedToday + 1
+    try repository.commitReview(
+      event: event,
+      state: newState,
+      dailyCompletedCount: newCompletedCount,
+      calendar: .current
     )
     states[card.id] = newState
-    completedToday += 1
-    try repository.saveDailyCompletion(
-      date: instant,
-      completedCount: completedToday
-    )
-    next()
+    completedToday = newCompletedCount
+    advance(status: cleanupMessage)
   }
 
   public func next() {
+    let cleanupMessage = cleanupRecordingForTransition()
+    advance(status: cleanupMessage)
+  }
+
+  private func advance(status: String?) {
     guard !queue.isEmpty else { return }
     currentIndex = (currentIndex + 1) % queue.count
     isRevealed = false
     remainingRecallSeconds = 3
     recallStartedAt = now()
-    statusMessage = nil
+    statusMessage = status
   }
 
   public func showStatus(_ message: String) {
@@ -156,6 +194,14 @@ public final class PracticeViewModel {
 
   public var isRecording: Bool {
     recordingService.isRecording
+  }
+
+  public var hasRecording: Bool {
+    recordingService.temporaryRecordingURL != nil
+  }
+
+  public var isPlayingRecording: Bool {
+    playbackService.isPlaying
   }
 
   public func speak() {
@@ -175,7 +221,7 @@ public final class PracticeViewModel {
   public func toggleRecording() async {
     if recordingService.isRecording {
       recordingService.stop()
-      statusMessage = "录音已停止"
+      statusMessage = "录音已停止，可播放、保存或丢弃"
       return
     }
     var result = await recordingService.start()
@@ -197,5 +243,96 @@ public final class PracticeViewModel {
     case .failed(let message):
       statusMessage = "录音未开始：\(message)"
     }
+  }
+
+  public func playRecording() {
+    guard let url = recordingService.temporaryRecordingURL else {
+      statusMessage = "没有可播放的录音"
+      return
+    }
+    if recordingService.isRecording {
+      recordingService.stop()
+    }
+    switch playbackService.play(url: url) {
+    case .playing:
+      statusMessage = "正在播放录音"
+    case .failed(let message):
+      statusMessage = "录音播放失败：\(message)"
+    }
+  }
+
+  @discardableResult
+  public func saveRecording() throws -> URL {
+    guard recordingService.temporaryRecordingURL != nil else {
+      throw RecordingServiceError.noTemporaryRecording
+    }
+    if recordingService.isRecording {
+      recordingService.stop()
+    }
+    playbackService.stop()
+    try FileManager.default.createDirectory(
+      at: recordingsDirectory,
+      withIntermediateDirectories: true
+    )
+    let destination =
+      recordingsDirectory
+      .appendingPathComponent(
+        "recording-\(UUID().uuidString)",
+        isDirectory: false
+      )
+      .appendingPathExtension("m4a")
+    let outcome = try recordingService.save(to: destination)
+    switch outcome {
+    case .saved(_, let cleanupPending):
+      statusMessage =
+        cleanupPending
+        ? "录音已保存，临时文件稍后清理"
+        : "录音已保存"
+    }
+    return destination
+  }
+
+  public func discardRecording() {
+    playbackService.stop()
+    if recordingService.isRecording {
+      recordingService.stop()
+    }
+    do {
+      try recordingService.discard()
+      statusMessage = "录音已丢弃"
+    } catch {
+      statusMessage = "录音暂未清理：\(error.localizedDescription)"
+    }
+  }
+
+  private func cleanupRecordingForTransition() -> String? {
+    playbackService.stop()
+    guard
+      recordingService.isRecording
+        || recordingService.temporaryRecordingURL != nil
+    else {
+      return nil
+    }
+    if recordingService.isRecording {
+      recordingService.stop()
+    }
+    do {
+      try recordingService.discard()
+      return nil
+    } catch {
+      return "切换已继续，录音暂未清理：\(error.localizedDescription)"
+    }
+  }
+
+  private static var defaultRecordingsDirectory: URL {
+    let base =
+      FileManager.default.urls(
+        for: .applicationSupportDirectory,
+        in: .userDomainMask
+      ).first ?? FileManager.default.temporaryDirectory
+    return
+      base
+      .appendingPathComponent("RussianCorner", isDirectory: true)
+      .appendingPathComponent("Recordings", isDirectory: true)
   }
 }
