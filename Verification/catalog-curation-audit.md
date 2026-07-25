@@ -121,6 +121,53 @@ Issues found during the sample were repaired before final verification:
   collocations such as `играть на гитаре`, `собираться в поездку`,
   `подключиться к сети`, and `записаться на стрижку`.
 
-`SentenceCard` currently has no `cueRu` field. This content-only change keeps
-the existing schema intact; `speechText` is synchronized exactly with the
-natural `practiceRu` cue for all 72 cards.
+`SentenceCard.cueRu` remains a separate Russian question/guidance prompt;
+`speechText` is synchronized exactly with `practiceRu` for all 72 answer
+cards.
+
+## Required linguistic metadata audit
+
+The linguistic metadata gate was added test-first. The initial focused run
+failed at compile time because `Lexeme` did not expose `government` or
+`aspectPairNote`. After adding those optional, backward-compatible fields,
+the catalog test run produced 474 assertions against the genuinely missing
+bundle data. A separate validator regression then failed with five assertions
+until `ContentCatalog.validate()` enforced noun gender, verb aspect,
+aspect-pair disposition, and verb/preposition government.
+
+Bundle coverage after curation:
+
+| Metadata | Coverage |
+|---|---:|
+| noun grammatical gender | 195 / 195 |
+| masculine nouns | 95 |
+| feminine nouns | 68 |
+| neuter nouns | 30 |
+| plural-only nouns | 2 |
+| verb aspect | 93 / 93 |
+| imperfective verbs | 68 |
+| perfective verbs | 24 |
+| biaspectual verbs | 1 |
+| explicit aspect pair | 85 / 93 |
+| explicit no-neutral-pair explanation | 8 / 93 |
+| verb government / usage | 93 / 93 |
+| preposition government | 2 / 2 |
+
+The eight verbs without a single neutral aspect partner are explicitly
+explained rather than filled with a placeholder:
+
+```text
+спать, вести, длиться, болеть, любить, бегать, жить, доверять
+```
+
+Manual exception review covered ambiguous genders (`кофе`, `время`,
+`полчаса`, `меню`, `метро`, `такси`, `кино`, `пальто`, `фото`,
+`брюки`, `очки`), motion verbs, reflexive verbs, and `-ировать` verbs.
+Dictionary cross-checks corrected `полчаса` to masculine, `время` to neuter,
+`планировать` to imperfective with `спланировать`, `тренировать(ся)` to
+`натренировать(ся)`, and booking sense `бронировать` to biaspectual with the
+common explicit completion `забронировать`.
+
+All new fields are optional in the decoding model, so older JSON without
+linguistic metadata still decodes; bundled reviewed content is held to the
+stricter gate.

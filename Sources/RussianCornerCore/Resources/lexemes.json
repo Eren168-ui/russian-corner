@@ -48,7 +48,10 @@
       "sentence-greetings-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "знакомиться",
+    "government": "с + 第五格（познакомиться с соседями）"
   },
   {
     "id": "lexeme-greetings-приятно",
@@ -82,7 +85,8 @@
       "sentence-greetings-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-greetings-спасибо",
@@ -133,7 +137,8 @@
       "sentence-greetings-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-greetings-свидание",
@@ -152,7 +157,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "свидания"
-    ]
+    ],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-greetings-пока",
@@ -188,7 +194,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "семье"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-family-родитель",
@@ -207,7 +214,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "родителями"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-family-мама",
@@ -226,7 +234,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "мамой"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-family-папа",
@@ -245,7 +254,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "папой"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-family-брат",
@@ -264,7 +274,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "братом"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-family-сестра",
@@ -281,7 +292,8 @@
       "sentence-family-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-family-бабушка",
@@ -300,7 +312,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "бабушку"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-family-дедушка",
@@ -319,7 +332,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "дедушку"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-family-внучка",
@@ -338,7 +352,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "внучку"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-family-родственник",
@@ -357,7 +372,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "родственников"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-home-квартира",
@@ -376,7 +392,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "квартире"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-home-кухня",
@@ -393,7 +410,8 @@
       "sentence-home-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-home-спальня",
@@ -412,7 +430,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "спальне"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-home-балкон",
@@ -431,7 +450,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "балконе"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-home-светлый",
@@ -470,7 +490,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "гостиной"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-home-удобный",
@@ -506,7 +527,8 @@
       "sentence-home-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-home-окно",
@@ -525,7 +547,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "окна"
-    ]
+    ],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-home-мебель",
@@ -542,7 +565,8 @@
       "sentence-home-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-daily-routine-вставать",
@@ -559,7 +583,10 @@
       "sentence-daily-routine-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "встать",
+    "government": "不及物；常接时间或方式副词（вставать рано）"
   },
   {
     "id": "lexeme-daily-routine-умываться",
@@ -576,7 +603,10 @@
       "sentence-daily-routine-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "умыться",
+    "government": "第五格表示方式或工具（умываться холодной водой）"
   },
   {
     "id": "lexeme-daily-routine-принимать",
@@ -595,7 +625,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "принимаю"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "принять",
+    "government": "直接接第四格（принимать душ / лекарство）"
   },
   {
     "id": "lexeme-daily-routine-душ",
@@ -612,7 +645,8 @@
       "sentence-daily-routine-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-daily-routine-рано",
@@ -646,7 +680,8 @@
       "sentence-daily-routine-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-daily-routine-одеваться",
@@ -665,7 +700,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "одеваюсь"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "одеться",
+    "government": "不及物；穿某物常用 в + 第四格（одеваться в пальто）"
   },
   {
     "id": "lexeme-daily-routine-ложиться",
@@ -684,7 +722,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "ложусь"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "лечь",
+    "government": "不及物；方向常用 в/на + 第四格（ложиться в кровать）"
   },
   {
     "id": "lexeme-daily-routine-спать",
@@ -701,7 +742,10 @@
       "sentence-daily-routine-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPairNote": "无中性的完成体对应词；поспать 表示“睡一会儿”",
+    "government": "不及物；常接方式或时长（спать крепко / восемь часов）"
   },
   {
     "id": "lexeme-daily-routine-распорядок",
@@ -718,7 +762,8 @@
       "sentence-daily-routine-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-food-обед",
@@ -735,7 +780,8 @@
       "sentence-food-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-food-суп",
@@ -752,7 +798,8 @@
       "sentence-food-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-food-салат",
@@ -769,7 +816,8 @@
       "sentence-food-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-food-свежий",
@@ -803,7 +851,8 @@
       "sentence-food-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-food-ужин",
@@ -820,7 +869,8 @@
       "sentence-food-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-food-готовить",
@@ -837,7 +887,10 @@
       "sentence-food-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "приготовить",
+    "government": "直接接第四格（готовить ужин）"
   },
   {
     "id": "lexeme-food-рис",
@@ -854,7 +907,8 @@
       "sentence-food-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-food-рыба",
@@ -873,7 +927,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "рыбу"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-food-чай",
@@ -890,7 +945,8 @@
       "sentence-food-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-shopping-магазин",
@@ -909,7 +965,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "магазине"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-shopping-сравнивать",
@@ -926,7 +983,10 @@
       "sentence-shopping-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "сравнить",
+    "government": "第四格 + с + 第五格（сравнивать цену с прошлой ценой）"
   },
   {
     "id": "lexeme-shopping-цена",
@@ -945,7 +1005,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "цены"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-shopping-выбирать",
@@ -962,7 +1023,10 @@
       "sentence-shopping-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "выбрать",
+    "government": "直接接第四格；从范围中选择用 из + 第二格"
   },
   {
     "id": "lexeme-shopping-товар",
@@ -979,7 +1043,8 @@
       "sentence-shopping-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-shopping-чек",
@@ -996,7 +1061,8 @@
       "sentence-shopping-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-shopping-платить",
@@ -1013,7 +1079,10 @@
       "sentence-shopping-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "заплатить",
+    "government": "за + 第四格；付款手段用第五格（платить за товар картой）"
   },
   {
     "id": "lexeme-shopping-банковский",
@@ -1052,7 +1121,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "картой"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-shopping-скидка",
@@ -1071,7 +1141,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "скидку"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-cafe-официант",
@@ -1088,7 +1159,8 @@
       "sentence-cafe-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-cafe-меню",
@@ -1105,7 +1177,8 @@
       "sentence-cafe-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-cafe-чашка",
@@ -1124,7 +1197,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "чашку"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-cafe-кофе",
@@ -1141,7 +1215,8 @@
       "sentence-cafe-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-cafe-принести",
@@ -1160,7 +1235,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "принесите"
-    ]
+    ],
+    "aspect": "perfective",
+    "aspectPair": "приносить",
+    "government": "直接接第四格；给某人用第三格（принести гостю воду）"
   },
   {
     "id": "lexeme-cafe-заказ",
@@ -1177,7 +1255,8 @@
       "sentence-cafe-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-cafe-сделать",
@@ -1194,7 +1273,10 @@
       "sentence-cafe-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "делать",
+    "government": "直接接第四格（сделать заказ）"
   },
   {
     "id": "lexeme-cafe-просить",
@@ -1211,7 +1293,10 @@
       "sentence-cafe-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "попросить",
+    "government": "第四格人 + 第二格事物，或 просить + 动词不定式"
   },
   {
     "id": "lexeme-cafe-счет",
@@ -1228,7 +1313,8 @@
       "sentence-cafe-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-cafe-десерт",
@@ -1245,7 +1331,8 @@
       "sentence-cafe-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-transport-автобус",
@@ -1262,7 +1349,8 @@
       "sentence-transport-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-transport-приехать",
@@ -1279,7 +1367,10 @@
       "sentence-transport-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "приезжать",
+    "government": "в/на + 第四格表示目的地；из/с + 第二格表示出发地"
   },
   {
     "id": "lexeme-transport-остановка",
@@ -1298,7 +1389,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "остановку"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-transport-через",
@@ -1315,7 +1407,8 @@
       "sentence-transport-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "government": "支配第四格：穿过某处或在一段时间之后（через парк / через час）"
   },
   {
     "id": "lexeme-transport-минута",
@@ -1335,7 +1428,8 @@
     "surfaceForms": [
       "минуту",
       "минут"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-transport-обычно",
@@ -1369,7 +1463,10 @@
       "sentence-transport-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "поехать",
+    "government": "на + 第六格表示交通工具；в/на + 第四格表示目的地"
   },
   {
     "id": "lexeme-transport-метро",
@@ -1386,7 +1483,8 @@
       "sentence-transport-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-transport-вызывать",
@@ -1403,7 +1501,10 @@
       "sentence-transport-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "вызвать",
+    "government": "直接接第四格（вызывать такси / врача）"
   },
   {
     "id": "lexeme-transport-такси",
@@ -1420,7 +1521,8 @@
       "sentence-transport-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-city-центр",
@@ -1439,7 +1541,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "центре"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-city-город",
@@ -1458,7 +1561,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "города"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-city-широкий",
@@ -1494,7 +1598,8 @@
       "sentence-city-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-city-музей",
@@ -1513,7 +1618,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "музеем"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-city-тихий",
@@ -1549,7 +1655,8 @@
       "sentence-city-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-city-вести",
@@ -1568,7 +1675,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "ведёт"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPairNote": "无单一中性完成体；привести 强调带到，повести 强调开始带领",
+    "government": "第四格人 + к + 第三格或 в/на + 第四格（вести гостя к выходу）"
   },
   {
     "id": "lexeme-city-парк",
@@ -1585,7 +1695,8 @@
       "sentence-city-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-city-набережная",
@@ -1604,7 +1715,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "набережной"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-directions-прямо",
@@ -1657,7 +1769,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "перекрёстке"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-directions-повернуть",
@@ -1676,7 +1789,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "поверните"
-    ]
+    ],
+    "aspect": "perfective",
+    "aspectPair": "поворачивать",
+    "government": "на + 第四格表示转入某处；也常接方向副词（повернуть направо）"
   },
   {
     "id": "lexeme-directions-налево",
@@ -1710,7 +1826,8 @@
       "sentence-directions-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-directions-напротив",
@@ -1727,7 +1844,8 @@
       "sentence-directions-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "government": "作介词时支配第二格（напротив банка）"
   },
   {
     "id": "lexeme-directions-банк",
@@ -1746,7 +1864,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "банка"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-directions-вход",
@@ -1763,7 +1882,8 @@
       "sentence-directions-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-directions-справа",
@@ -1848,7 +1968,8 @@
       "sentence-weather-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-weather-почти",
@@ -1919,7 +2040,8 @@
       "sentence-weather-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-weather-забывать",
@@ -1936,7 +2058,10 @@
       "sentence-weather-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "забыть",
+    "government": "直接接第四格；动作可用忘记 + 动词不定式"
   },
   {
     "id": "lexeme-weather-зонт",
@@ -1953,7 +2078,8 @@
       "sentence-weather-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-seasons-весна",
@@ -1972,7 +2098,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "весной"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-seasons-снег",
@@ -1989,7 +2116,8 @@
       "sentence-seasons-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-seasons-таять",
@@ -2006,7 +2134,10 @@
       "sentence-seasons-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "растаять",
+    "government": "不及物；常接方式或地点（снег тает на солнце）"
   },
   {
     "id": "lexeme-seasons-расцветать",
@@ -2023,7 +2154,10 @@
       "sentence-seasons-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "расцвести",
+    "government": "不及物；常接时间或方式（цветы расцветают весной）"
   },
   {
     "id": "lexeme-seasons-цветок",
@@ -2042,7 +2176,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "цветы"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-seasons-осень",
@@ -2061,7 +2196,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "осенью"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-seasons-лист",
@@ -2080,7 +2216,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "листья"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-seasons-желтеть",
@@ -2100,7 +2237,10 @@
     "surfaceForms": [
       "желтеет",
       "желтеют"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "пожелтеть",
+    "government": "不及物；主体用第一格（листья желтеют）"
   },
   {
     "id": "lexeme-seasons-воздух",
@@ -2117,7 +2257,8 @@
       "sentence-seasons-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-seasons-прохладный",
@@ -2170,7 +2311,8 @@
       "sentence-time-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-time-восьмой",
@@ -2206,7 +2348,8 @@
       "sentence-time-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-time-успевать",
@@ -2225,7 +2368,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "успеваю"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "успеть",
+    "government": "успевать + 动词不定式；也可接 в/на + 第四格"
   },
   {
     "id": "lexeme-time-начинаться",
@@ -2244,7 +2390,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "начинается"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "начаться",
+    "government": "不及物；时间用 в + 第四格（начинаться в девять）"
   },
   {
     "id": "lexeme-time-вовремя",
@@ -2278,7 +2427,10 @@
       "sentence-time-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPairNote": "表示持续状态，无自然完成体对应词",
+    "government": "直接接时长（длиться два часа）"
   },
   {
     "id": "lexeme-time-всего",
@@ -2329,7 +2481,10 @@
       "sentence-calendar-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "назначить",
+    "government": "直接接第四格；时间用 на + 第四格（назначать встречу на вторник）"
   },
   {
     "id": "lexeme-calendar-следующий",
@@ -2365,7 +2520,8 @@
       "sentence-calendar-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-calendar-неделя",
@@ -2382,7 +2538,8 @@
       "sentence-calendar-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-calendar-календарь",
@@ -2401,7 +2558,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "календаре"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-calendar-конец",
@@ -2420,7 +2578,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "конце"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-calendar-месяц",
@@ -2439,7 +2598,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "месяца"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-calendar-будущий",
@@ -2475,7 +2635,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "дня"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-calendar-отпуск",
@@ -2492,7 +2653,8 @@
       "sentence-calendar-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-study-студент",
@@ -2509,7 +2671,8 @@
       "sentence-study-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-study-читать",
@@ -2528,7 +2691,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "читает"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "прочитать",
+    "government": "直接接第四格（читать учебник）"
   },
   {
     "id": "lexeme-study-учебник",
@@ -2545,7 +2711,8 @@
       "sentence-study-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-study-библиотека",
@@ -2564,7 +2731,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "библиотеке"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-study-запись",
@@ -2581,7 +2749,8 @@
       "sentence-study-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-study-преподаватель",
@@ -2598,7 +2767,8 @@
       "sentence-study-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-study-объяснять",
@@ -2617,7 +2787,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "объясняет"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "объяснить",
+    "government": "第三格人 + 第四格内容（объяснять студенту правило）"
   },
   {
     "id": "lexeme-study-задание",
@@ -2634,7 +2807,8 @@
       "sentence-study-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-study-отвечать",
@@ -2653,7 +2827,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "отвечают"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "ответить",
+    "government": "на + 第四格（отвечать на вопрос）；第三格表示回答某人"
   },
   {
     "id": "lexeme-study-вопрос",
@@ -2670,7 +2847,8 @@
       "sentence-study-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-language-learning-повторять",
@@ -2687,7 +2865,10 @@
       "sentence-language-learning-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "повторить",
+    "government": "直接接第四格（повторять слова）"
   },
   {
     "id": "lexeme-language-learning-новый",
@@ -2723,7 +2904,8 @@
       "sentence-language-learning-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-language-learning-фраза",
@@ -2743,7 +2925,8 @@
     "surfaceForms": [
       "фразу",
       "фразы"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-language-learning-вслух",
@@ -2794,7 +2977,10 @@
       "sentence-language-learning-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "послушать",
+    "government": "直接接第四格（слушать диалог / преподавателя）"
   },
   {
     "id": "lexeme-language-learning-диалог",
@@ -2811,7 +2997,8 @@
       "sentence-language-learning-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-language-learning-тренировать",
@@ -2828,7 +3015,10 @@
       "sentence-language-learning-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "government": "直接接第四格（тренировать произношение）",
+    "aspectPair": "натренировать"
   },
   {
     "id": "lexeme-language-learning-произношение",
@@ -2845,7 +3035,8 @@
       "sentence-language-learning-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-health-болеть",
@@ -2862,7 +3053,10 @@
       "sentence-health-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPairNote": "表示状态时无自然完成体对应词",
+    "government": "身体部位作第一格（болит голова）；疾病可用 чем + 第五格"
   },
   {
     "id": "lexeme-health-голова",
@@ -2879,7 +3073,8 @@
       "sentence-health-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-health-температура",
@@ -2896,7 +3091,8 @@
       "sentence-health-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-health-нужно",
@@ -2930,7 +3126,10 @@
       "sentence-health-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "отдыхать",
+    "government": "不及物；地点常用 в/на + 第六格"
   },
   {
     "id": "lexeme-health-врач",
@@ -2947,7 +3146,8 @@
       "sentence-health-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-health-советовать",
@@ -2966,7 +3166,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "советует"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "посоветовать",
+    "government": "第三格人 + 第四格事物，或 советовать + 动词不定式"
   },
   {
     "id": "lexeme-health-пить",
@@ -2983,7 +3186,10 @@
       "sentence-health-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "выпить",
+    "government": "直接接第四格；部分量可用第二格（пить воду / выпить воды）"
   },
   {
     "id": "lexeme-health-вода",
@@ -3002,7 +3208,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "воды"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-health-лекарство",
@@ -3019,7 +3226,8 @@
       "sentence-health-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-feelings-радоваться",
@@ -3036,7 +3244,10 @@
       "sentence-feelings-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "обрадоваться",
+    "government": "第三格（радоваться новости / успеху）"
   },
   {
     "id": "lexeme-feelings-хороший",
@@ -3073,7 +3284,8 @@
       "sentence-feelings-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-feelings-чувствовать",
@@ -3090,7 +3302,10 @@
       "sentence-feelings-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "почувствовать",
+    "government": "直接接第四格；状态常用 чувствовать себя + 副词"
   },
   {
     "id": "lexeme-feelings-спокойно",
@@ -3143,7 +3358,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "волнуюсь"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "взволноваться",
+    "government": "за + 第四格或 из-за + 第二格（волноваться за друга）"
   },
   {
     "id": "lexeme-feelings-друг",
@@ -3160,7 +3378,8 @@
       "sentence-feelings-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-feelings-поддерживать",
@@ -3177,7 +3396,10 @@
       "sentence-feelings-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "поддержать",
+    "government": "直接接第四格（поддерживать друга）"
   },
   {
     "id": "lexeme-feelings-настроение",
@@ -3194,7 +3416,8 @@
       "sentence-feelings-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-hobbies-свободный",
@@ -3230,7 +3453,10 @@
       "sentence-hobbies-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "нарисовать",
+    "government": "直接接第四格；工具用第五格（рисовать портрет карандашом）"
   },
   {
     "id": "lexeme-hobbies-фотографировать",
@@ -3247,7 +3473,10 @@
       "sentence-hobbies-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "сфотографировать",
+    "government": "直接接第四格（фотографировать природу）"
   },
   {
     "id": "lexeme-hobbies-собирать",
@@ -3264,7 +3493,10 @@
       "sentence-hobbies-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "собрать",
+    "government": "直接接第四格（собирать открытки）"
   },
   {
     "id": "lexeme-hobbies-открытка",
@@ -3283,7 +3515,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "открытки"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-hobbies-выходной",
@@ -3300,7 +3533,8 @@
       "sentence-hobbies-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-hobbies-любить",
@@ -3319,7 +3553,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "люблю"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPairNote": "表示稳定情感或偏好，无自然完成体对应词",
+    "government": "直接接第四格，或 любить + 动词不定式"
   },
   {
     "id": "lexeme-hobbies-играть",
@@ -3336,7 +3573,10 @@
       "sentence-hobbies-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "сыграть",
+    "government": "на + 第六格表示乐器；в + 第四格表示游戏或运动"
   },
   {
     "id": "lexeme-hobbies-гитара",
@@ -3355,7 +3595,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "гитаре"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-hobbies-кино",
@@ -3372,7 +3613,8 @@
       "sentence-hobbies-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-sports-бегать",
@@ -3389,7 +3631,10 @@
       "sentence-sports-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPairNote": "多向运动动词，无单一中性完成体；побегать 表示跑一会儿",
+    "government": "по + 第三格表示活动范围（бегать по утрам / по парку）"
   },
   {
     "id": "lexeme-sports-стадион",
@@ -3408,7 +3653,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "стадионе"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-sports-разминка",
@@ -3427,7 +3673,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "разминку"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-sports-утром",
@@ -3463,7 +3710,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "упражнения"
-    ]
+    ],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-sports-команда",
@@ -3482,7 +3730,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "команды"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-sports-тренироваться",
@@ -3499,7 +3748,10 @@
       "sentence-sports-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "натренироваться",
+    "government": "в + 第六格表示训练项目；地点常用 в/на + 第六格"
   },
   {
     "id": "lexeme-sports-тренер",
@@ -3516,7 +3768,8 @@
       "sentence-sports-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-sports-записывать",
@@ -3535,7 +3788,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "записывает"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "записать",
+    "government": "直接接第四格；记录到某处用 в/на + 第四格"
   },
   {
     "id": "lexeme-sports-результат",
@@ -3552,7 +3808,8 @@
       "sentence-sports-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-travel-путешествие",
@@ -3571,7 +3828,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "путешествием"
-    ]
+    ],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-travel-маршрут",
@@ -3588,7 +3846,8 @@
       "sentence-travel-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-travel-чемодан",
@@ -3605,7 +3864,8 @@
       "sentence-travel-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-travel-собираться",
@@ -3622,7 +3882,10 @@
       "sentence-travel-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "собраться",
+    "government": "в + 第四格表示去向；собираться + 动词不定式表示打算"
   },
   {
     "id": "lexeme-travel-поездка",
@@ -3641,7 +3904,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "поездку"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-travel-место",
@@ -3658,7 +3922,8 @@
       "sentence-travel-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-travel-гулять",
@@ -3675,7 +3940,10 @@
       "sentence-travel-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "погулять",
+    "government": "по + 第三格表示地点范围（гулять по городу）"
   },
   {
     "id": "lexeme-travel-снимать",
@@ -3692,7 +3960,10 @@
       "sentence-travel-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "снять",
+    "government": "直接接第四格（снимать пейзажи / квартиру）"
   },
   {
     "id": "lexeme-travel-знакомиться",
@@ -3709,7 +3980,10 @@
       "sentence-travel-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "познакомиться",
+    "government": "с + 第五格（знакомиться с местными жителями）"
   },
   {
     "id": "lexeme-travel-местный",
@@ -3745,7 +4019,10 @@
       "sentence-hotel-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "biaspectual",
+    "aspectPair": "забронировать",
+    "government": "直接接第四格；日期用 на + 第四格（бронировать номер на неделю）"
   },
   {
     "id": "lexeme-hotel-одноместный",
@@ -3779,7 +4056,8 @@
       "sentence-hotel-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-hotel-питание",
@@ -3796,7 +4074,8 @@
       "sentence-hotel-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-hotel-гостиница",
@@ -3815,7 +4094,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "гостинице"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-hotel-администратор",
@@ -3832,7 +4112,8 @@
       "sentence-hotel-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-hotel-ключ",
@@ -3849,7 +4130,8 @@
       "sentence-hotel-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-hotel-назвать",
@@ -3868,7 +4150,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "назвали"
-    ]
+    ],
+    "aspect": "perfective",
+    "aspectPair": "называть",
+    "government": "直接接第四格（назвать фамилию）；命名结构可接第五格"
   },
   {
     "id": "lexeme-hotel-пароль",
@@ -3885,7 +4170,8 @@
       "sentence-hotel-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-hotel-вайфай",
@@ -3904,7 +4190,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "вайфая"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-airport-регистрация",
@@ -3923,7 +4210,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "регистрации"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-airport-показать",
@@ -3940,7 +4228,10 @@
       "sentence-airport-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "показывать",
+    "government": "第三格人 + 第四格事物（показать сотруднику паспорт）"
   },
   {
     "id": "lexeme-airport-паспорт",
@@ -3957,7 +4248,8 @@
       "sentence-airport-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-airport-билет",
@@ -3974,7 +4266,8 @@
       "sentence-airport-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-airport-багаж",
@@ -3993,7 +4286,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "багажа"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-airport-рейс",
@@ -4010,7 +4304,8 @@
       "sentence-airport-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-airport-задерживаться",
@@ -4029,7 +4324,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "задерживается"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "задержаться",
+    "government": "不及物；时长常用 на + 第四格（задержаться на час）"
   },
   {
     "id": "lexeme-airport-выход",
@@ -4046,7 +4344,8 @@
       "sentence-airport-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-airport-посадка",
@@ -4065,7 +4364,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "посадку"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-airport-измениться",
@@ -4082,7 +4382,10 @@
       "sentence-airport-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "изменяться",
+    "government": "不及物；变化幅度常用 на + 第四格"
   },
   {
     "id": "lexeme-train-поезд",
@@ -4099,7 +4402,8 @@
       "sentence-train-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-train-отправляться",
@@ -4116,7 +4420,10 @@
       "sentence-train-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "отправиться",
+    "government": "в/на + 第四格表示目的地；из/с + 第二格表示出发地"
   },
   {
     "id": "lexeme-train-второй",
@@ -4153,7 +4460,8 @@
     "surfaceForms": [
       "платформу",
       "платформы"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-train-расписание",
@@ -4172,7 +4480,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "расписании"
-    ]
+    ],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-train-найти",
@@ -4189,7 +4498,10 @@
       "sentence-train-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "находить",
+    "government": "直接接第四格（найти платформу）"
   },
   {
     "id": "lexeme-train-вагон",
@@ -4206,7 +4518,8 @@
       "sentence-train-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-train-сиденье",
@@ -4223,7 +4536,8 @@
       "sentence-train-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-train-полка",
@@ -4242,7 +4556,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "полку"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-train-проводник",
@@ -4259,7 +4574,8 @@
       "sentence-train-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-communication-позвонить",
@@ -4276,7 +4592,10 @@
       "sentence-communication-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "звонить",
+    "government": "第三格表示致电对象（позвонить родителям）"
   },
   {
     "id": "lexeme-communication-отправить",
@@ -4293,7 +4612,10 @@
       "sentence-communication-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "отправлять",
+    "government": "直接接第四格；收件人用第三格（отправить другу сообщение）"
   },
   {
     "id": "lexeme-communication-сообщение",
@@ -4310,7 +4632,8 @@
       "sentence-communication-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-communication-или",
@@ -4346,7 +4669,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "телефону"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-communication-ответить",
@@ -4363,7 +4687,10 @@
       "sentence-communication-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "отвечать",
+    "government": "на + 第四格（ответить на сообщение）；第三格表示回答某人"
   },
   {
     "id": "lexeme-communication-связаться",
@@ -4380,7 +4707,10 @@
       "sentence-communication-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "связываться",
+    "government": "с + 第五格（связаться с мастером）"
   },
   {
     "id": "lexeme-communication-позже",
@@ -4414,7 +4744,8 @@
       "sentence-communication-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-communication-разговор",
@@ -4431,7 +4762,8 @@
       "sentence-communication-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-technology-разрядиться",
@@ -4450,7 +4782,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "разрядился"
-    ]
+    ],
+    "aspect": "perfective",
+    "aspectPair": "разряжаться",
+    "government": "不及物；主体用第一格（батарея разрядилась）"
   },
   {
     "id": "lexeme-technology-зарядный",
@@ -4486,7 +4821,8 @@
       "sentence-technology-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-technology-экран",
@@ -4505,7 +4841,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "экране"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-technology-батарея",
@@ -4522,7 +4859,8 @@
       "sentence-technology-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-technology-подключиться",
@@ -4539,7 +4877,10 @@
       "sentence-technology-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "подключаться",
+    "government": "к + 第三格（подключиться к сети）"
   },
   {
     "id": "lexeme-technology-сеть",
@@ -4558,7 +4899,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "сети"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-technology-открыть",
@@ -4577,7 +4919,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "откройте"
-    ]
+    ],
+    "aspect": "perfective",
+    "aspectPair": "открывать",
+    "government": "直接接第四格（открыть приложение）"
   },
   {
     "id": "lexeme-technology-приложение",
@@ -4594,7 +4939,8 @@
       "sentence-technology-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-technology-интернет",
@@ -4611,7 +4957,8 @@
       "sentence-technology-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-clothing-холодный",
@@ -4645,7 +4992,10 @@
       "sentence-clothing-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "надеть",
+    "government": "直接接第四格；надевать что на кого（надевать пальто）"
   },
   {
     "id": "lexeme-clothing-пальто",
@@ -4662,7 +5012,8 @@
       "sentence-clothing-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-clothing-шарф",
@@ -4679,7 +5030,8 @@
       "sentence-clothing-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-clothing-сапог",
@@ -4698,7 +5050,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "сапоги"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-clothing-рубашка",
@@ -4715,7 +5068,8 @@
       "sentence-clothing-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-clothing-впору",
@@ -4749,7 +5103,8 @@
       "sentence-clothing-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "plural"
   },
   {
     "id": "lexeme-clothing-слишком",
@@ -4823,7 +5178,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "мужчины"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-appearance-короткий",
@@ -4861,7 +5217,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "волосы"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-appearance-очки",
@@ -4880,7 +5237,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "очках"
-    ]
+    ],
+    "grammaticalGender": "plural"
   },
   {
     "id": "lexeme-appearance-добрый",
@@ -4916,7 +5274,8 @@
       "sentence-appearance-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-appearance-синий",
@@ -4952,7 +5311,8 @@
       "sentence-appearance-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-appearance-внешность",
@@ -4969,7 +5329,8 @@
       "sentence-appearance-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-friends-старый",
@@ -5005,7 +5366,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "живёт"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPairNote": "表示持续状态，无自然完成体对应词",
+    "government": "地点用 в/на + 第六格；与某人同住用 с + 第五格"
   },
   {
     "id": "lexeme-friends-недалеко",
@@ -5056,7 +5420,10 @@
       "sentence-friends-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "увидеться",
+    "government": "с + 第五格（видеться с товарищем）"
   },
   {
     "id": "lexeme-friends-доверять",
@@ -5073,7 +5440,10 @@
       "sentence-friends-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPairNote": "表示持续信任，无中性的完成体对应词；довериться 含“托付/交心”",
+    "government": "第三格（доверять другу）"
   },
   {
     "id": "lexeme-friends-товарищ",
@@ -5092,7 +5462,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "товарищу"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-friends-честно",
@@ -5126,7 +5497,10 @@
       "sentence-friends-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "сказать",
+    "government": "с + 第五格表示交谈对象；о + 第六格表示话题"
   },
   {
     "id": "lexeme-friends-дружба",
@@ -5143,7 +5517,8 @@
       "sentence-friends-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-plans-завтра",
@@ -5179,7 +5554,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "планирую"
-    ]
+    ],
+    "aspect": "imperfective",
+    "government": "直接接第四格，或 планировать + 动词不定式",
+    "aspectPair": "спланировать"
   },
   {
     "id": "lexeme-plans-закончить",
@@ -5196,7 +5574,10 @@
       "sentence-plans-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "заканчивать",
+    "government": "直接接第四格，或 закончить + 动词不定式"
   },
   {
     "id": "lexeme-plans-весь",
@@ -5232,7 +5613,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "дел"
-    ]
+    ],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-plans-если",
@@ -5266,7 +5648,8 @@
       "sentence-plans-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-plans-вечером",
@@ -5300,7 +5683,10 @@
       "sentence-plans-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "идти",
+    "government": "в/на + 第四格表示目的地；к + 第三格表示走向某人或某物"
   },
   {
     "id": "lexeme-plans-прогуляться",
@@ -5317,7 +5703,10 @@
       "sentence-plans-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "прогуливаться",
+    "government": "по + 第三格表示地点范围（прогуляться по парку）"
   },
   {
     "id": "lexeme-invitations-приходить",
@@ -5334,7 +5723,10 @@
       "sentence-invitations-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "прийти",
+    "government": "в/на + 第四格表示目的地；к + 第三格表示到某人处"
   },
   {
     "id": "lexeme-invitations-гость",
@@ -5353,7 +5745,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "гостей"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-invitations-суббота",
@@ -5372,7 +5765,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "субботу"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-invitations-угощение",
@@ -5389,7 +5783,8 @@
       "sentence-invitations-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-invitations-приглашать",
@@ -5408,7 +5803,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "приглашаем"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "пригласить",
+    "government": "第四格人 + на + 第四格活动（приглашать друзей на праздник）"
   },
   {
     "id": "lexeme-invitations-приглашение",
@@ -5425,7 +5823,8 @@
       "sentence-invitations-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-invitations-удовольствие",
@@ -5444,7 +5843,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "удовольствием"
-    ]
+    ],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-invitations-прийти",
@@ -5463,7 +5863,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "приду"
-    ]
+    ],
+    "aspect": "perfective",
+    "aspectPair": "приходить",
+    "government": "в/на + 第四格表示目的地；к + 第三格表示到某人处"
   },
   {
     "id": "lexeme-invitations-соглашаться",
@@ -5482,7 +5885,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "соглашается"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "согласиться",
+    "government": "с + 第五格表示同意某人；на + 第四格表示接受条件"
   },
   {
     "id": "lexeme-invitations-отказываться",
@@ -5501,7 +5907,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "отказывается"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "отказаться",
+    "government": "от + 第二格表示拒绝某事；也可接动词不定式"
   },
   {
     "id": "lexeme-chores-заправлять",
@@ -5520,7 +5929,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "заправляю"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "заправить",
+    "government": "直接接第四格（заправлять кровать）"
   },
   {
     "id": "lexeme-chores-кровать",
@@ -5537,7 +5949,8 @@
       "sentence-chores-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-chores-подметать",
@@ -5556,7 +5969,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "подметаю"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "подмести",
+    "government": "直接接第四格（подметать пол）"
   },
   {
     "id": "lexeme-chores-пол",
@@ -5573,7 +5989,8 @@
       "sentence-chores-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-chores-мусор",
@@ -5590,7 +6007,8 @@
       "sentence-chores-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-chores-мыть",
@@ -5609,7 +6027,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "моем"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "помыть",
+    "government": "直接接第四格（мыть посуду）"
   },
   {
     "id": "lexeme-chores-посуда",
@@ -5628,7 +6049,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "посуду"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-chores-убирать",
@@ -5647,7 +6069,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "убираем"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "убрать",
+    "government": "直接接第四格（убирать кухню / мусор）"
   },
   {
     "id": "lexeme-chores-чистый",
@@ -5683,7 +6108,8 @@
       "sentence-chores-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-services-посылка",
@@ -5702,7 +6128,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "посылку"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-services-почта",
@@ -5721,7 +6148,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "почте"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-services-отправлять",
@@ -5738,7 +6166,10 @@
       "sentence-services-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "отправить",
+    "government": "直接接第四格；收件人用第三格（отправлять посылку другу）"
   },
   {
     "id": "lexeme-services-адрес",
@@ -5755,7 +6186,8 @@
       "sentence-services-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-services-марка",
@@ -5774,7 +6206,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "марку"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-services-мастер",
@@ -5791,7 +6224,8 @@
       "sentence-services-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-services-парикмахерская",
@@ -5810,7 +6244,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "парикмахерской"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-services-записаться",
@@ -5829,7 +6264,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "записался"
-    ]
+    ],
+    "aspect": "perfective",
+    "aspectPair": "записываться",
+    "government": "на + 第四格（записаться на стрижку）；к + 第三格表示预约某人"
   },
   {
     "id": "lexeme-services-стрижка",
@@ -5848,7 +6286,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "стрижку"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-services-услуга",
@@ -5867,7 +6306,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "услугу"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-nature-лес",
@@ -5884,7 +6324,8 @@
       "sentence-nature-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-nature-прозрачный",
@@ -5924,7 +6365,8 @@
     "surfaceForms": [
       "реки",
       "реке"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-nature-крутой",
@@ -5960,7 +6402,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "горы"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-nature-тропинка",
@@ -5977,7 +6420,8 @@
       "sentence-nature-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-nature-слышать",
@@ -5994,7 +6438,10 @@
       "sentence-nature-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "услышать",
+    "government": "直接接第四格（слышать пение птиц）"
   },
   {
     "id": "lexeme-nature-пение",
@@ -6011,7 +6458,8 @@
       "sentence-nature-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-nature-птица",
@@ -6031,7 +6479,8 @@
     "surfaceForms": [
       "птицы",
       "птиц"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-nature-природа",
@@ -6051,7 +6500,8 @@
     "surfaceForms": [
       "природу",
       "природе"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-holidays-праздник",
@@ -6070,7 +6520,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "праздником"
-    ]
+    ],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-holidays-украшать",
@@ -6087,7 +6538,10 @@
       "sentence-holidays-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "украсить",
+    "government": "第四格对象 + 第五格装饰物（украшать комнату гирляндами）"
   },
   {
     "id": "lexeme-holidays-комната",
@@ -6106,7 +6560,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "комнату"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-holidays-покупать",
@@ -6123,7 +6578,10 @@
       "sentence-holidays-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "купить",
+    "government": "直接接第四格；给某人用第三格（покупать другу подарок）"
   },
   {
     "id": "lexeme-holidays-подарок",
@@ -6140,7 +6598,8 @@
       "sentence-holidays-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-holidays-полночь",
@@ -6157,7 +6616,8 @@
       "sentence-holidays-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-holidays-поздравлять",
@@ -6176,7 +6636,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "поздравляем"
-    ]
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "поздравить",
+    "government": "第四格人 + с + 第五格节日（поздравлять друзей с праздником）"
   },
   {
     "id": "lexeme-holidays-общий",
@@ -6212,7 +6675,8 @@
       "sentence-holidays-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   },
   {
     "id": "lexeme-holidays-традиция",
@@ -6231,7 +6695,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "традиции"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-emergencies-помочь",
@@ -6252,7 +6717,8 @@
     "aspectPair": "помогать",
     "surfaceForms": [
       "помогите"
-    ]
+    ],
+    "government": "第三格人 + с + 第五格事情，或 помочь + 动词不定式"
   },
   {
     "id": "lexeme-emergencies-человек",
@@ -6269,7 +6735,8 @@
       "sentence-emergencies-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-emergencies-потерять",
@@ -6288,7 +6755,10 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "потерял"
-    ]
+    ],
+    "aspect": "perfective",
+    "aspectPair": "терять",
+    "government": "直接接第四格（потерять кошелёк）"
   },
   {
     "id": "lexeme-emergencies-кошелек",
@@ -6305,7 +6775,8 @@
       "sentence-emergencies-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-emergencies-срочно",
@@ -6361,7 +6832,8 @@
     "reviewStatus": "reviewed",
     "surfaceForms": [
       "ситуации"
-    ]
+    ],
+    "grammaticalGender": "feminine"
   },
   {
     "id": "lexeme-emergencies-звонок",
@@ -6378,7 +6850,8 @@
       "sentence-emergencies-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
   },
   {
     "id": "lexeme-emergencies-точно",
@@ -6412,6 +6885,7 @@
       "sentence-emergencies-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
   }
 ]

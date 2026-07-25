@@ -126,6 +126,90 @@ final class ContentCatalogTests: XCTestCase {
         XCTAssertEqual(item.surfaceForms, ["свободен"])
     }
 
+    func testLegacyLexemeWithoutLinguisticMetadataStillDecodes() throws {
+        let legacyJSON = """
+            {
+              "id": "lexeme-legacy",
+              "lemma": "дом",
+              "stressedForm": "до́м",
+              "speechText": "дом",
+              "partOfSpeech": "noun",
+              "glossZh": "家",
+              "collocations": ["уютный дом"],
+              "example": "Это мой дом.",
+              "sentenceIDs": ["sentence-home"],
+              "reviewStatus": "reviewed",
+              "surfaceForms": []
+            }
+            """
+
+        let item = try JSONDecoder().decode(
+            Lexeme.self,
+            from: Data(legacyJSON.utf8)
+        )
+
+        XCTAssertNil(item.government)
+        XCTAssertNil(item.aspectPairNote)
+    }
+
+    func testEveryBundleNounDeclaresGrammaticalGender() throws {
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
+        let nouns = catalog.lexemes.filter { $0.partOfSpeech == "noun" }
+        let allowedGenders: Set<String> = [
+            "masculine", "feminine", "neuter", "plural",
+        ]
+
+        XCTAssertEqual(nouns.count, 195)
+        for noun in nouns {
+            XCTAssertTrue(
+                noun.grammaticalGender.map(allowedGenders.contains) == true,
+                "\(noun.id): \(noun.grammaticalGender ?? "missing")"
+            )
+        }
+    }
+
+    func testEveryBundleVerbDeclaresAspectAndPairOrExplicitNote() throws {
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
+        let verbs = catalog.lexemes.filter { $0.partOfSpeech == "verb" }
+        let allowedAspects: Set<String> = [
+            "perfective", "imperfective", "biaspectual",
+        ]
+
+        XCTAssertEqual(verbs.count, 93)
+        for verb in verbs {
+            XCTAssertTrue(
+                verb.aspect.map(allowedAspects.contains) == true,
+                "\(verb.id): \(verb.aspect ?? "missing")"
+            )
+            XCTAssertTrue(
+                verb.aspectPair?.isEmpty == false
+                    || verb.aspectPairNote?.isEmpty == false,
+                "\(verb.id): missing aspect pair or explicit note"
+            )
+        }
+    }
+
+    func testEveryBundleVerbAndPrepositionDeclaresGovernment() throws {
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
+        let governedItems = catalog.lexemes.filter {
+            $0.partOfSpeech == "verb" || $0.partOfSpeech == "preposition"
+        }
+
+        XCTAssertEqual(governedItems.count, 95)
+        for item in governedItems {
+            XCTAssertTrue(
+                item.government?.isEmpty == false,
+                "\(item.id): missing government"
+            )
+        }
+    }
+
     func testPomogiteBelongsToCanonicalPomochLexeme() throws {
         let catalog = try ContentCatalog(
             resourceDirectory: sourceResourceDirectory
@@ -550,6 +634,72 @@ final class ContentCatalogTests: XCTestCase {
 
         XCTAssertFalse(issues.isEmpty)
         XCTAssertTrue(issues.contains { $0.itemID == "broken" })
+    }
+
+    func testValidationReportsMissingRequiredLinguisticMetadata() {
+        let entries = [
+            Lexeme(
+                id: "noun-without-gender",
+                lemma: "дом",
+                stressedForm: "до́м",
+                speechText: "дом",
+                partOfSpeech: "noun",
+                glossZh: "家",
+                collocations: ["уютный дом"],
+                example: "Это мой дом.",
+                sentenceIDs: [],
+                reviewStatus: .reviewed
+            ),
+            Lexeme(
+                id: "verb-without-usage",
+                lemma: "читать",
+                stressedForm: "чита́ть",
+                speechText: "читать",
+                partOfSpeech: "verb",
+                glossZh: "读",
+                collocations: ["читать книгу"],
+                example: "Я люблю читать.",
+                sentenceIDs: [],
+                reviewStatus: .reviewed
+            ),
+            Lexeme(
+                id: "preposition-without-government",
+                lemma: "через",
+                stressedForm: "че́рез",
+                speechText: "через",
+                partOfSpeech: "preposition",
+                glossZh: "穿过；过……之后",
+                collocations: ["через пять минут"],
+                example: "Автобус будет через пять минут.",
+                sentenceIDs: [],
+                reviewStatus: .reviewed
+            ),
+        ]
+        let issues = ContentCatalog(
+            lexemes: entries,
+            sentences: []
+        ).validate()
+
+        XCTAssertTrue(issues.contains {
+            $0.itemID == "noun-without-gender"
+                && $0.message.contains("grammatical gender")
+        })
+        XCTAssertTrue(issues.contains {
+            $0.itemID == "verb-without-usage"
+                && $0.message.contains("verbal aspect")
+        })
+        XCTAssertTrue(issues.contains {
+            $0.itemID == "verb-without-usage"
+                && $0.message.contains("aspect pair")
+        })
+        XCTAssertTrue(issues.contains {
+            $0.itemID == "verb-without-usage"
+                && $0.message.contains("government")
+        })
+        XCTAssertTrue(issues.contains {
+            $0.itemID == "preposition-without-government"
+                && $0.message.contains("government")
+        })
     }
 
     func testValidationReportsDuplicateLemmaRecords() {

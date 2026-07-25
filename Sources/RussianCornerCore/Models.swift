@@ -108,6 +108,8 @@ public struct Lexeme: Identifiable, Codable, Equatable, Sendable {
     public let grammaticalGender: String?
     public let aspect: String?
     public let aspectPair: String?
+    public let aspectPairNote: String?
+    public let government: String?
     public let principalForms: [String]?
     public let surfaceForms: [String]
 
@@ -125,6 +127,8 @@ public struct Lexeme: Identifiable, Codable, Equatable, Sendable {
         grammaticalGender: String? = nil,
         aspect: String? = nil,
         aspectPair: String? = nil,
+        aspectPairNote: String? = nil,
+        government: String? = nil,
         principalForms: [String]? = nil,
         surfaceForms: [String] = []
     ) {
@@ -141,6 +145,8 @@ public struct Lexeme: Identifiable, Codable, Equatable, Sendable {
         self.grammaticalGender = grammaticalGender
         self.aspect = aspect
         self.aspectPair = aspectPair
+        self.aspectPairNote = aspectPairNote
+        self.government = government
         self.principalForms = principalForms
         self.surfaceForms = surfaceForms
     }

@@ -215,6 +215,47 @@ public struct ContentCatalog: Sendable {
                 message: "missing Chinese gloss",
                 issues: &issues
             )
+            if lexeme.partOfSpeech == "noun" {
+                require(
+                    Self.allowedGrammaticalGenders.contains(
+                        lexeme.grammaticalGender ?? ""
+                    ),
+                    itemID: lexeme.id,
+                    message: "missing or invalid grammatical gender",
+                    issues: &issues
+                )
+            }
+            if lexeme.partOfSpeech == "verb" {
+                require(
+                    Self.allowedVerbalAspects.contains(
+                        lexeme.aspect ?? ""
+                    ),
+                    itemID: lexeme.id,
+                    message: "missing or invalid verbal aspect",
+                    issues: &issues
+                )
+                require(
+                    Self.isNonempty(lexeme.aspectPair)
+                        || Self.isNonempty(lexeme.aspectPairNote),
+                    itemID: lexeme.id,
+                    message: "missing aspect pair or explicit pair note",
+                    issues: &issues
+                )
+                require(
+                    Self.isNonempty(lexeme.government),
+                    itemID: lexeme.id,
+                    message: "missing verb government",
+                    issues: &issues
+                )
+            }
+            if lexeme.partOfSpeech == "preposition" {
+                require(
+                    Self.isNonempty(lexeme.government),
+                    itemID: lexeme.id,
+                    message: "missing preposition government",
+                    issues: &issues
+                )
+            }
             require(
                 !lexeme.collocations.isEmpty
                     && lexeme.collocations.allSatisfy { !$0.isEmpty },
@@ -498,6 +539,21 @@ public struct ContentCatalog: Sendable {
         "о", "об", "по", "за", "у", "при", "через", "перед",
         "между", "и", "или",
     ]
+
+    private static let allowedGrammaticalGenders: Set<String> = [
+        "masculine", "feminine", "neuter", "plural",
+    ]
+
+    private static let allowedVerbalAspects: Set<String> = [
+        "perfective", "imperfective", "biaspectual",
+    ]
+
+    private static func isNonempty(_ value: String?) -> Bool {
+        guard let value else {
+            return false
+        }
+        return !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
 
     private static func hasBalancedQuotes(_ value: String) -> Bool {
         var guillemetDepth = 0
