@@ -11,6 +11,10 @@ public protocol ReminderSettingsScheduling: Sendable {
   func schedule(
     settings: RussianCornerSettings
   ) async -> ReminderScheduleResult
+  func reconcile(
+    settings: RussianCornerSettings,
+    requestAuthorizationIfNeeded: Bool
+  ) async -> ReminderScheduleResult
 }
 
 public enum ReminderSettingsUpdateResult: Equatable, Sendable {
@@ -56,7 +60,10 @@ public final class ReminderSettingsCoordinator {
         return .localDatabaseFailed(error.localizedDescription)
       }
     }
-    let scheduleResult = await scheduler.schedule(settings: proposed)
+    let scheduleResult = await scheduler.reconcile(
+      settings: proposed,
+      requestAuthorizationIfNeeded: true
+    )
     guard case .scheduled = scheduleResult else {
       restore(oldSettings, to: appModel)
       return .scheduleFailed(message(for: scheduleResult))
@@ -68,7 +75,10 @@ public final class ReminderSettingsCoordinator {
       appModel.eveningReminder = proposed.eveningReminder
       return .applied
     } catch {
-      let rollbackResult = await scheduler.schedule(settings: oldSettings)
+      let rollbackResult = await scheduler.reconcile(
+        settings: oldSettings,
+        requestAuthorizationIfNeeded: false
+      )
       let rollbackSucceeded: Bool
       if case .scheduled = rollbackResult {
         rollbackSucceeded = true

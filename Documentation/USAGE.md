@@ -79,10 +79,12 @@ open "dist/Russian Corner.app"
 
 修改每日卡数后点“应用每日卡数”。修改提醒后点“保存并更新提醒”。
 
+应用首次启动时会请求通知权限；授权后立即建立默认的两次提醒。以后每次启动都会对照本地数据库中的提醒时间检查两个固定通知，若通知缺失或时间不一致会自动修复。拒绝权限或当前系统不支持通知只会关闭提醒，不会影响词汇、句子、进度和诊断功能。
+
 ## 首次权限
 
 - 麦克风：第一次开始录音时，macOS 会请求权限。拒绝后仍可继续学习和跳过录音；可到“系统设置 → 隐私与安全性 → 麦克风”重新开启。
-- 通知：第一次保存提醒设置时，macOS 会请求通知权限。拒绝不会删除学习进度，但系统不会展示提醒；可到“系统设置 → 通知 → Russian Corner”重新开启。
+- 通知：第一次启动时，macOS 会请求通知权限。拒绝不会删除学习进度，也不会阻塞应用启动；可到“系统设置 → 通知 → Russian Corner”重新开启，之后重启应用即可自动补齐两次提醒。
 
 ## 本地数据与隐私边界
 
@@ -91,9 +93,11 @@ open "dist/Russian Corner.app"
 本地数据位置：
 
 - 卡片显示、练习方式等偏好：`~/Library/Preferences/com.openclaw.russiancorner.plist`
-- 学习进度、评分、提醒设置和诊断历史：`~/Library/Application Support/default.store` 及同目录的 `default.store-*` 辅助文件（由 SwiftData 管理）
+- 学习进度、评分、提醒设置和诊断历史：`~/Library/Application Support/com.openclaw.russiancorner/RussianCorner.store` 及同目录的 `RussianCorner.store-*` 辅助文件（由 SwiftData 管理）
 - 手动保存的录音：`~/Library/Application Support/RussianCorner/Recordings/`
 - 未保存的录音：系统临时目录，切换练习项或退出时清理
+
+首版不会读取、迁移或删除 `~/Library/Application Support/default.store`。这个通用文件名可能属于其他 SwiftData 程序，因此 Russian Corner 只使用自己的专属目录；如你曾运行过内部开发版，旧 `default.store` 会原样保留，不会被本应用盲目接管。
 
 ## 卸载
 

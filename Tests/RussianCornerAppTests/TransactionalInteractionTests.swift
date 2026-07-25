@@ -278,10 +278,16 @@ private final class FakeReminderSettingsStore:
 
 private actor FakeReminderScheduler: ReminderSettingsScheduling {
   var results: [ReminderScheduleResult]
+  var reconciliationResults: [ReminderScheduleResult]
   private(set) var scheduledSettings: [RussianCornerSettings] = []
+  private(set) var reconciledSettings: [RussianCornerSettings] = []
 
-  init(results: [ReminderScheduleResult]) {
+  init(
+    results: [ReminderScheduleResult],
+    reconciliationResults: [ReminderScheduleResult] = []
+  ) {
     self.results = results
+    self.reconciliationResults = reconciliationResults
   }
 
   func schedule(
@@ -291,8 +297,24 @@ private actor FakeReminderScheduler: ReminderSettingsScheduling {
     return results.removeFirst()
   }
 
+  func reconcile(
+    settings: RussianCornerSettings,
+    requestAuthorizationIfNeeded: Bool
+  ) async -> ReminderScheduleResult {
+    reconciledSettings.append(settings)
+    scheduledSettings.append(settings)
+    if !reconciliationResults.isEmpty {
+      return reconciliationResults.removeFirst()
+    }
+    return results.removeFirst()
+  }
+
   func calls() -> [RussianCornerSettings] {
     scheduledSettings
+  }
+
+  func reconciliationCalls() -> [RussianCornerSettings] {
+    reconciledSettings
   }
 }
 

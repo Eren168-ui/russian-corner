@@ -42,6 +42,64 @@ final class ContentCatalogTests: XCTestCase {
         }
     }
 
+    func testExplicitResourceDirectoryFailsClosedOnValidationIssues() throws {
+        let resourceDirectory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(
+            at: resourceDirectory,
+            withIntermediateDirectories: true
+        )
+        addTeardownBlock {
+            try? FileManager.default.removeItem(at: resourceDirectory)
+        }
+        for name in ["lexemes.json", "sentences.json"] {
+            try FileManager.default.copyItem(
+                at: sourceResourceDirectory.appendingPathComponent(name),
+                to: resourceDirectory.appendingPathComponent(name)
+            )
+        }
+        let sentencesURL = resourceDirectory
+            .appendingPathComponent("sentences.json")
+        let validSentences = try String(
+            contentsOf: sentencesURL,
+            encoding: .utf8
+        )
+        let corruptedSentences = validSentences.replacingOccurrences(
+            of: "\"lexeme-emergencies-помочь\"",
+            with: "\"lexeme-does-not-exist\""
+        )
+        XCTAssertNotEqual(validSentences, corruptedSentences)
+        try Data(corruptedSentences.utf8).write(to: sentencesURL)
+
+        XCTAssertThrowsError(
+            try ContentCatalog(resourceDirectory: resourceDirectory)
+        ) { error in
+            guard case let ContentCatalogError.validationFailed(issues) = error
+            else {
+                return XCTFail("expected validation issues, got \(error)")
+            }
+            XCTAssertFalse(issues.isEmpty)
+            XCTAssertTrue(
+                issues.contains {
+                    $0.itemID.hasPrefix("sentence-emergencies-")
+                    && $0.message.contains("lexeme-does-not-exist")
+                },
+                "\(issues)"
+            )
+            XCTAssertTrue(
+                error.localizedDescription.contains(
+                    "lexeme-does-not-exist"
+                )
+            )
+        }
+    }
+
+    func testInMemoryFixtureInitializerAllowsInvalidFixture() {
+        let catalog = ContentCatalog(lexemes: [], sentences: [])
+
+        XCTAssertFalse(catalog.validate().isEmpty)
+    }
+
     func testProductionResourceResolutionIgnoresDevelopmentFallbacks() throws {
         let productionResources = URL(
             fileURLWithPath: "/Applications/Russian Corner.app/Contents/Resources",

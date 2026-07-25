@@ -207,6 +207,56 @@ public actor ReminderService {
         return result
     }
 
+    public func reconcile(
+        settings: RussianCornerSettings,
+        requestAuthorizationIfNeeded: Bool
+    ) async -> ReminderScheduleResult {
+        await Self.replacementCoordinator.acquire()
+        let result = await reconcileWithinReplacementGate(
+            settings: settings,
+            requestAuthorizationIfNeeded: requestAuthorizationIfNeeded
+        )
+        await Self.replacementCoordinator.release()
+        return result
+    }
+
+    private func reconcileWithinReplacementGate(
+        settings: RussianCornerSettings,
+        requestAuthorizationIfNeeded: Bool
+    ) async -> ReminderScheduleResult {
+        var permission = await scheduler.authorizationStatus()
+        if permission == .undetermined && requestAuthorizationIfNeeded {
+            permission = await scheduler.requestAuthorization()
+        }
+        switch permission {
+        case .authorized:
+            break
+        case .denied:
+            return .permissionDenied
+        case .undetermined:
+            return .permissionUndetermined
+        case .unavailable:
+            return .unavailable
+        }
+
+        let oldRequests: [DailyReminderRequest]
+        do {
+            oldRequests = try await scheduler.pendingRequests(
+                withIdentifiers: Self.pendingRequestIDs
+            )
+        } catch {
+            return .failed(error.localizedDescription)
+        }
+        let expected = reminderRequests(settings: settings)
+        guard oldRequests != expected else {
+            return .scheduled(Self.pendingRequestIDs)
+        }
+        return await replaceAuthorized(
+            oldRequests: oldRequests,
+            newRequests: expected
+        )
+    }
+
     private func replace(
         settings: RussianCornerSettings
     ) async -> ReminderScheduleResult {
@@ -230,11 +280,16 @@ public actor ReminderService {
             return .failed(error.localizedDescription)
         }
 
-        await scheduler.removePendingRequests(
-            withIdentifiers: Self.pendingRequestIDs
+        return await replaceAuthorized(
+            oldRequests: oldRequests,
+            newRequests: reminderRequests(settings: settings)
         )
+    }
 
-        let requests = zip(
+    private func reminderRequests(
+        settings: RussianCornerSettings
+    ) -> [DailyReminderRequest] {
+        zip(
             Self.pendingRequestIDs,
             settings.reminderTimes
         ).map { identifier, time in
@@ -245,9 +300,18 @@ public actor ReminderService {
                 body: "该练一轮俄语主动回忆了。"
             )
         }
+    }
+
+    private func replaceAuthorized(
+        oldRequests: [DailyReminderRequest],
+        newRequests: [DailyReminderRequest]
+    ) async -> ReminderScheduleResult {
+        await scheduler.removePendingRequests(
+            withIdentifiers: Self.pendingRequestIDs
+        )
 
         do {
-            for request in requests {
+            for request in newRequests {
                 try await scheduler.add(request)
             }
             return .scheduled(Self.pendingRequestIDs)

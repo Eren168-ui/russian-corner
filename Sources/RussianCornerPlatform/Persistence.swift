@@ -278,7 +278,9 @@ public final class ProgressRepository {
     }
 
     public static func makeContainer(
-        inMemory: Bool = false
+        inMemory: Bool = false,
+        applicationSupportDirectory: URL? = nil,
+        fileManager: FileManager = .default
     ) throws -> ModelContainer {
         let schema = Schema([
             ReviewEventRecord.self,
@@ -287,10 +289,40 @@ public final class ProgressRepository {
             SettingsRecord.self,
             DiagnosticReportRecord.self,
         ])
-        let configuration = ModelConfiguration(
-            schema: schema,
-            isStoredInMemoryOnly: inMemory
-        )
+        let configuration: ModelConfiguration
+        if inMemory {
+            configuration = ModelConfiguration(
+                schema: schema,
+                isStoredInMemoryOnly: true
+            )
+        } else {
+            let supportDirectory =
+                try applicationSupportDirectory
+                ?? fileManager.url(
+                    for: .applicationSupportDirectory,
+                    in: .userDomainMask,
+                    appropriateFor: nil,
+                    create: true
+                )
+            let appDirectory = supportDirectory.appendingPathComponent(
+                "com.openclaw.russiancorner",
+                isDirectory: true
+            )
+            try fileManager.createDirectory(
+                at: appDirectory,
+                withIntermediateDirectories: true
+            )
+            let storeURL = appDirectory.appendingPathComponent(
+                "RussianCorner.store",
+                isDirectory: false
+            )
+            configuration = ModelConfiguration(
+                "RussianCorner",
+                schema: schema,
+                url: storeURL,
+                cloudKitDatabase: .none
+            )
+        }
         return try ModelContainer(
             for: schema,
             configurations: [configuration]

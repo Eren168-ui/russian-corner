@@ -567,8 +567,160 @@ final class PracticeViewModelTests: XCTestCase {
   }
 }
 
+private actor RuntimeReminderScheduler: ReminderSettingsScheduling {
+  private let result: ReminderScheduleResult
+  private var reconciledSettings: [RussianCornerSettings] = []
+
+  init(result: ReminderScheduleResult) {
+    self.result = result
+  }
+
+  func schedule(
+    settings: RussianCornerSettings
+  ) async -> ReminderScheduleResult {
+    result
+  }
+
+  func reconcile(
+    settings: RussianCornerSettings,
+    requestAuthorizationIfNeeded: Bool
+  ) async -> ReminderScheduleResult {
+    reconciledSettings.append(settings)
+    return result
+  }
+
+  func callCount() -> Int {
+    reconciledSettings.count
+  }
+
+  func settings() -> [RussianCornerSettings] {
+    reconciledSettings
+  }
+}
+
 @MainActor
 final class AppModelTests: XCTestCase {
+  func testSavedDiagnosticImmediatelyReloadsPracticeStrategy() throws {
+    let repository = ProgressRepository(
+      container: try ProgressRepository.makeInMemoryContainer()
+    )
+    let lexeme = Lexeme(
+      id: "lexeme-work",
+      lemma: "работать",
+      stressedForm: "рабо́тать",
+      speechText: "работать",
+      partOfSpeech: "verb",
+      glossZh: "工作",
+      collocations: ["работать дома"],
+      example: "Я работаю дома.",
+      sentenceIDs: ["sentence-work"],
+      reviewStatus: .reviewed,
+      aspect: "imperfective",
+      aspectPairNote: "no common perfective pair",
+      government: "без дополнения",
+      surfaceForms: ["работаю"]
+    )
+    let sentence = SentenceCard(
+      id: "sentence-work",
+      promptZh: "我在家工作。",
+      cueRu: "Где вы работаете?",
+      practiceRu: "Я работаю дома.",
+      speechText: "Я работаю дома.",
+      theme: "work",
+      lexemeIDs: [lexeme.id],
+      sourcePath: "fixture",
+      sourceText: "fixture",
+      reviewStatus: .reviewed
+    )
+    let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+    let runtime = AppRuntime(
+      defaults: defaults,
+      catalog: ContentCatalog(
+        lexemes: [lexeme],
+        sentences: [sentence]
+      ),
+      repository: repository,
+      enableSystemReminders: false
+    )
+    let diagnostic = try XCTUnwrap(runtime.diagnostics)
+
+    XCTAssertEqual(runtime.practice?.mode, .quiet)
+    diagnostic.start()
+    diagnostic.submitRecognition(correct: true)
+    diagnostic.submitProduction(correct: true)
+    diagnostic.skipListening()
+    diagnostic.submitCollocation(rate: 100)
+    diagnostic.skipRecording(selfMonitoring: true)
+    diagnostic.skipRecording(selfMonitoring: true)
+
+    XCTAssertEqual(diagnostic.step, .summary)
+    XCTAssertEqual(runtime.practice?.mode, .speaking)
+    XCTAssertEqual(
+      try repository.latestDiagnosticReport()?.findings.map(\.type),
+      [.selfMonitoring]
+    )
+  }
+
+  func testRuntimeReminderReconciliationIsExplicitlyAsyncAfterInit() async throws {
+    let repository = ProgressRepository(
+      container: try ProgressRepository.makeInMemoryContainer()
+    )
+    let settings = RussianCornerSettings(
+      morningReminder: ReminderTime(hour: 8, minute: 20),
+      eveningReminder: ReminderTime(hour: 19, minute: 10)
+    )
+    try repository.save(settings: settings)
+    let scheduler = RuntimeReminderScheduler(
+      result: .scheduled(ReminderService.pendingRequestIDs)
+    )
+    let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+
+    let runtime = AppRuntime(
+      defaults: defaults,
+      catalog: ContentCatalog(lexemes: [], sentences: []),
+      repository: repository,
+      reminderScheduler: scheduler
+    )
+
+    let initialCallCount = await scheduler.callCount()
+    XCTAssertEqual(initialCallCount, 0)
+
+    await runtime.reconcileRemindersOnLaunch()
+
+    let reconciledSettings = await scheduler.settings()
+    XCTAssertEqual(reconciledSettings, [settings])
+    XCTAssertNil(runtime.launchError)
+  }
+
+  func testUnavailableRemindersDoNotBecomeLaunchFailure() async throws {
+    let repository = ProgressRepository(
+      container: try ProgressRepository.makeInMemoryContainer()
+    )
+    let scheduler = RuntimeReminderScheduler(result: .unavailable)
+    let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+    let runtime = AppRuntime(
+      defaults: defaults,
+      catalog: ContentCatalog(lexemes: [], sentences: []),
+      repository: repository,
+      reminderScheduler: scheduler
+    )
+
+    let result = await runtime.reconcileRemindersOnLaunch()
+
+    XCTAssertEqual(result, .unavailable)
+    XCTAssertNil(runtime.launchError)
+    XCTAssertEqual(
+      runtime.appModel.transientStatus,
+      "当前系统无法提供通知；学习功能仍可正常使用"
+    )
+  }
+
   func testLatestListeningFindingDefaultsToSpeakingMode() throws {
     let repository = ProgressRepository(
       container: try ProgressRepository.makeInMemoryContainer()

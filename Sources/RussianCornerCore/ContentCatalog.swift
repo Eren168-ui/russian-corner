@@ -10,8 +10,21 @@ public struct CatalogIssue: Equatable, Sendable {
     }
 }
 
-public enum ContentCatalogError: Error, Equatable {
+public enum ContentCatalogError: LocalizedError, Equatable {
     case missingResource(String)
+    case validationFailed([CatalogIssue])
+
+    public var errorDescription: String? {
+        switch self {
+        case .missingResource(let name):
+            return "Missing content resource: \(name).json"
+        case .validationFailed(let issues):
+            let details = issues.map {
+                "\($0.itemID): \($0.message)"
+            }.joined(separator: "; ")
+            return "Content catalog validation failed: \(details)"
+        }
+    }
 }
 
 public struct ContentCatalog: Sendable {
@@ -46,7 +59,15 @@ public struct ContentCatalog: Sendable {
             resourceDirectory: resourceDirectory,
             decoder: decoder
         )
-        self.init(lexemes: lexemes, sentences: sentences)
+        let catalog = ContentCatalog(
+            lexemes: lexemes,
+            sentences: sentences
+        )
+        let issues = catalog.validate()
+        guard issues.isEmpty else {
+            throw ContentCatalogError.validationFailed(issues)
+        }
+        self = catalog
     }
 
     static func defaultResourceDirectory(

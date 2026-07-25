@@ -206,19 +206,25 @@ public final class AppRuntime {
 
   private var catalog: ContentCatalog?
   private var repository: ProgressRepository?
-  private let reminderService: ReminderService?
+  private let reminderScheduler: (any ReminderSettingsScheduling)?
   private var reminderSettingsCoordinator: ReminderSettingsCoordinator?
 
   public init(
     defaults: UserDefaults = .standard,
     catalog injectedCatalog: ContentCatalog? = nil,
     repository injectedRepository: ProgressRepository? = nil,
+    reminderScheduler injectedReminderScheduler:
+      (any ReminderSettingsScheduling)? = nil,
     enableSystemReminders: Bool = true
   ) {
     appModel = AppModel(defaults: defaults)
-    reminderService =
-      !enableSystemReminders || Bundle.main.bundleIdentifier == nil
-      ? nil : ReminderService()
+    if let injectedReminderScheduler {
+      reminderScheduler = injectedReminderScheduler
+    } else {
+      reminderScheduler =
+        !enableSystemReminders || Bundle.main.bundleIdentifier == nil
+        ? nil : ReminderService()
+    }
     do {
       let catalog: ContentCatalog
       if let injectedCatalog {
@@ -238,7 +244,7 @@ public final class AppRuntime {
       self.repository = repository
       reminderSettingsCoordinator = ReminderSettingsCoordinator(
         store: repository,
-        scheduler: reminderService
+        scheduler: reminderScheduler
       )
       let persistedSettings = try repository.settings()
       appModel.morningReminder = persistedSettings.morningReminder
@@ -254,7 +260,10 @@ public final class AppRuntime {
       guard let catalog, let repository else { return }
       diagnostics = try DiagnosticViewModel(
         catalog: catalog,
-        repository: repository
+        repository: repository,
+        onReportSaved: { [weak self] in
+          self?.applyLatestDiagnosticStrategy()
+        }
       )
       diagnosticHistoryIssueCount = diagnostics?.historyIssueCount ?? 0
     } catch {
@@ -277,13 +286,62 @@ public final class AppRuntime {
     appModel.applyDiagnosticDefaultMode(
       prefersSpeaking ? .speaking : .quiet
     )
-    practice = try PracticeViewModel(
+    let nextPractice = try PracticeViewModel(
       catalog: catalog,
       repository: repository,
       targetCount: appModel.dailyCardCount,
       mode: appModel.mode,
       diagnosticFindings: findings
     )
+    practice?.handleDisappear()
+    practice = nextPractice
+  }
+
+  private func applyLatestDiagnosticStrategy() {
+    do {
+      try reloadPractice()
+      try refreshProgress()
+      diagnosticHistoryIssueCount =
+        try repository?.diagnosticHistory().issueCount ?? 0
+      diagnosticError = nil
+    } catch {
+      diagnosticError =
+        "诊断已保存，但训练策略暂时无法刷新：\(error.localizedDescription)"
+    }
+  }
+
+  @discardableResult
+  public func reconcileRemindersOnLaunch() async
+    -> ReminderScheduleResult?
+  {
+    guard launchError == nil, let reminderScheduler else {
+      return nil
+    }
+    let settings = RussianCornerSettings(
+      morningReminder: appModel.morningReminder,
+      eveningReminder: appModel.eveningReminder
+    )
+    let result = await reminderScheduler.reconcile(
+      settings: settings,
+      requestAuthorizationIfNeeded: true
+    )
+    switch result {
+    case .scheduled:
+      break
+    case .permissionDenied:
+      appModel.transientStatus =
+        "通知权限未开启；学习功能仍可正常使用"
+    case .permissionUndetermined:
+      appModel.transientStatus =
+        "尚未取得通知权限；学习功能仍可正常使用"
+    case .unavailable:
+      appModel.transientStatus =
+        "当前系统无法提供通知；学习功能仍可正常使用"
+    case .failed(let message):
+      appModel.transientStatus =
+        "提醒暂时无法同步：\(message)"
+    }
+    return result
   }
 
   @discardableResult
@@ -293,11 +351,6 @@ public final class AppRuntime {
     guard let reminderSettingsCoordinator else {
       appModel.transientStatus = "提醒设置暂时无法保存"
       return false
-    }
-    if let reminderService,
-      await reminderService.permissionStatus() == .undetermined
-    {
-      _ = await reminderService.requestPermission()
     }
     let result = await reminderSettingsCoordinator.apply(
       proposed: proposed,

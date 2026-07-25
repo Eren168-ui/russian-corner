@@ -58,6 +58,9 @@ struct RussianCornerApp: App {
     DispatchQueue.main.async {
       panelController.show()
     }
+    Task {
+      await runtime.reconcileRemindersOnLaunch()
+    }
   }
 
   private static func grade(
@@ -170,7 +173,7 @@ private struct MenuBarContent: View {
     Divider()
 
     Button("退出 Russian Corner", systemImage: "power") {
-      runtime.practice?.discardRecording()
+      runtime.practice?.handleDisappear()
       NSApplication.shared.terminate(nil)
     }
     .keyboardShortcut("q")

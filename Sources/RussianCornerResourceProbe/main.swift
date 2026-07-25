@@ -17,6 +17,14 @@ struct RussianCornerResourceProbe {
             let catalog = try ContentCatalog(
                 resourceDirectory: resourceDirectory
             )
+            let issues = catalog.validate()
+            guard issues.isEmpty else {
+                throw ProbeError(
+                    message: issues.map {
+                        "\($0.itemID): \($0.message)"
+                    }.joined(separator: "; ")
+                )
+            }
             guard catalog.lexemes.count == 360,
                 catalog.sentences.count == 72
             else {

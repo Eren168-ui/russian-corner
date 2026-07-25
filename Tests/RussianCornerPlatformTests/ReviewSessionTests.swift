@@ -54,6 +54,39 @@ final class ReviewSessionTests: XCTestCase {
 final class PersistenceTests: XCTestCase {
     private let now = Date(timeIntervalSince1970: 1_700_000_000)
 
+    func testPersistentContainerUsesDedicatedApplicationSupportStore() throws {
+        let applicationSupport = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(
+            at: applicationSupport,
+            withIntermediateDirectories: true
+        )
+        let unrelatedDefaultStore = applicationSupport
+            .appendingPathComponent("default.store")
+        let marker = Data("unrelated".utf8)
+        try marker.write(to: unrelatedDefaultStore)
+        addTeardownBlock {
+            try? FileManager.default.removeItem(at: applicationSupport)
+        }
+
+        let container = try ProgressRepository.makeContainer(
+            applicationSupportDirectory: applicationSupport
+        )
+
+        let expectedDirectory = applicationSupport
+            .appendingPathComponent(
+                "com.openclaw.russiancorner",
+                isDirectory: true
+            )
+        let expectedStore = expectedDirectory
+            .appendingPathComponent("RussianCorner.store")
+        XCTAssertEqual(container.configurations.first?.url, expectedStore)
+        XCTAssertTrue(
+            FileManager.default.fileExists(atPath: expectedDirectory.path)
+        )
+        XCTAssertEqual(try Data(contentsOf: unrelatedDefaultStore), marker)
+    }
+
     func testInMemoryRepositoryRestoresReviewEventWithLatency() throws {
         let container = try ProgressRepository.makeInMemoryContainer()
         let writer = ProgressRepository(container: container)
@@ -738,22 +771,27 @@ private actor FakeReminderScheduler: ReminderNotificationScheduling {
         case addFailed
     }
 
-    private let status: ReminderPermissionStatus
+    private var status: ReminderPermissionStatus
+    private let requestAuthorizationResult: ReminderPermissionStatus
     private let failingAddAttempt: Int?
     private let suspendingAddAttempt: Int?
     private var removedIdentifierBatches: [[String]] = []
     private var queriedIdentifierBatches: [[String]] = []
     private var requestsByID: [String: DailyReminderRequest]
     private var addAttemptCount = 0
+    private var authorizationRequestCount = 0
     private var suspendedAddContinuation: CheckedContinuation<Void, Never>?
 
     init(
         status: ReminderPermissionStatus,
+        requestAuthorizationResult: ReminderPermissionStatus? = nil,
         failingAddAttempt: Int? = nil,
         suspendingAddAttempt: Int? = nil,
         initialRequests: [DailyReminderRequest] = []
     ) {
         self.status = status
+        self.requestAuthorizationResult =
+            requestAuthorizationResult ?? status
         self.failingAddAttempt = failingAddAttempt
         self.suspendingAddAttempt = suspendingAddAttempt
         requestsByID = Dictionary(
@@ -768,7 +806,9 @@ private actor FakeReminderScheduler: ReminderNotificationScheduling {
     }
 
     func requestAuthorization() async -> ReminderPermissionStatus {
-        status
+        authorizationRequestCount += 1
+        status = requestAuthorizationResult
+        return status
     }
 
     func pendingRequests(
@@ -814,7 +854,9 @@ private actor FakeReminderScheduler: ReminderNotificationScheduling {
     func snapshot() -> (
         removed: [[String]],
         queried: [[String]],
-        pending: [DailyReminderRequest]
+        pending: [DailyReminderRequest],
+        authorizationRequests: Int,
+        addAttempts: Int
     ) {
         let ownedIDs = ReminderService.pendingRequestIDs
         let otherIDs = requestsByID.keys
@@ -823,12 +865,149 @@ private actor FakeReminderScheduler: ReminderNotificationScheduling {
         return (
             removedIdentifierBatches,
             queriedIdentifierBatches,
-            (ownedIDs + otherIDs).compactMap { requestsByID[$0] }
+            (ownedIDs + otherIDs).compactMap { requestsByID[$0] },
+            authorizationRequestCount,
+            addAttemptCount
         )
     }
 }
 
 final class ReminderServiceTests: XCTestCase {
+    func testFirstLaunchRequestsPermissionThenSchedulesDefaults() async {
+        let scheduler = FakeReminderScheduler(
+            status: .undetermined,
+            requestAuthorizationResult: .authorized
+        )
+        let service = ReminderService(scheduler: scheduler)
+
+        let result = await service.reconcile(
+            settings: RussianCornerSettings(),
+            requestAuthorizationIfNeeded: true
+        )
+        let snapshot = await scheduler.snapshot()
+
+        XCTAssertEqual(
+            result,
+            .scheduled(ReminderService.pendingRequestIDs)
+        )
+        XCTAssertEqual(snapshot.authorizationRequests, 1)
+        XCTAssertEqual(snapshot.pending.map(\.time), [
+            ReminderTime(hour: 11, minute: 30),
+            ReminderTime(hour: 17, minute: 30),
+        ])
+    }
+
+    func testAuthorizedLaunchRepairsMissingReminder() async {
+        let settings = RussianCornerSettings()
+        let existingMorning = reminderRequests(
+            settings: settings,
+            generation: "new"
+        )[0]
+        let scheduler = FakeReminderScheduler(
+            status: .authorized,
+            initialRequests: [existingMorning]
+        )
+        let service = ReminderService(scheduler: scheduler)
+
+        let result = await service.reconcile(
+            settings: settings,
+            requestAuthorizationIfNeeded: true
+        )
+        let snapshot = await scheduler.snapshot()
+
+        XCTAssertEqual(
+            result,
+            .scheduled(ReminderService.pendingRequestIDs)
+        )
+        XCTAssertEqual(snapshot.pending.map(\.time), settings.reminderTimes)
+        XCTAssertEqual(snapshot.removed, [ReminderService.pendingRequestIDs])
+        XCTAssertEqual(snapshot.addAttempts, 2)
+    }
+
+    func testAuthorizedLaunchRepairsWrongReminderTimes() async {
+        let desired = RussianCornerSettings(
+            morningReminder: ReminderTime(hour: 9, minute: 5),
+            eveningReminder: ReminderTime(hour: 20, minute: 10)
+        )
+        let wrong = RussianCornerSettings(
+            morningReminder: ReminderTime(hour: 8, minute: 0),
+            eveningReminder: ReminderTime(hour: 18, minute: 0)
+        )
+        let scheduler = FakeReminderScheduler(
+            status: .authorized,
+            initialRequests: reminderRequests(
+                settings: wrong,
+                generation: "new"
+            )
+        )
+        let service = ReminderService(scheduler: scheduler)
+
+        let result = await service.reconcile(
+            settings: desired,
+            requestAuthorizationIfNeeded: true
+        )
+        let snapshot = await scheduler.snapshot()
+
+        XCTAssertEqual(
+            result,
+            .scheduled(ReminderService.pendingRequestIDs)
+        )
+        XCTAssertEqual(snapshot.pending.map(\.time), desired.reminderTimes)
+        XCTAssertEqual(snapshot.addAttempts, 2)
+    }
+
+    func testAuthorizedLaunchLeavesMatchingRemindersUntouched() async {
+        let settings = RussianCornerSettings()
+        let expected = reminderRequests(
+            settings: settings,
+            generation: "new"
+        )
+        let scheduler = FakeReminderScheduler(
+            status: .authorized,
+            initialRequests: expected
+        )
+        let service = ReminderService(scheduler: scheduler)
+
+        let result = await service.reconcile(
+            settings: settings,
+            requestAuthorizationIfNeeded: true
+        )
+        let snapshot = await scheduler.snapshot()
+
+        XCTAssertEqual(
+            result,
+            .scheduled(ReminderService.pendingRequestIDs)
+        )
+        XCTAssertEqual(snapshot.pending, expected)
+        XCTAssertTrue(snapshot.removed.isEmpty)
+        XCTAssertEqual(snapshot.addAttempts, 0)
+    }
+
+    func testDeniedLaunchDoesNotBlockOrMutatePendingRequests() async {
+        let unrelated = DailyReminderRequest(
+            identifier: "another-feature.reminder",
+            time: ReminderTime(hour: 6, minute: 0),
+            title: "Other",
+            body: "Do not delete"
+        )
+        let scheduler = FakeReminderScheduler(
+            status: .denied,
+            initialRequests: [unrelated]
+        )
+        let service = ReminderService(scheduler: scheduler)
+
+        let result = await service.reconcile(
+            settings: RussianCornerSettings(),
+            requestAuthorizationIfNeeded: true
+        )
+        let snapshot = await scheduler.snapshot()
+
+        XCTAssertEqual(result, .permissionDenied)
+        XCTAssertEqual(snapshot.pending, [unrelated])
+        XCTAssertTrue(snapshot.removed.isEmpty)
+        XCTAssertEqual(snapshot.authorizationRequests, 0)
+    }
+
     func testAuthorizedSchedulingUsesExactlyTwoStableDailyReminderIDs() async {
         let scheduler = FakeReminderScheduler(status: .authorized)
         let service = ReminderService(scheduler: scheduler)
