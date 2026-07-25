@@ -114,11 +114,18 @@ public enum RecordingServiceError: Error, Equatable, Sendable {
     case destinationAlreadyExists
 }
 
+public enum RecordingSaveOutcome: Equatable, Sendable {
+    case saved(
+        destinationURL: URL,
+        temporaryCleanupPending: Bool
+    )
+}
+
 @MainActor
 public protocol RecordingFileManaging {
     func fileExists(at url: URL) -> Bool
     func removeItem(at url: URL) throws
-    func moveItem(at sourceURL: URL, to destinationURL: URL) throws
+    func copyItem(at sourceURL: URL, to destinationURL: URL) throws
 }
 
 public struct SystemRecordingFileManager: RecordingFileManaging {
@@ -132,11 +139,11 @@ public struct SystemRecordingFileManager: RecordingFileManaging {
         try FileManager.default.removeItem(at: url)
     }
 
-    public func moveItem(
+    public func copyItem(
         at sourceURL: URL,
         to destinationURL: URL
     ) throws {
-        try FileManager.default.moveItem(
+        try FileManager.default.copyItem(
             at: sourceURL,
             to: destinationURL
         )
@@ -205,19 +212,20 @@ public final class RecordingService {
         let outputURL = temporaryDirectory
             .appendingPathComponent("russian-corner-\(UUID().uuidString)")
             .appendingPathExtension("m4a")
+        temporaryRecordingURL = outputURL
 
         do {
             let newEngine = try engineFactory.makeEngine(outputURL: outputURL)
             guard newEngine.record() else {
-                try? fileManager.removeItem(at: outputURL)
-                return .failed("Audio recorder did not start.")
+                newEngine.stop()
+                return startFailure(
+                    message: "Audio recorder did not start."
+                )
             }
             engine = newEngine
-            temporaryRecordingURL = outputURL
             return .started(outputURL)
         } catch {
-            try? fileManager.removeItem(at: outputURL)
-            return .failed(error.localizedDescription)
+            return startFailure(message: error.localizedDescription)
         }
     }
 
@@ -238,7 +246,9 @@ public final class RecordingService {
     }
 
     @discardableResult
-    public func save(to destinationURL: URL) throws -> URL {
+    public func save(
+        to destinationURL: URL
+    ) throws -> RecordingSaveOutcome {
         guard !isRecording else {
             throw RecordingServiceError.recordingInProgress
         }
@@ -249,11 +259,44 @@ public final class RecordingService {
             throw RecordingServiceError.destinationAlreadyExists
         }
 
-        try fileManager.moveItem(
+        try fileManager.copyItem(
             at: temporaryRecordingURL,
             to: destinationURL
         )
-        self.temporaryRecordingURL = nil
-        return destinationURL
+
+        do {
+            if fileManager.fileExists(at: temporaryRecordingURL) {
+                try fileManager.removeItem(at: temporaryRecordingURL)
+            }
+            self.temporaryRecordingURL = nil
+            return .saved(
+                destinationURL: destinationURL,
+                temporaryCleanupPending: false
+            )
+        } catch {
+            return .saved(
+                destinationURL: destinationURL,
+                temporaryCleanupPending: true
+            )
+        }
+    }
+
+    private func startFailure(message: String) -> RecordingStartResult {
+        let startMessage = "Recording failed to start: \(message)"
+        guard let temporaryRecordingURL else {
+            return .failed(startMessage)
+        }
+
+        do {
+            if fileManager.fileExists(at: temporaryRecordingURL) {
+                try fileManager.removeItem(at: temporaryRecordingURL)
+            }
+            self.temporaryRecordingURL = nil
+            return .failed(startMessage)
+        } catch {
+            return .failed(
+                "\(startMessage) Cleanup failed: \(error.localizedDescription)"
+            )
+        }
     }
 }

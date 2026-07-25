@@ -148,15 +148,40 @@ public enum ReminderScheduleResult: Equatable, Sendable {
     case failed(String)
 }
 
+private actor ReminderReplacementCoordinator {
+    private var isReplacing = false
+    private var waiters: [CheckedContinuation<Void, Never>] = []
+
+    func acquire() async {
+        if !isReplacing {
+            isReplacing = true
+            return
+        }
+
+        await withCheckedContinuation {
+            waiters.append($0)
+        }
+    }
+
+    func release() {
+        guard !waiters.isEmpty else {
+            isReplacing = false
+            return
+        }
+        waiters.removeFirst().resume()
+    }
+}
+
 public actor ReminderService {
     public static let pendingRequestIDs = [
         "russian-corner.reminder.morning",
         "russian-corner.reminder.evening",
     ]
 
+    private static let replacementCoordinator =
+        ReminderReplacementCoordinator()
+
     private let scheduler: any ReminderNotificationScheduling
-    private var isReplacing = false
-    private var replacementWaiters: [CheckedContinuation<Void, Never>] = []
 
     public init(
         scheduler: any ReminderNotificationScheduling =
@@ -176,9 +201,9 @@ public actor ReminderService {
     public func schedule(
         settings: RussianCornerSettings
     ) async -> ReminderScheduleResult {
-        await acquireReplacementSlot()
+        await Self.replacementCoordinator.acquire()
         let result = await replace(settings: settings)
-        releaseReplacementSlot()
+        await Self.replacementCoordinator.release()
         return result
     }
 
@@ -246,24 +271,5 @@ public actor ReminderService {
             }
             return .failed(message)
         }
-    }
-
-    private func acquireReplacementSlot() async {
-        if !isReplacing {
-            isReplacing = true
-            return
-        }
-
-        await withCheckedContinuation {
-            replacementWaiters.append($0)
-        }
-    }
-
-    private func releaseReplacementSlot() {
-        guard !replacementWaiters.isEmpty else {
-            isReplacing = false
-            return
-        }
-        replacementWaiters.removeFirst().resume()
     }
 }

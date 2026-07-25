@@ -139,11 +139,14 @@ final class PersistenceTests: XCTestCase {
         XCTAssertThrowsError(
             try ProgressRepository(container: container).reviewEvents()
         ) { error in
-            let description = String(describing: error)
-            XCTAssertTrue(description.contains("corruptedRecord"))
-            XCTAssertTrue(description.contains(recordID.uuidString))
-            XCTAssertTrue(description.contains("gradeRawValue"))
-            XCTAssertTrue(description.contains("impossible-grade"))
+            XCTAssertEqual(
+                error as? ProgressRepositoryError,
+                .corruptedRecord(
+                    recordID: recordID,
+                    field: "gradeRawValue",
+                    value: "impossible-grade"
+                )
+            )
         }
     }
 }
@@ -164,11 +167,16 @@ private struct FixedMicrophonePermissionProvider:
 
 @MainActor
 private final class FakeRecordingEngine: RecordingEngine {
+    private let recordSucceeds: Bool
     private(set) var isRecording = false
 
+    init(recordSucceeds: Bool = true) {
+        self.recordSucceeds = recordSucceeds
+    }
+
     func record() -> Bool {
-        isRecording = true
-        return true
+        isRecording = recordSucceeds
+        return recordSucceeds
     }
 
     func stop() {
@@ -178,12 +186,33 @@ private final class FakeRecordingEngine: RecordingEngine {
 
 @MainActor
 private final class FakeRecordingEngineFactory: RecordingEngineFactory {
+    enum Behavior {
+        case succeeds(recordSucceeds: Bool = true)
+        case writesThenThrows
+    }
+
+    private enum FakeError: Error {
+        case factoryFailed
+    }
+
+    let behavior: Behavior
     private(set) var makeCallCount = 0
+    private(set) var lastOutputURL: URL?
+
+    init(behavior: Behavior = .succeeds()) {
+        self.behavior = behavior
+    }
 
     func makeEngine(outputURL: URL) throws -> any RecordingEngine {
         makeCallCount += 1
+        lastOutputURL = outputURL
         try Data("temporary audio".utf8).write(to: outputURL)
-        return FakeRecordingEngine()
+        switch behavior {
+        case let .succeeds(recordSucceeds):
+            return FakeRecordingEngine(recordSucceeds: recordSucceeds)
+        case .writesThenThrows:
+            throw FakeError.factoryFailed
+        }
     }
 }
 
@@ -191,12 +220,12 @@ private final class FakeRecordingEngineFactory: RecordingEngineFactory {
 private final class FakeRecordingFileManager: RecordingFileManaging {
     private enum FakeError: Error {
         case removeFailed
-        case moveFailed
+        case copyFailed
     }
 
     var shouldFailRemoval = false
-    var shouldFailMove = false
-    private(set) var moveCallCount = 0
+    var shouldFailCopy = false
+    private(set) var copyCallCount = 0
 
     func fileExists(at url: URL) -> Bool {
         FileManager.default.fileExists(atPath: url.path)
@@ -209,12 +238,12 @@ private final class FakeRecordingFileManager: RecordingFileManaging {
         try FileManager.default.removeItem(at: url)
     }
 
-    func moveItem(at sourceURL: URL, to destinationURL: URL) throws {
-        moveCallCount += 1
-        if shouldFailMove {
-            throw FakeError.moveFailed
+    func copyItem(at sourceURL: URL, to destinationURL: URL) throws {
+        copyCallCount += 1
+        if shouldFailCopy {
+            throw FakeError.copyFailed
         }
-        try FileManager.default.moveItem(
+        try FileManager.default.copyItem(
             at: sourceURL,
             to: destinationURL
         )
@@ -257,7 +286,7 @@ final class RecordingServiceTests: XCTestCase {
         XCTAssertNil(service.temporaryRecordingURL)
     }
 
-    func testExplicitSaveMovesRecordingAndCleansTemporaryFile() async throws {
+    func testExplicitSaveCopiesRecordingAndCleansTemporaryFile() async throws {
         let fileManager = FakeRecordingFileManager()
         let service = RecordingService(
             permissionProvider: FixedMicrophonePermissionProvider(
@@ -276,13 +305,19 @@ final class RecordingServiceTests: XCTestCase {
         }
 
         service.stop()
-        let returnedURL = try service.save(to: savedURL)
+        let outcome = try service.save(to: savedURL)
 
-        XCTAssertEqual(returnedURL, savedURL)
+        XCTAssertEqual(
+            outcome,
+            .saved(
+                destinationURL: savedURL,
+                temporaryCleanupPending: false
+            )
+        )
         XCTAssertTrue(FileManager.default.fileExists(atPath: savedURL.path))
         XCTAssertFalse(FileManager.default.fileExists(atPath: temporaryURL.path))
         XCTAssertNil(service.temporaryRecordingURL)
-        XCTAssertEqual(fileManager.moveCallCount, 1)
+        XCTAssertEqual(fileManager.copyCallCount, 1)
     }
 
     func testDiscardFailureKeepsTemporaryURLForRetry() async throws {
@@ -334,7 +369,65 @@ final class RecordingServiceTests: XCTestCase {
         try service.discard()
     }
 
-    func testMoveFailureKeepsTemporaryURLForRetry() async throws {
+    func testFactoryThrowAndCleanupFailureRetainsTrackedURL() async throws {
+        let fileManager = FakeRecordingFileManager()
+        fileManager.shouldFailRemoval = true
+        let engineFactory = FakeRecordingEngineFactory(
+            behavior: .writesThenThrows
+        )
+        let service = RecordingService(
+            permissionProvider: FixedMicrophonePermissionProvider(
+                status: .granted
+            ),
+            engineFactory: engineFactory,
+            fileManager: fileManager
+        )
+
+        let result = await service.start()
+        let outputURL = try XCTUnwrap(engineFactory.lastOutputURL)
+
+        guard case let .failed(message) = result else {
+            return XCTFail("expected failed result, got \(result)")
+        }
+        XCTAssertTrue(message.contains("Recording failed to start"))
+        XCTAssertTrue(message.contains("Cleanup failed"))
+        XCTAssertEqual(service.temporaryRecordingURL, outputURL)
+        XCTAssertTrue(fileManager.fileExists(at: outputURL))
+
+        fileManager.shouldFailRemoval = false
+        try service.discard()
+    }
+
+    func testRecordFalseAndCleanupFailureRetainsTrackedURL() async throws {
+        let fileManager = FakeRecordingFileManager()
+        fileManager.shouldFailRemoval = true
+        let engineFactory = FakeRecordingEngineFactory(
+            behavior: .succeeds(recordSucceeds: false)
+        )
+        let service = RecordingService(
+            permissionProvider: FixedMicrophonePermissionProvider(
+                status: .granted
+            ),
+            engineFactory: engineFactory,
+            fileManager: fileManager
+        )
+
+        let result = await service.start()
+        let outputURL = try XCTUnwrap(engineFactory.lastOutputURL)
+
+        guard case let .failed(message) = result else {
+            return XCTFail("expected failed result, got \(result)")
+        }
+        XCTAssertTrue(message.contains("Audio recorder did not start"))
+        XCTAssertTrue(message.contains("Cleanup failed"))
+        XCTAssertEqual(service.temporaryRecordingURL, outputURL)
+        XCTAssertTrue(fileManager.fileExists(at: outputURL))
+
+        fileManager.shouldFailRemoval = false
+        try service.discard()
+    }
+
+    func testCopyFailureKeepsTemporaryURLForRetry() async throws {
         let fileManager = FakeRecordingFileManager()
         let service = RecordingService(
             permissionProvider: FixedMicrophonePermissionProvider(
@@ -352,13 +445,54 @@ final class RecordingServiceTests: XCTestCase {
             try? FileManager.default.removeItem(at: savedURL)
         }
         service.stop()
-        fileManager.shouldFailMove = true
+        fileManager.shouldFailCopy = true
 
         XCTAssertThrowsError(try service.save(to: savedURL))
 
         XCTAssertEqual(service.temporaryRecordingURL, temporaryURL)
         XCTAssertTrue(fileManager.fileExists(at: temporaryURL))
         XCTAssertFalse(fileManager.fileExists(at: savedURL))
+    }
+
+    func testSaveReportsSuccessWhenTemporaryCleanupNeedsRetry() async throws {
+        let fileManager = FakeRecordingFileManager()
+        let service = RecordingService(
+            permissionProvider: FixedMicrophonePermissionProvider(
+                status: .granted
+            ),
+            engineFactory: FakeRecordingEngineFactory(),
+            fileManager: fileManager
+        )
+        let firstResult = await service.start()
+        let temporaryURL = try XCTUnwrap(firstResult.startedURL)
+        let savedURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString)
+            .appendingPathExtension("m4a")
+        defer {
+            try? FileManager.default.removeItem(at: temporaryURL)
+            try? FileManager.default.removeItem(at: savedURL)
+        }
+        service.stop()
+        fileManager.shouldFailRemoval = true
+
+        let outcome = try service.save(to: savedURL)
+
+        XCTAssertEqual(
+            outcome,
+            .saved(
+                destinationURL: savedURL,
+                temporaryCleanupPending: true
+            )
+        )
+        XCTAssertTrue(fileManager.fileExists(at: savedURL))
+        XCTAssertTrue(fileManager.fileExists(at: temporaryURL))
+        XCTAssertEqual(service.temporaryRecordingURL, temporaryURL)
+
+        fileManager.shouldFailRemoval = false
+        try service.discard()
+        XCTAssertNil(service.temporaryRecordingURL)
+        XCTAssertFalse(fileManager.fileExists(at: temporaryURL))
+        XCTAssertTrue(fileManager.fileExists(at: savedURL))
     }
 
     func testExistingSaveDestinationPreservesTemporaryRecording() async throws {
@@ -390,7 +524,7 @@ final class RecordingServiceTests: XCTestCase {
         }
         XCTAssertEqual(service.temporaryRecordingURL, temporaryURL)
         XCTAssertTrue(fileManager.fileExists(at: temporaryURL))
-        XCTAssertEqual(fileManager.moveCallCount, 0)
+        XCTAssertEqual(fileManager.copyCallCount, 0)
     }
 }
 
@@ -619,6 +753,67 @@ final class ReminderServiceTests: XCTestCase {
                 generation: "new"
             )
         )
+    }
+
+    func testConcurrentSchedulesAcrossServicesShareReplacementGate() async {
+        let scheduler = FakeReminderScheduler(
+            status: .authorized,
+            suspendingAddAttempt: 2
+        )
+        let firstService = ReminderService(scheduler: scheduler)
+        let secondService = ReminderService(scheduler: scheduler)
+        let firstSettings = RussianCornerSettings(
+            morningReminder: ReminderTime(hour: 8, minute: 10),
+            eveningReminder: ReminderTime(hour: 18, minute: 20)
+        )
+        let secondSettings = RussianCornerSettings(
+            morningReminder: ReminderTime(hour: 9, minute: 30),
+            eveningReminder: ReminderTime(hour: 20, minute: 40)
+        )
+
+        let first = Task {
+            await firstService.schedule(settings: firstSettings)
+        }
+        while !(await scheduler.isAddSuspended()) {
+            await Task.yield()
+        }
+        let second = Task {
+            await secondService.schedule(settings: secondSettings)
+        }
+        for _ in 0..<100 {
+            if await scheduler.removalCount() >= 2 {
+                break
+            }
+            await Task.yield()
+        }
+        await scheduler.resumeSuspendedAdd()
+
+        let firstResult = await first.value
+        let secondResult = await second.value
+        let snapshot = await scheduler.snapshot()
+        let owned = snapshot.pending.filter {
+            ReminderService.pendingRequestIDs.contains($0.identifier)
+        }
+
+        XCTAssertEqual(
+            firstResult,
+            .scheduled(ReminderService.pendingRequestIDs)
+        )
+        XCTAssertEqual(
+            secondResult,
+            .scheduled(ReminderService.pendingRequestIDs)
+        )
+        XCTAssertEqual(
+            owned,
+            reminderRequests(
+                settings: secondSettings,
+                generation: "new"
+            )
+        )
+        XCTAssertEqual(snapshot.removed, [
+            ReminderService.pendingRequestIDs,
+            ReminderService.pendingRequestIDs,
+        ])
     }
 
     private func reminderRequests(
