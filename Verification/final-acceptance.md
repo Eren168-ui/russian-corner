@@ -1,8 +1,8 @@
 # Russian Corner 最终验收记录
 
-本记录绑定代码提交 `28ef9d217e24e7e7fbe52156b72909609f3bcb38`
+本记录绑定代码提交 `018eb126cbe6a792289b04f0e7530a1a8dcac27c`
 （`fix: publish app bundles atomically`）。验收在该提交内容上执行，时间为
-2026-07-26 05:24–05:26 CST。
+2026-07-26 05:38–05:41 CST。
 
 ## 验收环境
 
@@ -44,12 +44,12 @@ bash Tests/Packaging/build-app-safety.sh
 
 ```text
 codesign_failure_preserves_old_app=PASS
-concurrent_build_rejected=PASS
+lockf_concurrent_build_rejected=PASS
 dist_swap_external_sentinel_safe_failure=PASS
 publish_failure_restores_old_dist=PASS
 unrelated_dist_entries_preserved=PASS
 sigkill_transaction_recovered=PASS
-stale_lock_without_state_self_healed=PASS
+persistent_empty_lockfile_nonblocking=PASS
 build_app_symlink_safety=PASS
 ```
 
@@ -57,16 +57,22 @@ build_app_symlink_safety=PASS
 
 - 注入的 `CODESIGN_BIN` 签名失败不会替换旧 App；旧 executable SHA、
   sentinel 和有效签名均保持不变；
-- 仓库根目录的原子 `mkdir` 锁写入 PID 和进程启动时间；live lock
-  拒绝第二个构建，PID 存活但启动时间不符的 stale lock 可自愈；
+- 外层脚本解析 Git 管理目录中的安全 lockfile，并用系统
+  `/usr/bin/lockf -k -t 0` 取得排他锁后重执行内层脚本；两个并发进程
+  只有一个进入 internal build；
+- 空 lockfile 会保留在 Git 管理目录中且不会阻塞后续构建；锁由内核随
+  进程退出或 SIGKILL 自动释放，不使用 PID、启动时间或 stale-lock 删除；
 - staging 先用 `cp -a` 快照真实 `dist`，保留无关 marker 的字节和无关
   symlink 本身，只替换 `Russian Corner.app`；
 - 构建期间将 `dist` 换成外部目录 symlink，脚本安全拒绝发布，外部
   sentinel、symlink 和移出的旧 `dist` 均不变；
 - 旧 `dist` 移入可信根目录备份后注入发布失败，trap 会恢复旧 `dist`；
-- root 内事务状态记录 `prepared`、`old_moved`、`new_published` 阶段以及
-  backup / new-dist 路径；`old_moved` 后真实 SIGKILL 留下的 stale lock
-  和事务会在下一次运行中自动恢复，再完成新构建；
+- root 内四行事务状态记录 `prepared`、`old_moved`、`new_published`
+  阶段、随机 owner token 以及 backup / new-dist 路径；rollback 和状态
+  删除前都读回核对 owner token；
+- 首进程在 `old_moved` 后暂停时，第二进程被 `lockf` 拒绝且事务文件
+  SHA 不变；首进程真实 SIGKILL 后，第三次运行取得锁、恢复事务并完成
+  新构建；
 - 每个失败用例结束后 `.build-app-stage.*`、`.build-app-backup.*` 和
   `.build-app.lock`、`.build-app-transaction` 数量均为 0。
 
@@ -92,7 +98,8 @@ resource_sha256=PASS lexemes=8ba11a40227ce02b09a698d0b475487513d400d3f3255c972e6
 脚本先把现有真实 `dist` 安全复制为仓库根目录 staging 中的 `new-dist`，
 仅替换其中的 App，再完成探针检查和签名。发布前写入可恢复事务状态；
 验证成功后才通过 `/bin/mv -h` 发布整个 `dist`，最终检查结束后清理
-backup、staging 和事务状态。
+backup、staging 和事务状态。竞争失败发生在内层 trap 安装前，因此不会
+执行 rollback 或修改事务。
 
 ### 5. Executable 身份与无 fallback
 
@@ -144,7 +151,7 @@ sleep 5
 pgrep -f '/Russian Corner.app/Contents/MacOS/RussianCornerApp'
 ```
 
-2026-07-26 05:26:10 CST 的结果：PID `40464` 在启动 5 秒后仍运行。
+2026-07-26 05:41:09 CST 的结果：PID `58857` 在启动 5 秒后仍运行。
 启动前后 10 分钟窗口中的 `RussianCornerApp*.crash` /
 `RussianCornerApp*.ips` 文件数均为 0。
 
