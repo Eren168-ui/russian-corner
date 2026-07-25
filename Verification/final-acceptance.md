@@ -1,8 +1,8 @@
 # Russian Corner 最终验收记录
 
-本记录绑定代码提交 `e61847e72164d25639388c443d47e39344bef645`
-（`fix: publish app bundles atomically`）。验收在该提交内容上执行，时间为
-2026-07-26 05:53–05:56 CST。
+本记录绑定实现提交 `481dfeb`（`feat: complete bilingual daily dialogue
+practice`）。验收覆盖该提交及其之前的全部实现，时间为
+2026-07-26 06:44–06:46 CST。
 
 ## 验收环境
 
@@ -10,22 +10,22 @@
 - App：`dist/Russian Corner.app`
 - macOS：26.3.1 (25D771280a)
 - Swift：Apple Swift 6.3.3，target `arm64-apple-macosx26.0`
-- App 大小：2720 KiB（`du -sk`）
+- App 大小：3080 KiB（`du -sk`）
 
 ## 自动验收结果
 
 ### 1. 严格警告测试
 
 ```bash
-swift test -Xswiftc -warnings-as-errors
+swift test -Xswiftc -strict-concurrency=complete -Xswiftc -warnings-as-errors
 ```
 
-结果：通过。执行 136 个 XCTest，0 failures，0 unexpected；Swift Testing
+结果：通过。执行 184 个 XCTest，0 failures，0 unexpected；Swift Testing
 的空测试集也正常结束。
 
 ### 2. Core 资源加载回归
 
-严格测试中的 29 个 `ContentCatalogTests` 全部通过，覆盖：
+严格测试中的 36 个 `ContentCatalogTests` 全部通过，覆盖：
 
 - 从 `#filePath` 构造显式测试资源目录；
 - 显式目录加载 360 个词和 72 个句子；
@@ -90,11 +90,11 @@ bash Scripts/build-app.sh
 四项均通过。代码提交后又执行一次 `bash Scripts/build-app.sh`，输出：
 
 ```text
-copied_executable_sha256=60c3925f44034e5a42c2337f91588fb35292232f168d7f1d681a18bdebc9ff8c
+copied_executable_sha256=5e2ca7ede9eba0812804732f09da70e2793b122332a57d39a6917e715e4f968f
 resource_probe=PASS lexemes=360 sentences=72 directory=.../Contents/Resources
 missing_resource_probe=PASS
 permissions=PASS resources=0755 executable=0755 json=0644
-resource_sha256=PASS lexemes=8ba11a40227ce02b09a698d0b475487513d400d3f3255c972e65fc67cc18098e sentences=c950c3adafd19a39aa4e028c160b44c5e44082fb441c661fe08285f41f750ba3
+resource_sha256=PASS lexemes=e4ffaa8a91895e497515f139e86598a415992b48ec787ca972a6c33e9df77317 sentences=c950c3adafd19a39aa4e028c160b44c5e44082fb441c661fe08285f41f750ba3
 ```
 
 脚本先把现有真实 `dist` 安全复制为仓库根目录 staging 中的 `new-dist`，
@@ -109,13 +109,13 @@ backup、staging 和事务状态。脚本只在成功持锁后安装 trap；被�
 SHA-256；本次两者均为：
 
 ```text
-60c3925f44034e5a42c2337f91588fb35292232f168d7f1d681a18bdebc9ff8c
+5e2ca7ede9eba0812804732f09da70e2793b122332a57d39a6917e715e4f968f
 ```
 
 ad-hoc `codesign` 会重写 Mach-O 内嵌签名，因此最终 executable SHA-256 为：
 
 ```text
-d0139304539b694ab26bfab8e48baf2b2b2676014d94875f21c843e2bcbc6234
+11c03e40b68b22e0e2fb6910133248ac722614013fef2ecc7aa3a18a51448d30
 ```
 
 对最终 executable 执行 `strings` 检查，仓库绝对路径和
@@ -127,7 +127,7 @@ d0139304539b694ab26bfab8e48baf2b2b2676014d94875f21c843e2bcbc6234
 源文件、staging 和最终 App 的 JSON SHA 在脚本中逐阶段比较。最终复核：
 
 ```text
-lexemes.json   8ba11a40227ce02b09a698d0b475487513d400d3f3255c972e65fc67cc18098e
+lexemes.json   e4ffaa8a91895e497515f139e86598a415992b48ec787ca972a6c33e9df77317
 sentences.json c950c3adafd19a39aa4e028c160b44c5e44082fb441c661fe08285f41f750ba3
 ```
 
@@ -153,15 +153,36 @@ sleep 5
 pgrep -f '/Russian Corner.app/Contents/MacOS/RussianCornerApp'
 ```
 
-2026-07-26 05:56:20 CST 的结果：PID `79579` 在启动 5 秒后仍运行。
+2026-07-26 06:46 CST 的结果：PID `39206` 在启动 5 秒后仍运行。
 启动前后 10 分钟窗口中的 `RussianCornerApp*.crash` /
 `RussianCornerApp*.ips` 文件数均为 0。
 
 ### 8. 仓库边界
 
 `git diff --check` 通过。验收文档没有未决占位内容。
-原始 Obsidian 语料哈希复核方法与只读基线保存在
-`Verification/source-corpus-baseline.txt`。
+原始 Obsidian 语料通过 `Scripts/verify-source-corpus.sh` 复核：
+46 个文件，SHA-256
+`89ca565d1fa8b3840e89e7262b867d61fe486ea95962f1746c109bf2a4478b0c`，
+与只读基线一致。
+
+### 9. 学习闭环与生产加固
+
+新增回归测试及实机检查确认：
+
+- 日常队列同时投放词卡和句卡；上午默认俄语到中文认词，下午默认中文
+  到俄语主动提取，并可手动切换方向；
+- 每日新词按历史表现和积压使用 6 / 10 / 12，自周复习日不加入新内容；
+- `Again` 本轮稍后重现，成功项不循环，重启后恢复剩余队列；
+- 诊断结果会收紧新词上限或默认开口模式，保存诊断后立即刷新策略；
+- 同主题句卡形成 2–3 轮微型对话；
+- 195 个名词均有性，93 个动词均有体及体对或说明，动词和介词均有
+  支配/常见用法；
+- 内容加载与 ResourceProbe 遇到坏链接或缺失元数据会 fail closed；
+- 听力诊断只有俄语语音真实播放完成后才允许提交证据；
+- SwiftData 实机文件位于
+  `~/Library/Application Support/com.openclaw.russiancorner/RussianCorner.store`，
+  进程未打开通用 `default.store`；
+- 首次启动请求通知权限，后续启动校准 11:30 / 17:30 两个固定提醒。
 
 ## 人工硬件验收边界
 
