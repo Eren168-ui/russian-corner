@@ -94,11 +94,20 @@ public struct ContentCatalog: Sendable {
             "conflict", "双链报告", "ai计划",
         ]
         var seenLemmas: Set<String> = []
+        let surfaceFormOwners = lexemes.reduce(
+            into: [String: Set<String>]()
+        ) { result, lexeme in
+            for surfaceForm in lexeme.surfaceForms {
+                let normalizedForm = Self.normalizedForm(surfaceForm)
+                guard !normalizedForm.isEmpty else {
+                    continue
+                }
+                result[normalizedForm, default: []].insert(lexeme.id)
+            }
+        }
 
         for lexeme in lexemes {
-            let normalizedLemma = lexeme.lemma
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-                .lowercased()
+            let normalizedLemma = Self.normalizedForm(lexeme.lemma)
             if !normalizedLemma.isEmpty
                 && !seenLemmas.insert(normalizedLemma).inserted
             {
@@ -106,6 +115,16 @@ public struct ContentCatalog: Sendable {
                     CatalogIssue(
                         itemID: lexeme.id,
                         message: "duplicate lemma \(lexeme.lemma)"
+                    )
+                )
+            }
+            if let owners = surfaceFormOwners[normalizedLemma],
+                owners.contains(where: { $0 != lexeme.id })
+            {
+                issues.append(
+                    CatalogIssue(
+                        itemID: lexeme.id,
+                        message: "morphological duplicate lemma \(lexeme.lemma)"
                     )
                 )
             }
@@ -159,6 +178,27 @@ public struct ContentCatalog: Sendable {
                 issues: &issues
             )
             require(
+                Self.containsLexeme(lexeme, in: lexeme.example),
+                itemID: lexeme.id,
+                message: "example does not contain lemma or surface form",
+                issues: &issues
+            )
+            for collocation in lexeme.collocations {
+                require(
+                    Self.containsLexeme(lexeme, in: collocation),
+                    itemID: lexeme.id,
+                    message: "collocation does not contain lemma or surface form",
+                    issues: &issues
+                )
+                require(
+                    Self.normalizedText(collocation)
+                        != Self.normalizedText(lexeme.example),
+                    itemID: lexeme.id,
+                    message: "collocation equals example",
+                    issues: &issues
+                )
+            }
+            require(
                 !lexeme.sentenceIDs.isEmpty,
                 itemID: lexeme.id,
                 message: "missing sentence link",
@@ -179,6 +219,16 @@ public struct ContentCatalog: Sendable {
                     sentence.lexemeIDs.contains(lexeme.id),
                     itemID: lexeme.id,
                     message: "sentence \(sentenceID) does not link back",
+                    issues: &issues
+                )
+                require(
+                    Self.containsLexeme(lexeme, in: sentence.practiceRu)
+                        && Self.containsLexeme(
+                            lexeme,
+                            in: sentence.speechText
+                        ),
+                    itemID: lexeme.id,
+                    message: "linked sentence text does not contain lemma or surface form",
                     issues: &issues
                 )
             }
@@ -271,6 +321,53 @@ public struct ContentCatalog: Sendable {
             throw ContentCatalogError.missingResource(resource)
         }
         return try decoder.decode(Value.self, from: Data(contentsOf: url))
+    }
+
+    private static func containsLexeme(
+        _ lexeme: Lexeme,
+        in text: String
+    ) -> Bool {
+        let textTokens = tokens(in: text)
+        return ([lexeme.lemma] + lexeme.surfaceForms).contains {
+            contains(tokens(in: $0), in: textTokens)
+        }
+    }
+
+    private static func contains(
+        _ formTokens: [String],
+        in textTokens: [String]
+    ) -> Bool {
+        guard !formTokens.isEmpty, textTokens.count >= formTokens.count else {
+            return false
+        }
+
+        for start in 0...(textTokens.count - formTokens.count) {
+            let end = start + formTokens.count
+            if Array(textTokens[start..<end]) == formTokens {
+                return true
+            }
+        }
+        return false
+    }
+
+    private static func tokens(in value: String) -> [String] {
+        normalizedText(value)
+            .components(separatedBy: CharacterSet.letters.inverted)
+            .filter { !$0.isEmpty }
+    }
+
+    private static func normalizedForm(_ value: String) -> String {
+        tokens(in: value).joined(separator: " ")
+    }
+
+    private static func normalizedText(_ value: String) -> String {
+        value
+            .decomposedStringWithCanonicalMapping
+            .replacingOccurrences(of: "\u{301}", with: "")
+            .precomposedStringWithCanonicalMapping
+            .lowercased()
+            .split(whereSeparator: \.isWhitespace)
+            .joined(separator: " ")
     }
 
     private func require(

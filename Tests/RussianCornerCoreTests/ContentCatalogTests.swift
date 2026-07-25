@@ -2,6 +2,24 @@ import XCTest
 @testable import RussianCornerCore
 
 final class ContentCatalogTests: XCTestCase {
+    func testLexemeDeclaresSurfaceForms() {
+        let item = Lexeme(
+            id: "lexeme-svobodnyy",
+            lemma: "свободный",
+            stressedForm: "свобо́дный",
+            speechText: "свободный",
+            partOfSpeech: "adjective",
+            glossZh: "空闲的；自由的",
+            collocations: ["свободный вечер"],
+            example: "Сегодня я свободен.",
+            sentenceIDs: ["sentence-free"],
+            reviewStatus: .reviewed,
+            surfaceForms: ["свободен"]
+        )
+
+        XCTAssertEqual(item.surfaceForms, ["свободен"])
+    }
+
     func testBundleCatalogMeetsReviewedDailyContentContract() throws {
         let catalog = try ContentCatalog()
 
@@ -194,39 +212,212 @@ final class ContentCatalogTests: XCTestCase {
         )
     }
 
+    func testValidationReportsLexemeMissingFromLinkedSentenceText() {
+        let catalog = ContentCatalog(
+            lexemes: [
+                lexeme(
+                    id: "lexeme-cat",
+                    lemma: "кошка",
+                    stressedForm: "ко́шка",
+                    collocations: ["домашняя кошка"],
+                    example: "У меня дома живёт кошка.",
+                    sentenceIDs: ["sentence-home"],
+                    status: .reviewed,
+                    surfaceForms: ["кошку"]
+                ),
+            ],
+            sentences: [
+                sentence(
+                    id: "sentence-home",
+                    lexemeIDs: ["lexeme-cat"],
+                    status: .reviewed,
+                    practiceRu: "Это мой дом."
+                ),
+            ]
+        )
+
+        XCTAssertTrue(
+            catalog.validate().contains {
+                $0.itemID == "lexeme-cat"
+                    && $0.message.contains("linked sentence text")
+            }
+        )
+    }
+
+    func testValidationReportsExampleWithoutLemmaOrSurfaceForm() {
+        let catalog = ContentCatalog(
+            lexemes: [
+                lexeme(
+                    id: "lexeme-home",
+                    lemma: "дом",
+                    stressedForm: "до́м",
+                    collocations: ["уютный дом"],
+                    example: "Я читаю книгу.",
+                    sentenceIDs: ["sentence-home"],
+                    status: .reviewed,
+                    surfaceForms: ["дома"]
+                ),
+            ],
+            sentences: [
+                sentence(
+                    id: "sentence-home",
+                    lexemeIDs: ["lexeme-home"],
+                    status: .reviewed,
+                    practiceRu: "Это мой дом."
+                ),
+            ]
+        )
+
+        XCTAssertTrue(
+            catalog.validate().contains {
+                $0.itemID == "lexeme-home"
+                    && $0.message.contains("example does not contain")
+            }
+        )
+    }
+
+    func testValidationReportsCollocationWithoutLemmaOrSurfaceForm() {
+        let catalog = ContentCatalog(
+            lexemes: [
+                lexeme(
+                    id: "lexeme-home",
+                    lemma: "дом",
+                    stressedForm: "до́м",
+                    collocations: ["читать книгу"],
+                    example: "Это мой дом.",
+                    sentenceIDs: ["sentence-home"],
+                    status: .reviewed
+                ),
+            ],
+            sentences: [
+                sentence(
+                    id: "sentence-home",
+                    lexemeIDs: ["lexeme-home"],
+                    status: .reviewed,
+                    practiceRu: "Это мой дом."
+                ),
+            ]
+        )
+
+        XCTAssertTrue(
+            catalog.validate().contains {
+                $0.itemID == "lexeme-home"
+                    && $0.message.contains("collocation does not contain")
+            }
+        )
+    }
+
+    func testValidationReportsCollocationIdenticalToExample() {
+        let catalog = ContentCatalog(
+            lexemes: [
+                lexeme(
+                    id: "lexeme-home",
+                    lemma: "дом",
+                    stressedForm: "до́м",
+                    collocations: ["Это мой дом."],
+                    example: "Это мой дом.",
+                    sentenceIDs: ["sentence-home"],
+                    status: .reviewed
+                ),
+            ],
+            sentences: [
+                sentence(
+                    id: "sentence-home",
+                    lexemeIDs: ["lexeme-home"],
+                    status: .reviewed,
+                    practiceRu: "Это мой дом."
+                ),
+            ]
+        )
+
+        XCTAssertTrue(
+            catalog.validate().contains {
+                $0.itemID == "lexeme-home"
+                    && $0.message.contains("collocation equals example")
+            }
+        )
+    }
+
+    func testValidationReportsLemmaDuplicatedByAnotherSurfaceForm() {
+        let linkedSentence = sentence(
+            id: "sentence-free",
+            lexemeIDs: ["lexeme-free", "lexeme-short-free"],
+            status: .reviewed,
+            practiceRu: "Сегодня я свободен."
+        )
+        let catalog = ContentCatalog(
+            lexemes: [
+                lexeme(
+                    id: "lexeme-free",
+                    lemma: "свободный",
+                    stressedForm: "свобо́дный",
+                    collocations: ["свободный вечер"],
+                    example: "Сегодня я свободен.",
+                    sentenceIDs: ["sentence-free"],
+                    status: .reviewed,
+                    surfaceForms: ["свободен"]
+                ),
+                lexeme(
+                    id: "lexeme-short-free",
+                    lemma: "свободен",
+                    stressedForm: "свобо́ден",
+                    collocations: ["свободен сегодня"],
+                    example: "Сегодня я свободен.",
+                    sentenceIDs: ["sentence-free"],
+                    status: .reviewed
+                ),
+            ],
+            sentences: [linkedSentence]
+        )
+
+        XCTAssertTrue(
+            catalog.validate().contains {
+                $0.itemID == "lexeme-short-free"
+                    && $0.message.contains("morphological duplicate")
+            }
+        )
+    }
+
     private func lexeme(
         id: String,
+        lemma: String = "дом",
+        stressedForm: String = "до́м",
+        collocations: [String] = ["уютный дом"],
+        example: String = "Это мой дом.",
         sentenceIDs: [String],
-        status: ReviewStatus
+        status: ReviewStatus,
+        surfaceForms: [String] = []
     ) -> Lexeme {
         Lexeme(
             id: id,
-            lemma: "дом",
-            stressedForm: "до́м",
-            speechText: "дом",
+            lemma: lemma,
+            stressedForm: stressedForm,
+            speechText: lemma,
             partOfSpeech: "noun",
             glossZh: "家",
-            collocations: ["уютный дом"],
-            example: "Это мой дом.",
+            collocations: collocations,
+            example: example,
             sentenceIDs: sentenceIDs,
-            reviewStatus: status
+            reviewStatus: status,
+            surfaceForms: surfaceForms
         )
     }
 
     private func sentence(
         id: String,
         lexemeIDs: [String],
-        status: ReviewStatus
+        status: ReviewStatus,
+        practiceRu: String = "Это мой дом."
     ) -> SentenceCard {
         SentenceCard(
             id: id,
             promptZh: "这是我的家。",
-            practiceRu: "Это мой дом.",
-            speechText: "Это мой дом.",
+            practiceRu: practiceRu,
+            speechText: practiceRu,
             theme: "home",
             lexemeIDs: lexemeIDs,
             sourcePath: "curated://daily-russian-a1-b1/home",
-            sourceText: "Это мой дом.",
+            sourceText: practiceRu,
             reviewStatus: status
         )
     }
