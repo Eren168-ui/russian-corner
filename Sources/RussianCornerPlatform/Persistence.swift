@@ -8,6 +8,7 @@ public enum ProgressRepositoryError: Error, Equatable, Sendable {
         field: String,
         value: String
     )
+    case corruptedDiagnosticRecord(recordID: UUID, message: String)
 }
 
 @MainActor
@@ -28,6 +29,40 @@ public protocol PracticeProgressStoring: AnyObject {
         dailyCompletedCount: Int,
         calendar: Calendar
     ) throws
+}
+
+public enum DiagnosticRunKind:
+    String,
+    Codable,
+    Equatable,
+    Sendable
+{
+    case baseline
+    case weekly
+}
+
+public struct DiagnosticHistoryEntry: Equatable, Sendable {
+    public let id: UUID
+    public let kind: DiagnosticRunKind
+    public let report: DiagnosticReport
+
+    public init(
+        id: UUID,
+        kind: DiagnosticRunKind,
+        report: DiagnosticReport
+    ) {
+        self.id = id
+        self.kind = kind
+        self.report = report
+    }
+}
+
+@MainActor
+public protocol DiagnosticReportStoring: AnyObject {
+    func saveDiagnosticReport(_ report: DiagnosticReport) throws
+    func diagnosticHistory() throws -> [DiagnosticHistoryEntry]
+    func baselineDiagnosticReport() throws -> DiagnosticReport?
+    func latestDiagnosticReport() throws -> DiagnosticReport?
 }
 
 @Model
@@ -162,6 +197,54 @@ public final class SettingsRecord {
     }
 }
 
+@Model
+public final class DiagnosticReportRecord {
+    @Attribute(.unique) public var id: UUID
+    public var kindRawValue: String
+    public var completedAt: Date
+    public var reportJSON: Data
+
+    public init(
+        id: UUID = UUID(),
+        kind: DiagnosticRunKind,
+        report: DiagnosticReport,
+        encoder: JSONEncoder = JSONEncoder()
+    ) throws {
+        self.id = id
+        kindRawValue = kind.rawValue
+        completedAt = report.current.completedAt
+        reportJSON = try encoder.encode(report)
+    }
+
+    public func decodedEntry(
+        decoder: JSONDecoder = JSONDecoder()
+    ) throws -> DiagnosticHistoryEntry {
+        guard let kind = DiagnosticRunKind(rawValue: kindRawValue) else {
+            throw ProgressRepositoryError.corruptedDiagnosticRecord(
+                recordID: id,
+                message: "invalid kind \(kindRawValue)"
+            )
+        }
+        do {
+            return DiagnosticHistoryEntry(
+                id: id,
+                kind: kind,
+                report: try decoder.decode(
+                    DiagnosticReport.self,
+                    from: reportJSON
+                )
+            )
+        } catch let error as ProgressRepositoryError {
+            throw error
+        } catch {
+            throw ProgressRepositoryError.corruptedDiagnosticRecord(
+                recordID: id,
+                message: error.localizedDescription
+            )
+        }
+    }
+}
+
 @MainActor
 public final class ProgressRepository {
     public let container: ModelContainer
@@ -187,6 +270,7 @@ public final class ProgressRepository {
             ItemProgressRecord.self,
             DailyCompletionRecord.self,
             SettingsRecord.self,
+            DiagnosticReportRecord.self,
         ])
         let configuration = ModelConfiguration(
             schema: schema,
@@ -323,6 +407,41 @@ public final class ProgressRepository {
             ?? RussianCornerSettings()
     }
 
+    public func saveDiagnosticReport(
+        _ report: DiagnosticReport
+    ) throws {
+        do {
+            let descriptor = FetchDescriptor<DiagnosticReportRecord>()
+            let kind: DiagnosticRunKind =
+                try context.fetchCount(descriptor) == 0
+                ? .baseline : .weekly
+            context.insert(
+                try DiagnosticReportRecord(kind: kind, report: report)
+            )
+            try saveContext(context)
+        } catch {
+            context.rollback()
+            throw error
+        }
+    }
+
+    public func diagnosticHistory() throws -> [DiagnosticHistoryEntry] {
+        let descriptor = FetchDescriptor<DiagnosticReportRecord>(
+            sortBy: [SortDescriptor(\.completedAt)]
+        )
+        return try context.fetch(descriptor).map {
+            try $0.decodedEntry()
+        }
+    }
+
+    public func baselineDiagnosticReport() throws -> DiagnosticReport? {
+        try diagnosticHistory().first(where: { $0.kind == .baseline })?.report
+    }
+
+    public func latestDiagnosticReport() throws -> DiagnosticReport? {
+        try diagnosticHistory().last?.report
+    }
+
     private func upsertProgress(
         itemType: PracticeItemKind,
         itemId: String,
@@ -372,3 +491,4 @@ public final class ProgressRepository {
 }
 
 extension ProgressRepository: PracticeProgressStoring {}
+extension ProgressRepository: DiagnosticReportStoring {}

@@ -188,6 +188,85 @@ final class PersistenceTests: XCTestCase {
             )
         }
     }
+
+    func testDiagnosticReportsRoundTripAcrossRepositoryInstances() throws {
+        let container = try ProgressRepository.makeInMemoryContainer()
+        let writer = ProgressRepository(container: container)
+        let baselineMetrics = diagnosticMetrics(
+            recognitionRate: 68,
+            completedAt: now
+        )
+        let baselineReport = DiagnosticEngine().report(
+            baseline: baselineMetrics,
+            current: baselineMetrics
+        )
+        let weeklyMetrics = diagnosticMetrics(
+            recognitionRate: 78,
+            completedAt: now.addingTimeInterval(7 * 86_400)
+        )
+        let weeklyReport = DiagnosticEngine().report(
+            baseline: baselineMetrics,
+            current: weeklyMetrics
+        )
+
+        try writer.saveDiagnosticReport(baselineReport)
+        try writer.saveDiagnosticReport(weeklyReport)
+
+        let reader = ProgressRepository(container: container)
+        let history = try reader.diagnosticHistory()
+
+        XCTAssertEqual(history.map(\.kind), [.baseline, .weekly])
+        XCTAssertEqual(history.map(\.report), [baselineReport, weeklyReport])
+        XCTAssertEqual(try reader.baselineDiagnosticReport(), baselineReport)
+        XCTAssertEqual(try reader.latestDiagnosticReport(), weeklyReport)
+    }
+
+    func testFirstDiagnosticIsBaselineAndLaterDiagnosticsAreWeekly() throws {
+        let repository = ProgressRepository(
+            container: try ProgressRepository.makeInMemoryContainer()
+        )
+        let firstMetrics = diagnosticMetrics(
+            recognitionRate: 70,
+            completedAt: now
+        )
+        let secondMetrics = diagnosticMetrics(
+            recognitionRate: 75,
+            completedAt: now.addingTimeInterval(86_400)
+        )
+
+        try repository.saveDiagnosticReport(
+            DiagnosticEngine().report(
+                baseline: firstMetrics,
+                current: firstMetrics
+            )
+        )
+        try repository.saveDiagnosticReport(
+            DiagnosticEngine().report(
+                baseline: firstMetrics,
+                current: secondMetrics
+            )
+        )
+
+        XCTAssertEqual(
+            try repository.diagnosticHistory().map(\.kind),
+            [.baseline, .weekly]
+        )
+    }
+
+    private func diagnosticMetrics(
+        recognitionRate: Double,
+        completedAt: Date
+    ) -> DiagnosticMetrics {
+        DiagnosticMetrics(
+            recognitionRate: recognitionRate,
+            productionRate: 55,
+            medianResponseSeconds: 3,
+            listeningRate: 50,
+            collocationRate: 50,
+            selfMonitoringRate: 60,
+            completedAt: completedAt
+        )
+    }
 }
 
 private enum FixturePersistenceError: Error {

@@ -184,6 +184,7 @@ public struct LearningProgressSnapshot: Equatable, Sendable {
 public final class AppRuntime {
   public let appModel: AppModel
   public private(set) var practice: PracticeViewModel?
+  public private(set) var diagnostics: DiagnosticViewModel?
   public private(set) var progress = LearningProgressSnapshot()
   public private(set) var launchError: String?
 
@@ -207,6 +208,10 @@ public final class AppRuntime {
       reminderSettingsCoordinator = ReminderSettingsCoordinator(
         store: repository,
         scheduler: reminderService
+      )
+      diagnostics = try DiagnosticViewModel(
+        catalog: catalog,
+        repository: repository
       )
       let persistedSettings = try repository.settings()
       appModel.morningReminder = persistedSettings.morningReminder

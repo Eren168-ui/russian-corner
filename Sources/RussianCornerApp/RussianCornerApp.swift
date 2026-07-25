@@ -98,7 +98,18 @@ struct RussianCornerApp: App {
     .windowResizability(.contentSize)
 
     Window("Russian Corner 诊断", id: "diagnostics") {
-      DiagnosticsEmptyView()
+      if let diagnostics = runtime.diagnostics {
+        RussianCornerDiagnosticView(model: diagnostics)
+      } else {
+        ContentUnavailableView(
+          "诊断暂时无法载入",
+          systemImage: "exclamationmark.triangle",
+          description: Text(
+            runtime.launchError ?? "请稍后重新打开应用"
+          )
+        )
+        .frame(width: 440, height: 300)
+      }
     }
     .windowResizability(.contentSize)
   }
@@ -141,7 +152,7 @@ private struct MenuBarContent: View {
       openWindow(id: "progress")
       NSApplication.shared.activate(ignoringOtherApps: true)
     }
-    Button("发音诊断…", systemImage: "waveform.badge.magnifyingglass") {
+    Button("学习诊断…", systemImage: "waveform.badge.magnifyingglass") {
       openWindow(id: "diagnostics")
       NSApplication.shared.activate(ignoringOtherApps: true)
     }
@@ -161,23 +172,5 @@ private struct MenuBarContent: View {
       NSApplication.shared.terminate(nil)
     }
     .keyboardShortcut("q")
-  }
-}
-
-private struct DiagnosticsEmptyView: View {
-  var body: some View {
-    ContentUnavailableView {
-      Label(
-        "发音诊断尚未启用",
-        systemImage: "waveform.badge.magnifyingglass"
-      )
-    } description: {
-      Text("当前版本保留录音入口；语音诊断能力将在后续阶段接入。")
-    } actions: {
-      Text("练习、朗读与录音功能不受影响")
-        .font(.caption)
-        .foregroundStyle(.secondary)
-    }
-    .frame(width: 440, height: 300)
   }
 }
