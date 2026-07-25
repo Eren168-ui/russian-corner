@@ -138,6 +138,219 @@ final class ContentCatalogTests: XCTestCase {
         XCTAssertEqual(catalog.validate(), [])
     }
 
+    func testBundleCollocationsAreShortCompleteAndBalanced() throws {
+        let catalog = try ContentCatalog()
+        let forbiddenEndings: Set<String> = [
+            "в", "на", "к", "с", "из", "от", "до", "для", "без",
+            "о", "об", "по", "за", "у", "при", "через", "перед",
+            "между", "и", "или",
+        ]
+
+        for lexeme in catalog.lexemes {
+            for collocation in lexeme.collocations {
+                let tokens = russianTokens(in: collocation)
+                XCTAssertTrue(
+                    (2...6).contains(tokens.count),
+                    "\(lexeme.id): \(collocation)"
+                )
+                XCTAssertFalse(
+                    forbiddenEndings.contains(tokens.last ?? ""),
+                    "\(lexeme.id): \(collocation)"
+                )
+                XCTAssertEqual(
+                    collocation.filter { $0 == "«" }.count,
+                    collocation.filter { $0 == "»" }.count,
+                    "\(lexeme.id): \(collocation)"
+                )
+                XCTAssertEqual(
+                    collocation.filter { $0 == "\"" }.count % 2,
+                    0,
+                    "\(lexeme.id): \(collocation)"
+                )
+            }
+        }
+    }
+
+    func testBundleExamplesAreUniqueAndContainOwnLexicalForm() throws {
+        let catalog = try ContentCatalog()
+        let normalizedExamples = catalog.lexemes.map {
+            normalizedRussianText($0.example)
+        }
+
+        XCTAssertEqual(
+            Set(normalizedExamples).count,
+            catalog.lexemes.count,
+            "every lexeme needs an independent example"
+        )
+        for lexeme in catalog.lexemes {
+            XCTAssertTrue(
+                containsLexeme(lexeme, in: lexeme.example),
+                "\(lexeme.id): \(lexeme.example)"
+            )
+        }
+    }
+
+    func testBundleSentenceLinksVaryAndEveryLinkedLexemeAppears() throws {
+        let catalog = try ContentCatalog()
+        let lexemesByID = Dictionary(
+            uniqueKeysWithValues: catalog.lexemes.map { ($0.id, $0) }
+        )
+        let linkCounts = Set(catalog.sentences.map { $0.lexemeIDs.count })
+
+        XCTAssertGreaterThanOrEqual(
+            linkCounts.count,
+            3,
+            "sentence link counts must have a real distribution"
+        )
+        for sentence in catalog.sentences {
+            XCTAssertTrue(
+                (3...8).contains(sentence.lexemeIDs.count),
+                sentence.id
+            )
+            for lexemeID in sentence.lexemeIDs {
+                let lexeme = try XCTUnwrap(lexemesByID[lexemeID])
+                XCTAssertTrue(
+                    containsLexeme(lexeme, in: sentence.practiceRu),
+                    "\(sentence.id) does not contain \(lexemeID)"
+                )
+            }
+        }
+    }
+
+    func testValidationReportsTruncatedOrUnbalancedCollocations() {
+        let linkedSentence = sentence(
+            id: "sentence-home",
+            lexemeIDs: ["lexeme-play", "lexeme-greeting"],
+            status: .reviewed,
+            practiceRu: "Я люблю играть и говорить привет."
+        )
+        let catalog = ContentCatalog(
+            lexemes: [
+                lexeme(
+                    id: "lexeme-play",
+                    lemma: "играть",
+                    stressedForm: "игра́ть",
+                    collocations: ["играть на"],
+                    example: "Дети любят играть во дворе.",
+                    sentenceIDs: ["sentence-home"],
+                    status: .reviewed
+                ),
+                lexeme(
+                    id: "lexeme-greeting",
+                    lemma: "привет",
+                    stressedForm: "приве́т",
+                    collocations: ["сказать «привет"],
+                    example: "Я передал соседу привет.",
+                    sentenceIDs: ["sentence-home"],
+                    status: .reviewed
+                ),
+            ],
+            sentences: [linkedSentence]
+        )
+
+        let issues = catalog.validate()
+
+        XCTAssertTrue(issues.contains {
+            $0.itemID == "lexeme-play"
+                && $0.message.contains("ends with a function word")
+        })
+        XCTAssertTrue(issues.contains {
+            $0.itemID == "lexeme-greeting"
+                && $0.message.contains("unbalanced quotes")
+        })
+    }
+
+    func testValidationReportsDuplicateExamples() {
+        let linkedSentence = sentence(
+            id: "sentence-home",
+            lexemeIDs: ["lexeme-home", "lexeme-window"],
+            status: .reviewed,
+            practiceRu: "Это мой дом, и в нём есть окно."
+        )
+        let sharedExample = "В доме есть большое окно."
+        let catalog = ContentCatalog(
+            lexemes: [
+                lexeme(
+                    id: "lexeme-home",
+                    example: sharedExample,
+                    sentenceIDs: ["sentence-home"],
+                    status: .reviewed
+                ),
+                lexeme(
+                    id: "lexeme-window",
+                    lemma: "окно",
+                    stressedForm: "окно́",
+                    collocations: ["большое окно"],
+                    example: sharedExample,
+                    sentenceIDs: ["sentence-home"],
+                    status: .reviewed
+                ),
+            ],
+            sentences: [linkedSentence]
+        )
+
+        XCTAssertTrue(catalog.validate().contains {
+            $0.itemID == "lexeme-window"
+                && $0.message.contains("duplicate example")
+        })
+    }
+
+    func testValidationReportsUniformSentenceLinkCounts() {
+        let catalog = ContentCatalog(
+            lexemes: [],
+            sentences: [
+                sentence(
+                    id: "sentence-one",
+                    lexemeIDs: ["one", "two", "three"],
+                    status: .reviewed
+                ),
+                sentence(
+                    id: "sentence-two",
+                    lexemeIDs: ["four", "five", "six"],
+                    status: .reviewed
+                ),
+            ]
+        )
+
+        XCTAssertTrue(catalog.validate().contains {
+            $0.itemID == "catalog.sentences"
+                && $0.message.contains("link counts must vary")
+        })
+    }
+
+    func testValidationReportsSentenceSideLinkWhoseFormIsAbsent() {
+        let linkedSentence = sentence(
+            id: "sentence-home",
+            lexemeIDs: ["lexeme-home", "lexeme-cat"],
+            status: .reviewed,
+            practiceRu: "Это мой дом."
+        )
+        let catalog = ContentCatalog(
+            lexemes: [
+                lexeme(
+                    id: "lexeme-home",
+                    sentenceIDs: ["sentence-home"],
+                    status: .reviewed
+                ),
+                lexeme(
+                    id: "lexeme-cat",
+                    lemma: "кошка",
+                    stressedForm: "ко́шка",
+                    collocations: ["домашняя кошка"],
+                    example: "На диване спит кошка.",
+                    sentenceIDs: [],
+                    status: .reviewed
+                ),
+            ],
+            sentences: [linkedSentence]
+        )
+
+        XCTAssertTrue(catalog.validate().contains {
+            $0.itemID == "sentence-home"
+                && $0.message.contains("linked lexeme form is absent")
+        })
+    }
+
     func testValidationReportsBrokenLinksAndMissingFields() {
         let catalog = ContentCatalog(
             lexemes: [
@@ -420,5 +633,33 @@ final class ContentCatalogTests: XCTestCase {
             sourceText: practiceRu,
             reviewStatus: status
         )
+    }
+
+    private func russianTokens(in value: String) -> [String] {
+        normalizedRussianText(value)
+            .components(separatedBy: CharacterSet.letters.inverted)
+            .filter { !$0.isEmpty }
+    }
+
+    private func normalizedRussianText(_ value: String) -> String {
+        value
+            .decomposedStringWithCanonicalMapping
+            .replacingOccurrences(of: "\u{301}", with: "")
+            .precomposedStringWithCanonicalMapping
+            .lowercased()
+    }
+
+    private func containsLexeme(_ lexeme: Lexeme, in text: String) -> Bool {
+        let textTokens = russianTokens(in: text)
+        return ([lexeme.lemma] + lexeme.surfaceForms).contains { form in
+            let formTokens = russianTokens(in: form)
+            guard !formTokens.isEmpty, textTokens.count >= formTokens.count
+            else {
+                return false
+            }
+            return (0...(textTokens.count - formTokens.count)).contains {
+                Array(textTokens[$0..<($0 + formTokens.count)]) == formTokens
+            }
+        }
     }
 }

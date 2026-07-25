@@ -89,11 +89,19 @@ public struct ContentCatalog: Sendable {
                 result[sentence.id] = sentence
             }
         }
+        let lexemesByID = lexemes.reduce(
+            into: [String: Lexeme]()
+        ) { result, lexeme in
+            if result[lexeme.id] == nil {
+                result[lexeme.id] = lexeme
+            }
+        }
         let excludedSourceFragments = [
             "professional", "生物", "化学", "物理", "组织学",
             "conflict", "双链报告", "ai计划",
         ]
         var seenLemmas: Set<String> = []
+        var seenExamples: Set<String> = []
         let surfaceFormOwners = lexemes.reduce(
             into: [String: Set<String>]()
         ) { result, lexeme in
@@ -183,7 +191,39 @@ public struct ContentCatalog: Sendable {
                 message: "example does not contain lemma or surface form",
                 issues: &issues
             )
+            let normalizedExample = Self.normalizedText(lexeme.example)
+            if !normalizedExample.isEmpty
+                && !seenExamples.insert(normalizedExample).inserted
+            {
+                issues.append(
+                    CatalogIssue(
+                        itemID: lexeme.id,
+                        message: "duplicate example"
+                    )
+                )
+            }
             for collocation in lexeme.collocations {
+                let collocationTokens = Self.tokens(in: collocation)
+                require(
+                    (2...6).contains(collocationTokens.count),
+                    itemID: lexeme.id,
+                    message: "collocation must contain 2 through 6 words",
+                    issues: &issues
+                )
+                require(
+                    !Self.forbiddenCollocationEndings.contains(
+                        collocationTokens.last ?? ""
+                    ),
+                    itemID: lexeme.id,
+                    message: "collocation ends with a function word",
+                    issues: &issues
+                )
+                require(
+                    Self.hasBalancedQuotes(collocation),
+                    itemID: lexeme.id,
+                    message: "collocation has unbalanced quotes",
+                    issues: &issues
+                )
                 require(
                     Self.containsLexeme(lexeme, in: collocation),
                     itemID: lexeme.id,
@@ -284,6 +324,12 @@ public struct ContentCatalog: Sendable {
                 issues: &issues
             )
 
+            require(
+                (3...8).contains(sentence.lexemeIDs.count),
+                itemID: sentence.id,
+                message: "sentence must link 3 through 8 lexemes",
+                issues: &issues
+            )
             let normalizedPath = sentence.sourcePath.lowercased()
             for fragment in excludedSourceFragments
             where normalizedPath.contains(fragment) {
@@ -304,6 +350,40 @@ public struct ContentCatalog: Sendable {
                     )
                 )
             }
+            for lexemeID in sentence.lexemeIDs {
+                guard let lexeme = lexemesByID[lexemeID] else {
+                    continue
+                }
+                require(
+                    Self.containsLexeme(lexeme, in: sentence.practiceRu)
+                        && Self.containsLexeme(
+                            lexeme,
+                            in: sentence.speechText
+                        ),
+                    itemID: sentence.id,
+                    message: "linked lexeme form is absent from sentence text",
+                    issues: &issues
+                )
+                require(
+                    lexeme.sentenceIDs.contains(sentence.id),
+                    itemID: sentence.id,
+                    message: "linked lexeme does not link back",
+                    issues: &issues
+                )
+            }
+        }
+
+        if sentences.count > 1 {
+            let distinctLinkCounts = Set(
+                sentences.map { $0.lexemeIDs.count }
+            )
+            let requiredVariety = min(3, sentences.count)
+            require(
+                distinctLinkCounts.count >= requiredVariety,
+                itemID: "catalog.sentences",
+                message: "sentence link counts must vary",
+                issues: &issues
+            )
         }
 
         return issues
@@ -354,6 +434,33 @@ public struct ContentCatalog: Sendable {
         normalizedText(value)
             .components(separatedBy: CharacterSet.letters.inverted)
             .filter { !$0.isEmpty }
+    }
+
+    private static let forbiddenCollocationEndings: Set<String> = [
+        "в", "на", "к", "с", "из", "от", "до", "для", "без",
+        "о", "об", "по", "за", "у", "при", "через", "перед",
+        "между", "и", "или",
+    ]
+
+    private static func hasBalancedQuotes(_ value: String) -> Bool {
+        var guillemetDepth = 0
+        var asciiQuoteCount = 0
+        for character in value {
+            switch character {
+            case "«":
+                guillemetDepth += 1
+            case "»":
+                guard guillemetDepth > 0 else {
+                    return false
+                }
+                guillemetDepth -= 1
+            case "\"":
+                asciiQuoteCount += 1
+            default:
+                continue
+            }
+        }
+        return guillemetDepth == 0 && asciiQuoteCount.isMultiple(of: 2)
     }
 
     private static func normalizedForm(_ value: String) -> String {

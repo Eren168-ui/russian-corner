@@ -7,9 +7,9 @@
     "partOfSpeech": "interjection",
     "glossZh": "您好",
     "collocations": [
-      "сказать «здравствуйте"
+      "вежливо сказать «здравствуйте»"
     ],
-    "example": "Можно сказать «здравствуйте» или «привет»; очень приятно познакомиться, и наша встреча начинается.",
+    "example": "При входе я всегда говорю «здравствуйте».",
     "sentenceIDs": [
       "sentence-greetings-1"
     ],
@@ -24,11 +24,11 @@
     "partOfSpeech": "interjection",
     "glossZh": "你好",
     "collocations": [
-      "здравствуйте» или «привет"
+      "передать привет родителям"
     ],
-    "example": "Можно сказать «здравствуйте» или «привет»; очень приятно познакомиться, и наша встреча начинается.",
+    "example": "Он передал большой привет всей семье.",
     "sentenceIDs": [
-      "sentence-greetings-1"
+      "sentence-greetings-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -41,9 +41,9 @@
     "partOfSpeech": "verb",
     "glossZh": "认识",
     "collocations": [
-      "приятно познакомиться"
+      "познакомиться с соседями"
     ],
-    "example": "Можно сказать «здравствуйте» или «привет»; очень приятно познакомиться, и наша встреча начинается.",
+    "example": "Я хочу познакомиться с новой соседкой.",
     "sentenceIDs": [
       "sentence-greetings-1"
     ],
@@ -58,9 +58,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "愉快地",
     "collocations": [
-      "очень приятно"
+      "приятно вас видеть"
     ],
-    "example": "Можно сказать «здравствуйте» или «привет»; очень приятно познакомиться, и наша встреча начинается.",
+    "example": "Мне приятно снова вас видеть.",
     "sentenceIDs": [
       "sentence-greetings-1"
     ],
@@ -75,9 +75,9 @@
     "partOfSpeech": "noun",
     "glossZh": "见面",
     "collocations": [
-      "наша встреча"
+      "случайная встреча в кафе"
     ],
-    "example": "Можно сказать «здравствуйте» или «привет»; очень приятно познакомиться, и наша встреча начинается.",
+    "example": "Наша встреча состоится после обеда.",
     "sentenceIDs": [
       "sentence-greetings-1"
     ],
@@ -92,9 +92,9 @@
     "partOfSpeech": "interjection",
     "glossZh": "谢谢",
     "collocations": [
-      "спасибо за"
+      "спасибо за поддержку"
     ],
-    "example": "Спасибо за помощь; скажите, пожалуйста, до свидания или пока.",
+    "example": "Большое спасибо за тёплый приём.",
     "sentenceIDs": [
       "sentence-greetings-2"
     ],
@@ -109,9 +109,9 @@
     "partOfSpeech": "interjection",
     "glossZh": "请；不客气",
     "collocations": [
-      "скажите, пожалуйста"
+      "скажите пожалуйста ещё раз"
     ],
-    "example": "Спасибо за помощь; скажите, пожалуйста, до свидания или пока.",
+    "example": "Повторите адрес, пожалуйста, немного медленнее.",
     "sentenceIDs": [
       "sentence-greetings-2"
     ],
@@ -126,9 +126,9 @@
     "partOfSpeech": "noun",
     "glossZh": "帮助",
     "collocations": [
-      "за помощь"
+      "нужна срочная помощь"
     ],
-    "example": "Спасибо за помощь; скажите, пожалуйста, до свидания или пока.",
+    "example": "Помощь пришла как раз вовремя.",
     "sentenceIDs": [
       "sentence-greetings-2"
     ],
@@ -143,9 +143,9 @@
     "partOfSpeech": "noun",
     "glossZh": "会面；再见",
     "collocations": [
-      "до свидания"
+      "первое свидание"
     ],
-    "example": "Спасибо за помощь; скажите, пожалуйста, до свидания или пока.",
+    "example": "Он пригласил меня на свидание.",
     "sentenceIDs": [
       "sentence-greetings-2"
     ],
@@ -162,9 +162,9 @@
     "partOfSpeech": "interjection",
     "glossZh": "再见",
     "collocations": [
-      "свидания или пока"
+      "сказать пока друзьям"
     ],
-    "example": "Спасибо за помощь; скажите, пожалуйста, до свидания или пока.",
+    "example": "Мне пора домой, пока!",
     "sentenceIDs": [
       "sentence-greetings-2"
     ],
@@ -179,14 +179,16 @@
     "partOfSpeech": "noun",
     "glossZh": "家庭",
     "collocations": [
-      "наша семья"
+      "дружная семья"
     ],
-    "example": "Наша семья — это мама, папа, брат и каждый родитель, который заботится о детях.",
+    "example": "Наша семья часто ужинает вместе.",
     "sentenceIDs": [
       "sentence-family-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "семье"
+    ]
   },
   {
     "id": "lexeme-family-родитель",
@@ -196,14 +198,16 @@
     "partOfSpeech": "noun",
     "glossZh": "父母之一",
     "collocations": [
-      "каждый родитель"
+      "заботливый родитель"
     ],
-    "example": "Наша семья — это мама, папа, брат и каждый родитель, который заботится о детях.",
+    "example": "Каждый родитель знает привычки своего ребёнка.",
     "sentenceIDs": [
       "sentence-family-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "родителями"
+    ]
   },
   {
     "id": "lexeme-family-мама",
@@ -213,14 +217,16 @@
     "partOfSpeech": "noun",
     "glossZh": "妈妈",
     "collocations": [
-      "это мама"
+      "молодая мама"
     ],
-    "example": "Наша семья — это мама, папа, брат и каждый родитель, который заботится о детях.",
+    "example": "Мама печёт яблочный пирог.",
     "sentenceIDs": [
       "sentence-family-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "мамой"
+    ]
   },
   {
     "id": "lexeme-family-папа",
@@ -230,14 +236,16 @@
     "partOfSpeech": "noun",
     "glossZh": "爸爸",
     "collocations": [
-      "мама, папа"
+      "мой папа"
     ],
-    "example": "Наша семья — это мама, папа, брат и каждый родитель, который заботится о детях.",
+    "example": "Папа чинит велосипед на балконе.",
     "sentenceIDs": [
       "sentence-family-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "папой"
+    ]
   },
   {
     "id": "lexeme-family-брат",
@@ -247,14 +255,16 @@
     "partOfSpeech": "noun",
     "glossZh": "兄弟",
     "collocations": [
-      "папа, брат"
+      "младший брат"
     ],
-    "example": "Наша семья — это мама, папа, брат и каждый родитель, который заботится о детях.",
+    "example": "Брат учится в соседней школе.",
     "sentenceIDs": [
       "sentence-family-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "братом"
+    ]
   },
   {
     "id": "lexeme-family-сестра",
@@ -264,9 +274,9 @@
     "partOfSpeech": "noun",
     "glossZh": "姐妹",
     "collocations": [
-      "моя сестра"
+      "старшая сестра"
     ],
-    "example": "Моя сестра, бабушка, дедушка, внучка и ещё один родственник собираются вместе.",
+    "example": "Сестра прислала фотографии из поездки.",
     "sentenceIDs": [
       "sentence-family-2"
     ],
@@ -281,14 +291,16 @@
     "partOfSpeech": "noun",
     "glossZh": "祖母；外祖母",
     "collocations": [
-      "сестра, бабушка"
+      "любимая бабушка"
     ],
-    "example": "Моя сестра, бабушка, дедушка, внучка и ещё один родственник собираются вместе.",
+    "example": "Бабушка выращивает мяту на даче.",
     "sentenceIDs": [
       "sentence-family-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "бабушку"
+    ]
   },
   {
     "id": "lexeme-family-дедушка",
@@ -298,14 +310,16 @@
     "partOfSpeech": "noun",
     "glossZh": "祖父；外祖父",
     "collocations": [
-      "бабушка, дедушка"
+      "весёлый дедушка"
     ],
-    "example": "Моя сестра, бабушка, дедушка, внучка и ещё один родственник собираются вместе.",
+    "example": "Дедушка рано выходит на прогулку.",
     "sentenceIDs": [
       "sentence-family-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "дедушку"
+    ]
   },
   {
     "id": "lexeme-family-внучка",
@@ -315,14 +329,16 @@
     "partOfSpeech": "noun",
     "glossZh": "孙女；外孙女",
     "collocations": [
-      "дедушка, внучка"
+      "маленькая внучка"
     ],
-    "example": "Моя сестра, бабушка, дедушка, внучка и ещё один родственник собираются вместе.",
+    "example": "Внучка читает сказку вслух.",
     "sentenceIDs": [
       "sentence-family-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "внучку"
+    ]
   },
   {
     "id": "lexeme-family-родственник",
@@ -332,14 +348,16 @@
     "partOfSpeech": "noun",
     "glossZh": "亲戚",
     "collocations": [
-      "один родственник"
+      "близкий родственник"
     ],
-    "example": "Моя сестра, бабушка, дедушка, внучка и ещё один родственник собираются вместе.",
+    "example": "Этот родственник живёт в другом городе.",
     "sentenceIDs": [
       "sentence-family-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "родственников"
+    ]
   },
   {
     "id": "lexeme-home-квартира",
@@ -351,12 +369,14 @@
     "collocations": [
       "светлая квартира"
     ],
-    "example": "Эта светлая квартира удобная: в ней есть кухня, спальня и балкон.",
+    "example": "Квартира находится на третьем этаже.",
     "sentenceIDs": [
       "sentence-home-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "квартире"
+    ]
   },
   {
     "id": "lexeme-home-кухня",
@@ -366,9 +386,9 @@
     "partOfSpeech": "noun",
     "glossZh": "厨房",
     "collocations": [
-      "есть кухня"
+      "просторная кухня"
     ],
-    "example": "Эта светлая квартира удобная: в ней есть кухня, спальня и балкон.",
+    "example": "Кухня пахнет свежим хлебом.",
     "sentenceIDs": [
       "sentence-home-1"
     ],
@@ -383,14 +403,16 @@
     "partOfSpeech": "noun",
     "glossZh": "卧室",
     "collocations": [
-      "кухня, спальня"
+      "тихая спальня"
     ],
-    "example": "Эта светлая квартира удобная: в ней есть кухня, спальня и балкон.",
+    "example": "Спальня выходит окнами во двор.",
     "sentenceIDs": [
-      "sentence-home-1"
+      "sentence-home-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "спальне"
+    ]
   },
   {
     "id": "lexeme-home-балкон",
@@ -400,14 +422,16 @@
     "partOfSpeech": "noun",
     "glossZh": "阳台",
     "collocations": [
-      "спальня и балкон"
+      "застеклённый балкон"
     ],
-    "example": "Эта светлая квартира удобная: в ней есть кухня, спальня и балкон.",
+    "example": "Балкон украшен летними цветами.",
     "sentenceIDs": [
       "sentence-home-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "балконе"
+    ]
   },
   {
     "id": "lexeme-home-светлый",
@@ -417,15 +441,16 @@
     "partOfSpeech": "adjective",
     "glossZh": "明亮的",
     "collocations": [
-      "светлая квартира"
+      "светлый коридор"
     ],
-    "example": "Эта светлая квартира удобная: в ней есть кухня, спальня и балкон.",
+    "example": "Светлый ковёр делает комнату уютнее.",
     "sentenceIDs": [
       "sentence-home-1"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
-      "светлая"
+      "светлая",
+      "светлой"
     ]
   },
   {
@@ -436,14 +461,16 @@
     "partOfSpeech": "noun",
     "glossZh": "客厅",
     "collocations": [
-      "гостиная обставлена"
+      "уютная гостиная"
     ],
-    "example": "Гостиная обставлена просто: удобный диван, большое окно и новая мебель.",
+    "example": "Гостиная готова к приходу гостей.",
     "sentenceIDs": [
       "sentence-home-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "гостиной"
+    ]
   },
   {
     "id": "lexeme-home-удобный",
@@ -455,12 +482,14 @@
     "collocations": [
       "удобный диван"
     ],
-    "example": "Гостиная обставлена просто: удобный диван, большое окно и новая мебель.",
+    "example": "Удобный стул стоит у стола.",
     "sentenceIDs": [
       "sentence-home-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "удобная"
+    ]
   },
   {
     "id": "lexeme-home-диван",
@@ -470,9 +499,9 @@
     "partOfSpeech": "noun",
     "glossZh": "沙发",
     "collocations": [
-      "удобный диван"
+      "мягкий диван"
     ],
-    "example": "Гостиная обставлена просто: удобный диван, большое окно и новая мебель.",
+    "example": "Диван раскладывается на ночь.",
     "sentenceIDs": [
       "sentence-home-2"
     ],
@@ -487,14 +516,16 @@
     "partOfSpeech": "noun",
     "glossZh": "窗户",
     "collocations": [
-      "большое окно"
+      "открыть окно"
     ],
-    "example": "Гостиная обставлена просто: удобный диван, большое окно и новая мебель.",
+    "example": "Окно осталось открытым после дождя.",
     "sentenceIDs": [
       "sentence-home-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "окна"
+    ]
   },
   {
     "id": "lexeme-home-мебель",
@@ -506,7 +537,7 @@
     "collocations": [
       "новая мебель"
     ],
-    "example": "Гостиная обставлена просто: удобный диван, большое окно и новая мебель.",
+    "example": "Мебель привезут в пятницу.",
     "sentenceIDs": [
       "sentence-home-2"
     ],
@@ -521,9 +552,9 @@
     "partOfSpeech": "verb",
     "glossZh": "起床",
     "collocations": [
-      "вставать, умываться"
+      "рано вставать"
     ],
-    "example": "Я стараюсь рано вставать, умываться и принимать душ.",
+    "example": "Зимой мне трудно вставать до рассвета.",
     "sentenceIDs": [
       "sentence-daily-routine-1"
     ],
@@ -538,9 +569,9 @@
     "partOfSpeech": "verb",
     "glossZh": "洗脸",
     "collocations": [
-      "вставать, умываться"
+      "умываться холодной водой"
     ],
-    "example": "Я стараюсь рано вставать, умываться и принимать душ.",
+    "example": "Ребёнок уже умеет умываться сам.",
     "sentenceIDs": [
       "sentence-daily-routine-1"
     ],
@@ -555,14 +586,16 @@
     "partOfSpeech": "verb",
     "glossZh": "接受；进行",
     "collocations": [
-      "принимать душ"
+      "принимать тёплый душ"
     ],
-    "example": "Я стараюсь рано вставать, умываться и принимать душ.",
+    "example": "После тренировки приятно принимать душ.",
     "sentenceIDs": [
-      "sentence-daily-routine-1"
+      "sentence-daily-routine-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "принимаю"
+    ]
   },
   {
     "id": "lexeme-daily-routine-душ",
@@ -572,11 +605,11 @@
     "partOfSpeech": "noun",
     "glossZh": "淋浴",
     "collocations": [
-      "принимать душ"
+      "контрастный душ"
     ],
-    "example": "Я стараюсь рано вставать, умываться и принимать душ.",
+    "example": "Душ помогает мне окончательно проснуться.",
     "sentenceIDs": [
-      "sentence-daily-routine-1"
+      "sentence-daily-routine-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -589,9 +622,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "早地",
     "collocations": [
-      "стараюсь рано"
+      "слишком рано"
     ],
-    "example": "Я стараюсь рано вставать, умываться и принимать душ.",
+    "example": "Сегодня автобус пришёл рано.",
     "sentenceIDs": [
       "sentence-daily-routine-1"
     ],
@@ -606,9 +639,9 @@
     "partOfSpeech": "noun",
     "glossZh": "早餐",
     "collocations": [
-      "сначала завтрак"
+      "лёгкий завтрак"
     ],
-    "example": "Мой распорядок прост: сначала завтрак, потом нужно одеваться, а вечером ложиться спать.",
+    "example": "Завтрак уже стоит на столе.",
     "sentenceIDs": [
       "sentence-daily-routine-2"
     ],
@@ -623,14 +656,16 @@
     "partOfSpeech": "verb",
     "glossZh": "穿衣",
     "collocations": [
-      "нужно одеваться"
+      "быстро одеваться"
     ],
-    "example": "Мой распорядок прост: сначала завтрак, потом нужно одеваться, а вечером ложиться спать.",
+    "example": "В темноте неудобно одеваться.",
     "sentenceIDs": [
       "sentence-daily-routine-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "одеваюсь"
+    ]
   },
   {
     "id": "lexeme-daily-routine-ложиться",
@@ -640,14 +675,16 @@
     "partOfSpeech": "verb",
     "glossZh": "躺下；上床",
     "collocations": [
-      "ложиться спать"
+      "поздно ложиться"
     ],
-    "example": "Мой распорядок прост: сначала завтрак, потом нужно одеваться, а вечером ложиться спать.",
+    "example": "Я стараюсь ложиться до полуночи.",
     "sentenceIDs": [
       "sentence-daily-routine-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "ложусь"
+    ]
   },
   {
     "id": "lexeme-daily-routine-спать",
@@ -657,9 +694,9 @@
     "partOfSpeech": "verb",
     "glossZh": "睡觉",
     "collocations": [
-      "ложиться спать"
+      "крепко спать"
     ],
-    "example": "Мой распорядок прост: сначала завтрак, потом нужно одеваться, а вечером ложиться спать.",
+    "example": "В поезде я не могу спать.",
     "sentenceIDs": [
       "sentence-daily-routine-2"
     ],
@@ -674,9 +711,9 @@
     "partOfSpeech": "noun",
     "glossZh": "作息；秩序",
     "collocations": [
-      "мой распорядок"
+      "привычный распорядок дня"
     ],
-    "example": "Мой распорядок прост: сначала завтрак, потом нужно одеваться, а вечером ложиться спать.",
+    "example": "Чёткий распорядок экономит мне время.",
     "sentenceIDs": [
       "sentence-daily-routine-2"
     ],
@@ -691,9 +728,9 @@
     "partOfSpeech": "noun",
     "glossZh": "午餐",
     "collocations": [
-      "на обед"
+      "горячий обед"
     ],
-    "example": "На обед я выбираю суп, салат и свежий хлеб.",
+    "example": "Обед будет готов к двум часам.",
     "sentenceIDs": [
       "sentence-food-1"
     ],
@@ -708,9 +745,9 @@
     "partOfSpeech": "noun",
     "glossZh": "汤",
     "collocations": [
-      "выбираю суп"
+      "овощной суп"
     ],
-    "example": "На обед я выбираю суп, салат и свежий хлеб.",
+    "example": "Суп ещё греется на плите.",
     "sentenceIDs": [
       "sentence-food-1"
     ],
@@ -725,9 +762,9 @@
     "partOfSpeech": "noun",
     "glossZh": "沙拉",
     "collocations": [
-      "суп, салат"
+      "свежий салат"
     ],
-    "example": "На обед я выбираю суп, салат и свежий хлеб.",
+    "example": "Салат заправили оливковым маслом.",
     "sentenceIDs": [
       "sentence-food-1"
     ],
@@ -744,7 +781,7 @@
     "collocations": [
       "свежий хлеб"
     ],
-    "example": "На обед я выбираю суп, салат и свежий хлеб.",
+    "example": "Свежий огурец приятно хрустит.",
     "sentenceIDs": [
       "sentence-food-1"
     ],
@@ -759,9 +796,9 @@
     "partOfSpeech": "noun",
     "glossZh": "面包",
     "collocations": [
-      "свежий хлеб"
+      "ржаной хлеб"
     ],
-    "example": "На обед я выбираю суп, салат и свежий хлеб.",
+    "example": "Хлеб лежит в деревянной корзине.",
     "sentenceIDs": [
       "sentence-food-1"
     ],
@@ -776,9 +813,9 @@
     "partOfSpeech": "noun",
     "glossZh": "晚餐",
     "collocations": [
-      "на ужин"
+      "семейный ужин"
     ],
-    "example": "На ужин я люблю готовить рис; рыба и чай тоже будут на столе.",
+    "example": "Ужин сегодня готовит мой брат.",
     "sentenceIDs": [
       "sentence-food-2"
     ],
@@ -793,9 +830,9 @@
     "partOfSpeech": "verb",
     "glossZh": "做饭；准备",
     "collocations": [
-      "готовить рис"
+      "готовить дома"
     ],
-    "example": "На ужин я люблю готовить рис; рыба и чай тоже будут на столе.",
+    "example": "По выходным мы любим готовить вместе.",
     "sentenceIDs": [
       "sentence-food-2"
     ],
@@ -810,9 +847,9 @@
     "partOfSpeech": "noun",
     "glossZh": "米饭；大米",
     "collocations": [
-      "готовить рис"
+      "варёный рис"
     ],
-    "example": "На ужин я люблю готовить рис; рыба и чай тоже будут на столе.",
+    "example": "Рис получился мягким и рассыпчатым.",
     "sentenceIDs": [
       "sentence-food-2"
     ],
@@ -827,14 +864,16 @@
     "partOfSpeech": "noun",
     "glossZh": "鱼",
     "collocations": [
-      "рыба и чай"
+      "запечённая рыба"
     ],
-    "example": "На ужин я люблю готовить рис; рыба и чай тоже будут на столе.",
+    "example": "Рыба хорошо сочетается с овощами.",
     "sentenceIDs": [
       "sentence-food-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "рыбу"
+    ]
   },
   {
     "id": "lexeme-food-чай",
@@ -844,11 +883,11 @@
     "partOfSpeech": "noun",
     "glossZh": "茶",
     "collocations": [
-      "чай тоже"
+      "зелёный чай"
     ],
-    "example": "На ужин я люблю готовить рис; рыба и чай тоже будут на столе.",
+    "example": "Чай немного остыл у окна.",
     "sentenceIDs": [
-      "sentence-food-2"
+      "sentence-food-1"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -861,14 +900,16 @@
     "partOfSpeech": "noun",
     "glossZh": "商店",
     "collocations": [
-      "в магазин"
+      "продуктовый магазин"
     ],
-    "example": "В магазин стоит зайти: цена указана, можно сравнивать варианты и выбирать товар.",
+    "example": "Магазин закрывается в десять вечера.",
     "sentenceIDs": [
       "sentence-shopping-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "магазине"
+    ]
   },
   {
     "id": "lexeme-shopping-сравнивать",
@@ -878,9 +919,9 @@
     "partOfSpeech": "verb",
     "glossZh": "比较",
     "collocations": [
-      "сравнивать варианты"
+      "сравнивать цены"
     ],
-    "example": "В магазин стоит зайти: цена указана, можно сравнивать варианты и выбирать товар.",
+    "example": "Перед покупкой полезно сравнивать варианты.",
     "sentenceIDs": [
       "sentence-shopping-1"
     ],
@@ -895,14 +936,16 @@
     "partOfSpeech": "noun",
     "glossZh": "价格",
     "collocations": [
-      "цена указана"
+      "доступная цена"
     ],
-    "example": "В магазин стоит зайти: цена указана, можно сравнивать варианты и выбирать товар.",
+    "example": "Цена указана на жёлтом ярлыке.",
     "sentenceIDs": [
       "sentence-shopping-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "цены"
+    ]
   },
   {
     "id": "lexeme-shopping-выбирать",
@@ -912,11 +955,11 @@
     "partOfSpeech": "verb",
     "glossZh": "选择",
     "collocations": [
-      "выбирать товар"
+      "внимательно выбирать"
     ],
-    "example": "В магазин стоит зайти: цена указана, можно сравнивать варианты и выбирать товар.",
+    "example": "Я предпочитаю выбирать продукты сам.",
     "sentenceIDs": [
-      "sentence-shopping-1"
+      "sentence-shopping-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -929,9 +972,9 @@
     "partOfSpeech": "noun",
     "glossZh": "商品",
     "collocations": [
-      "выбирать товар"
+      "качественный товар"
     ],
-    "example": "В магазин стоит зайти: цена указана, можно сравнивать варианты и выбирать товар.",
+    "example": "Этот товар можно вернуть завтра.",
     "sentenceIDs": [
       "sentence-shopping-1"
     ],
@@ -946,9 +989,9 @@
     "partOfSpeech": "noun",
     "glossZh": "小票",
     "collocations": [
-      "возьмите чек"
+      "кассовый чек"
     ],
-    "example": "Возьмите чек: платить можно банковской картой, а скидка уже учтена.",
+    "example": "Чек лежит в кармане куртки.",
     "sentenceIDs": [
       "sentence-shopping-2"
     ],
@@ -963,9 +1006,9 @@
     "partOfSpeech": "verb",
     "glossZh": "付款",
     "collocations": [
-      "платить можно"
+      "платить картой"
     ],
-    "example": "Возьмите чек: платить можно банковской картой, а скидка уже учтена.",
+    "example": "Здесь можно платить наличными.",
     "sentenceIDs": [
       "sentence-shopping-2"
     ],
@@ -980,15 +1023,16 @@
     "partOfSpeech": "adjective",
     "glossZh": "银行的",
     "collocations": [
-      "банковской картой"
+      "банковская карта"
     ],
-    "example": "Возьмите чек: платить можно банковской картой, а скидка уже учтена.",
+    "example": "Банковский перевод пришёл утром.",
     "sentenceIDs": [
       "sentence-shopping-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
-      "банковской"
+      "банковской",
+      "банковская"
     ]
   },
   {
@@ -999,9 +1043,9 @@
     "partOfSpeech": "noun",
     "glossZh": "卡片；银行卡",
     "collocations": [
-      "банковской картой"
+      "дисконтная карта"
     ],
-    "example": "Возьмите чек: платить можно банковской картой, а скидка уже учтена.",
+    "example": "Карта не проходит на кассе.",
     "sentenceIDs": [
       "sentence-shopping-2"
     ],
@@ -1018,14 +1062,16 @@
     "partOfSpeech": "noun",
     "glossZh": "折扣",
     "collocations": [
-      "скидка уже"
+      "сезонная скидка"
     ],
-    "example": "Возьмите чек: платить можно банковской картой, а скидка уже учтена.",
+    "example": "Скидка действует только до воскресенья.",
     "sentenceIDs": [
       "sentence-shopping-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "скидку"
+    ]
   },
   {
     "id": "lexeme-cafe-официант",
@@ -1035,9 +1081,9 @@
     "partOfSpeech": "noun",
     "glossZh": "服务员",
     "collocations": [
-      "официант, можете"
+      "вежливый официант"
     ],
-    "example": "Официант, можете принести меню, чашку и кофе?",
+    "example": "Официант принёс воду без газа.",
     "sentenceIDs": [
       "sentence-cafe-1"
     ],
@@ -1052,9 +1098,9 @@
     "partOfSpeech": "noun",
     "glossZh": "菜单",
     "collocations": [
-      "принести меню"
+      "посмотреть меню"
     ],
-    "example": "Официант, можете принести меню, чашку и кофе?",
+    "example": "Меню лежит рядом с салфетками.",
     "sentenceIDs": [
       "sentence-cafe-1"
     ],
@@ -1069,9 +1115,9 @@
     "partOfSpeech": "noun",
     "glossZh": "杯子",
     "collocations": [
-      "меню, чашку"
+      "чистая чашка"
     ],
-    "example": "Официант, можете принести меню, чашку и кофе?",
+    "example": "Чашка оказалась слишком горячей.",
     "sentenceIDs": [
       "sentence-cafe-1"
     ],
@@ -1088,9 +1134,9 @@
     "partOfSpeech": "noun",
     "glossZh": "咖啡",
     "collocations": [
-      "чашку и кофе"
+      "крепкий кофе"
     ],
-    "example": "Официант, можете принести меню, чашку и кофе?",
+    "example": "Кофе здесь варят на песке.",
     "sentenceIDs": [
       "sentence-cafe-1"
     ],
@@ -1105,14 +1151,16 @@
     "partOfSpeech": "verb",
     "glossZh": "拿来",
     "collocations": [
-      "принести меню"
+      "принести стакан воды"
     ],
-    "example": "Официант, можете принести меню, чашку и кофе?",
+    "example": "Попросите принести ещё одну ложку.",
     "sentenceIDs": [
       "sentence-cafe-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "принесите"
+    ]
   },
   {
     "id": "lexeme-cafe-заказ",
@@ -1122,9 +1170,9 @@
     "partOfSpeech": "noun",
     "glossZh": "订单；点餐",
     "collocations": [
-      "сделать заказ"
+      "готовый заказ"
     ],
-    "example": "Мы хотим сделать заказ и выбрать десерт, а потом будем просить счёт.",
+    "example": "Наш заказ скоро вынесут на террасу.",
     "sentenceIDs": [
       "sentence-cafe-2"
     ],
@@ -1141,7 +1189,7 @@
     "collocations": [
       "сделать заказ"
     ],
-    "example": "Мы хотим сделать заказ и выбрать десерт, а потом будем просить счёт.",
+    "example": "Я хочу сделать заказ у окна.",
     "sentenceIDs": [
       "sentence-cafe-2"
     ],
@@ -1158,7 +1206,7 @@
     "collocations": [
       "просить счёт"
     ],
-    "example": "Мы хотим сделать заказ и выбрать десерт, а потом будем просить счёт.",
+    "example": "Неудобно долго просить внимания.",
     "sentenceIDs": [
       "sentence-cafe-2"
     ],
@@ -1173,9 +1221,9 @@
     "partOfSpeech": "noun",
     "glossZh": "账单",
     "collocations": [
-      "просить счёт"
+      "оплатить счёт"
     ],
-    "example": "Мы хотим сделать заказ и выбрать десерт, а потом будем просить счёт.",
+    "example": "Счёт уже включал обслуживание.",
     "sentenceIDs": [
       "sentence-cafe-2"
     ],
@@ -1190,9 +1238,9 @@
     "partOfSpeech": "noun",
     "glossZh": "甜点",
     "collocations": [
-      "выбрать десерт"
+      "шоколадный десерт"
     ],
-    "example": "Мы хотим сделать заказ и выбрать десерт, а потом будем просить счёт.",
+    "example": "Десерт украсили свежими ягодами.",
     "sentenceIDs": [
       "sentence-cafe-2"
     ],
@@ -1207,9 +1255,9 @@
     "partOfSpeech": "noun",
     "glossZh": "公共汽车",
     "collocations": [
-      "автобус должен"
+      "городской автобус"
     ],
-    "example": "Автобус должен приехать через минуту; остановка уже видна.",
+    "example": "Автобус остановился у театра.",
     "sentenceIDs": [
       "sentence-transport-1"
     ],
@@ -1224,9 +1272,9 @@
     "partOfSpeech": "verb",
     "glossZh": "到达（乘车）",
     "collocations": [
-      "приехать через"
+      "приехать вовремя"
     ],
-    "example": "Автобус должен приехать через минуту; остановка уже видна.",
+    "example": "Мы надеемся приехать до темноты.",
     "sentenceIDs": [
       "sentence-transport-1"
     ],
@@ -1241,14 +1289,16 @@
     "partOfSpeech": "noun",
     "glossZh": "车站",
     "collocations": [
-      "остановка уже"
+      "следующая остановка"
     ],
-    "example": "Автобус должен приехать через минуту; остановка уже видна.",
+    "example": "Остановка находится за мостом.",
     "sentenceIDs": [
       "sentence-transport-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "остановку"
+    ]
   },
   {
     "id": "lexeme-transport-через",
@@ -1258,11 +1308,11 @@
     "partOfSpeech": "preposition",
     "glossZh": "经过；之后",
     "collocations": [
-      "через минуту"
+      "через пять минут"
     ],
-    "example": "Автобус должен приехать через минуту; остановка уже видна.",
+    "example": "Через час начнётся последний сеанс.",
     "sentenceIDs": [
-      "sentence-transport-1"
+      "sentence-transport-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -1275,15 +1325,16 @@
     "partOfSpeech": "noun",
     "glossZh": "分钟",
     "collocations": [
-      "через минуту"
+      "свободная минута"
     ],
-    "example": "Автобус должен приехать через минуту; остановка уже видна.",
+    "example": "Каждая минута сейчас важна.",
     "sentenceIDs": [
-      "sentence-transport-1"
+      "sentence-transport-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
-      "минуту"
+      "минуту",
+      "минут"
     ]
   },
   {
@@ -1294,9 +1345,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "通常",
     "collocations": [
-      "обычно я"
+      "как обычно"
     ],
-    "example": "Обычно я предпочитаю ехать на метро и вызывать такси только поздно вечером.",
+    "example": "Обычно я хожу на работу пешком.",
     "sentenceIDs": [
       "sentence-transport-2"
     ],
@@ -1311,9 +1362,9 @@
     "partOfSpeech": "verb",
     "glossZh": "乘车行进",
     "collocations": [
-      "ехать на"
+      "ехать на метро"
     ],
-    "example": "Обычно я предпочитаю ехать на метро и вызывать такси только поздно вечером.",
+    "example": "До центра удобнее ехать на метро.",
     "sentenceIDs": [
       "sentence-transport-2"
     ],
@@ -1328,9 +1379,9 @@
     "partOfSpeech": "noun",
     "glossZh": "地铁",
     "collocations": [
-      "на метро"
+      "станция метро"
     ],
-    "example": "Обычно я предпочитаю ехать на метро и вызывать такси только поздно вечером.",
+    "example": "Метро открывается рано утром.",
     "sentenceIDs": [
       "sentence-transport-2"
     ],
@@ -1347,7 +1398,7 @@
     "collocations": [
       "вызывать такси"
     ],
-    "example": "Обычно я предпочитаю ехать на метро и вызывать такси только поздно вечером.",
+    "example": "Ночью безопаснее вызывать такси.",
     "sentenceIDs": [
       "sentence-transport-2"
     ],
@@ -1362,9 +1413,9 @@
     "partOfSpeech": "noun",
     "glossZh": "出租车",
     "collocations": [
-      "вызывать такси"
+      "свободное такси"
     ],
-    "example": "Обычно я предпочитаю ехать на метро и вызывать такси только поздно вечером.",
+    "example": "Такси ждёт у главного входа.",
     "sentenceIDs": [
       "sentence-transport-2"
     ],
@@ -1379,14 +1430,16 @@
     "partOfSpeech": "noun",
     "glossZh": "中心",
     "collocations": [
-      "его центр"
+      "исторический центр"
     ],
-    "example": "Этот город красив: его центр, широкий проспект, площадь и музей находятся рядом.",
+    "example": "Центр города перекрыли для фестиваля.",
     "sentenceIDs": [
       "sentence-city-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "центре"
+    ]
   },
   {
     "id": "lexeme-city-город",
@@ -1396,14 +1449,16 @@
     "partOfSpeech": "noun",
     "glossZh": "城市",
     "collocations": [
-      "этот город"
+      "родной город"
     ],
-    "example": "Этот город красив: его центр, широкий проспект, площадь и музей находятся рядом.",
+    "example": "Город особенно красив после дождя.",
     "sentenceIDs": [
       "sentence-city-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "города"
+    ]
   },
   {
     "id": "lexeme-city-широкий",
@@ -1415,12 +1470,14 @@
     "collocations": [
       "широкий проспект"
     ],
-    "example": "Этот город красив: его центр, широкий проспект, площадь и музей находятся рядом.",
+    "example": "Широкий мост соединяет два района.",
     "sentenceIDs": [
       "sentence-city-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "широкая"
+    ]
   },
   {
     "id": "lexeme-city-площадь",
@@ -1430,9 +1487,9 @@
     "partOfSpeech": "noun",
     "glossZh": "广场；面积",
     "collocations": [
-      "проспект, площадь"
+      "центральная площадь"
     ],
-    "example": "Этот город красив: его центр, широкий проспект, площадь и музей находятся рядом.",
+    "example": "Площадь заполнили уличные музыканты.",
     "sentenceIDs": [
       "sentence-city-1"
     ],
@@ -1447,14 +1504,16 @@
     "partOfSpeech": "noun",
     "glossZh": "博物馆",
     "collocations": [
-      "музей находятся"
+      "художественный музей"
     ],
-    "example": "Этот город красив: его центр, широкий проспект, площадь и музей находятся рядом.",
+    "example": "Музей работает до позднего вечера.",
     "sentenceIDs": [
       "sentence-city-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "музеем"
+    ]
   },
   {
     "id": "lexeme-city-тихий",
@@ -1464,14 +1523,16 @@
     "partOfSpeech": "adjective",
     "glossZh": "安静的",
     "collocations": [
-      "тихий район"
+      "тихий переулок"
     ],
-    "example": "Тихий район хорош: улица может вести в парк, дальше начинается набережная.",
+    "example": "Тихий двор спрятан за аркой.",
     "sentenceIDs": [
-      "sentence-city-2"
+      "sentence-city-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "тихая"
+    ]
   },
   {
     "id": "lexeme-city-улица",
@@ -1481,9 +1542,9 @@
     "partOfSpeech": "noun",
     "glossZh": "街道",
     "collocations": [
-      "улица может"
+      "соседняя улица"
     ],
-    "example": "Тихий район хорош: улица может вести в парк, дальше начинается набережная.",
+    "example": "Улица ведёт прямо к вокзалу.",
     "sentenceIDs": [
       "sentence-city-2"
     ],
@@ -1498,14 +1559,16 @@
     "partOfSpeech": "verb",
     "glossZh": "通向；带领",
     "collocations": [
-      "вести в"
+      "вести к парку"
     ],
-    "example": "Тихий район хорош: улица может вести в парк, дальше начинается набережная.",
+    "example": "Эта дорожка ведёт к реке.",
     "sentenceIDs": [
       "sentence-city-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "ведёт"
+    ]
   },
   {
     "id": "lexeme-city-парк",
@@ -1515,9 +1578,9 @@
     "partOfSpeech": "noun",
     "glossZh": "公园",
     "collocations": [
-      "в парк"
+      "городской парк"
     ],
-    "example": "Тихий район хорош: улица может вести в парк, дальше начинается набережная.",
+    "example": "Парк закрывают после полуночи.",
     "sentenceIDs": [
       "sentence-city-2"
     ],
@@ -1532,14 +1595,16 @@
     "partOfSpeech": "noun",
     "glossZh": "河岸街",
     "collocations": [
-      "начинается набережная"
+      "вечерняя набережная"
     ],
-    "example": "Тихий район хорош: улица может вести в парк, дальше начинается набережная.",
+    "example": "Набережная освещена тёплыми фонарями.",
     "sentenceIDs": [
       "sentence-city-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "набережной"
+    ]
   },
   {
     "id": "lexeme-directions-прямо",
@@ -1549,9 +1614,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "直行",
     "collocations": [
-      "идите прямо"
+      "идти прямо"
     ],
-    "example": "Идите прямо, потом на перекрёстке нужно повернуть налево.",
+    "example": "От светофора двигайтесь прямо.",
     "sentenceIDs": [
       "sentence-directions-1"
     ],
@@ -1566,9 +1631,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "然后",
     "collocations": [
-      "прямо, потом"
+      "зайти потом"
     ],
-    "example": "Идите прямо, потом на перекрёстке нужно повернуть налево.",
+    "example": "Сначала купим билеты, потом пообедаем.",
     "sentenceIDs": [
       "sentence-directions-1"
     ],
@@ -1583,9 +1648,9 @@
     "partOfSpeech": "noun",
     "glossZh": "十字路口",
     "collocations": [
-      "на перекрёстке"
+      "ближайший перекрёсток"
     ],
-    "example": "Идите прямо, потом на перекрёстке нужно повернуть налево.",
+    "example": "Перекрёсток хорошо виден отсюда.",
     "sentenceIDs": [
       "sentence-directions-1"
     ],
@@ -1602,14 +1667,16 @@
     "partOfSpeech": "verb",
     "glossZh": "转弯",
     "collocations": [
-      "повернуть налево"
+      "повернуть направо"
     ],
-    "example": "Идите прямо, потом на перекрёстке нужно повернуть налево.",
+    "example": "После школы нужно повернуть налево.",
     "sentenceIDs": [
       "sentence-directions-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "поверните"
+    ]
   },
   {
     "id": "lexeme-directions-налево",
@@ -1619,11 +1686,11 @@
     "partOfSpeech": "adverb",
     "glossZh": "向左",
     "collocations": [
-      "повернуть налево"
+      "свернуть налево"
     ],
-    "example": "Идите прямо, потом на перекрёстке нужно повернуть налево.",
+    "example": "У аптеки поверните налево.",
     "sentenceIDs": [
-      "sentence-directions-1"
+      "sentence-directions-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -1636,9 +1703,9 @@
     "partOfSpeech": "noun",
     "glossZh": "药店",
     "collocations": [
-      "аптека находится"
+      "круглосуточная аптека"
     ],
-    "example": "Аптека находится напротив банка, её вход справа.",
+    "example": "Аптека находится на первом этаже.",
     "sentenceIDs": [
       "sentence-directions-2"
     ],
@@ -1653,9 +1720,9 @@
     "partOfSpeech": "preposition",
     "glossZh": "在对面",
     "collocations": [
-      "напротив банка"
+      "прямо напротив"
     ],
-    "example": "Аптека находится напротив банка, её вход справа.",
+    "example": "Кафе стоит напротив библиотеки.",
     "sentenceIDs": [
       "sentence-directions-2"
     ],
@@ -1670,9 +1737,9 @@
     "partOfSpeech": "noun",
     "glossZh": "银行",
     "collocations": [
-      "напротив банка"
+      "ближайший банк"
     ],
-    "example": "Аптека находится напротив банка, её вход справа.",
+    "example": "Банк откроется через десять минут.",
     "sentenceIDs": [
       "sentence-directions-2"
     ],
@@ -1689,9 +1756,9 @@
     "partOfSpeech": "noun",
     "glossZh": "入口",
     "collocations": [
-      "её вход"
+      "главный вход"
     ],
-    "example": "Аптека находится напротив банка, её вход справа.",
+    "example": "Вход во двор закрыт на код.",
     "sentenceIDs": [
       "sentence-directions-2"
     ],
@@ -1706,9 +1773,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "在右边",
     "collocations": [
-      "вход справа"
+      "дом справа"
     ],
-    "example": "Аптека находится напротив банка, её вход справа.",
+    "example": "Справа начинается узкая лестница.",
     "sentenceIDs": [
       "sentence-directions-2"
     ],
@@ -1723,9 +1790,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "今天",
     "collocations": [
-      "сегодня тепло"
+      "сегодня утром"
     ],
-    "example": "Сегодня тепло и солнечно, ветер почти не чувствуется.",
+    "example": "Сегодня обещают ясную погоду.",
     "sentenceIDs": [
       "sentence-weather-1"
     ],
@@ -1740,9 +1807,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "暖和",
     "collocations": [
-      "сегодня тепло"
+      "очень тепло"
     ],
-    "example": "Сегодня тепло и солнечно, ветер почти не чувствуется.",
+    "example": "В комнате стало тепло.",
     "sentenceIDs": [
       "sentence-weather-1"
     ],
@@ -1757,9 +1824,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "晴朗",
     "collocations": [
-      "солнечно, ветер"
+      "завтра солнечно"
     ],
-    "example": "Сегодня тепло и солнечно, ветер почти не чувствуется.",
+    "example": "После обеда будет солнечно.",
     "sentenceIDs": [
       "sentence-weather-1"
     ],
@@ -1774,9 +1841,9 @@
     "partOfSpeech": "noun",
     "glossZh": "风",
     "collocations": [
-      "солнечно, ветер"
+      "сильный ветер"
     ],
-    "example": "Сегодня тепло и солнечно, ветер почти не чувствуется.",
+    "example": "Ветер раскачивает ветви клёна.",
     "sentenceIDs": [
       "sentence-weather-1"
     ],
@@ -1791,9 +1858,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "几乎",
     "collocations": [
-      "ветер почти"
+      "почти безоблачно"
     ],
-    "example": "Сегодня тепло и солнечно, ветер почти не чувствуется.",
+    "example": "Озеро почти полностью замёрзло.",
     "sentenceIDs": [
       "sentence-weather-1"
     ],
@@ -1808,9 +1875,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "白天；下午",
     "collocations": [
-      "днём возможен"
+      "завтра днём"
     ],
-    "example": "Днём возможен дождь, поэтому нельзя забывать зонт.",
+    "example": "Днём температура поднимется до десяти.",
     "sentenceIDs": [
       "sentence-weather-2"
     ],
@@ -1825,15 +1892,16 @@
     "partOfSpeech": "adjective",
     "glossZh": "可能的",
     "collocations": [
-      "возможен дождь"
+      "возможный дождь"
     ],
-    "example": "Днём возможен дождь, поэтому нельзя забывать зонт.",
+    "example": "Синоптик предупредил о возможном дожде.",
     "sentenceIDs": [
       "sentence-weather-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
-      "возможен"
+      "возможен",
+      "возможном"
     ]
   },
   {
@@ -1844,9 +1912,9 @@
     "partOfSpeech": "noun",
     "glossZh": "雨",
     "collocations": [
-      "возможен дождь"
+      "мелкий дождь"
     ],
-    "example": "Днём возможен дождь, поэтому нельзя забывать зонт.",
+    "example": "Дождь начался сразу после заката.",
     "sentenceIDs": [
       "sentence-weather-2"
     ],
@@ -1861,9 +1929,9 @@
     "partOfSpeech": "verb",
     "glossZh": "忘记",
     "collocations": [
-      "забывать зонт"
+      "часто забывать"
     ],
-    "example": "Днём возможен дождь, поэтому нельзя забывать зонт.",
+    "example": "Я перестал забывать дома перчатки.",
     "sentenceIDs": [
       "sentence-weather-2"
     ],
@@ -1878,9 +1946,9 @@
     "partOfSpeech": "noun",
     "glossZh": "雨伞",
     "collocations": [
-      "забывать зонт"
+      "складной зонт"
     ],
-    "example": "Днём возможен дождь, поэтому нельзя забывать зонт.",
+    "example": "Зонт сушится в прихожей.",
     "sentenceIDs": [
       "sentence-weather-2"
     ],
@@ -1895,14 +1963,16 @@
     "partOfSpeech": "noun",
     "glossZh": "春天",
     "collocations": [
-      "весна заставляет"
+      "ранняя весна"
     ],
-    "example": "Весна заставляет снег таять, а каждый цветок — расцветать.",
+    "example": "Весна в этом году пришла поздно.",
     "sentenceIDs": [
       "sentence-seasons-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "весной"
+    ]
   },
   {
     "id": "lexeme-seasons-снег",
@@ -1912,9 +1982,9 @@
     "partOfSpeech": "noun",
     "glossZh": "雪",
     "collocations": [
-      "заставляет снег"
+      "первый снег"
     ],
-    "example": "Весна заставляет снег таять, а каждый цветок — расцветать.",
+    "example": "Снег тихо падает на крыши.",
     "sentenceIDs": [
       "sentence-seasons-1"
     ],
@@ -1929,9 +1999,9 @@
     "partOfSpeech": "verb",
     "glossZh": "融化",
     "collocations": [
-      "снег таять"
+      "быстро таять"
     ],
-    "example": "Весна заставляет снег таять, а каждый цветок — расцветать.",
+    "example": "На солнце лёд начинает таять.",
     "sentenceIDs": [
       "sentence-seasons-1"
     ],
@@ -1946,11 +2016,11 @@
     "partOfSpeech": "verb",
     "glossZh": "开花",
     "collocations": [
-      "цветок — расцветать"
+      "рано расцветать"
     ],
-    "example": "Весна заставляет снег таять, а каждый цветок — расцветать.",
+    "example": "Яблони будут расцветать в мае.",
     "sentenceIDs": [
-      "sentence-seasons-1"
+      "sentence-seasons-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -1963,14 +2033,16 @@
     "partOfSpeech": "noun",
     "glossZh": "花",
     "collocations": [
-      "каждый цветок"
+      "полевой цветок"
     ],
-    "example": "Весна заставляет снег таять, а каждый цветок — расцветать.",
+    "example": "Этот цветок пахнет мёдом.",
     "sentenceIDs": [
-      "sentence-seasons-1"
+      "sentence-seasons-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "цветы"
+    ]
   },
   {
     "id": "lexeme-seasons-осень",
@@ -1980,14 +2052,16 @@
     "partOfSpeech": "noun",
     "glossZh": "秋天",
     "collocations": [
-      "осень пришла"
+      "золотая осень"
     ],
-    "example": "Осень пришла: каждый лист начинает желтеть, а прохладный воздух пахнет дождём.",
+    "example": "Осень раскрасила парк яркими красками.",
     "sentenceIDs": [
       "sentence-seasons-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "осенью"
+    ]
   },
   {
     "id": "lexeme-seasons-лист",
@@ -1997,14 +2071,16 @@
     "partOfSpeech": "noun",
     "glossZh": "叶子",
     "collocations": [
-      "каждый лист"
+      "жёлтый лист"
     ],
-    "example": "Осень пришла: каждый лист начинает желтеть, а прохладный воздух пахнет дождём.",
+    "example": "Сухой лист кружится над дорожкой.",
     "sentenceIDs": [
       "sentence-seasons-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "листья"
+    ]
   },
   {
     "id": "lexeme-seasons-желтеть",
@@ -2014,14 +2090,17 @@
     "partOfSpeech": "verb",
     "glossZh": "变黄",
     "collocations": [
-      "начинает желтеть"
+      "постепенно желтеть"
     ],
-    "example": "Осень пришла: каждый лист начинает желтеть, а прохладный воздух пахнет дождём.",
+    "example": "Берёзы начинают желтеть в сентябре.",
     "sentenceIDs": [
       "sentence-seasons-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "желтеет",
+      "желтеют"
+    ]
   },
   {
     "id": "lexeme-seasons-воздух",
@@ -2033,7 +2112,7 @@
     "collocations": [
       "прохладный воздух"
     ],
-    "example": "Осень пришла: каждый лист начинает желтеть, а прохладный воздух пахнет дождём.",
+    "example": "Воздух после грозы особенно свежий.",
     "sentenceIDs": [
       "sentence-seasons-2"
     ],
@@ -2048,14 +2127,16 @@
     "partOfSpeech": "adjective",
     "glossZh": "凉爽的",
     "collocations": [
-      "прохладный воздух"
+      "прохладный вечер"
     ],
-    "example": "Осень пришла: каждый лист начинает желтеть, а прохладный воздух пахнет дождём.",
+    "example": "Прохладный ветер дует с реки.",
     "sentenceIDs": [
       "sentence-seasons-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "прохладным"
+    ]
   },
   {
     "id": "lexeme-time-сейчас",
@@ -2065,9 +2146,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "现在",
     "collocations": [
-      "сейчас четверть"
+      "прямо сейчас"
     ],
-    "example": "Сейчас четверть восьмого; у меня есть полчаса, и я должен успевать делать всё вовремя.",
+    "example": "Сейчас у меня короткий перерыв.",
     "sentenceIDs": [
       "sentence-time-1"
     ],
@@ -2082,9 +2163,9 @@
     "partOfSpeech": "noun",
     "glossZh": "四分之一；一刻钟",
     "collocations": [
-      "сейчас четверть"
+      "четверть часа"
     ],
-    "example": "Сейчас четверть восьмого; у меня есть полчаса, и я должен успевать делать всё вовремя.",
+    "example": "Четверть часа пролетела незаметно.",
     "sentenceIDs": [
       "sentence-time-1"
     ],
@@ -2099,9 +2180,9 @@
     "partOfSpeech": "numeral",
     "glossZh": "第八",
     "collocations": [
-      "четверть восьмого"
+      "восьмой вагон"
     ],
-    "example": "Сейчас четверть восьмого; у меня есть полчаса, и я должен успевать делать всё вовремя.",
+    "example": "Восьмой урок отменили из-за собрания.",
     "sentenceIDs": [
       "sentence-time-1"
     ],
@@ -2118,9 +2199,9 @@
     "partOfSpeech": "noun",
     "glossZh": "半小时",
     "collocations": [
-      "есть полчаса"
+      "ещё полчаса"
     ],
-    "example": "Сейчас четверть восьмого; у меня есть полчаса, и я должен успевать делать всё вовремя.",
+    "example": "Полчаса достаточно для пересадки.",
     "sentenceIDs": [
       "sentence-time-1"
     ],
@@ -2135,14 +2216,16 @@
     "partOfSpeech": "verb",
     "glossZh": "来得及",
     "collocations": [
-      "успевать делать"
+      "всё успевать"
     ],
-    "example": "Сейчас четверть восьмого; у меня есть полчаса, и я должен успевать делать всё вовремя.",
+    "example": "Утром я стараюсь успевать на автобус.",
     "sentenceIDs": [
       "sentence-time-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "успеваю"
+    ]
   },
   {
     "id": "lexeme-time-начинаться",
@@ -2154,12 +2237,14 @@
     "collocations": [
       "начинаться вовремя"
     ],
-    "example": "Встреча должна начинаться вовремя, длиться всего сорок минут.",
+    "example": "Спектакль должен начинаться ровно в семь.",
     "sentenceIDs": [
       "sentence-time-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "начинается"
+    ]
   },
   {
     "id": "lexeme-time-вовремя",
@@ -2169,11 +2254,11 @@
     "partOfSpeech": "adverb",
     "glossZh": "准时",
     "collocations": [
-      "начинаться вовремя"
+      "прийти вовремя"
     ],
-    "example": "Встреча должна начинаться вовремя, длиться всего сорок минут.",
+    "example": "Курьер приехал вовремя.",
     "sentenceIDs": [
-      "sentence-time-2"
+      "sentence-time-1"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -2186,9 +2271,9 @@
     "partOfSpeech": "verb",
     "glossZh": "持续",
     "collocations": [
-      "длиться всего"
+      "длиться недолго"
     ],
-    "example": "Встреча должна начинаться вовремя, длиться всего сорок минут.",
+    "example": "Экскурсия будет длиться два часа.",
     "sentenceIDs": [
       "sentence-time-2"
     ],
@@ -2203,9 +2288,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "总共；仅仅",
     "collocations": [
-      "длиться всего"
+      "всего пять минут"
     ],
-    "example": "Встреча должна начинаться вовремя, длиться всего сорок минут.",
+    "example": "До дома осталось всего сто метров.",
     "sentenceIDs": [
       "sentence-time-2"
     ],
@@ -2222,7 +2307,7 @@
     "collocations": [
       "сорок минут"
     ],
-    "example": "Встреча должна начинаться вовремя, длиться всего сорок минут.",
+    "example": "Сорок зрителей вошли в зал.",
     "sentenceIDs": [
       "sentence-time-2"
     ],
@@ -2237,9 +2322,9 @@
     "partOfSpeech": "verb",
     "glossZh": "安排；指定",
     "collocations": [
-      "назначать дела"
+      "назначать встречу"
     ],
-    "example": "Я стараюсь назначать дела на следующий вторник: неделя уже отмечена в календаре.",
+    "example": "Врач предпочитает назначать приём утром.",
     "sentenceIDs": [
       "sentence-calendar-1"
     ],
@@ -2256,12 +2341,14 @@
     "collocations": [
       "следующий вторник"
     ],
-    "example": "Я стараюсь назначать дела на следующий вторник: неделя уже отмечена в календаре.",
+    "example": "Следующий поезд отправится через час.",
     "sentenceIDs": [
       "sentence-calendar-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "следующая"
+    ]
   },
   {
     "id": "lexeme-calendar-вторник",
@@ -2271,9 +2358,9 @@
     "partOfSpeech": "noun",
     "glossZh": "星期二",
     "collocations": [
-      "следующий вторник"
+      "встреча во вторник"
     ],
-    "example": "Я стараюсь назначать дела на следующий вторник: неделя уже отмечена в календаре.",
+    "example": "Вторник оказался самым загруженным днём.",
     "sentenceIDs": [
       "sentence-calendar-1"
     ],
@@ -2288,11 +2375,11 @@
     "partOfSpeech": "noun",
     "glossZh": "星期；周",
     "collocations": [
-      "неделя уже"
+      "рабочая неделя"
     ],
-    "example": "Я стараюсь назначать дела на следующий вторник: неделя уже отмечена в календаре.",
+    "example": "Неделя началась с важного звонка.",
     "sentenceIDs": [
-      "sentence-calendar-1"
+      "sentence-calendar-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -2305,9 +2392,9 @@
     "partOfSpeech": "noun",
     "glossZh": "日历",
     "collocations": [
-      "в календаре"
+      "настенный календарь"
     ],
-    "example": "Я стараюсь назначать дела на следующий вторник: неделя уже отмечена в календаре.",
+    "example": "Календарь висит над письменным столом.",
     "sentenceIDs": [
       "sentence-calendar-1"
     ],
@@ -2326,12 +2413,14 @@
     "collocations": [
       "конец месяца"
     ],
-    "example": "Конец месяца близко: каждый будущий день приближает отпуск.",
+    "example": "Конец фильма меня удивил.",
     "sentenceIDs": [
       "sentence-calendar-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "конце"
+    ]
   },
   {
     "id": "lexeme-calendar-месяц",
@@ -2341,9 +2430,9 @@
     "partOfSpeech": "noun",
     "glossZh": "月",
     "collocations": [
-      "конец месяца"
+      "прошлый месяц"
     ],
-    "example": "Конец месяца близко: каждый будущий день приближает отпуск.",
+    "example": "Месяц пролетел очень быстро.",
     "sentenceIDs": [
       "sentence-calendar-2"
     ],
@@ -2360,9 +2449,9 @@
     "partOfSpeech": "adjective",
     "glossZh": "将来的",
     "collocations": [
-      "будущий день"
+      "будущий отпуск"
     ],
-    "example": "Конец месяца близко: каждый будущий день приближает отпуск.",
+    "example": "Будущий год обещает много поездок.",
     "sentenceIDs": [
       "sentence-calendar-2"
     ],
@@ -2377,14 +2466,16 @@
     "partOfSpeech": "noun",
     "glossZh": "天；日",
     "collocations": [
-      "будущий день"
+      "свободный день"
     ],
-    "example": "Конец месяца близко: каждый будущий день приближает отпуск.",
+    "example": "День начался с солнечной погоды.",
     "sentenceIDs": [
       "sentence-calendar-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "дня"
+    ]
   },
   {
     "id": "lexeme-calendar-отпуск",
@@ -2394,9 +2485,9 @@
     "partOfSpeech": "noun",
     "glossZh": "休假",
     "collocations": [
-      "приближает отпуск"
+      "летний отпуск"
     ],
-    "example": "Конец месяца близко: каждый будущий день приближает отпуск.",
+    "example": "Отпуск мы проведём у моря.",
     "sentenceIDs": [
       "sentence-calendar-2"
     ],
@@ -2411,9 +2502,9 @@
     "partOfSpeech": "noun",
     "glossZh": "学生",
     "collocations": [
-      "студент читает"
+      "иностранный студент"
     ],
-    "example": "Студент читает учебник в библиотеке и делает запись в тетради.",
+    "example": "Студент задал преподавателю вопрос.",
     "sentenceIDs": [
       "sentence-study-1"
     ],
@@ -2428,9 +2519,9 @@
     "partOfSpeech": "verb",
     "glossZh": "阅读",
     "collocations": [
-      "читает учебник"
+      "читать вслух"
     ],
-    "example": "Студент читает учебник в библиотеке и делает запись в тетради.",
+    "example": "Перед сном я люблю читать.",
     "sentenceIDs": [
       "sentence-study-1"
     ],
@@ -2447,9 +2538,9 @@
     "partOfSpeech": "noun",
     "glossZh": "课本",
     "collocations": [
-      "читает учебник"
+      "новый учебник"
     ],
-    "example": "Студент читает учебник в библиотеке и делает запись в тетради.",
+    "example": "Учебник лежит под тетрадью.",
     "sentenceIDs": [
       "sentence-study-1"
     ],
@@ -2464,9 +2555,9 @@
     "partOfSpeech": "noun",
     "glossZh": "图书馆",
     "collocations": [
-      "в библиотеке"
+      "городская библиотека"
     ],
-    "example": "Студент читает учебник в библиотеке и делает запись в тетради.",
+    "example": "Библиотека открыта до восьми.",
     "sentenceIDs": [
       "sentence-study-1"
     ],
@@ -2483,9 +2574,9 @@
     "partOfSpeech": "noun",
     "glossZh": "笔记；记录",
     "collocations": [
-      "делает запись"
+      "короткая запись"
     ],
-    "example": "Студент читает учебник в библиотеке и делает запись в тетради.",
+    "example": "Запись в дневнике заняла одну строку.",
     "sentenceIDs": [
       "sentence-study-1"
     ],
@@ -2500,9 +2591,9 @@
     "partOfSpeech": "noun",
     "glossZh": "教师",
     "collocations": [
-      "преподаватель начинает"
+      "опытный преподаватель"
     ],
-    "example": "Преподаватель начинает объяснять задание, а ученики начинают отвечать на каждый вопрос.",
+    "example": "Преподаватель проверяет наши работы.",
     "sentenceIDs": [
       "sentence-study-2"
     ],
@@ -2517,14 +2608,16 @@
     "partOfSpeech": "verb",
     "glossZh": "解释",
     "collocations": [
-      "объяснять задание"
+      "понятно объяснять"
     ],
-    "example": "Преподаватель начинает объяснять задание, а ученики начинают отвечать на каждый вопрос.",
+    "example": "Она умеет объяснять сложные правила.",
     "sentenceIDs": [
       "sentence-study-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "объясняет"
+    ]
   },
   {
     "id": "lexeme-study-задание",
@@ -2534,9 +2627,9 @@
     "partOfSpeech": "noun",
     "glossZh": "任务；作业",
     "collocations": [
-      "объяснять задание"
+      "домашнее задание"
     ],
-    "example": "Преподаватель начинает объяснять задание, а ученики начинают отвечать на каждый вопрос.",
+    "example": "Задание нужно сдать в пятницу.",
     "sentenceIDs": [
       "sentence-study-2"
     ],
@@ -2551,14 +2644,16 @@
     "partOfSpeech": "verb",
     "glossZh": "回答",
     "collocations": [
-      "отвечать на"
+      "отвечать на вопрос"
     ],
-    "example": "Преподаватель начинает объяснять задание, а ученики начинают отвечать на каждый вопрос.",
+    "example": "Не бойтесь отвечать своими словами.",
     "sentenceIDs": [
       "sentence-study-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "отвечают"
+    ]
   },
   {
     "id": "lexeme-study-вопрос",
@@ -2568,9 +2663,9 @@
     "partOfSpeech": "noun",
     "glossZh": "问题",
     "collocations": [
-      "каждый вопрос"
+      "задать вопрос"
     ],
-    "example": "Преподаватель начинает объяснять задание, а ученики начинают отвечать на каждый вопрос.",
+    "example": "Этот вопрос требует точного ответа.",
     "sentenceIDs": [
       "sentence-study-2"
     ],
@@ -2585,9 +2680,9 @@
     "partOfSpeech": "verb",
     "glossZh": "复习；重复",
     "collocations": [
-      "повторять каждое"
+      "повторять слова"
     ],
-    "example": "Я хочу повторять каждое новое слово и каждую фразу вслух.",
+    "example": "Утром полезно повторять новые выражения.",
     "sentenceIDs": [
       "sentence-language-learning-1"
     ],
@@ -2604,7 +2699,7 @@
     "collocations": [
       "новое слово"
     ],
-    "example": "Я хочу повторять каждое новое слово и каждую фразу вслух.",
+    "example": "Новый учебник оказался очень удобным.",
     "sentenceIDs": [
       "sentence-language-learning-1"
     ],
@@ -2621,9 +2716,9 @@
     "partOfSpeech": "noun",
     "glossZh": "单词；话",
     "collocations": [
-      "новое слово"
+      "русское слово"
     ],
-    "example": "Я хочу повторять каждое новое слово и каждую фразу вслух.",
+    "example": "Это слово часто встречается в речи.",
     "sentenceIDs": [
       "sentence-language-learning-1"
     ],
@@ -2638,15 +2733,16 @@
     "partOfSpeech": "noun",
     "glossZh": "短语",
     "collocations": [
-      "каждую фразу"
+      "полезная фраза"
     ],
-    "example": "Я хочу повторять каждое новое слово и каждую фразу вслух.",
+    "example": "Фраза звучит естественно и вежливо.",
     "sentenceIDs": [
-      "sentence-language-learning-1"
+      "sentence-language-learning-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
-      "фразу"
+      "фразу",
+      "фразы"
     ]
   },
   {
@@ -2657,9 +2753,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "大声地",
     "collocations": [
-      "фразу вслух"
+      "читать вслух"
     ],
-    "example": "Я хочу повторять каждое новое слово и каждую фразу вслух.",
+    "example": "Попробуйте произнести предложение вслух.",
     "sentenceIDs": [
       "sentence-language-learning-1"
     ],
@@ -2676,7 +2772,7 @@
     "collocations": [
       "говорить свободно"
     ],
-    "example": "Чтобы говорить свободно, полезно слушать диалог, тренировать произношение.",
+    "example": "После практики она говорит свободно.",
     "sentenceIDs": [
       "sentence-language-learning-2"
     ],
@@ -2691,9 +2787,9 @@
     "partOfSpeech": "verb",
     "glossZh": "听",
     "collocations": [
-      "слушать диалог"
+      "внимательно слушать"
     ],
-    "example": "Чтобы говорить свободно, полезно слушать диалог, тренировать произношение.",
+    "example": "В автобусе я люблю слушать подкасты.",
     "sentenceIDs": [
       "sentence-language-learning-2"
     ],
@@ -2708,9 +2804,9 @@
     "partOfSpeech": "noun",
     "glossZh": "对话",
     "collocations": [
-      "слушать диалог"
+      "короткий диалог"
     ],
-    "example": "Чтобы говорить свободно, полезно слушать диалог, тренировать произношение.",
+    "example": "Диалог легко запомнить по ролям.",
     "sentenceIDs": [
       "sentence-language-learning-2"
     ],
@@ -2727,7 +2823,7 @@
     "collocations": [
       "тренировать произношение"
     ],
-    "example": "Чтобы говорить свободно, полезно слушать диалог, тренировать произношение.",
+    "example": "Полезно тренировать слух каждый день.",
     "sentenceIDs": [
       "sentence-language-learning-2"
     ],
@@ -2742,9 +2838,9 @@
     "partOfSpeech": "noun",
     "glossZh": "发音",
     "collocations": [
-      "тренировать произношение"
+      "чёткое произношение"
     ],
-    "example": "Чтобы говорить свободно, полезно слушать диалог, тренировать произношение.",
+    "example": "Произношение улучшилось после занятий.",
     "sentenceIDs": [
       "sentence-language-learning-2"
     ],
@@ -2759,9 +2855,9 @@
     "partOfSpeech": "verb",
     "glossZh": "疼；生病",
     "collocations": [
-      "болеть голова"
+      "сильно болеть"
     ],
-    "example": "Если начинает болеть голова и растёт температура, нужно отдохнуть.",
+    "example": "После падения колено продолжает болеть.",
     "sentenceIDs": [
       "sentence-health-1"
     ],
@@ -2776,9 +2872,9 @@
     "partOfSpeech": "noun",
     "glossZh": "头",
     "collocations": [
-      "болеть голова"
+      "часто болит голова"
     ],
-    "example": "Если начинает болеть голова и растёт температура, нужно отдохнуть.",
+    "example": "Голова перестала болеть к вечеру.",
     "sentenceIDs": [
       "sentence-health-1"
     ],
@@ -2793,9 +2889,9 @@
     "partOfSpeech": "noun",
     "glossZh": "体温；温度",
     "collocations": [
-      "растёт температура"
+      "высокая температура"
     ],
-    "example": "Если начинает болеть голова и растёт температура, нужно отдохнуть.",
+    "example": "Температура поднялась ночью.",
     "sentenceIDs": [
       "sentence-health-1"
     ],
@@ -2810,11 +2906,11 @@
     "partOfSpeech": "adverb",
     "glossZh": "需要",
     "collocations": [
-      "температура, нужно"
+      "нужно отдохнуть"
     ],
-    "example": "Если начинает болеть голова и растёт температура, нужно отдохнуть.",
+    "example": "Мне нужно записаться к врачу.",
     "sentenceIDs": [
-      "sentence-health-1"
+      "sentence-health-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -2827,11 +2923,11 @@
     "partOfSpeech": "verb",
     "glossZh": "休息一下",
     "collocations": [
-      "нужно отдохнуть"
+      "хорошо отдохнуть"
     ],
-    "example": "Если начинает болеть голова и растёт температура, нужно отдохнуть.",
+    "example": "После дороги хочется отдохнуть.",
     "sentenceIDs": [
-      "sentence-health-1"
+      "sentence-health-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -2844,9 +2940,9 @@
     "partOfSpeech": "noun",
     "glossZh": "医生",
     "collocations": [
-      "врач советует"
+      "семейный врач"
     ],
-    "example": "Врач советует пить больше: вода важна, а лекарство нужно принимать вовремя.",
+    "example": "Врач внимательно выслушал пациента.",
     "sentenceIDs": [
       "sentence-health-2"
     ],
@@ -2861,9 +2957,9 @@
     "partOfSpeech": "verb",
     "glossZh": "建议",
     "collocations": [
-      "советует пить"
+      "советовать больше отдыхать"
     ],
-    "example": "Врач советует пить больше: вода важна, а лекарство нужно принимать вовремя.",
+    "example": "Я не могу советовать это лекарство.",
     "sentenceIDs": [
       "sentence-health-2"
     ],
@@ -2880,9 +2976,9 @@
     "partOfSpeech": "verb",
     "glossZh": "喝",
     "collocations": [
-      "пить больше"
+      "пить воду"
     ],
-    "example": "Врач советует пить больше: вода важна, а лекарство нужно принимать вовремя.",
+    "example": "Во время жары важно пить чаще.",
     "sentenceIDs": [
       "sentence-health-2"
     ],
@@ -2897,14 +2993,16 @@
     "partOfSpeech": "noun",
     "glossZh": "水",
     "collocations": [
-      "вода важна"
+      "питьевая вода"
     ],
-    "example": "Врач советует пить больше: вода важна, а лекарство нужно принимать вовремя.",
+    "example": "Вода в бутылке ещё прохладная.",
     "sentenceIDs": [
       "sentence-health-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "воды"
+    ]
   },
   {
     "id": "lexeme-health-лекарство",
@@ -2914,9 +3012,9 @@
     "partOfSpeech": "noun",
     "glossZh": "药",
     "collocations": [
-      "лекарство нужно"
+      "принимать лекарство"
     ],
-    "example": "Врач советует пить больше: вода важна, а лекарство нужно принимать вовремя.",
+    "example": "Лекарство следует хранить в шкафу.",
     "sentenceIDs": [
       "sentence-health-2"
     ],
@@ -2931,9 +3029,9 @@
     "partOfSpeech": "verb",
     "glossZh": "高兴",
     "collocations": [
-      "хочу радоваться"
+      "радоваться успеху"
     ],
-    "example": "Я хочу радоваться: хороший день и добрая новость помогают чувствовать себя спокойно.",
+    "example": "Дети умеют радоваться простым вещам.",
     "sentenceIDs": [
       "sentence-feelings-1"
     ],
@@ -2950,12 +3048,15 @@
     "collocations": [
       "хороший день"
     ],
-    "example": "Я хочу радоваться: хороший день и добрая новость помогают чувствовать себя спокойно.",
+    "example": "Хороший сон возвращает силы.",
     "sentenceIDs": [
       "sentence-feelings-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "хорошая",
+      "хорошее"
+    ]
   },
   {
     "id": "lexeme-feelings-новость",
@@ -2965,9 +3066,9 @@
     "partOfSpeech": "noun",
     "glossZh": "消息",
     "collocations": [
-      "добрая новость"
+      "приятная новость"
     ],
-    "example": "Я хочу радоваться: хороший день и добрая новость помогают чувствовать себя спокойно.",
+    "example": "Новость быстро разошлась по офису.",
     "sentenceIDs": [
       "sentence-feelings-1"
     ],
@@ -2982,9 +3083,9 @@
     "partOfSpeech": "verb",
     "glossZh": "感觉",
     "collocations": [
-      "чувствовать себя"
+      "чувствовать себя лучше"
     ],
-    "example": "Я хочу радоваться: хороший день и добрая новость помогают чувствовать себя спокойно.",
+    "example": "Я начал чувствовать запах кофе.",
     "sentenceIDs": [
       "sentence-feelings-1"
     ],
@@ -2999,9 +3100,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "平静地",
     "collocations": [
-      "себя спокойно"
+      "говорить спокойно"
     ],
-    "example": "Я хочу радоваться: хороший день и добрая новость помогают чувствовать себя спокойно.",
+    "example": "Она спокойно объяснила свою просьбу.",
     "sentenceIDs": [
       "sentence-feelings-1"
     ],
@@ -3016,9 +3117,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "一点",
     "collocations": [
-      "я немного"
+      "немного устать"
     ],
-    "example": "Я немного начинаю волноваться, но друг умеет поддерживать моё настроение.",
+    "example": "После прогулки я немного замёрз.",
     "sentenceIDs": [
       "sentence-feelings-2"
     ],
@@ -3033,14 +3134,16 @@
     "partOfSpeech": "verb",
     "glossZh": "担心；激动",
     "collocations": [
-      "начинаю волноваться"
+      "сильно волноваться"
     ],
-    "example": "Я немного начинаю волноваться, но друг умеет поддерживать моё настроение.",
+    "example": "Перед экзаменом нормально волноваться.",
     "sentenceIDs": [
       "sentence-feelings-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "волнуюсь"
+    ]
   },
   {
     "id": "lexeme-feelings-друг",
@@ -3050,9 +3153,9 @@
     "partOfSpeech": "noun",
     "glossZh": "朋友",
     "collocations": [
-      "друг умеет"
+      "близкий друг"
     ],
-    "example": "Я немного начинаю волноваться, но друг умеет поддерживать моё настроение.",
+    "example": "Друг встретил меня на вокзале.",
     "sentenceIDs": [
       "sentence-feelings-2"
     ],
@@ -3067,9 +3170,9 @@
     "partOfSpeech": "verb",
     "glossZh": "支持",
     "collocations": [
-      "поддерживать моё"
+      "поддерживать друга"
     ],
-    "example": "Я немного начинаю волноваться, но друг умеет поддерживать моё настроение.",
+    "example": "Важно поддерживать близких в трудный момент.",
     "sentenceIDs": [
       "sentence-feelings-2"
     ],
@@ -3084,11 +3187,11 @@
     "partOfSpeech": "noun",
     "glossZh": "心情",
     "collocations": [
-      "моё настроение"
+      "хорошее настроение"
     ],
-    "example": "Я немного начинаю волноваться, но друг умеет поддерживать моё настроение.",
+    "example": "Музыка сразу улучшила настроение.",
     "sentenceIDs": [
-      "sentence-feelings-2"
+      "sentence-feelings-1"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -3103,7 +3206,7 @@
     "collocations": [
       "свободный вечер"
     ],
-    "example": "Свободный вечер можно посвятить тому, чтобы рисовать, фотографировать и собирать открытки.",
+    "example": "Свободный столик нашёлся у окна.",
     "sentenceIDs": [
       "sentence-hobbies-1"
     ],
@@ -3120,9 +3223,9 @@
     "partOfSpeech": "verb",
     "glossZh": "画画",
     "collocations": [
-      "рисовать, фотографировать"
+      "рисовать портреты"
     ],
-    "example": "Свободный вечер можно посвятить тому, чтобы рисовать, фотографировать и собирать открытки.",
+    "example": "Моя дочь любит рисовать акварелью.",
     "sentenceIDs": [
       "sentence-hobbies-1"
     ],
@@ -3137,9 +3240,9 @@
     "partOfSpeech": "verb",
     "glossZh": "摄影",
     "collocations": [
-      "рисовать, фотографировать"
+      "фотографировать природу"
     ],
-    "example": "Свободный вечер можно посвятить тому, чтобы рисовать, фотографировать и собирать открытки.",
+    "example": "Здесь запрещено фотографировать со вспышкой.",
     "sentenceIDs": [
       "sentence-hobbies-1"
     ],
@@ -3156,9 +3259,9 @@
     "collocations": [
       "собирать открытки"
     ],
-    "example": "Свободный вечер можно посвятить тому, чтобы рисовать, фотографировать и собирать открытки.",
+    "example": "Осенью приятно собирать грибы.",
     "sentenceIDs": [
-      "sentence-hobbies-1"
+      "sentence-hobbies-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -3171,9 +3274,9 @@
     "partOfSpeech": "noun",
     "glossZh": "明信片",
     "collocations": [
-      "собирать открытки"
+      "почтовая открытка"
     ],
-    "example": "Свободный вечер можно посвятить тому, чтобы рисовать, фотографировать и собирать открытки.",
+    "example": "Открытка дошла за две недели.",
     "sentenceIDs": [
       "sentence-hobbies-1"
     ],
@@ -3190,9 +3293,9 @@
     "partOfSpeech": "noun",
     "glossZh": "休息日",
     "collocations": [
-      "в выходной"
+      "ближайший выходной"
     ],
-    "example": "В выходной я люблю играть на гитаре и смотреть кино.",
+    "example": "Выходной я проведу за городом.",
     "sentenceIDs": [
       "sentence-hobbies-2"
     ],
@@ -3207,9 +3310,9 @@
     "partOfSpeech": "verb",
     "glossZh": "喜欢；爱",
     "collocations": [
-      "люблю играть"
+      "любить музыку"
     ],
-    "example": "В выходной я люблю играть на гитаре и смотреть кино.",
+    "example": "Можно любить город за его ритм.",
     "sentenceIDs": [
       "sentence-hobbies-2"
     ],
@@ -3226,9 +3329,9 @@
     "partOfSpeech": "verb",
     "glossZh": "演奏；玩",
     "collocations": [
-      "играть на"
+      "играть на гитаре"
     ],
-    "example": "В выходной я люблю играть на гитаре и смотреть кино.",
+    "example": "Сосед учится играть на гитаре.",
     "sentenceIDs": [
       "sentence-hobbies-2"
     ],
@@ -3243,9 +3346,9 @@
     "partOfSpeech": "noun",
     "glossZh": "吉他",
     "collocations": [
-      "на гитаре"
+      "акустическая гитара"
     ],
-    "example": "В выходной я люблю играть на гитаре и смотреть кино.",
+    "example": "Гитара висит на стене.",
     "sentenceIDs": [
       "sentence-hobbies-2"
     ],
@@ -3264,7 +3367,7 @@
     "collocations": [
       "смотреть кино"
     ],
-    "example": "В выходной я люблю играть на гитаре и смотреть кино.",
+    "example": "По пятницам мы обсуждаем кино.",
     "sentenceIDs": [
       "sentence-hobbies-2"
     ],
@@ -3279,9 +3382,9 @@
     "partOfSpeech": "verb",
     "glossZh": "跑步",
     "collocations": [
-      "бегать на"
+      "бегать по утрам"
     ],
-    "example": "Утром полезно бегать на стадионе: разминка и каждое упражнение помогают проснуться.",
+    "example": "Врач разрешил мне снова бегать.",
     "sentenceIDs": [
       "sentence-sports-1"
     ],
@@ -3296,9 +3399,9 @@
     "partOfSpeech": "noun",
     "glossZh": "体育场",
     "collocations": [
-      "на стадионе"
+      "городской стадион"
     ],
-    "example": "Утром полезно бегать на стадионе: разминка и каждое упражнение помогают проснуться.",
+    "example": "Стадион открыли после ремонта.",
     "sentenceIDs": [
       "sentence-sports-1"
     ],
@@ -3315,14 +3418,16 @@
     "partOfSpeech": "noun",
     "glossZh": "热身",
     "collocations": [
-      "разминка и каждое"
+      "короткая разминка"
     ],
-    "example": "Утром полезно бегать на стадионе: разминка и каждое упражнение помогают проснуться.",
+    "example": "Разминка заняла около десяти минут.",
     "sentenceIDs": [
       "sentence-sports-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "разминку"
+    ]
   },
   {
     "id": "lexeme-sports-утром",
@@ -3332,9 +3437,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "早晨",
     "collocations": [
-      "утром полезно"
+      "тренироваться утром"
     ],
-    "example": "Утром полезно бегать на стадионе: разминка и каждое упражнение помогают проснуться.",
+    "example": "Утром в парке почти нет людей.",
     "sentenceIDs": [
       "sentence-sports-1"
     ],
@@ -3349,14 +3454,16 @@
     "partOfSpeech": "noun",
     "glossZh": "练习；动作",
     "collocations": [
-      "каждое упражнение"
+      "простое упражнение"
     ],
-    "example": "Утром полезно бегать на стадионе: разминка и каждое упражнение помогают проснуться.",
+    "example": "Это упражнение укрепляет спину.",
     "sentenceIDs": [
-      "sentence-sports-1"
+      "sentence-sports-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "упражнения"
+    ]
   },
   {
     "id": "lexeme-sports-команда",
@@ -3366,14 +3473,16 @@
     "partOfSpeech": "noun",
     "glossZh": "队伍",
     "collocations": [
-      "команда начинает"
+      "сильная команда"
     ],
-    "example": "Команда начинает тренироваться, а тренер начинает записывать результат.",
+    "example": "Команда вышла на поле первой.",
     "sentenceIDs": [
       "sentence-sports-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "команды"
+    ]
   },
   {
     "id": "lexeme-sports-тренироваться",
@@ -3383,9 +3492,9 @@
     "partOfSpeech": "verb",
     "glossZh": "训练",
     "collocations": [
-      "начинает тренироваться"
+      "тренироваться регулярно"
     ],
-    "example": "Команда начинает тренироваться, а тренер начинает записывать результат.",
+    "example": "Мы будем тренироваться трижды в неделю.",
     "sentenceIDs": [
       "sentence-sports-2"
     ],
@@ -3400,9 +3509,9 @@
     "partOfSpeech": "noun",
     "glossZh": "教练",
     "collocations": [
-      "тренер начинает"
+      "новый тренер"
     ],
-    "example": "Команда начинает тренироваться, а тренер начинает записывать результат.",
+    "example": "Тренер показал правильное движение.",
     "sentenceIDs": [
       "sentence-sports-2"
     ],
@@ -3419,12 +3528,14 @@
     "collocations": [
       "записывать результат"
     ],
-    "example": "Команда начинает тренироваться, а тренер начинает записывать результат.",
+    "example": "Секретарь начал записывать имена участников.",
     "sentenceIDs": [
       "sentence-sports-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "записывает"
+    ]
   },
   {
     "id": "lexeme-sports-результат",
@@ -3434,9 +3545,9 @@
     "partOfSpeech": "noun",
     "glossZh": "结果",
     "collocations": [
-      "записывать результат"
+      "лучший результат"
     ],
-    "example": "Команда начинает тренироваться, а тренер начинает записывать результат.",
+    "example": "Результат превзошёл наши ожидания.",
     "sentenceIDs": [
       "sentence-sports-2"
     ],
@@ -3451,14 +3562,16 @@
     "partOfSpeech": "noun",
     "glossZh": "旅行",
     "collocations": [
-      "путешествие начинается"
+      "долгое путешествие"
     ],
-    "example": "Путешествие начинается так: выбрать маршрут, собрать чемодан и собираться в поездку.",
+    "example": "Путешествие по северу длилось неделю.",
     "sentenceIDs": [
       "sentence-travel-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "путешествием"
+    ]
   },
   {
     "id": "lexeme-travel-маршрут",
@@ -3468,9 +3581,9 @@
     "partOfSpeech": "noun",
     "glossZh": "路线",
     "collocations": [
-      "выбрать маршрут"
+      "удобный маршрут"
     ],
-    "example": "Путешествие начинается так: выбрать маршрут, собрать чемодан и собираться в поездку.",
+    "example": "Маршрут проходит через старый город.",
     "sentenceIDs": [
       "sentence-travel-1"
     ],
@@ -3485,9 +3598,9 @@
     "partOfSpeech": "noun",
     "glossZh": "行李箱",
     "collocations": [
-      "собрать чемодан"
+      "тяжёлый чемодан"
     ],
-    "example": "Путешествие начинается так: выбрать маршрут, собрать чемодан и собираться в поездку.",
+    "example": "Чемодан едва поместился на полке.",
     "sentenceIDs": [
       "sentence-travel-1"
     ],
@@ -3502,11 +3615,11 @@
     "partOfSpeech": "verb",
     "glossZh": "收拾；准备",
     "collocations": [
-      "собираться в"
+      "собираться в поездку"
     ],
-    "example": "Путешествие начинается так: выбрать маршрут, собрать чемодан и собираться в поездку.",
+    "example": "Я начал собираться ещё вечером.",
     "sentenceIDs": [
-      "sentence-travel-1"
+      "sentence-travel-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -3519,11 +3632,11 @@
     "partOfSpeech": "noun",
     "glossZh": "出行",
     "collocations": [
-      "в поездку"
+      "деловая поездка"
     ],
-    "example": "Путешествие начинается так: выбрать маршрут, собрать чемодан и собираться в поездку.",
+    "example": "Поездка прошла без задержек.",
     "sentenceIDs": [
-      "sentence-travel-1"
+      "sentence-travel-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
@@ -3540,7 +3653,7 @@
     "collocations": [
       "новое место"
     ],
-    "example": "Новое место интересно: гулять, снимать виды и знакомиться; местный житель подскажет дорогу.",
+    "example": "Это место напоминает мне детство.",
     "sentenceIDs": [
       "sentence-travel-2"
     ],
@@ -3555,9 +3668,9 @@
     "partOfSpeech": "verb",
     "glossZh": "散步",
     "collocations": [
-      "гулять, снимать"
+      "гулять по городу"
     ],
-    "example": "Новое место интересно: гулять, снимать виды и знакомиться; местный житель подскажет дорогу.",
+    "example": "Мы любим гулять без определённого плана.",
     "sentenceIDs": [
       "sentence-travel-2"
     ],
@@ -3572,9 +3685,9 @@
     "partOfSpeech": "verb",
     "glossZh": "拍摄；租",
     "collocations": [
-      "снимать виды"
+      "снимать пейзажи"
     ],
-    "example": "Новое место интересно: гулять, снимать виды и знакомиться; местный житель подскажет дорогу.",
+    "example": "В центре дорого снимать квартиру.",
     "sentenceIDs": [
       "sentence-travel-2"
     ],
@@ -3589,9 +3702,9 @@
     "partOfSpeech": "verb",
     "glossZh": "结识",
     "collocations": [
-      "виды и знакомиться"
+      "знакомиться с местными"
     ],
-    "example": "Новое место интересно: гулять, снимать виды и знакомиться; местный житель подскажет дорогу.",
+    "example": "В поездках легко знакомиться с людьми.",
     "sentenceIDs": [
       "sentence-travel-2"
     ],
@@ -3608,12 +3721,14 @@
     "collocations": [
       "местный житель"
     ],
-    "example": "Новое место интересно: гулять, снимать виды и знакомиться; местный житель подскажет дорогу.",
+    "example": "Местный рынок работает по субботам.",
     "sentenceIDs": [
       "sentence-travel-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "местными"
+    ]
   },
   {
     "id": "lexeme-hotel-бронировать",
@@ -3623,9 +3738,9 @@
     "partOfSpeech": "verb",
     "glossZh": "预订",
     "collocations": [
-      "бронировать одноместный"
+      "бронировать номер"
     ],
-    "example": "В гостинице я хочу бронировать одноместный номер, питание уже включено.",
+    "example": "Летом лучше бронировать жильё заранее.",
     "sentenceIDs": [
       "sentence-hotel-1"
     ],
@@ -3642,7 +3757,7 @@
     "collocations": [
       "одноместный номер"
     ],
-    "example": "В гостинице я хочу бронировать одноместный номер, питание уже включено.",
+    "example": "Одноместный номер выходит во двор.",
     "sentenceIDs": [
       "sentence-hotel-1"
     ],
@@ -3657,9 +3772,9 @@
     "partOfSpeech": "noun",
     "glossZh": "房间；号码",
     "collocations": [
-      "одноместный номер"
+      "свободный номер"
     ],
-    "example": "В гостинице я хочу бронировать одноместный номер, питание уже включено.",
+    "example": "Номер оказался тихим и просторным.",
     "sentenceIDs": [
       "sentence-hotel-1"
     ],
@@ -3674,9 +3789,9 @@
     "partOfSpeech": "noun",
     "glossZh": "餐食",
     "collocations": [
-      "номер, питание"
+      "трёхразовое питание"
     ],
-    "example": "В гостинице я хочу бронировать одноместный номер, питание уже включено.",
+    "example": "Питание не входит в стоимость.",
     "sentenceIDs": [
       "sentence-hotel-1"
     ],
@@ -3691,9 +3806,9 @@
     "partOfSpeech": "noun",
     "glossZh": "酒店",
     "collocations": [
-      "в гостинице"
+      "небольшая гостиница"
     ],
-    "example": "В гостинице я хочу бронировать одноместный номер, питание уже включено.",
+    "example": "Гостиница расположена возле станции.",
     "sentenceIDs": [
       "sentence-hotel-1"
     ],
@@ -3710,11 +3825,11 @@
     "partOfSpeech": "noun",
     "glossZh": "前台人员；管理员",
     "collocations": [
-      "администратор может"
+      "дежурный администратор"
     ],
-    "example": "Администратор может назвать пароль от вайфая и дать ключ.",
+    "example": "Администратор вызвал для нас такси.",
     "sentenceIDs": [
-      "sentence-hotel-2"
+      "sentence-hotel-1"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -3727,9 +3842,9 @@
     "partOfSpeech": "noun",
     "glossZh": "钥匙",
     "collocations": [
-      "дать ключ"
+      "электронный ключ"
     ],
-    "example": "Администратор может назвать пароль от вайфая и дать ключ.",
+    "example": "Ключ оставили на стойке.",
     "sentenceIDs": [
       "sentence-hotel-2"
     ],
@@ -3744,14 +3859,16 @@
     "partOfSpeech": "verb",
     "glossZh": "说出；命名",
     "collocations": [
-      "назвать пароль"
+      "назвать фамилию"
     ],
-    "example": "Администратор может назвать пароль от вайфая и дать ключ.",
+    "example": "Я затрудняюсь назвать точную дату.",
     "sentenceIDs": [
       "sentence-hotel-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "назвали"
+    ]
   },
   {
     "id": "lexeme-hotel-пароль",
@@ -3761,9 +3878,9 @@
     "partOfSpeech": "noun",
     "glossZh": "密码",
     "collocations": [
-      "назвать пароль"
+      "новый пароль"
     ],
-    "example": "Администратор может назвать пароль от вайфая и дать ключ.",
+    "example": "Пароль состоит из восьми символов.",
     "sentenceIDs": [
       "sentence-hotel-2"
     ],
@@ -3778,9 +3895,9 @@
     "partOfSpeech": "noun",
     "glossZh": "无线网络",
     "collocations": [
-      "от вайфая"
+      "бесплатный вайфай"
     ],
-    "example": "Администратор может назвать пароль от вайфая и дать ключ.",
+    "example": "Вайфай работает только в холле.",
     "sentenceIDs": [
       "sentence-hotel-2"
     ],
@@ -3797,14 +3914,16 @@
     "partOfSpeech": "noun",
     "glossZh": "登记；值机",
     "collocations": [
-      "регистрация началась"
+      "регистрация на рейс"
     ],
-    "example": "Регистрация началась: нужно показать паспорт, билет и багаж.",
+    "example": "Регистрация заканчивается за сорок минут.",
     "sentenceIDs": [
       "sentence-airport-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "регистрации"
+    ]
   },
   {
     "id": "lexeme-airport-показать",
@@ -3816,7 +3935,7 @@
     "collocations": [
       "показать паспорт"
     ],
-    "example": "Регистрация началась: нужно показать паспорт, билет и багаж.",
+    "example": "На контроле попросят показать билет.",
     "sentenceIDs": [
       "sentence-airport-1"
     ],
@@ -3831,9 +3950,9 @@
     "partOfSpeech": "noun",
     "glossZh": "护照",
     "collocations": [
-      "показать паспорт"
+      "заграничный паспорт"
     ],
-    "example": "Регистрация началась: нужно показать паспорт, билет и багаж.",
+    "example": "Паспорт лежит во внутреннем кармане.",
     "sentenceIDs": [
       "sentence-airport-1"
     ],
@@ -3848,9 +3967,9 @@
     "partOfSpeech": "noun",
     "glossZh": "票",
     "collocations": [
-      "паспорт, билет"
+      "электронный билет"
     ],
-    "example": "Регистрация началась: нужно показать паспорт, билет и багаж.",
+    "example": "Билет пришёл на почту вечером.",
     "sentenceIDs": [
       "sentence-airport-1"
     ],
@@ -3865,14 +3984,16 @@
     "partOfSpeech": "noun",
     "glossZh": "行李",
     "collocations": [
-      "билет и багаж"
+      "ручной багаж"
     ],
-    "example": "Регистрация началась: нужно показать паспорт, билет и багаж.",
+    "example": "Багаж уже приняли у стойки.",
     "sentenceIDs": [
-      "sentence-airport-1"
+      "sentence-airport-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "багажа"
+    ]
   },
   {
     "id": "lexeme-airport-рейс",
@@ -3882,9 +4003,9 @@
     "partOfSpeech": "noun",
     "glossZh": "航班",
     "collocations": [
-      "рейс может"
+      "вечерний рейс"
     ],
-    "example": "Рейс может задерживаться, поэтому выход на посадку успеет измениться.",
+    "example": "Рейс перенесли на завтра.",
     "sentenceIDs": [
       "sentence-airport-2"
     ],
@@ -3899,14 +4020,16 @@
     "partOfSpeech": "verb",
     "glossZh": "延误",
     "collocations": [
-      "задерживаться, поэтому"
+      "часто задерживаться"
     ],
-    "example": "Рейс может задерживаться, поэтому выход на посадку успеет измениться.",
+    "example": "Самолёт может задерживаться из-за тумана.",
     "sentenceIDs": [
       "sentence-airport-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "задерживается"
+    ]
   },
   {
     "id": "lexeme-airport-выход",
@@ -3916,9 +4039,9 @@
     "partOfSpeech": "noun",
     "glossZh": "出口；登机口",
     "collocations": [
-      "поэтому выход"
+      "нужный выход"
     ],
-    "example": "Рейс может задерживаться, поэтому выход на посадку успеет измениться.",
+    "example": "Выход расположен рядом с кафе.",
     "sentenceIDs": [
       "sentence-airport-2"
     ],
@@ -3933,9 +4056,9 @@
     "partOfSpeech": "noun",
     "glossZh": "登机；落座",
     "collocations": [
-      "на посадку"
+      "посадка на рейс"
     ],
-    "example": "Рейс может задерживаться, поэтому выход на посадку успеет измениться.",
+    "example": "Посадка начнётся через пять минут.",
     "sentenceIDs": [
       "sentence-airport-2"
     ],
@@ -3952,9 +4075,9 @@
     "partOfSpeech": "verb",
     "glossZh": "改变",
     "collocations": [
-      "успеет измениться"
+      "резко измениться"
     ],
-    "example": "Рейс может задерживаться, поэтому выход на посадку успеет измениться.",
+    "example": "Номер выхода успел измениться.",
     "sentenceIDs": [
       "sentence-airport-2"
     ],
@@ -3969,9 +4092,9 @@
     "partOfSpeech": "noun",
     "glossZh": "火车",
     "collocations": [
-      "поезд будет"
+      "скорый поезд"
     ],
-    "example": "Расписание сообщает: поезд будет отправляться со второго пути, а второй выход ведёт на платформу.",
+    "example": "Поезд прибыл на первую платформу.",
     "sentenceIDs": [
       "sentence-train-1"
     ],
@@ -3986,9 +4109,9 @@
     "partOfSpeech": "verb",
     "glossZh": "出发",
     "collocations": [
-      "отправляться со"
+      "отправляться каждый час"
     ],
-    "example": "Расписание сообщает: поезд будет отправляться со второго пути, а второй выход ведёт на платформу.",
+    "example": "Поезда отсюда будут отправляться каждый час.",
     "sentenceIDs": [
       "sentence-train-1"
     ],
@@ -4003,9 +4126,9 @@
     "partOfSpeech": "numeral",
     "glossZh": "第二",
     "collocations": [
-      "второй выход"
+      "второй вагон"
     ],
-    "example": "Расписание сообщает: поезд будет отправляться со второго пути, а второй выход ведёт на платформу.",
+    "example": "Второй подъезд находится за магазином.",
     "sentenceIDs": [
       "sentence-train-1"
     ],
@@ -4020,15 +4143,16 @@
     "partOfSpeech": "noun",
     "glossZh": "站台",
     "collocations": [
-      "на платформу"
+      "нужная платформа"
     ],
-    "example": "Расписание сообщает: поезд будет отправляться со второго пути, а второй выход ведёт на платформу.",
+    "example": "Платформа оказалась на другой стороне.",
     "sentenceIDs": [
       "sentence-train-1"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
-      "платформу"
+      "платформу",
+      "платформы"
     ]
   },
   {
@@ -4039,14 +4163,16 @@
     "partOfSpeech": "noun",
     "glossZh": "时刻表",
     "collocations": [
-      "расписание сообщает"
+      "новое расписание"
     ],
-    "example": "Расписание сообщает: поезд будет отправляться со второго пути, а второй выход ведёт на платформу.",
+    "example": "Расписание висит возле кассы.",
     "sentenceIDs": [
       "sentence-train-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "расписании"
+    ]
   },
   {
     "id": "lexeme-train-найти",
@@ -4056,9 +4182,9 @@
     "partOfSpeech": "verb",
     "glossZh": "找到",
     "collocations": [
-      "найти вагон"
+      "быстро найти"
     ],
-    "example": "Нужно найти вагон: проводник покажет сиденье и верхнюю полку.",
+    "example": "Мне удалось найти свободное место.",
     "sentenceIDs": [
       "sentence-train-2"
     ],
@@ -4073,9 +4199,9 @@
     "partOfSpeech": "noun",
     "glossZh": "车厢",
     "collocations": [
-      "найти вагон"
+      "соседний вагон"
     ],
-    "example": "Нужно найти вагон: проводник покажет сиденье и верхнюю полку.",
+    "example": "Вагон был почти пустым.",
     "sentenceIDs": [
       "sentence-train-2"
     ],
@@ -4090,9 +4216,9 @@
     "partOfSpeech": "noun",
     "glossZh": "座位",
     "collocations": [
-      "покажет сиденье"
+      "удобное сиденье"
     ],
-    "example": "Нужно найти вагон: проводник покажет сиденье и верхнюю полку.",
+    "example": "Сиденье у окна уже занято.",
     "sentenceIDs": [
       "sentence-train-2"
     ],
@@ -4107,9 +4233,9 @@
     "partOfSpeech": "noun",
     "glossZh": "卧铺；搁板",
     "collocations": [
-      "верхнюю полку"
+      "верхняя полка"
     ],
-    "example": "Нужно найти вагон: проводник покажет сиденье и верхнюю полку.",
+    "example": "Полка выдерживает тяжёлый чемодан.",
     "sentenceIDs": [
       "sentence-train-2"
     ],
@@ -4126,9 +4252,9 @@
     "partOfSpeech": "noun",
     "glossZh": "列车员",
     "collocations": [
-      "проводник покажет"
+      "вежливый проводник"
     ],
-    "example": "Нужно найти вагон: проводник покажет сиденье и верхнюю полку.",
+    "example": "Проводник проверил билеты после отправления.",
     "sentenceIDs": [
       "sentence-train-2"
     ],
@@ -4143,9 +4269,9 @@
     "partOfSpeech": "verb",
     "glossZh": "打电话",
     "collocations": [
-      "позвонить по"
+      "позвонить родителям"
     ],
-    "example": "Можно позвонить по телефону или отправить сообщение.",
+    "example": "Я обещал позвонить после работы.",
     "sentenceIDs": [
       "sentence-communication-1"
     ],
@@ -4162,7 +4288,7 @@
     "collocations": [
       "отправить сообщение"
     ],
-    "example": "Можно позвонить по телефону или отправить сообщение.",
+    "example": "Не забудь отправить адрес встречи.",
     "sentenceIDs": [
       "sentence-communication-1"
     ],
@@ -4177,9 +4303,9 @@
     "partOfSpeech": "noun",
     "glossZh": "消息",
     "collocations": [
-      "отправить сообщение"
+      "голосовое сообщение"
     ],
-    "example": "Можно позвонить по телефону или отправить сообщение.",
+    "example": "Сообщение пришло слишком поздно.",
     "sentenceIDs": [
       "sentence-communication-1"
     ],
@@ -4194,9 +4320,9 @@
     "partOfSpeech": "conjunction",
     "glossZh": "或者",
     "collocations": [
-      "или отправить"
+      "чай или кофе"
     ],
-    "example": "Можно позвонить по телефону или отправить сообщение.",
+    "example": "Можно встретиться сегодня или завтра.",
     "sentenceIDs": [
       "sentence-communication-1"
     ],
@@ -4211,9 +4337,9 @@
     "partOfSpeech": "noun",
     "glossZh": "电话；手机",
     "collocations": [
-      "по телефону"
+      "мобильный телефон"
     ],
-    "example": "Можно позвонить по телефону или отправить сообщение.",
+    "example": "Телефон лежит рядом с ключами.",
     "sentenceIDs": [
       "sentence-communication-1"
     ],
@@ -4230,11 +4356,11 @@
     "partOfSpeech": "verb",
     "glossZh": "回答；接听",
     "collocations": [
-      "ответить, хочу"
+      "быстро ответить"
     ],
-    "example": "Если не успею ответить, хочу связаться позже: контакт сохранён, разговор продолжим.",
+    "example": "Я постараюсь ответить до обеда.",
     "sentenceIDs": [
-      "sentence-communication-2"
+      "sentence-communication-1"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -4247,9 +4373,9 @@
     "partOfSpeech": "verb",
     "glossZh": "联系",
     "collocations": [
-      "связаться позже"
+      "связаться с мастером"
     ],
-    "example": "Если не успею ответить, хочу связаться позже: контакт сохранён, разговор продолжим.",
+    "example": "С курьером не удалось связаться.",
     "sentenceIDs": [
       "sentence-communication-2"
     ],
@@ -4264,9 +4390,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "稍后",
     "collocations": [
-      "связаться позже"
+      "немного позже"
     ],
-    "example": "Если не успею ответить, хочу связаться позже: контакт сохранён, разговор продолжим.",
+    "example": "Давайте обсудим это позже.",
     "sentenceIDs": [
       "sentence-communication-2"
     ],
@@ -4281,9 +4407,9 @@
     "partOfSpeech": "noun",
     "glossZh": "联系；联系人",
     "collocations": [
-      "контакт сохранён"
+      "рабочий контакт"
     ],
-    "example": "Если не успею ответить, хочу связаться позже: контакт сохранён, разговор продолжим.",
+    "example": "Сохраните мой контакт в телефоне.",
     "sentenceIDs": [
       "sentence-communication-2"
     ],
@@ -4298,9 +4424,9 @@
     "partOfSpeech": "noun",
     "glossZh": "谈话",
     "collocations": [
-      "сохранён, разговор"
+      "короткий разговор"
     ],
-    "example": "Если не успею ответить, хочу связаться позже: контакт сохранён, разговор продолжим.",
+    "example": "Разговор закончился на дружеской ноте.",
     "sentenceIDs": [
       "sentence-communication-2"
     ],
@@ -4315,14 +4441,16 @@
     "partOfSpeech": "verb",
     "glossZh": "没电",
     "collocations": [
-      "успел разрядиться"
+      "быстро разрядиться"
     ],
-    "example": "Телефон успел разрядиться: зарядное устройство, экран и батарея требуют проверки.",
+    "example": "Телефон может разрядиться на морозе.",
     "sentenceIDs": [
       "sentence-technology-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "разрядился"
+    ]
   },
   {
     "id": "lexeme-technology-зарядный",
@@ -4334,7 +4462,7 @@
     "collocations": [
       "зарядное устройство"
     ],
-    "example": "Телефон успел разрядиться: зарядное устройство, экран и батарея требуют проверки.",
+    "example": "Зарядный кабель остался дома.",
     "sentenceIDs": [
       "sentence-technology-1"
     ],
@@ -4351,9 +4479,9 @@
     "partOfSpeech": "noun",
     "glossZh": "设备",
     "collocations": [
-      "зарядное устройство"
+      "новое устройство"
     ],
-    "example": "Телефон успел разрядиться: зарядное устройство, экран и батарея требуют проверки.",
+    "example": "Устройство включается боковой кнопкой.",
     "sentenceIDs": [
       "sentence-technology-1"
     ],
@@ -4368,14 +4496,16 @@
     "partOfSpeech": "noun",
     "glossZh": "屏幕",
     "collocations": [
-      "устройство, экран"
+      "яркий экран"
     ],
-    "example": "Телефон успел разрядиться: зарядное устройство, экран и батарея требуют проверки.",
+    "example": "Экран погас через минуту.",
     "sentenceIDs": [
-      "sentence-technology-1"
+      "sentence-technology-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "экране"
+    ]
   },
   {
     "id": "lexeme-technology-батарея",
@@ -4385,9 +4515,9 @@
     "partOfSpeech": "noun",
     "glossZh": "电池",
     "collocations": [
-      "батарея требуют"
+      "запасная батарея"
     ],
-    "example": "Телефон успел разрядиться: зарядное устройство, экран и батарея требуют проверки.",
+    "example": "Батарея полностью зарядилась.",
     "sentenceIDs": [
       "sentence-technology-1"
     ],
@@ -4402,9 +4532,9 @@
     "partOfSpeech": "verb",
     "glossZh": "连接",
     "collocations": [
-      "подключиться к"
+      "подключиться к сети"
     ],
-    "example": "Нужно подключиться к сети, открыть приложение и проверить интернет.",
+    "example": "Не получается подключиться к вайфаю.",
     "sentenceIDs": [
       "sentence-technology-2"
     ],
@@ -4419,9 +4549,9 @@
     "partOfSpeech": "noun",
     "glossZh": "网络",
     "collocations": [
-      "к сети"
+      "домашняя сеть"
     ],
-    "example": "Нужно подключиться к сети, открыть приложение и проверить интернет.",
+    "example": "Сеть временно недоступна.",
     "sentenceIDs": [
       "sentence-technology-2"
     ],
@@ -4440,12 +4570,14 @@
     "collocations": [
       "открыть приложение"
     ],
-    "example": "Нужно подключиться к сети, открыть приложение и проверить интернет.",
+    "example": "Нажмите здесь, чтобы открыть файл.",
     "sentenceIDs": [
       "sentence-technology-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "откройте"
+    ]
   },
   {
     "id": "lexeme-technology-приложение",
@@ -4455,9 +4587,9 @@
     "partOfSpeech": "noun",
     "glossZh": "应用程序",
     "collocations": [
-      "открыть приложение"
+      "мобильное приложение"
     ],
-    "example": "Нужно подключиться к сети, открыть приложение и проверить интернет.",
+    "example": "Приложение обновилось этой ночью.",
     "sentenceIDs": [
       "sentence-technology-2"
     ],
@@ -4472,9 +4604,9 @@
     "partOfSpeech": "noun",
     "glossZh": "互联网",
     "collocations": [
-      "проверить интернет"
+      "быстрый интернет"
     ],
-    "example": "Нужно подключиться к сети, открыть приложение и проверить интернет.",
+    "example": "Интернет пропал во время звонка.",
     "sentenceIDs": [
       "sentence-technology-2"
     ],
@@ -4491,7 +4623,7 @@
     "collocations": [
       "холодный день"
     ],
-    "example": "В холодный день нужно надевать пальто и шарф; каждый сапог должен быть сухим.",
+    "example": "Холодный воздух проник через окно.",
     "sentenceIDs": [
       "sentence-clothing-1"
     ],
@@ -4508,7 +4640,7 @@
     "collocations": [
       "надевать пальто"
     ],
-    "example": "В холодный день нужно надевать пальто и шарф; каждый сапог должен быть сухим.",
+    "example": "Ребёнок учится сам надевать сапоги.",
     "sentenceIDs": [
       "sentence-clothing-1"
     ],
@@ -4523,9 +4655,9 @@
     "partOfSpeech": "noun",
     "glossZh": "大衣",
     "collocations": [
-      "надевать пальто"
+      "зимнее пальто"
     ],
-    "example": "В холодный день нужно надевать пальто и шарф; каждый сапог должен быть сухим.",
+    "example": "Пальто висит у входа.",
     "sentenceIDs": [
       "sentence-clothing-1"
     ],
@@ -4540,9 +4672,9 @@
     "partOfSpeech": "noun",
     "glossZh": "围巾",
     "collocations": [
-      "пальто и шарф"
+      "шерстяной шарф"
     ],
-    "example": "В холодный день нужно надевать пальто и шарф; каждый сапог должен быть сухим.",
+    "example": "Шарф подходит к этой куртке.",
     "sentenceIDs": [
       "sentence-clothing-1"
     ],
@@ -4557,14 +4689,16 @@
     "partOfSpeech": "noun",
     "glossZh": "靴子",
     "collocations": [
-      "каждый сапог"
+      "резиновый сапог"
     ],
-    "example": "В холодный день нужно надевать пальто и шарф; каждый сапог должен быть сухим.",
+    "example": "Правый сапог промок у ручья.",
     "sentenceIDs": [
       "sentence-clothing-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "сапоги"
+    ]
   },
   {
     "id": "lexeme-clothing-рубашка",
@@ -4574,9 +4708,9 @@
     "partOfSpeech": "noun",
     "glossZh": "衬衫",
     "collocations": [
-      "эта рубашка"
+      "белая рубашка"
     ],
-    "example": "Эта рубашка мне впору, а брюки слишком длинные.",
+    "example": "Рубашка уже выглажена.",
     "sentenceIDs": [
       "sentence-clothing-2"
     ],
@@ -4591,9 +4725,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "正合身",
     "collocations": [
-      "мне впору"
+      "быть впору"
     ],
-    "example": "Эта рубашка мне впору, а брюки слишком длинные.",
+    "example": "Эти ботинки мне как раз впору.",
     "sentenceIDs": [
       "sentence-clothing-2"
     ],
@@ -4608,9 +4742,9 @@
     "partOfSpeech": "noun",
     "glossZh": "裤子",
     "collocations": [
-      "брюки слишком"
+      "тёмные брюки"
     ],
-    "example": "Эта рубашка мне впору, а брюки слишком длинные.",
+    "example": "Брюки нужно немного укоротить.",
     "sentenceIDs": [
       "sentence-clothing-2"
     ],
@@ -4625,9 +4759,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "过于",
     "collocations": [
-      "брюки слишком"
+      "слишком длинный"
     ],
-    "example": "Эта рубашка мне впору, а брюки слишком длинные.",
+    "example": "Здесь слишком жарко для пальто.",
     "sentenceIDs": [
       "sentence-clothing-2"
     ],
@@ -4642,9 +4776,9 @@
     "partOfSpeech": "adjective",
     "glossZh": "长的",
     "collocations": [
-      "слишком длинные"
+      "длинный рукав"
     ],
-    "example": "Эта рубашка мне впору, а брюки слишком длинные.",
+    "example": "Длинный шарф дважды обернули вокруг шеи.",
     "sentenceIDs": [
       "sentence-clothing-2"
     ],
@@ -4661,9 +4795,9 @@
     "partOfSpeech": "adjective",
     "glossZh": "高的",
     "collocations": [
-      "высокого мужчины"
+      "высокий мужчина"
     ],
-    "example": "У высокого мужчины короткие волосы и очки.",
+    "example": "Высокий юноша стоял у двери.",
     "sentenceIDs": [
       "sentence-appearance-1"
     ],
@@ -4680,9 +4814,9 @@
     "partOfSpeech": "noun",
     "glossZh": "男人",
     "collocations": [
-      "высокого мужчины"
+      "пожилой мужчина"
     ],
-    "example": "У высокого мужчины короткие волосы и очки.",
+    "example": "Мужчина в очках улыбнулся ребёнку.",
     "sentenceIDs": [
       "sentence-appearance-1"
     ],
@@ -4701,9 +4835,9 @@
     "collocations": [
       "короткие волосы"
     ],
-    "example": "У высокого мужчины короткие волосы и очки.",
+    "example": "Ему очень идут короткие волосы.",
     "sentenceIDs": [
-      "sentence-appearance-1"
+      "sentence-appearance-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
@@ -4718,11 +4852,11 @@
     "partOfSpeech": "noun",
     "glossZh": "头发",
     "collocations": [
-      "короткие волосы"
+      "густые волосы"
     ],
-    "example": "У высокого мужчины короткие волосы и очки.",
+    "example": "Волосы быстро сохнут на солнце.",
     "sentenceIDs": [
-      "sentence-appearance-1"
+      "sentence-appearance-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
@@ -4737,14 +4871,16 @@
     "partOfSpeech": "noun",
     "glossZh": "眼镜",
     "collocations": [
-      "волосы и очки"
+      "круглые очки"
     ],
-    "example": "У высокого мужчины короткие волосы и очки.",
+    "example": "Очки лежали в чёрном футляре.",
     "sentenceIDs": [
       "sentence-appearance-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "очках"
+    ]
   },
   {
     "id": "lexeme-appearance-добрый",
@@ -4756,12 +4892,14 @@
     "collocations": [
       "добрый взгляд"
     ],
-    "example": "Добрый взгляд, улыбка, синий шарф и платье создают приятную внешность.",
+    "example": "Добрый взгляд сразу успокоил малыша.",
     "sentenceIDs": [
       "sentence-appearance-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "добрая"
+    ]
   },
   {
     "id": "lexeme-appearance-улыбка",
@@ -4771,9 +4909,9 @@
     "partOfSpeech": "noun",
     "glossZh": "微笑",
     "collocations": [
-      "взгляд, улыбка"
+      "широкая улыбка"
     ],
-    "example": "Добрый взгляд, улыбка, синий шарф и платье создают приятную внешность.",
+    "example": "Улыбка сделала её лицо моложе.",
     "sentenceIDs": [
       "sentence-appearance-2"
     ],
@@ -4790,12 +4928,14 @@
     "collocations": [
       "синий шарф"
     ],
-    "example": "Добрый взгляд, улыбка, синий шарф и платье создают приятную внешность.",
+    "example": "Синий цвет подчёркивает глаза.",
     "sentenceIDs": [
       "sentence-appearance-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "синее"
+    ]
   },
   {
     "id": "lexeme-appearance-платье",
@@ -4805,9 +4945,9 @@
     "partOfSpeech": "noun",
     "glossZh": "连衣裙",
     "collocations": [
-      "платье создают"
+      "летнее платье"
     ],
-    "example": "Добрый взгляд, улыбка, синий шарф и платье создают приятную внешность.",
+    "example": "Платье хорошо сидит по фигуре.",
     "sentenceIDs": [
       "sentence-appearance-2"
     ],
@@ -4822,9 +4962,9 @@
     "partOfSpeech": "noun",
     "glossZh": "外貌",
     "collocations": [
-      "приятную внешность"
+      "яркая внешность"
     ],
-    "example": "Добрый взгляд, улыбка, синий шарф и платье создают приятную внешность.",
+    "example": "Внешность бывает обманчивой.",
     "sentenceIDs": [
       "sentence-appearance-2"
     ],
@@ -4841,7 +4981,7 @@
     "collocations": [
       "старый друг"
     ],
-    "example": "Старый друг хочет жить недалеко, часто встречаться и видеться со мной.",
+    "example": "Старый альбом хранит наши фотографии.",
     "sentenceIDs": [
       "sentence-friends-1"
     ],
@@ -4856,14 +4996,16 @@
     "partOfSpeech": "verb",
     "glossZh": "居住；生活",
     "collocations": [
-      "жить недалеко"
+      "жить рядом"
     ],
-    "example": "Старый друг хочет жить недалеко, часто встречаться и видеться со мной.",
+    "example": "После учёбы я хочу жить у моря.",
     "sentenceIDs": [
       "sentence-friends-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "живёт"
+    ]
   },
   {
     "id": "lexeme-friends-недалеко",
@@ -4873,9 +5015,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "不远",
     "collocations": [
-      "жить недалеко"
+      "совсем недалеко"
     ],
-    "example": "Старый друг хочет жить недалеко, часто встречаться и видеться со мной.",
+    "example": "Вокзал находится недалеко.",
     "sentenceIDs": [
       "sentence-friends-1"
     ],
@@ -4890,9 +5032,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "经常",
     "collocations": [
-      "недалеко, часто"
+      "довольно часто"
     ],
-    "example": "Старый друг хочет жить недалеко, часто встречаться и видеться со мной.",
+    "example": "Мы часто созваниваемся по вечерам.",
     "sentenceIDs": [
       "sentence-friends-1"
     ],
@@ -4907,9 +5049,9 @@
     "partOfSpeech": "verb",
     "glossZh": "见面",
     "collocations": [
-      "видеться со"
+      "редко видеться"
     ],
-    "example": "Старый друг хочет жить недалеко, часто встречаться и видеться со мной.",
+    "example": "Теперь нам удаётся видеться чаще.",
     "sentenceIDs": [
       "sentence-friends-1"
     ],
@@ -4924,9 +5066,9 @@
     "partOfSpeech": "verb",
     "glossZh": "信任",
     "collocations": [
-      "доверять товарищу"
+      "полностью доверять"
     ],
-    "example": "Доверять товарищу и честно говорить — основа, на которой держится дружба.",
+    "example": "Я привык доверять этому человеку.",
     "sentenceIDs": [
       "sentence-friends-2"
     ],
@@ -4941,11 +5083,11 @@
     "partOfSpeech": "noun",
     "glossZh": "伙伴",
     "collocations": [
-      "доверять товарищу"
+      "школьный товарищ"
     ],
-    "example": "Доверять товарищу и честно говорить — основа, на которой держится дружба.",
+    "example": "Товарищ помог донести сумки.",
     "sentenceIDs": [
-      "sentence-friends-2"
+      "sentence-friends-1"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
@@ -4960,9 +5102,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "坦诚地",
     "collocations": [
-      "честно говорить"
+      "говорить честно"
     ],
-    "example": "Доверять товарищу и честно говорить — основа, на которой держится дружба.",
+    "example": "Она честно признала свою ошибку.",
     "sentenceIDs": [
       "sentence-friends-2"
     ],
@@ -4977,9 +5119,9 @@
     "partOfSpeech": "verb",
     "glossZh": "说话",
     "collocations": [
-      "говорить — основа"
+      "тихо говорить"
     ],
-    "example": "Доверять товарищу и честно говорить — основа, на которой держится дружба.",
+    "example": "Давайте говорить по очереди.",
     "sentenceIDs": [
       "sentence-friends-2"
     ],
@@ -4994,9 +5136,9 @@
     "partOfSpeech": "noun",
     "glossZh": "友谊",
     "collocations": [
-      "держится дружба"
+      "крепкая дружба"
     ],
-    "example": "Доверять товарищу и честно говорить — основа, на которой держится дружба.",
+    "example": "Дружба сохранилась спустя много лет.",
     "sentenceIDs": [
       "sentence-friends-2"
     ],
@@ -5011,9 +5153,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "明天",
     "collocations": [
-      "завтра я"
+      "уже завтра"
     ],
-    "example": "Завтра я буду планировать, как закончить весь список и каждое дело.",
+    "example": "Завтра мы уезжаем за город.",
     "sentenceIDs": [
       "sentence-plans-1"
     ],
@@ -5028,14 +5170,16 @@
     "partOfSpeech": "verb",
     "glossZh": "计划",
     "collocations": [
-      "планировать, как"
+      "планировать неделю"
     ],
-    "example": "Завтра я буду планировать, как закончить весь список и каждое дело.",
+    "example": "Я люблю планировать дела заранее.",
     "sentenceIDs": [
       "sentence-plans-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "планирую"
+    ]
   },
   {
     "id": "lexeme-plans-закончить",
@@ -5045,9 +5189,9 @@
     "partOfSpeech": "verb",
     "glossZh": "完成",
     "collocations": [
-      "закончить весь"
+      "закончить работу"
     ],
-    "example": "Завтра я буду планировать, как закончить весь список и каждое дело.",
+    "example": "Нужно закончить отчёт до пятницы.",
     "sentenceIDs": [
       "sentence-plans-1"
     ],
@@ -5062,9 +5206,9 @@
     "partOfSpeech": "pronoun",
     "glossZh": "全部的",
     "collocations": [
-      "закончить весь"
+      "весь день"
     ],
-    "example": "Завтра я буду планировать, как закончить весь список и каждое дело.",
+    "example": "Весь вечер лил дождь.",
     "sentenceIDs": [
       "sentence-plans-1"
     ],
@@ -5079,14 +5223,16 @@
     "partOfSpeech": "noun",
     "glossZh": "事情",
     "collocations": [
-      "каждое дело"
+      "важное дело"
     ],
-    "example": "Завтра я буду планировать, как закончить весь список и каждое дело.",
+    "example": "Это дело займёт не больше часа.",
     "sentenceIDs": [
-      "sentence-plans-1"
+      "sentence-plans-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "дел"
+    ]
   },
   {
     "id": "lexeme-plans-если",
@@ -5096,9 +5242,9 @@
     "partOfSpeech": "conjunction",
     "glossZh": "如果",
     "collocations": [
-      "если есть"
+      "если будет время"
     ],
-    "example": "Если есть время, вечером можно пойти прогуляться.",
+    "example": "Если погода улучшится, поедем к озеру.",
     "sentenceIDs": [
       "sentence-plans-2"
     ],
@@ -5113,9 +5259,9 @@
     "partOfSpeech": "noun",
     "glossZh": "时间",
     "collocations": [
-      "есть время"
+      "свободное время"
     ],
-    "example": "Если есть время, вечером можно пойти прогуляться.",
+    "example": "Время до поезда пролетело быстро.",
     "sentenceIDs": [
       "sentence-plans-2"
     ],
@@ -5130,9 +5276,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "晚上",
     "collocations": [
-      "время, вечером"
+      "сегодня вечером"
     ],
-    "example": "Если есть время, вечером можно пойти прогуляться.",
+    "example": "Вечером зажглись фонари.",
     "sentenceIDs": [
       "sentence-plans-2"
     ],
@@ -5147,9 +5293,9 @@
     "partOfSpeech": "verb",
     "glossZh": "去；开始走",
     "collocations": [
-      "пойти прогуляться"
+      "пойти гулять"
     ],
-    "example": "Если есть время, вечером можно пойти прогуляться.",
+    "example": "После ужина можно пойти в парк.",
     "sentenceIDs": [
       "sentence-plans-2"
     ],
@@ -5164,9 +5310,9 @@
     "partOfSpeech": "verb",
     "glossZh": "散步一下",
     "collocations": [
-      "пойти прогуляться"
+      "немного прогуляться"
     ],
-    "example": "Если есть время, вечером можно пойти прогуляться.",
+    "example": "Перед сном полезно прогуляться.",
     "sentenceIDs": [
       "sentence-plans-2"
     ],
@@ -5181,11 +5327,11 @@
     "partOfSpeech": "verb",
     "glossZh": "来",
     "collocations": [
-      "приходить в"
+      "приходить вовремя"
     ],
-    "example": "Я буду приглашать друзей: каждый гость может приходить в субботу, а угощение уже готово.",
+    "example": "Гости начали приходить после шести.",
     "sentenceIDs": [
-      "sentence-invitations-1"
+      "sentence-invitations-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -5198,14 +5344,16 @@
     "partOfSpeech": "noun",
     "glossZh": "客人；做客",
     "collocations": [
-      "каждый гость"
+      "дорогой гость"
     ],
-    "example": "Я буду приглашать друзей: каждый гость может приходить в субботу, а угощение уже готово.",
+    "example": "Первый гость принёс цветы.",
     "sentenceIDs": [
       "sentence-invitations-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "гостей"
+    ]
   },
   {
     "id": "lexeme-invitations-суббота",
@@ -5215,9 +5363,9 @@
     "partOfSpeech": "noun",
     "glossZh": "星期六",
     "collocations": [
-      "в субботу"
+      "ближайшая суббота"
     ],
-    "example": "Я буду приглашать друзей: каждый гость может приходить в субботу, а угощение уже готово.",
+    "example": "Суббота подходит для пикника.",
     "sentenceIDs": [
       "sentence-invitations-1"
     ],
@@ -5234,9 +5382,9 @@
     "partOfSpeech": "noun",
     "glossZh": "招待；点心",
     "collocations": [
-      "угощение уже"
+      "домашнее угощение"
     ],
-    "example": "Я буду приглашать друзей: каждый гость может приходить в субботу, а угощение уже готово.",
+    "example": "Угощение уже расставили на столе.",
     "sentenceIDs": [
       "sentence-invitations-1"
     ],
@@ -5253,12 +5401,14 @@
     "collocations": [
       "приглашать друзей"
     ],
-    "example": "Я буду приглашать друзей: каждый гость может приходить в субботу, а угощение уже готово.",
+    "example": "Мы решили приглашать только близких.",
     "sentenceIDs": [
       "sentence-invitations-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "приглашаем"
+    ]
   },
   {
     "id": "lexeme-invitations-приглашение",
@@ -5268,9 +5418,9 @@
     "partOfSpeech": "noun",
     "glossZh": "邀请",
     "collocations": [
-      "получив приглашение"
+      "письменное приглашение"
     ],
-    "example": "Получив приглашение, можно с удовольствием прийти, соглашаться сразу или вежливо отказываться.",
+    "example": "Приглашение пришло по электронной почте.",
     "sentenceIDs": [
       "sentence-invitations-2"
     ],
@@ -5287,7 +5437,7 @@
     "collocations": [
       "с удовольствием"
     ],
-    "example": "Получив приглашение, можно с удовольствием прийти, соглашаться сразу или вежливо отказываться.",
+    "example": "Прогулка доставила детям удовольствие.",
     "sentenceIDs": [
       "sentence-invitations-2"
     ],
@@ -5304,14 +5454,16 @@
     "partOfSpeech": "verb",
     "glossZh": "来到",
     "collocations": [
-      "прийти, соглашаться"
+      "прийти на праздник"
     ],
-    "example": "Получив приглашение, можно с удовольствием прийти, соглашаться сразу или вежливо отказываться.",
+    "example": "Он обещал прийти немного раньше.",
     "sentenceIDs": [
       "sentence-invitations-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "приду"
+    ]
   },
   {
     "id": "lexeme-invitations-соглашаться",
@@ -5321,14 +5473,16 @@
     "partOfSpeech": "verb",
     "glossZh": "同意",
     "collocations": [
-      "соглашаться сразу"
+      "охотно соглашаться"
     ],
-    "example": "Получив приглашение, можно с удовольствием прийти, соглашаться сразу или вежливо отказываться.",
+    "example": "Не обязательно сразу соглашаться.",
     "sentenceIDs": [
-      "sentence-invitations-2"
+      "sentence-invitations-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "соглашается"
+    ]
   },
   {
     "id": "lexeme-invitations-отказываться",
@@ -5340,12 +5494,14 @@
     "collocations": [
       "вежливо отказываться"
     ],
-    "example": "Получив приглашение, можно с удовольствием прийти, соглашаться сразу или вежливо отказываться.",
+    "example": "Иногда приходится отказываться от встречи.",
     "sentenceIDs": [
-      "sentence-invitations-2"
+      "sentence-invitations-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "отказывается"
+    ]
   },
   {
     "id": "lexeme-chores-заправлять",
@@ -5357,12 +5513,14 @@
     "collocations": [
       "заправлять кровать"
     ],
-    "example": "Утром нужно заправлять кровать, подметать пол и выносить мусор.",
+    "example": "Детей учат утром заправлять кровать.",
     "sentenceIDs": [
       "sentence-chores-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "заправляю"
+    ]
   },
   {
     "id": "lexeme-chores-кровать",
@@ -5372,9 +5530,9 @@
     "partOfSpeech": "noun",
     "glossZh": "床",
     "collocations": [
-      "заправлять кровать"
+      "удобная кровать"
     ],
-    "example": "Утром нужно заправлять кровать, подметать пол и выносить мусор.",
+    "example": "Кровать поставили у дальней стены.",
     "sentenceIDs": [
       "sentence-chores-1"
     ],
@@ -5391,12 +5549,14 @@
     "collocations": [
       "подметать пол"
     ],
-    "example": "Утром нужно заправлять кровать, подметать пол и выносить мусор.",
+    "example": "Балкон лучше подметать влажной щёткой.",
     "sentenceIDs": [
       "sentence-chores-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "подметаю"
+    ]
   },
   {
     "id": "lexeme-chores-пол",
@@ -5406,9 +5566,9 @@
     "partOfSpeech": "noun",
     "glossZh": "地板",
     "collocations": [
-      "подметать пол"
+      "деревянный пол"
     ],
-    "example": "Утром нужно заправлять кровать, подметать пол и выносить мусор.",
+    "example": "Пол скрипит возле двери.",
     "sentenceIDs": [
       "sentence-chores-1"
     ],
@@ -5425,7 +5585,7 @@
     "collocations": [
       "выносить мусор"
     ],
-    "example": "Утром нужно заправлять кровать, подметать пол и выносить мусор.",
+    "example": "Мусор нужно вынести до вечера.",
     "sentenceIDs": [
       "sentence-chores-1"
     ],
@@ -5442,12 +5602,14 @@
     "collocations": [
       "мыть посуду"
     ],
-    "example": "После ужина нужно мыть посуду, убирать кухню: чистый дом и порядок радуют.",
+    "example": "После готовки приходится мыть плиту.",
     "sentenceIDs": [
       "sentence-chores-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "моем"
+    ]
   },
   {
     "id": "lexeme-chores-посуда",
@@ -5457,9 +5619,9 @@
     "partOfSpeech": "noun",
     "glossZh": "餐具",
     "collocations": [
-      "мыть посуду"
+      "чистая посуда"
     ],
-    "example": "После ужина нужно мыть посуду, убирать кухню: чистый дом и порядок радуют.",
+    "example": "Посуда сохнет на полотенце.",
     "sentenceIDs": [
       "sentence-chores-2"
     ],
@@ -5478,12 +5640,14 @@
     "collocations": [
       "убирать кухню"
     ],
-    "example": "После ужина нужно мыть посуду, убирать кухню: чистый дом и порядок радуют.",
+    "example": "По субботам мы начинаем убирать вместе.",
     "sentenceIDs": [
       "sentence-chores-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "убираем"
+    ]
   },
   {
     "id": "lexeme-chores-чистый",
@@ -5495,12 +5659,14 @@
     "collocations": [
       "чистый дом"
     ],
-    "example": "После ужина нужно мыть посуду, убирать кухню: чистый дом и порядок радуют.",
+    "example": "Чистый стол приятно пахнет деревом.",
     "sentenceIDs": [
       "sentence-chores-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "чистой"
+    ]
   },
   {
     "id": "lexeme-chores-порядок",
@@ -5510,9 +5676,9 @@
     "partOfSpeech": "noun",
     "glossZh": "整洁；秩序",
     "collocations": [
-      "порядок радуют"
+      "полный порядок"
     ],
-    "example": "После ужина нужно мыть посуду, убирать кухню: чистый дом и порядок радуют.",
+    "example": "Порядок в шкафу держится недолго.",
     "sentenceIDs": [
       "sentence-chores-2"
     ],
@@ -5527,9 +5693,9 @@
     "partOfSpeech": "noun",
     "glossZh": "包裹",
     "collocations": [
-      "отправлять посылку"
+      "тяжёлая посылка"
     ],
-    "example": "На почте можно отправлять посылку: адрес и марка должны быть указаны точно.",
+    "example": "Посылка дошла за четыре дня.",
     "sentenceIDs": [
       "sentence-services-1"
     ],
@@ -5546,9 +5712,9 @@
     "partOfSpeech": "noun",
     "glossZh": "邮局；邮件",
     "collocations": [
-      "на почте"
+      "ближайшая почта"
     ],
-    "example": "На почте можно отправлять посылку: адрес и марка должны быть указаны точно.",
+    "example": "Почта открывается в девять утра.",
     "sentenceIDs": [
       "sentence-services-1"
     ],
@@ -5567,7 +5733,7 @@
     "collocations": [
       "отправлять посылку"
     ],
-    "example": "На почте можно отправлять посылку: адрес и марка должны быть указаны точно.",
+    "example": "Документы лучше отправлять заказным письмом.",
     "sentenceIDs": [
       "sentence-services-1"
     ],
@@ -5582,9 +5748,9 @@
     "partOfSpeech": "noun",
     "glossZh": "地址",
     "collocations": [
-      "адрес и марка"
+      "точный адрес"
     ],
-    "example": "На почте можно отправлять посылку: адрес и марка должны быть указаны точно.",
+    "example": "Адрес написан на обратной стороне.",
     "sentenceIDs": [
       "sentence-services-1"
     ],
@@ -5599,14 +5765,16 @@
     "partOfSpeech": "noun",
     "glossZh": "邮票",
     "collocations": [
-      "марка должны"
+      "почтовая марка"
     ],
-    "example": "На почте можно отправлять посылку: адрес и марка должны быть указаны точно.",
+    "example": "Марка отклеилась от конверта.",
     "sentenceIDs": [
       "sentence-services-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "марку"
+    ]
   },
   {
     "id": "lexeme-services-мастер",
@@ -5616,9 +5784,9 @@
     "partOfSpeech": "noun",
     "glossZh": "师傅",
     "collocations": [
-      "мастер в"
+      "опытный мастер"
     ],
-    "example": "Мастер в парикмахерской предлагает услугу: можно записаться на стрижку.",
+    "example": "Мастер починил кран за час.",
     "sentenceIDs": [
       "sentence-services-2"
     ],
@@ -5633,9 +5801,9 @@
     "partOfSpeech": "noun",
     "glossZh": "理发店",
     "collocations": [
-      "в парикмахерской"
+      "соседняя парикмахерская"
     ],
-    "example": "Мастер в парикмахерской предлагает услугу: можно записаться на стрижку.",
+    "example": "Парикмахерская работает без выходных.",
     "sentenceIDs": [
       "sentence-services-2"
     ],
@@ -5652,14 +5820,16 @@
     "partOfSpeech": "verb",
     "glossZh": "预约；报名",
     "collocations": [
-      "записаться на"
+      "записаться на стрижку"
     ],
-    "example": "Мастер в парикмахерской предлагает услугу: можно записаться на стрижку.",
+    "example": "Я хочу записаться на пятницу.",
     "sentenceIDs": [
       "sentence-services-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "записался"
+    ]
   },
   {
     "id": "lexeme-services-стрижка",
@@ -5669,9 +5839,9 @@
     "partOfSpeech": "noun",
     "glossZh": "理发；发型",
     "collocations": [
-      "на стрижку"
+      "короткая стрижка"
     ],
-    "example": "Мастер в парикмахерской предлагает услугу: можно записаться на стрижку.",
+    "example": "Стрижка хорошо держит форму.",
     "sentenceIDs": [
       "sentence-services-2"
     ],
@@ -5688,9 +5858,9 @@
     "partOfSpeech": "noun",
     "glossZh": "服务",
     "collocations": [
-      "предлагает услугу"
+      "дополнительная услуга"
     ],
-    "example": "Мастер в парикмахерской предлагает услугу: можно записаться на стрижку.",
+    "example": "Эта услуга оплачивается отдельно.",
     "sentenceIDs": [
       "sentence-services-2"
     ],
@@ -5707,9 +5877,9 @@
     "partOfSpeech": "noun",
     "glossZh": "森林",
     "collocations": [
-      "лес заканчивается"
+      "сосновый лес"
     ],
-    "example": "Лес заканчивается у реки: прозрачная вода, крутой берег и гора видны издалека.",
+    "example": "Лес начинается сразу за деревней.",
     "sentenceIDs": [
       "sentence-nature-1"
     ],
@@ -5724,15 +5894,16 @@
     "partOfSpeech": "adjective",
     "glossZh": "清澈的",
     "collocations": [
-      "прозрачная вода"
+      "прозрачный лёд"
     ],
-    "example": "Лес заканчивается у реки: прозрачная вода, крутой берег и гора видны издалека.",
+    "example": "Прозрачный ручей бежит вдоль тропы.",
     "sentenceIDs": [
       "sentence-nature-1"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
-      "прозрачная"
+      "прозрачная",
+      "прозрачной"
     ]
   },
   {
@@ -5743,15 +5914,16 @@
     "partOfSpeech": "noun",
     "glossZh": "河",
     "collocations": [
-      "у реки"
+      "горная река"
     ],
-    "example": "Лес заканчивается у реки: прозрачная вода, крутой берег и гора видны издалека.",
+    "example": "Река разлилась после сильных дождей.",
     "sentenceIDs": [
       "sentence-nature-1"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
-      "реки"
+      "реки",
+      "реке"
     ]
   },
   {
@@ -5762,9 +5934,9 @@
     "partOfSpeech": "adjective",
     "glossZh": "陡峭的",
     "collocations": [
-      "крутой берег"
+      "крутой склон"
     ],
-    "example": "Лес заканчивается у реки: прозрачная вода, крутой берег и гора видны издалека.",
+    "example": "Крутой подъём оказался утомительным.",
     "sentenceIDs": [
       "sentence-nature-1"
     ],
@@ -5779,14 +5951,16 @@
     "partOfSpeech": "noun",
     "glossZh": "山",
     "collocations": [
-      "гора видны"
+      "высокая гора"
     ],
-    "example": "Лес заканчивается у реки: прозрачная вода, крутой берег и гора видны издалека.",
+    "example": "Гора скрылась за облаками.",
     "sentenceIDs": [
       "sentence-nature-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "горы"
+    ]
   },
   {
     "id": "lexeme-nature-тропинка",
@@ -5796,11 +5970,11 @@
     "partOfSpeech": "noun",
     "glossZh": "小路",
     "collocations": [
-      "тропинка ведёт"
+      "узкая тропинка"
     ],
-    "example": "Тропинка ведёт через лес, где можно слышать пение птицы и чувствовать природу.",
+    "example": "Тропинка вывела нас к озеру.",
     "sentenceIDs": [
-      "sentence-nature-2"
+      "sentence-nature-1"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -5813,9 +5987,9 @@
     "partOfSpeech": "verb",
     "glossZh": "听见",
     "collocations": [
-      "слышать пение"
+      "хорошо слышать"
     ],
-    "example": "Тропинка ведёт через лес, где можно слышать пение птицы и чувствовать природу.",
+    "example": "Из палатки было слышать сову.",
     "sentenceIDs": [
       "sentence-nature-2"
     ],
@@ -5830,9 +6004,9 @@
     "partOfSpeech": "noun",
     "glossZh": "歌声；鸣叫",
     "collocations": [
-      "слышать пение"
+      "пение птиц"
     ],
-    "example": "Тропинка ведёт через лес, где можно слышать пение птицы и чувствовать природу.",
+    "example": "Пение доносилось из сада.",
     "sentenceIDs": [
       "sentence-nature-2"
     ],
@@ -5847,15 +6021,16 @@
     "partOfSpeech": "noun",
     "glossZh": "鸟",
     "collocations": [
-      "пение птицы"
+      "редкая птица"
     ],
-    "example": "Тропинка ведёт через лес, где можно слышать пение птицы и чувствовать природу.",
+    "example": "Птица села на нижнюю ветку.",
     "sentenceIDs": [
       "sentence-nature-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
-      "птицы"
+      "птицы",
+      "птиц"
     ]
   },
   {
@@ -5866,15 +6041,16 @@
     "partOfSpeech": "noun",
     "glossZh": "自然",
     "collocations": [
-      "чувствовать природу"
+      "беречь природу"
     ],
-    "example": "Тропинка ведёт через лес, где можно слышать пение птицы и чувствовать природу.",
+    "example": "Природа здесь почти не тронута.",
     "sentenceIDs": [
       "sentence-nature-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
-      "природу"
+      "природу",
+      "природе"
     ]
   },
   {
@@ -5885,9 +6061,9 @@
     "partOfSpeech": "noun",
     "glossZh": "节日",
     "collocations": [
-      "перед праздником"
+      "семейный праздник"
     ],
-    "example": "Перед праздником принято украшать комнату, покупать подарок и готовить угощение.",
+    "example": "Праздник начался с общего ужина.",
     "sentenceIDs": [
       "sentence-holidays-1"
     ],
@@ -5906,7 +6082,7 @@
     "collocations": [
       "украшать комнату"
     ],
-    "example": "Перед праздником принято украшать комнату, покупать подарок и готовить угощение.",
+    "example": "Дети помогали украшать ёлку.",
     "sentenceIDs": [
       "sentence-holidays-1"
     ],
@@ -5921,9 +6097,9 @@
     "partOfSpeech": "noun",
     "glossZh": "房间",
     "collocations": [
-      "украшать комнату"
+      "большая комната"
     ],
-    "example": "Перед праздником принято украшать комнату, покупать подарок и готовить угощение.",
+    "example": "Комната наполнилась запахом хвои.",
     "sentenceIDs": [
       "sentence-holidays-1"
     ],
@@ -5940,9 +6116,9 @@
     "partOfSpeech": "verb",
     "glossZh": "购买",
     "collocations": [
-      "покупать подарок"
+      "покупать подарки"
     ],
-    "example": "Перед праздником принято украшать комнату, покупать подарок и готовить угощение.",
+    "example": "Мы стараемся покупать подарки заранее.",
     "sentenceIDs": [
       "sentence-holidays-1"
     ],
@@ -5957,11 +6133,11 @@
     "partOfSpeech": "noun",
     "glossZh": "礼物",
     "collocations": [
-      "покупать подарок"
+      "неожиданный подарок"
     ],
-    "example": "Перед праздником принято украшать комнату, покупать подарок и готовить угощение.",
+    "example": "Подарок лежал под ёлкой.",
     "sentenceIDs": [
-      "sentence-holidays-1"
+      "sentence-holidays-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": []
@@ -5974,9 +6150,9 @@
     "partOfSpeech": "noun",
     "glossZh": "午夜",
     "collocations": [
-      "в полночь"
+      "ровно в полночь"
     ],
-    "example": "В полночь традиция велит поздравлять всех и делать общее фото.",
+    "example": "В полночь на площади зазвонили часы.",
     "sentenceIDs": [
       "sentence-holidays-2"
     ],
@@ -5991,14 +6167,16 @@
     "partOfSpeech": "verb",
     "glossZh": "祝贺",
     "collocations": [
-      "поздравлять всех"
+      "поздравлять друзей"
     ],
-    "example": "В полночь традиция велит поздравлять всех и делать общее фото.",
+    "example": "Мы пришли поздравлять бабушку.",
     "sentenceIDs": [
       "sentence-holidays-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "поздравляем"
+    ]
   },
   {
     "id": "lexeme-holidays-общий",
@@ -6008,9 +6186,9 @@
     "partOfSpeech": "adjective",
     "glossZh": "共同的",
     "collocations": [
-      "общее фото"
+      "общий снимок"
     ],
-    "example": "В полночь традиция велит поздравлять всех и делать общее фото.",
+    "example": "Общий стол поставили у окна.",
     "sentenceIDs": [
       "sentence-holidays-2"
     ],
@@ -6027,9 +6205,9 @@
     "partOfSpeech": "noun",
     "glossZh": "照片",
     "collocations": [
-      "общее фото"
+      "семейное фото"
     ],
-    "example": "В полночь традиция велит поздравлять всех и делать общее фото.",
+    "example": "Фото получилось немного тёмным.",
     "sentenceIDs": [
       "sentence-holidays-2"
     ],
@@ -6044,14 +6222,16 @@
     "partOfSpeech": "noun",
     "glossZh": "传统",
     "collocations": [
-      "полночь традиция"
+      "семейная традиция"
     ],
-    "example": "В полночь традиция велит поздравлять всех и делать общее фото.",
+    "example": "Эта традиция объединяет три поколения.",
     "sentenceIDs": [
       "sentence-holidays-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "традиции"
+    ]
   },
   {
     "id": "lexeme-emergencies-помогать",
@@ -6061,14 +6241,16 @@
     "partOfSpeech": "verb",
     "glossZh": "帮助",
     "collocations": [
-      "срочно помогать"
+      "помогать людям"
     ],
-    "example": "Нужно срочно помогать: человек может потерять кошелёк.",
+    "example": "Соседи пришли помогать после грозы.",
     "sentenceIDs": [
       "sentence-emergencies-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "помогите"
+    ]
   },
   {
     "id": "lexeme-emergencies-человек",
@@ -6078,9 +6260,9 @@
     "partOfSpeech": "noun",
     "glossZh": "人",
     "collocations": [
-      "человек может"
+      "пожилой человек"
     ],
-    "example": "Нужно срочно помогать: человек может потерять кошелёк.",
+    "example": "Человек попросил вызвать врача.",
     "sentenceIDs": [
       "sentence-emergencies-1"
     ],
@@ -6097,12 +6279,14 @@
     "collocations": [
       "потерять кошелёк"
     ],
-    "example": "Нужно срочно помогать: человек может потерять кошелёк.",
+    "example": "В толпе легко потерять ребёнка.",
     "sentenceIDs": [
       "sentence-emergencies-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "потерял"
+    ]
   },
   {
     "id": "lexeme-emergencies-кошелек",
@@ -6112,9 +6296,9 @@
     "partOfSpeech": "noun",
     "glossZh": "钱包",
     "collocations": [
-      "потерять кошелёк"
+      "кожаный кошелёк"
     ],
-    "example": "Нужно срочно помогать: человек может потерять кошелёк.",
+    "example": "Кошелёк нашли возле кассы.",
     "sentenceIDs": [
       "sentence-emergencies-1"
     ],
@@ -6129,9 +6313,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "紧急地",
     "collocations": [
-      "нужно срочно"
+      "очень срочно"
     ],
-    "example": "Нужно срочно помогать: человек может потерять кошелёк.",
+    "example": "Мне срочно нужен номер полиции.",
     "sentenceIDs": [
       "sentence-emergencies-1"
     ],
@@ -6146,15 +6330,16 @@
     "partOfSpeech": "adjective",
     "glossZh": "紧急的",
     "collocations": [
-      "экстренная ситуация"
+      "экстренный вызов"
     ],
-    "example": "Экстренная ситуация требует сделать звонок и точно назвать местонахождение.",
+    "example": "Экстренный выход нельзя загромождать.",
     "sentenceIDs": [
       "sentence-emergencies-2"
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
-      "экстренная"
+      "экстренная",
+      "экстренной"
     ]
   },
   {
@@ -6165,14 +6350,16 @@
     "partOfSpeech": "noun",
     "glossZh": "情况",
     "collocations": [
-      "экстренная ситуация"
+      "опасная ситуация"
     ],
-    "example": "Экстренная ситуация требует сделать звонок и точно назвать местонахождение.",
+    "example": "Ситуация быстро стала спокойнее.",
     "sentenceIDs": [
       "sentence-emergencies-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": []
+    "surfaceForms": [
+      "ситуации"
+    ]
   },
   {
     "id": "lexeme-emergencies-звонок",
@@ -6182,9 +6369,9 @@
     "partOfSpeech": "noun",
     "glossZh": "电话；铃声",
     "collocations": [
-      "сделать звонок"
+      "тревожный звонок"
     ],
-    "example": "Экстренная ситуация требует сделать звонок и точно назвать местонахождение.",
+    "example": "Звонок поступил около полуночи.",
     "sentenceIDs": [
       "sentence-emergencies-2"
     ],
@@ -6199,9 +6386,9 @@
     "partOfSpeech": "adverb",
     "glossZh": "准确地",
     "collocations": [
-      "точно назвать"
+      "знать точно"
     ],
-    "example": "Экстренная ситуация требует сделать звонок и точно назвать местонахождение.",
+    "example": "Я точно помню название улицы.",
     "sentenceIDs": [
       "sentence-emergencies-2"
     ],
@@ -6216,9 +6403,9 @@
     "partOfSpeech": "noun",
     "glossZh": "所在位置",
     "collocations": [
-      "назвать местонахождение"
+      "текущее местонахождение"
     ],
-    "example": "Экстренная ситуация требует сделать звонок и точно назвать местонахождение.",
+    "example": "Местонахождение телефона видно на карте.",
     "sentenceIDs": [
       "sentence-emergencies-2"
     ],
