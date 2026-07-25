@@ -13,6 +13,19 @@ public struct RussianCornerSettingsView: View {
   public var body: some View {
     Form {
       Section("悬浮卡") {
+        if availableScreens.isEmpty {
+          LabeledContent("显示器", value: "当前不可用")
+        } else {
+          Picker(
+            "显示器",
+            selection: $appModel.preferredScreenIdentifier
+          ) {
+            ForEach(availableScreens) { screen in
+              Text(screenLabel(screen))
+                .tag(Optional(screen.identifier))
+            }
+          }
+        }
         Picker("吸附位置", selection: $appModel.corner) {
           ForEach(FloatingCorner.allCases, id: \.self) {
             Text($0.title).tag($0)
@@ -71,7 +84,7 @@ public struct RussianCornerSettingsView: View {
       }
     }
     .formStyle(.grouped)
-    .frame(width: 470, height: 510)
+    .frame(width: 470, height: 550)
     .navigationTitle("Russian Corner 设置")
     .onChange(of: appModel.dailyCardCount) {
       try? runtime.reloadPractice()
@@ -79,6 +92,14 @@ public struct RussianCornerSettingsView: View {
     .onChange(of: appModel.mode) {
       runtime.practice?.mode = appModel.mode
     }
+  }
+
+  private var availableScreens: [ScreenDescriptor] {
+    ScreenPlacement.systemScreens()
+  }
+
+  private func screenLabel(_ screen: ScreenDescriptor) -> String {
+    screen.isMain ? "\(screen.name) · 主屏" : screen.name
   }
 
   private func reminderBinding(

@@ -29,6 +29,8 @@ public final class AppModel {
     static let dailyCardCount = "practice.dailyCardCount"
     static let mode = "practice.mode"
     static let collapsed = "floating.collapsed"
+    static let preferredScreenIdentifier =
+      "floating.preferredScreenIdentifier"
     static let morningHour = "reminder.morning.hour"
     static let morningMinute = "reminder.morning.minute"
     static let eveningHour = "reminder.evening.hour"
@@ -44,6 +46,21 @@ public final class AppModel {
   }
   public var corner: FloatingCorner {
     didSet { persist(corner.rawValue, forKey: Key.corner) }
+  }
+  public var preferredScreenIdentifier: String? {
+    didSet {
+      guard !isLoading else { return }
+      if let preferredScreenIdentifier {
+        defaults.set(
+          preferredScreenIdentifier,
+          forKey: Key.preferredScreenIdentifier
+        )
+      } else {
+        defaults.removeObject(
+          forKey: Key.preferredScreenIdentifier
+        )
+      }
+    }
   }
   public var opacity: Double {
     didSet {
@@ -98,6 +115,9 @@ public final class AppModel {
       FloatingCorner(
         rawValue: defaults.string(forKey: Key.corner) ?? ""
       ) ?? .topRight
+    preferredScreenIdentifier = defaults.string(
+      forKey: Key.preferredScreenIdentifier
+    )
     opacity =
       defaults.object(forKey: Key.opacity) == nil
       ? 0.96 : defaults.double(forKey: Key.opacity)

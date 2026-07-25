@@ -187,4 +187,125 @@ final class AppModelTests: XCTestCase {
     XCTAssertEqual(model.opacity, 0.55, accuracy: 0.001)
     XCTAssertEqual(model.fontScale, 1.35, accuracy: 0.001)
   }
+
+  func testPreferredScreenIdentifierPersistsAndRestores() {
+    let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+
+    var model = AppModel(defaults: defaults)
+    model.preferredScreenIdentifier = "69733248"
+
+    model = AppModel(defaults: defaults)
+
+    XCTAssertEqual(model.preferredScreenIdentifier, "69733248")
+  }
+}
+
+final class ScreenPlacementTests: XCTestCase {
+  private let screens = [
+    ScreenDescriptor(
+      identifier: "100",
+      name: "Studio Display",
+      visibleFrame: CGRect(x: 0, y: 0, width: 1920, height: 1050),
+      isMain: true
+    ),
+    ScreenDescriptor(
+      identifier: "200",
+      name: "Built-in Retina Display",
+      visibleFrame: CGRect(x: -1512, y: 0, width: 1512, height: 945),
+      isMain: false
+    ),
+    ScreenDescriptor(
+      identifier: "300",
+      name: "Projector",
+      visibleFrame: CGRect(x: 1920, y: 0, width: 1280, height: 720),
+      isMain: false
+    ),
+  ]
+
+  func testPreferredIdentifierSelectsMatchingScreen() {
+    XCTAssertEqual(
+      ScreenPlacement.selectedScreen(
+        preferredIdentifier: "200",
+        screens: screens
+      )?.identifier,
+      "200"
+    )
+  }
+
+  func testScreenNumberProducesStableIdentifier() {
+    XCTAssertEqual(
+      ScreenPlacement.identifier(
+        screenNumber: NSNumber(value: UInt32(69_733_248))
+      ),
+      "69733248"
+    )
+  }
+
+  func testUnknownIdentifierFallsBackToMainScreen() {
+    XCTAssertEqual(
+      ScreenPlacement.selectedScreen(
+        preferredIdentifier: "missing",
+        screens: screens
+      )?.identifier,
+      "100"
+    )
+  }
+
+  func testMissingMainScreenFallsBackToFirstDescriptor() {
+    let noMain = screens.map {
+      ScreenDescriptor(
+        identifier: $0.identifier,
+        name: $0.name,
+        visibleFrame: $0.visibleFrame,
+        isMain: false
+      )
+    }
+
+    XCTAssertEqual(
+      ScreenPlacement.selectedScreen(
+        preferredIdentifier: nil,
+        screens: noMain
+      )?.identifier,
+      "100"
+    )
+  }
+
+  func testNextScreenCyclesFromPreferredAndWraps() {
+    XCTAssertEqual(
+      ScreenPlacement.nextScreen(
+        after: "200",
+        screens: screens
+      )?.identifier,
+      "300"
+    )
+    XCTAssertEqual(
+      ScreenPlacement.nextScreen(
+        after: "300",
+        screens: screens
+      )?.identifier,
+      "100"
+    )
+  }
+
+  func testUnknownPreferredCyclesFromFallbackMain() {
+    XCTAssertEqual(
+      ScreenPlacement.nextScreen(
+        after: "missing",
+        screens: screens
+      )?.identifier,
+      "200"
+    )
+  }
+
+  func testSingleScreenCycleIsSafeNoOp() {
+    XCTAssertEqual(
+      ScreenPlacement.nextScreen(
+        after: "100",
+        screens: [screens[0]]
+      ),
+      screens[0]
+    )
+  }
 }

@@ -94,6 +94,11 @@ private struct MenuBarContent: View {
     .keyboardShortcut("n", modifiers: [.control, .option])
     .disabled(runtime.practice == nil)
 
+    Button("移到下一块显示器", systemImage: "display.2") {
+      panelController.moveToNextScreen()
+    }
+    .disabled(!panelController.canMoveToAnotherScreen)
+
     Divider()
 
     Button("设置…", systemImage: "gearshape") {

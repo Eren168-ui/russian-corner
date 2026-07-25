@@ -8,10 +8,12 @@ private final class PassiveFloatingPanel: NSPanel {
 }
 
 @MainActor
-public final class FloatingPanelController {
+public final class FloatingPanelController: NSObject, NSWindowDelegate {
   private let panel: PassiveFloatingPanel
   private let appModel: AppModel
   nonisolated(unsafe) private var screenObserver: NSObjectProtocol?
+  private var moveDebounceTask: Task<Void, Never>?
+  private var isSnapping = false
 
   public init(runtime: AppRuntime) {
     appModel = runtime.appModel
@@ -21,6 +23,7 @@ public final class FloatingPanelController {
       backing: .buffered,
       defer: false
     )
+    super.init()
     panel.level = .floating
     panel.collectionBehavior = [
       .canJoinAllSpaces,
@@ -34,6 +37,9 @@ public final class FloatingPanelController {
     panel.backgroundColor = .clear
     panel.hasShadow = false
     panel.animationBehavior = .utilityWindow
+    panel.isMovable = true
+    panel.isMovableByWindowBackground = true
+    panel.delegate = self
 
     panel.contentView = NSHostingView(
       rootView: FloatingPracticeRoot(
@@ -60,6 +66,17 @@ public final class FloatingPanelController {
     if let screenObserver {
       NotificationCenter.default.removeObserver(screenObserver)
     }
+    moveDebounceTask?.cancel()
+  }
+
+  public func windowDidMove(_ notification: Notification) {
+    guard !isSnapping else { return }
+    moveDebounceTask?.cancel()
+    moveDebounceTask = Task { [weak self] in
+      try? await Task.sleep(for: .milliseconds(180))
+      guard !Task.isCancelled else { return }
+      self?.recordDraggedScreenAndSnap()
+    }
   }
 
   public func show() {
@@ -75,6 +92,25 @@ public final class FloatingPanelController {
 
   public func toggle() {
     appModel.isCardVisible ? hide() : show()
+  }
+
+  public var canMoveToAnotherScreen: Bool {
+    ScreenPlacement.systemScreens().count > 1
+  }
+
+  public func moveToNextScreen() {
+    let descriptors = ScreenPlacement.systemScreens()
+    guard
+      let next = ScreenPlacement.nextScreen(
+        after: appModel.preferredScreenIdentifier,
+        screens: descriptors
+      ),
+      next.identifier != appModel.preferredScreenIdentifier
+    else {
+      return
+    }
+    appModel.preferredScreenIdentifier = next.identifier
+    refreshLayout()
   }
 
   public func refreshLayout() {
@@ -95,7 +131,9 @@ public final class FloatingPanelController {
       panelSize: panel.frame.size,
       visibleFrame: screen.visibleFrame
     )
+    isSnapping = true
     panel.setFrameOrigin(origin)
+    isSnapping = false
   }
 
   public static func origin(
@@ -121,16 +159,58 @@ public final class FloatingPanelController {
   }
 
   private func targetScreen() -> NSScreen? {
-    let center = CGPoint(x: panel.frame.midX, y: panel.frame.midY)
-    return NSScreen.screens.first(where: {
-      $0.frame.contains(center)
-    }) ?? NSScreen.main ?? NSScreen.screens.first
+    let pairs = systemScreenPairs()
+    let descriptors = pairs.map(\.descriptor)
+    guard
+      let selected = ScreenPlacement.selectedScreen(
+        preferredIdentifier: appModel.preferredScreenIdentifier,
+        screens: descriptors
+      )
+    else {
+      return NSScreen.main ?? NSScreen.screens.first
+    }
+    if appModel.preferredScreenIdentifier != selected.identifier {
+      appModel.preferredScreenIdentifier = selected.identifier
+    }
+    return pairs.first(where: {
+      $0.descriptor.identifier == selected.identifier
+    })?.screen
+  }
+
+  private func recordDraggedScreenAndSnap() {
+    guard
+      let draggedScreen = panel.screen,
+      let descriptor = ScreenPlacement.descriptor(
+        for: draggedScreen,
+        isMain: draggedScreen == NSScreen.main
+      )
+    else {
+      snapToCorner()
+      return
+    }
+    appModel.preferredScreenIdentifier = descriptor.identifier
+    snapToCorner()
+  }
+
+  private func systemScreenPairs() -> [(screen: NSScreen, descriptor: ScreenDescriptor)] {
+    NSScreen.screens.compactMap { screen in
+      guard
+        let descriptor = ScreenPlacement.descriptor(
+          for: screen,
+          isMain: screen == NSScreen.main
+        )
+      else {
+        return nil
+      }
+      return (screen, descriptor)
+    }
   }
 
   private func observeLayoutPreferences() {
     withObservationTracking {
       _ = appModel.corner
       _ = appModel.isCollapsed
+      _ = appModel.preferredScreenIdentifier
     } onChange: { [weak self] in
       Task { @MainActor in
         self?.refreshLayout()
