@@ -1,8 +1,8 @@
 # Russian Corner 最终验收记录
 
-本记录绑定实现提交 `481dfeb`（`feat: complete bilingual daily dialogue
-practice`）。验收覆盖该提交及其之前的全部实现，时间为
-2026-07-26 06:44–06:46 CST。
+本记录绑定实现提交 `dd5e3e9`（`fix: refresh practice across temporal
+boundaries`）。验收覆盖该提交及其之前的全部实现，时间为
+2026-07-26 06:56–06:57 CST。
 
 ## 验收环境
 
@@ -10,7 +10,7 @@ practice`）。验收覆盖该提交及其之前的全部实现，时间为
 - App：`dist/Russian Corner.app`
 - macOS：26.3.1 (25D771280a)
 - Swift：Apple Swift 6.3.3，target `arm64-apple-macosx26.0`
-- App 大小：3080 KiB（`du -sk`）
+- App 大小：3100 KiB（`du -sk`）
 
 ## 自动验收结果
 
@@ -20,7 +20,7 @@ practice`）。验收覆盖该提交及其之前的全部实现，时间为
 swift test -Xswiftc -strict-concurrency=complete -Xswiftc -warnings-as-errors
 ```
 
-结果：通过。执行 184 个 XCTest，0 failures，0 unexpected；Swift Testing
+结果：通过。执行 187 个 XCTest，0 failures，0 unexpected；Swift Testing
 的空测试集也正常结束。
 
 ### 2. Core 资源加载回归
@@ -90,7 +90,7 @@ bash Scripts/build-app.sh
 四项均通过。代码提交后又执行一次 `bash Scripts/build-app.sh`，输出：
 
 ```text
-copied_executable_sha256=5e2ca7ede9eba0812804732f09da70e2793b122332a57d39a6917e715e4f968f
+copied_executable_sha256=498f6ce3c0676f299ea23bc985db388e64ea5450153513049a3fa3cdad8a0516
 resource_probe=PASS lexemes=360 sentences=72 directory=.../Contents/Resources
 missing_resource_probe=PASS
 permissions=PASS resources=0755 executable=0755 json=0644
@@ -109,13 +109,13 @@ backup、staging 和事务状态。脚本只在成功持锁后安装 trap；被�
 SHA-256；本次两者均为：
 
 ```text
-5e2ca7ede9eba0812804732f09da70e2793b122332a57d39a6917e715e4f968f
+498f6ce3c0676f299ea23bc985db388e64ea5450153513049a3fa3cdad8a0516
 ```
 
 ad-hoc `codesign` 会重写 Mach-O 内嵌签名，因此最终 executable SHA-256 为：
 
 ```text
-11c03e40b68b22e0e2fb6910133248ac722614013fef2ecc7aa3a18a51448d30
+7886760c4b5d7d28b0f05cdd26ff34bc57673d728871909e5fc7c2d83714d29a
 ```
 
 对最终 executable 执行 `strings` 检查，仓库绝对路径和
@@ -153,7 +153,7 @@ sleep 5
 pgrep -f '/Russian Corner.app/Contents/MacOS/RussianCornerApp'
 ```
 
-2026-07-26 06:46 CST 的结果：PID `39206` 在启动 5 秒后仍运行。
+2026-07-26 06:57 CST 的结果：PID `54058` 在启动 5 秒后仍运行。
 启动前后 10 分钟窗口中的 `RussianCornerApp*.crash` /
 `RussianCornerApp*.ips` 文件数均为 0。
 
@@ -171,7 +171,10 @@ pgrep -f '/Russian Corner.app/Contents/MacOS/RussianCornerApp'
 
 - 日常队列同时投放词卡和句卡；上午默认俄语到中文认词，下午默认中文
   到俄语主动提取，并可手动切换方向；
+- 常驻应用每分钟检查时间边界，跨中午刷新默认训练方向，跨午夜重建
+  当天队列、完成状态、配额和周复习策略；
 - 每日新词按历史表现和积压使用 6 / 10 / 12，自周复习日不加入新内容；
+- 周复习日按自适应目标投放多条已学词，不再退化为仅复习一个词；
 - `Again` 本轮稍后重现，成功项不循环，重启后恢复剩余队列；
 - 诊断结果会收紧新词上限或默认开口模式，保存诊断后立即刷新策略；
 - 同主题句卡形成 2–3 轮微型对话；
@@ -183,6 +186,9 @@ pgrep -f '/Russian Corner.app/Contents/MacOS/RussianCornerApp'
   `~/Library/Application Support/com.openclaw.russiancorner/RussianCorner.store`，
   进程未打开通用 `default.store`；
 - 首次启动请求通知权限，后续启动校准 11:30 / 17:30 两个固定提醒。
+
+独立最终复审在提交 `dd5e3e9` 上复核上述两个时间边界问题，定向测试
+38/38、全量严格测试 187/187 均通过，结论为 `Ready to merge: Yes`。
 
 ## 人工硬件验收边界
 
