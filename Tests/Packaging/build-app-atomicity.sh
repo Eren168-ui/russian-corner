@@ -12,6 +12,17 @@ cleanup() {
     kill "$background_pid" 2>/dev/null || true
     wait "$background_pid" 2>/dev/null || true
   done
+  if [ -n "${SANDBOX_REPO:-}" ]; then
+    for orphan_pid in $(
+      /bin/ps -axo pid=,command= |
+        awk -v script="$SANDBOX_REPO/Scripts/build-app.sh" \
+          'index($0, "bash " script) || index($0, "zsh " script) {
+             print $1
+           }'
+    ); do
+      kill -KILL "$orphan_pid" 2>/dev/null || true
+    done
+  fi
   rm -rf -- "$TEST_ROOT"
 }
 trap cleanup EXIT HUP INT TERM
@@ -158,11 +169,48 @@ run_packager() {
     RUSSIAN_CORNER_PACKAGING_TEST_MODE=1 \
     RUSSIAN_CORNER_TEST_BUILD_DELAY_SECONDS="${2:-0}" \
     RUSSIAN_CORNER_TEST_FORCE_PUBLISH_FAILURE="${4:-0}" \
-    RUSSIAN_CORNER_TEST_KILL_AFTER_OLD_MOVED="${5:-0}" \
-    RUSSIAN_CORNER_TEST_PAUSE_AFTER_OLD_MOVED_SECONDS="${6:-0}" \
+    RUSSIAN_CORNER_TEST_PAUSE_AFTER_OLD_MOVED_SECONDS="${5:-0}" \
     FAKE_BUILD_DELAY_SECONDS="${3:-0}" \
     bash "$SANDBOX_REPO/Scripts/build-app.sh" \
     >"$BUILD_LOG" 2>&1
+}
+
+start_packager() {
+  PATH="$FAKE_BIN:$PATH" \
+    FAKE_BUILD="$FAKE_BUILD" \
+    FAKE_BUILD_MARKER="$BUILD_MARKER" \
+    CODESIGN_BIN="$1" \
+    RUSSIAN_CORNER_PACKAGING_TEST_MODE=1 \
+    RUSSIAN_CORNER_TEST_BUILD_DELAY_SECONDS="${2:-0}" \
+    RUSSIAN_CORNER_TEST_FORCE_PUBLISH_FAILURE="${4:-0}" \
+    RUSSIAN_CORNER_TEST_PAUSE_AFTER_OLD_MOVED_SECONDS="${5:-0}" \
+    FAKE_BUILD_DELAY_SECONDS="${3:-0}" \
+    bash "$SANDBOX_REPO/Scripts/build-app.sh" \
+    >"$BUILD_LOG" 2>&1 &
+  STARTED_PACKAGER_PID=$!
+  BACKGROUND_PIDS="$BACKGROUND_PIDS $STARTED_PACKAGER_PID"
+}
+
+build_app_process_count() {
+  /bin/ps -axo pid=,ppid=,command= |
+    awk -v script="$SANDBOX_REPO/Scripts/build-app.sh" \
+      'index($0, "bash " script) || index($0, "zsh " script) {
+         count += 1
+       }
+       END { print count + 0 }'
+}
+
+direct_build_app_child_count() {
+  parent_pid=$1
+  /bin/ps -axo pid=,ppid=,command= |
+    awk \
+      -v parent="$parent_pid" \
+      -v script="$SANDBOX_REPO/Scripts/build-app.sh" \
+      '$2 == parent &&
+         (index($0, "bash " script) || index($0, "zsh " script)) {
+         count += 1
+       }
+       END { print count + 0 }'
 }
 
 assert_old_app_unchanged() {
@@ -208,9 +256,8 @@ test_concurrent_build_is_rejected() {
   prepare_case "concurrency"
   create_signed_old_app
 
-  run_packager "$FAKE_CODESIGN_OK" 0 2 &
-  first_pid=$!
-  BACKGROUND_PIDS="$BACKGROUND_PIDS $first_pid"
+  start_packager "$FAKE_CODESIGN_OK" 0 2
+  first_pid=$STARTED_PACKAGER_PID
   wait_for_path "$BUILD_MARKER"
   wait_for_path "$LOCK_FILE"
   test -f "$LOCK_FILE" && test ! -L "$LOCK_FILE" ||
@@ -248,9 +295,8 @@ test_dist_swap_never_touches_external_target() {
   mkdir -p "$external_target"
   printf 'external\n' >"$external_target/sentinel"
 
-  run_packager "$FAKE_CODESIGN_OK" 0 2 &
-  packager_pid=$!
-  BACKGROUND_PIDS="$BACKGROUND_PIDS $packager_pid"
+  start_packager "$FAKE_CODESIGN_OK" 0 2
+  packager_pid=$STARTED_PACKAGER_PID
   wait_for_path "$BUILD_MARKER"
   /bin/mv -h "$SANDBOX_REPO/dist" "$SANDBOX_REPO/old-dist-by-test"
   ln -s "$external_target" "$SANDBOX_REPO/dist"
@@ -320,9 +366,8 @@ test_sigkill_transaction_is_recovered() {
     shasum -a 256 "$SANDBOX_REPO/dist/unrelated-marker" | awk '{print $1}'
   )
 
-  run_packager "$FAKE_CODESIGN_OK" 0 0 0 1 3 &
-  interrupted_pid=$!
-  BACKGROUND_PIDS="$BACKGROUND_PIDS $interrupted_pid"
+  start_packager "$FAKE_CODESIGN_OK" 0 0 0 30
+  interrupted_pid=$STARTED_PACKAGER_PID
   wait_for_path "$LOCK_FILE"
   wait_for_path "$SANDBOX_REPO/.build-app-transaction"
   wait_for_absence "$SANDBOX_REPO/dist"
@@ -360,8 +405,26 @@ test_sigkill_transaction_is_recovered() {
   [ "$state_sha_after" = "$state_sha_before" ] ||
     fail "rejected lockf contender changed transaction state"
 
+  direct_child_count=$(direct_build_app_child_count "$interrupted_pid")
+  kill -KILL "$interrupted_pid"
   if wait "$interrupted_pid"; then
-    fail "SIGKILL injection unexpectedly succeeded"
+    fail "SIGKILL of user-launched build unexpectedly succeeded"
+  fi
+  sleep 0.2
+  [ "$direct_child_count" -eq 0 ] ||
+    fail "user-launched build PID delegated transaction to a child shell"
+  test ! -e "$SANDBOX_REPO/dist" ||
+    fail "a child continued publication after user build PID was killed"
+  test -f "$SANDBOX_REPO/.build-app-transaction" ||
+    fail "transaction disappeared after user build PID was killed"
+  orphan_build_count=$(build_app_process_count)
+  if [ "$orphan_build_count" -ne 0 ]; then
+    /bin/ps -axo pid=,ppid=,command= |
+      awk -v script="$SANDBOX_REPO/Scripts/build-app.sh" \
+        'index($0, "bash " script) || index($0, "zsh " script) {
+           print
+         }' >&2
+    fail "orphan build-app process remained after SIGKILL"
   fi
 
   run_packager "$FAKE_CODESIGN_OK"

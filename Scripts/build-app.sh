@@ -20,41 +20,37 @@ STATE_FILE="$REPO_ROOT/.build-app-transaction"
 SOURCE_RESOURCES_DIR="$REPO_ROOT/Sources/RussianCornerCore/Resources"
 CODESIGN_BIN=${CODESIGN_BIN:-/usr/bin/codesign}
 
-if [ "${RUSSIAN_CORNER_LOCK_HELD:-0}" != "1" ]; then
-  GIT_ADMIN_DIR=$(
-    /usr/bin/git -C "$REPO_ROOT" rev-parse --absolute-git-dir
-  )
-  LOCK_FILE=$(
-    /usr/bin/git -C "$REPO_ROOT" rev-parse \
-      --path-format=absolute \
-      --git-path russian-corner-build.lock
-  )
-  if [ "$LOCK_FILE" != "$GIT_ADMIN_DIR/russian-corner-build.lock" ] ||
-    [ -L "$LOCK_FILE" ] ||
-    { [ -e "$LOCK_FILE" ] && [ ! -f "$LOCK_FILE" ]; }; then
-    printf 'error: unsafe build lock file: %s\n' "$LOCK_FILE" >&2
-    exit 1
-  fi
-  if [ -n "${ZSH_VERSION:-}" ]; then
-    LOCK_SHELL=/bin/zsh
-  else
-    LOCK_SHELL=/bin/bash
-  fi
-  exec /usr/bin/lockf -k -t 0 "$LOCK_FILE" \
-    /usr/bin/env RUSSIAN_CORNER_LOCK_HELD=1 \
-    "$LOCK_SHELL" "$SCRIPT_DIR/$(basename -- "$0")" "$@"
-fi
-
 STAGING_ROOT=""
 NEW_DIST=""
 STAGED_APP=""
 BACKUP_DIST=""
-LOCK_HELD=1
+LOCK_HELD=0
 TRANSACTION_OWNER_TOKEN=""
 TRANSACTION_OWNED=0
 OLD_MOVED=0
 NEW_PUBLISHED=0
 PUBLISH_COMMITTED=0
+
+GIT_ADMIN_DIR=$(
+  /usr/bin/git -C "$REPO_ROOT" rev-parse --absolute-git-dir
+)
+LOCK_FILE=$(
+  /usr/bin/git -C "$REPO_ROOT" rev-parse \
+    --path-format=absolute \
+    --git-path russian-corner-build.lock
+)
+if [ "$LOCK_FILE" != "$GIT_ADMIN_DIR/russian-corner-build.lock" ] ||
+  [ -L "$LOCK_FILE" ] ||
+  { [ -e "$LOCK_FILE" ] && [ ! -f "$LOCK_FILE" ]; }; then
+  printf 'error: unsafe build lock file: %s\n' "$LOCK_FILE" >&2
+  exit 1
+fi
+exec 9>"$LOCK_FILE"
+if ! /usr/bin/lockf -s -t 0 9; then
+  printf 'error: another build-app process holds %s\n' "$LOCK_FILE" >&2
+  exit 1
+fi
+LOCK_HELD=1
 
 entry_exists() {
   [ -e "$1" ] || [ -L "$1" ]
@@ -634,14 +630,10 @@ if [ -n "${RUSSIAN_CORNER_TEST_PAUSE_AFTER_OLD_MOVED_SECONDS:-}" ]; then
     printf 'error: transaction pause requires packaging test mode\n' >&2
     exit 1
   fi
-  sleep "$RUSSIAN_CORNER_TEST_PAUSE_AFTER_OLD_MOVED_SECONDS"
-fi
-if [ "${RUSSIAN_CORNER_TEST_KILL_AFTER_OLD_MOVED:-0}" = "1" ]; then
-  if [ "${RUSSIAN_CORNER_PACKAGING_TEST_MODE:-}" != "1" ]; then
-    printf 'error: SIGKILL injection requires packaging test mode\n' >&2
-    exit 1
-  fi
-  /bin/kill -KILL "$$"
+  pause_until=$((SECONDS + RUSSIAN_CORNER_TEST_PAUSE_AFTER_OLD_MOVED_SECONDS))
+  while [ "$SECONDS" -lt "$pause_until" ]; do
+    :
+  done
 fi
 if [ "${RUSSIAN_CORNER_TEST_FORCE_PUBLISH_FAILURE:-0}" = "1" ]; then
   if [ "${RUSSIAN_CORNER_PACKAGING_TEST_MODE:-}" != "1" ]; then
