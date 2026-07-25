@@ -238,10 +238,13 @@ final class PracticeViewModelTests: XCTestCase {
     )
 
     XCTAssertTrue(model.isWeeklyReviewDay)
+    XCTAssertEqual(model.newWordLimit, 0)
+    XCTAssertEqual(model.remainingNewWordCount, 0)
     XCTAssertEqual(
       Set(model.queue.filter { $0.kind == .lexeme }.map(\.id)),
       [catalog.lexemes[0].id]
     )
+    XCTAssertTrue(model.queue.allSatisfy { $0.kind == .lexeme })
   }
 
   func testFirstLaunchOnSundayStillOffersLexemes() throws {
@@ -277,6 +280,72 @@ final class PracticeViewModelTests: XCTestCase {
     XCTAssertEqual(model.currentLexeme?.collocations, ["важное слово 0"])
     XCTAssertEqual(model.currentLexeme?.example, "Это слово 0.")
     XCTAssertEqual(model.currentContextSentence?.theme, "场景 0")
+  }
+
+  func testMorningLexemeStartsWithRussianRecognitionAndCanToggleDirection()
+    throws
+  {
+    let morning = try XCTUnwrap(
+      utcCalendar.date(
+        from: DateComponents(
+          year: 2026,
+          month: 7,
+          day: 27,
+          hour: 8
+        )
+      )
+    )
+    let model = try PracticeViewModel(
+      catalog: makeCatalog(lexemeCount: 1, sentenceCount: 1),
+      repository: try makeRepository(),
+      now: { morning },
+      calendar: utcCalendar
+    )
+
+    XCTAssertEqual(model.lexemeDirection, .recognition)
+    XCTAssertEqual(model.prompt, "сло́во 0")
+    model.reveal()
+    XCTAssertEqual(model.answer, "词义 0")
+
+    model.toggleLexemeDirection()
+
+    XCTAssertEqual(model.lexemeDirection, .production)
+    XCTAssertEqual(model.prompt, "词义 0")
+    XCTAssertNil(model.answer)
+  }
+
+  func testSentenceCardOffersTwoTurnThemeMicroDialogue() throws {
+    let sentences = (0..<2).map { index in
+      SentenceCard(
+        id: "dialogue-\(index)",
+        promptZh: "对话提示 \(index)",
+        cueRu: "Что вы скажете в ситуации \(index)?",
+        practiceRu: "Ответ \(index).",
+        speechText: "Ответ \(index).",
+        theme: "共同场景",
+        lexemeIDs: [],
+        sourcePath: "fixture.md",
+        sourceText: "fixture",
+        reviewStatus: .reviewed
+      )
+    }
+    let model = try PracticeViewModel(
+      catalog: ContentCatalog(lexemes: [], sentences: sentences),
+      repository: try makeRepository(),
+      targetCount: 5,
+      now: { self.start },
+      calendar: utcCalendar
+    )
+
+    XCTAssertEqual(model.currentItem?.kind, .sentence)
+    XCTAssertEqual(model.microDialogueTurns.count, 2)
+    XCTAssertEqual(
+      model.microDialogueTurns.map(\.cue),
+      [
+        "Что вы скажете в ситуации 0?",
+        "Что вы скажете в ситуации 1?",
+      ]
+    )
   }
 
   func testAgainAppendsOneRetryAndSuccessfulRetryCompletes() throws {

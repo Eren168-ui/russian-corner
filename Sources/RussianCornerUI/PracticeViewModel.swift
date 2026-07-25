@@ -33,6 +33,25 @@ public enum PracticeContent: Equatable, Sendable {
   case sentence(SentenceCard)
 }
 
+public enum LexemePromptDirection: Equatable, Sendable {
+  case recognition
+  case production
+}
+
+public struct MicroDialogueTurn: Identifiable, Equatable, Sendable {
+  public let cardID: String
+  public let cue: String
+  public let response: String
+
+  public var id: String { cardID }
+
+  public init(cardID: String, cue: String, response: String) {
+    self.cardID = cardID
+    self.cue = cue
+    self.response = response
+  }
+}
+
 public struct PracticeQueueEntry: Identifiable, Equatable, Sendable {
   public let content: PracticeContent
   public let isRetry: Bool
@@ -76,6 +95,7 @@ public final class PracticeViewModel {
   public let remainingSentenceCardCount: Int
   public let isWeeklyReviewDay: Bool
   public var mode: PracticeMode
+  public var lexemeDirection: LexemePromptDirection
 
   private let repository: any PracticeProgressStoring
   private let scheduler: ReviewScheduler
@@ -86,6 +106,7 @@ public final class PracticeViewModel {
   private let now: () -> Date
   private let calendar: Calendar
   private let sentencesByID: [String: SentenceCard]
+  private let sentencesByTheme: [String: [SentenceCard]]
   private var states: [PracticeItemIdentity: ReviewState]
   private var successfulToday: Set<PracticeItemIdentity>
   private var recallStartedAt: Date
@@ -117,6 +138,21 @@ public final class PracticeViewModel {
     return lexeme.sentenceIDs.lazy.compactMap {
       self.sentencesByID[$0]
     }.first
+  }
+
+  public var microDialogueTurns: [MicroDialogueTurn] {
+    guard case .sentence(let current) = currentContent else {
+      return []
+    }
+    let sameTheme = sentencesByTheme[current.theme] ?? [current]
+    let ordered = [current] + sameTheme.filter { $0.id != current.id }
+    return ordered.prefix(3).map {
+      MicroDialogueTurn(
+        cardID: $0.id,
+        cue: $0.cueRu,
+        response: $0.practiceRu
+      )
+    }
   }
 
   public var lexemeGrammarLabels: [String] {
@@ -161,7 +197,8 @@ public final class PracticeViewModel {
   public var prompt: String? {
     switch currentContent {
     case .lexeme(let lexeme):
-      return lexeme.glossZh
+      return lexemeDirection == .recognition
+        ? lexeme.stressedForm : lexeme.glossZh
     case .sentence(let card):
       let identity = PracticeItemIdentity(kind: .sentence, id: card.id)
       let mastery = states[identity]?.masteryLevel ?? 0
@@ -181,7 +218,8 @@ public final class PracticeViewModel {
     guard isRevealed else { return nil }
     return switch currentContent {
     case .lexeme(let lexeme):
-      lexeme.stressedForm
+      lexemeDirection == .recognition
+        ? lexeme.glossZh : lexeme.stressedForm
     case .sentence(let sentence):
       sentence.practiceRu
     case nil:
@@ -216,9 +254,16 @@ public final class PracticeViewModel {
     self.recordingsDirectory =
       recordingsDirectory ?? Self.defaultRecordingsDirectory
     let instant = now()
+    lexemeDirection =
+      calendar.component(.hour, from: instant) < 12
+      ? .recognition : .production
     recallStartedAt = instant
     sentencesByID = Dictionary(
       uniqueKeysWithValues: catalog.sentences.map { ($0.id, $0) }
+    )
+    sentencesByTheme = Dictionary(
+      grouping: catalog.sentences,
+      by: \.theme
     )
 
     let events = try repository.reviewEvents()
@@ -326,10 +371,13 @@ public final class PracticeViewModel {
     let diagnosticCapsNewWords = diagnosticFindings.contains {
       $0 == .vocabularyBreadth || $0 == .activeRetrieval
     }
-    let adaptiveNewWordLimit =
+    let diagnosedNewWordLimit =
       diagnosticCapsNewWords
       ? min(scheduledNewWordLimit, 6)
       : scheduledNewWordLimit
+    let adaptiveNewWordLimit =
+      weeklyReviewDay && hasLearnedContent
+      ? 0 : diagnosedNewWordLimit
 
     let attemptedBeforeToday = Set(
       events.compactMap { event in
@@ -414,6 +462,18 @@ public final class PracticeViewModel {
     }
 
     let sentenceExcluded = successfulTodaySet.union(retryToday)
+    let freshSentenceCandidates =
+      weeklyReviewDay && hasLearnedContent
+      ? []
+      : Self.dailyOrder(
+        freshSentences.filter {
+          !sentenceExcluded.contains(
+            PracticeItemIdentity(kind: .sentence, id: $0.id)
+          )
+        },
+        dayIndex: dayIndex,
+        salt: 29
+      )
     let sentenceCandidates =
       Self.dailyOrder(
         dueSentences.filter {
@@ -424,15 +484,7 @@ public final class PracticeViewModel {
         dayIndex: dayIndex,
         salt: 23
       )
-      + Self.dailyOrder(
-        freshSentences.filter {
-          !sentenceExcluded.contains(
-            PracticeItemIdentity(kind: .sentence, id: $0.id)
-          )
-        },
-        dayIndex: dayIndex,
-        salt: 29
-      )
+      + freshSentenceCandidates
       + Self.dailyOrder(
         learnedSentences.filter {
           let identity = PracticeItemIdentity(
@@ -477,6 +529,17 @@ public final class PracticeViewModel {
   public func reveal() {
     isRevealed = true
     refreshRecallTimer()
+  }
+
+  public func toggleLexemeDirection() {
+    guard currentLexeme != nil else { return }
+    lexemeDirection =
+      lexemeDirection == .recognition
+      ? .production : .recognition
+    isRevealed = false
+    remainingRecallSeconds = 3
+    recallStartedAt = now()
+    speechService.stop()
   }
 
   public func refreshRecallTimer() {
@@ -712,7 +775,10 @@ public final class PracticeViewModel {
       ).first ?? FileManager.default.temporaryDirectory
     return
       base
-      .appendingPathComponent("RussianCorner", isDirectory: true)
+      .appendingPathComponent(
+        "com.openclaw.russiancorner",
+        isDirectory: true
+      )
       .appendingPathComponent("Recordings", isDirectory: true)
   }
 

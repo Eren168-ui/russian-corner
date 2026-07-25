@@ -11,11 +11,13 @@ private final class PassiveFloatingPanel: NSPanel {
 public final class FloatingPanelController: NSObject, NSWindowDelegate {
   private let panel: PassiveFloatingPanel
   private let appModel: AppModel
+  private weak var runtime: AppRuntime?
   nonisolated(unsafe) private var screenObserver: NSObjectProtocol?
   private var moveDebounceTask: Task<Void, Never>?
   private var isSnapping = false
 
   public init(runtime: AppRuntime) {
+    self.runtime = runtime
     appModel = runtime.appModel
     panel = PassiveFloatingPanel(
       contentRect: CGRect(origin: .zero, size: Self.expandedSize),
@@ -87,6 +89,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   }
 
   public func hide() {
+    runtime?.practice?.handleDisappear()
     appModel.isCardVisible = false
     panel.orderOut(nil)
   }

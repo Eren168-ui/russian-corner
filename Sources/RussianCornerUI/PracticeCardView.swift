@@ -203,6 +203,8 @@ public struct PracticeCardView: View {
                 .accessibilityLabel("答案：\(answer)")
               if practice.currentLexeme != nil {
                 lexemeDetails
+              } else if practice.microDialogueTurns.count >= 2 {
+                microDialogue
               }
             }
             .transition(.opacity.combined(with: .move(edge: .bottom)))
@@ -261,6 +263,14 @@ public struct PracticeCardView: View {
             value: lexeme.collocations.prefix(2).joined(separator: "  ·  ")
           )
         }
+        if let government = lexeme.government, !government.isEmpty {
+          detailBlock(title: "支配 / 用法", value: government)
+        }
+        if let aspectPairNote = lexeme.aspectPairNote,
+          !aspectPairNote.isEmpty
+        {
+          detailBlock(title: "体对说明", value: aspectPairNote)
+        }
         detailBlock(title: "例句", value: lexeme.example)
       }
       if let context = practice.currentContextSentence {
@@ -268,6 +278,27 @@ public struct PracticeCardView: View {
           title: "场景 · \(context.theme)",
           value: context.practiceRu
         )
+      }
+    }
+    .textSelection(.enabled)
+  }
+
+  private var microDialogue: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      Text("МИКРО-ДИАЛОГ · 场景串练")
+        .font(.system(size: 8, weight: .semibold, design: .monospaced))
+        .tracking(0.8)
+        .foregroundStyle(CardPalette.rust)
+      ForEach(Array(practice.microDialogueTurns.enumerated()), id: \.element.id) {
+        index, turn in
+        VStack(alignment: .leading, spacing: 2) {
+          Text("A\(index + 1) · \(turn.cue)")
+            .font(.system(size: 11 * appModel.fontScale))
+            .foregroundStyle(CardPalette.mutedInk)
+          Text("Вы · \(turn.response)")
+            .font(.system(size: 12 * appModel.fontScale))
+            .fixedSize(horizontal: false, vertical: true)
+        }
       }
     }
     .textSelection(.enabled)
@@ -290,6 +321,15 @@ public struct PracticeCardView: View {
       HStack(spacing: 8) {
         utilityButton("朗读", systemImage: "speaker.wave.2") {
           practice.speak()
+        }
+        if practice.currentLexeme != nil {
+          utilityButton(
+            practice.lexemeDirection == .recognition ? "俄→中" : "中→俄",
+            systemImage: "arrow.left.arrow.right"
+          ) {
+            practice.toggleLexemeDirection()
+          }
+          .accessibilityHint("切换认词和主动提取方向")
         }
         utilityButton(
           practice.isRecording ? "停止" : "录音",
