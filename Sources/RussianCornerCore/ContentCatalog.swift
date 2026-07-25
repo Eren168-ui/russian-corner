@@ -288,6 +288,19 @@ public struct ContentCatalog: Sendable {
                 issues: &issues
             )
             require(
+                !sentence.cueRu.isEmpty,
+                itemID: sentence.id,
+                message: "missing Russian cue",
+                issues: &issues
+            )
+            require(
+                Self.normalizedText(sentence.cueRu)
+                    != Self.normalizedText(sentence.practiceRu),
+                itemID: sentence.id,
+                message: "Russian cue equals practice text",
+                issues: &issues
+            )
+            require(
                 !sentence.practiceRu.isEmpty,
                 itemID: sentence.id,
                 message: "missing Russian practice text",

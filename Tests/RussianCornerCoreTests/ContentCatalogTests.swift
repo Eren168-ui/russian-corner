@@ -123,6 +123,16 @@ final class ContentCatalogTests: XCTestCase {
 
         for sentence in catalog.sentences {
             XCTAssertFalse(sentence.promptZh.isEmpty, sentence.id)
+            XCTAssertFalse(sentence.cueRu.isEmpty, sentence.id)
+            XCTAssertNotEqual(
+                sentence.cueRu
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .lowercased(),
+                sentence.practiceRu
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .lowercased(),
+                sentence.id
+            )
             XCTAssertFalse(sentence.practiceRu.isEmpty, sentence.id)
             XCTAssertFalse(sentence.speechText.isEmpty, sentence.id)
             XCTAssertFalse(sentence.theme.isEmpty, sentence.id)
@@ -132,6 +142,26 @@ final class ContentCatalogTests: XCTestCase {
             XCTAssertTrue(
                 sentence.lexemeIDs.allSatisfy(lexemeIDs.contains),
                 sentence.id
+            )
+        }
+    }
+
+    func testEveryRussianCueIsReviewedQuestionOrGuidance() throws {
+        let catalog = try ContentCatalog()
+
+        XCTAssertEqual(catalog.sentences.count, 72)
+        for sentence in catalog.sentences {
+            XCTAssertEqual(sentence.reviewStatus, .reviewed, sentence.id)
+            XCTAssertTrue(
+                sentence.cueRu.hasSuffix("?")
+                    || sentence.cueRu.hasSuffix("!")
+                    || sentence.cueRu.hasSuffix("…"),
+                "\(sentence.id): \(sentence.cueRu)"
+            )
+            XCTAssertGreaterThanOrEqual(
+                sentence.cueRu.split(separator: " ").count,
+                3,
+                "\(sentence.id): \(sentence.cueRu)"
             )
         }
     }
@@ -645,6 +675,7 @@ final class ContentCatalogTests: XCTestCase {
         SentenceCard(
             id: id,
             promptZh: "这是我的家。",
+            cueRu: "Что вы скажете о своём доме?",
             practiceRu: practiceRu,
             speechText: practiceRu,
             theme: "home",

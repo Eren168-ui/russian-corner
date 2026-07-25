@@ -13,7 +13,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/greetings",
     "sourceText": "Здравствуйте! Очень приятно познакомиться; надеюсь, наша встреча пройдёт хорошо.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как вы поприветствуете нового знакомого?"
   },
   {
     "id": "sentence-greetings-2",
@@ -31,7 +32,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/greetings",
     "sourceText": "Спасибо за помощь. Передайте, пожалуйста, Анне привет; с друзьями я прощаюсь словом «пока», а со старшими — «до свидания».",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как поблагодарить и передать привет?"
   },
   {
     "id": "sentence-family-1",
@@ -48,7 +50,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/family",
     "sourceText": "В нашей семье я живу вместе с родителями — мамой, папой и младшим братом.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Кто живёт вместе в вашей семье?"
   },
   {
     "id": "sentence-family-2",
@@ -65,7 +68,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/family",
     "sourceText": "В воскресенье сестра встречает бабушку и дедушку: они приходят навестить внучку и других родственников.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Кого встречает сестра в воскресенье?"
   },
   {
     "id": "sentence-home-1",
@@ -81,7 +85,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/home",
     "sourceText": "В светлой квартире балкон выходит во двор, а кухня — на улицу.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Куда выходят окна квартиры?"
   },
   {
     "id": "sentence-home-2",
@@ -99,7 +104,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/home",
     "sourceText": "В спальне и гостиной удобная мебель: диван стоит у большого окна.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Какая мебель стоит у окна?"
   },
   {
     "id": "sentence-daily-routine-1",
@@ -114,7 +120,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/daily-routine",
     "sourceText": "По будням я стараюсь рано вставать и сразу умываться.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что вы делаете утром по будням?"
   },
   {
     "id": "sentence-daily-routine-2",
@@ -133,7 +140,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/daily-routine",
     "sourceText": "Мой распорядок прост: утром я принимаю душ, потом у меня завтрак и я одеваюсь, а вечером ложусь спать.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как выглядит ваш обычный распорядок?"
   },
   {
     "id": "sentence-food-1",
@@ -151,7 +159,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/food",
     "sourceText": "На обед мы заказали свежий хлеб, суп и салат, а потом выпили чай.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что вы заказали на обед?"
   },
   {
     "id": "sentence-food-2",
@@ -167,7 +176,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/food",
     "sourceText": "На ужин брат будет готовить рис и рыбу.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что брат приготовит на ужин?"
   },
   {
     "id": "sentence-shopping-1",
@@ -183,7 +193,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/shopping",
     "sourceText": "В магазине я хочу сравнивать цены на один и тот же товар.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что вы сравниваете в магазине?"
   },
   {
     "id": "sentence-shopping-2",
@@ -201,7 +212,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/shopping",
     "sourceText": "Я привык заранее выбирать способ оплаты, а на кассе платить банковской картой, получать чек и проверять, учли ли скидку.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как вы обычно платите на кассе?"
   },
   {
     "id": "sentence-cafe-1",
@@ -218,7 +230,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/cafe",
     "sourceText": "Официант, принесите, пожалуйста, меню и чашку кофе.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как обратиться к официанту за меню?"
   },
   {
     "id": "sentence-cafe-2",
@@ -235,7 +248,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/cafe",
     "sourceText": "Мы хотим сделать заказ и выбрать десерт; счёт будем просить позже.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что вы хотите заказать в кафе?"
   },
   {
     "id": "sentence-transport-1",
@@ -250,7 +264,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/transport",
     "sourceText": "Автобус должен приехать на остановку через пять минут.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Когда автобус приедет на остановку?"
   },
   {
     "id": "sentence-transport-2",
@@ -269,7 +284,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/transport",
     "sourceText": "Обычно днём быстрее ехать на метро, а через несколько минут после закрытия станции приходится вызывать такси.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как лучше добраться после закрытия метро?"
   },
   {
     "id": "sentence-city-1",
@@ -287,7 +303,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/city",
     "sourceText": "В центре города перед музеем есть широкая и тихая площадь.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что находится перед музеем в центре?"
   },
   {
     "id": "sentence-city-2",
@@ -303,7 +320,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/city",
     "sourceText": "Эта улица ведёт через парк к набережной.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Куда ведёт эта улица?"
   },
   {
     "id": "sentence-directions-1",
@@ -319,7 +337,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/directions",
     "sourceText": "Идите прямо, потом на перекрёстке поверните налево.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как пройти от этого места?"
   },
   {
     "id": "sentence-directions-2",
@@ -337,7 +356,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/directions",
     "sourceText": "Если повернуть налево, аптека будет напротив банка, а вход — справа.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Где находится аптека и её вход?"
   },
   {
     "id": "sentence-weather-1",
@@ -354,7 +374,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/weather",
     "sourceText": "Сегодня тепло и солнечно, ветер почти не чувствуется.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Какая сегодня погода?"
   },
   {
     "id": "sentence-weather-2",
@@ -371,7 +392,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/weather",
     "sourceText": "Днём возможен дождь, поэтому нельзя забывать зонт.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что взять из-за возможного дождя?"
   },
   {
     "id": "sentence-seasons-1",
@@ -386,7 +408,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/seasons",
     "sourceText": "Весной снег начинает таять уже в марте.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что происходит со снегом весной?"
   },
   {
     "id": "sentence-seasons-2",
@@ -405,7 +428,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/seasons",
     "sourceText": "Весной начинают расцветать цветы, а осенью листья желтеют и воздух становится прохладным.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как меняется природа весной и осенью?"
   },
   {
     "id": "sentence-time-1",
@@ -423,7 +447,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/time",
     "sourceText": "Сейчас четверть восьмого; у меня есть полчаса, и я обычно успеваю прийти вовремя.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Который час и успеете ли вы?"
   },
   {
     "id": "sentence-time-2",
@@ -439,7 +464,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/time",
     "sourceText": "Встреча начинается в восемь и будет длиться всего сорок минут.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Когда начинается и сколько длится встреча?"
   },
   {
     "id": "sentence-calendar-1",
@@ -455,7 +481,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/calendar",
     "sourceText": "Я привык назначать встречи заранее: следующая будет во вторник и уже отмечена в календаре.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Когда назначена следующая встреча?"
   },
   {
     "id": "sentence-calendar-2",
@@ -473,7 +500,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/calendar",
     "sourceText": "В конце месяца рабочая неделя будет короткой: будущий отпуск начнётся через три дня.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Когда начнётся будущий отпуск?"
   },
   {
     "id": "sentence-study-1",
@@ -490,7 +518,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/study",
     "sourceText": "Студент читает учебник в библиотеке и делает запись в тетради.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что студент делает в библиотеке?"
   },
   {
     "id": "sentence-study-2",
@@ -507,7 +536,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/study",
     "sourceText": "Преподаватель объясняет задание, а ученики отвечают на каждый вопрос.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что делают преподаватель и ученики?"
   },
   {
     "id": "sentence-language-learning-1",
@@ -523,7 +553,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/language-learning",
     "sourceText": "Каждое новое слово я стараюсь повторять вслух.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как вы запоминаете новое слово?"
   },
   {
     "id": "sentence-language-learning-2",
@@ -541,7 +572,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/language-learning",
     "sourceText": "Чтобы говорить свободно, полезно слушать диалог, повторять фразы и тренировать произношение.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что полезно делать для свободной речи?"
   },
   {
     "id": "sentence-health-1",
@@ -556,7 +588,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/health",
     "sourceText": "У меня начала болеть голова и поднялась температура.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что случилось с вашим здоровьем?"
   },
   {
     "id": "sentence-health-2",
@@ -575,7 +608,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/health",
     "sourceText": "Врач советует: нужно отдохнуть, пить больше воды и вовремя принимать лекарство.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что советует врач для выздоровления?"
   },
   {
     "id": "sentence-feelings-1",
@@ -593,7 +627,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/feelings",
     "sourceText": "Хорошая новость помогает мне радоваться, чувствовать себя спокойно и сохранять хорошее настроение.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как на вас действует хорошая новость?"
   },
   {
     "id": "sentence-feelings-2",
@@ -609,7 +644,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/feelings",
     "sourceText": "Я немного волнуюсь, но друг умеет меня поддерживать.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Кто поддерживает вас при волнении?"
   },
   {
     "id": "sentence-hobbies-1",
@@ -625,7 +661,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/hobbies",
     "sourceText": "В свободный вечер я люблю рисовать, фотографировать и подписывать открытки.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Чем вы занимаетесь в свободный вечер?"
   },
   {
     "id": "sentence-hobbies-2",
@@ -643,7 +680,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/hobbies",
     "sourceText": "В выходной я люблю собирать марки, играть на гитаре и смотреть кино.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Какие занятия вам нравятся в выходной?"
   },
   {
     "id": "sentence-sports-1",
@@ -659,7 +697,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/sports",
     "sourceText": "Утром перед тем, как бегать на стадионе, мы делаем разминку.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что вы делаете перед бегом?"
   },
   {
     "id": "sentence-sports-2",
@@ -677,7 +716,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/sports",
     "sourceText": "После каждого упражнения тренер записывает результат команды, и все продолжают тренироваться.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что происходит после каждого упражнения?"
   },
   {
     "id": "sentence-travel-1",
@@ -692,7 +732,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/travel",
     "sourceText": "Перед путешествием я проверяю маршрут и собираю чемодан.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что вы проверяете перед путешествием?"
   },
   {
     "id": "sentence-travel-2",
@@ -711,7 +752,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/travel",
     "sourceText": "Я люблю собираться в поездку заранее и выбирать новое место, где можно гулять, снимать городские виды и знакомиться с местными жителями.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Какое место вы выбираете для поездки?"
   },
   {
     "id": "sentence-hotel-1",
@@ -729,7 +771,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/hotel",
     "sourceText": "В этой гостинице я предпочитаю бронировать одноместный номер; администратор подтверждает, что питание включено.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Какой номер вы бронируете в гостинице?"
   },
   {
     "id": "sentence-hotel-2",
@@ -745,7 +788,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/hotel",
     "sourceText": "На стойке мне дали ключ и назвали пароль от вайфая.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что вам дали и сообщили на стойке?"
   },
   {
     "id": "sentence-airport-1",
@@ -761,7 +805,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/airport",
     "sourceText": "На регистрации нужно показать паспорт и билет.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что показать на регистрации?"
   },
   {
     "id": "sentence-airport-2",
@@ -779,7 +824,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/airport",
     "sourceText": "Багаж ещё не погрузили, поэтому рейс задерживается, а выход на посадку может измениться.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Почему задерживается рейс?"
   },
   {
     "id": "sentence-train-1",
@@ -796,7 +842,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/train",
     "sourceText": "Поезд будет отправляться со второй платформы, это уже указано в расписании.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Откуда будет отправляться поезд?"
   },
   {
     "id": "sentence-train-2",
@@ -813,7 +860,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/train",
     "sourceText": "Проводник помог найти вагон, сиденье и верхнюю полку.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что помог найти проводник?"
   },
   {
     "id": "sentence-communication-1",
@@ -831,7 +879,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/communication",
     "sourceText": "Можно позвонить по телефону или отправить сообщение — я постараюсь быстро ответить.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как с вами можно связаться?"
   },
   {
     "id": "sentence-communication-2",
@@ -847,7 +896,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/communication",
     "sourceText": "Если нужно связаться позже, сохраните мой контакт, и мы продолжим разговор.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что сделать для поздней связи?"
   },
   {
     "id": "sentence-technology-1",
@@ -863,7 +913,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/technology",
     "sourceText": "Телефон разрядился: зарядное устройство сломано, поэтому батарея не заряжается.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Почему телефон не заряжается?"
   },
   {
     "id": "sentence-technology-2",
@@ -881,7 +932,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/technology",
     "sourceText": "На экране нажмите «Подключиться к сети», затем откройте приложение и проверьте интернет.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как подключиться к сети на экране?"
   },
   {
     "id": "sentence-clothing-1",
@@ -898,7 +950,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/clothing",
     "sourceText": "В холодный день нужно надевать пальто, шарф и непромокаемые сапоги.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что надеть в холодный день?"
   },
   {
     "id": "sentence-clothing-2",
@@ -915,7 +968,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/clothing",
     "sourceText": "Эта рубашка мне впору, а брюки слишком длинные.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как сидят рубашка и брюки?"
   },
   {
     "id": "sentence-appearance-1",
@@ -930,7 +984,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/appearance",
     "sourceText": "Высокий мужчина в очках ждёт у двери.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Кто ждёт у двери?"
   },
   {
     "id": "sentence-appearance-2",
@@ -949,7 +1004,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/appearance",
     "sourceText": "Короткие волосы, добрая улыбка и синее платье делают её внешность яркой.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что делает её внешность яркой?"
   },
   {
     "id": "sentence-friends-1",
@@ -967,7 +1023,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/friends",
     "sourceText": "Мой старый товарищ живёт недалеко, поэтому мы можем часто видеться.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Почему вы часто видитесь с товарищем?"
   },
   {
     "id": "sentence-friends-2",
@@ -983,7 +1040,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/friends",
     "sourceText": "Крепкая дружба помогает доверять друг другу и честно говорить о проблемах.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что даёт вам крепкая дружба?"
   },
   {
     "id": "sentence-plans-1",
@@ -999,7 +1057,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/plans",
     "sourceText": "Завтра я планирую закончить весь список дел.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что вы планируете сделать завтра?"
   },
   {
     "id": "sentence-plans-2",
@@ -1017,7 +1076,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/plans",
     "sourceText": "Если вечером останется время и не будет срочных дел, можно пойти прогуляться.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Когда можно пойти прогуляться?"
   },
   {
     "id": "sentence-invitations-1",
@@ -1035,7 +1095,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/invitations",
     "sourceText": "Мы приглашаем гостей в субботу и готовим угощение; кто свободен, сразу соглашается, а кто занят — вежливо отказывается.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как гости отвечают на приглашение?"
   },
   {
     "id": "sentence-invitations-2",
@@ -1051,7 +1112,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/invitations",
     "sourceText": "Спасибо за приглашение: мне всегда приятно приходить к вам, и в этот раз я с удовольствием приду.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как тепло принять приглашение?"
   },
   {
     "id": "sentence-chores-1",
@@ -1068,7 +1130,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/chores",
     "sourceText": "Утром я заправляю кровать, подметаю пол и выношу мусор.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Какие домашние дела вы делаете утром?"
   },
   {
     "id": "sentence-chores-2",
@@ -1085,7 +1148,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/chores",
     "sourceText": "После ужина мы моем посуду и убираем кухню, чтобы она была чистой и в доме был порядок.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как вы убираете после ужина?"
   },
   {
     "id": "sentence-services-1",
@@ -1102,7 +1166,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/services",
     "sourceText": "На почте мне объяснили, как правильно писать адрес, наклеивать марку и отправлять посылку.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как правильно отправить посылку?"
   },
   {
     "id": "sentence-services-2",
@@ -1119,7 +1184,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/services",
     "sourceText": "Мастер в парикмахерской оказывает эту услугу; я уже записался на стрижку в пятницу.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "На какую услугу вы записались?"
   },
   {
     "id": "sentence-nature-1",
@@ -1137,7 +1203,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/nature",
     "sourceText": "Узкая тропинка ведёт через лес к реке с прозрачной водой у подножия крутой горы.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Куда ведёт узкая тропинка?"
   },
   {
     "id": "sentence-nature-2",
@@ -1153,7 +1220,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/nature",
     "sourceText": "На природе приятно слышать пение птиц.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что приятно слушать на природе?"
   },
   {
     "id": "sentence-holidays-1",
@@ -1169,7 +1237,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/holidays",
     "sourceText": "Перед праздником мы будем украшать комнату и покупать продукты.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что вы делаете перед праздником?"
   },
   {
     "id": "sentence-holidays-2",
@@ -1187,7 +1256,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/holidays",
     "sourceText": "По традиции в полночь мы дарим подарок, поздравляем друг друга и делаем общее фото.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как вы отмечаете праздник в полночь?"
   },
   {
     "id": "sentence-emergencies-1",
@@ -1204,7 +1274,8 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/emergencies",
     "sourceText": "Помогите, пожалуйста: человек только что потерял кошелёк. Пропажу нужно срочно найти.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Как попросить помочь найти пропажу?"
   },
   {
     "id": "sentence-emergencies-2",
@@ -1221,6 +1292,7 @@
     ],
     "sourcePath": "curated://daily-russian-a1-b1/emergencies",
     "sourceText": "Один звонок в службу спасения поможет в экстренной ситуации; точно сообщите своё местонахождение.",
-    "reviewStatus": "reviewed"
+    "reviewStatus": "reviewed",
+    "cueRu": "Что сообщить службе спасения?"
   }
 ]

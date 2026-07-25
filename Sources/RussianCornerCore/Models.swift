@@ -149,6 +149,7 @@ public struct Lexeme: Identifiable, Codable, Equatable, Sendable {
 public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
     public let id: String
     public let promptZh: String
+    public let cueRu: String
     public let practiceRu: String
     public let speechText: String
     public let theme: String
@@ -160,6 +161,7 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
     public init(
         id: String,
         promptZh: String,
+        cueRu: String,
         practiceRu: String,
         speechText: String,
         theme: String,
@@ -170,6 +172,7 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
     ) {
         self.id = id
         self.promptZh = promptZh
+        self.cueRu = cueRu
         self.practiceRu = practiceRu
         self.speechText = speechText
         self.theme = theme

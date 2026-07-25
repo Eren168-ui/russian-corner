@@ -16,6 +16,14 @@ let package = Package(
             name: "RussianCornerPlatform",
             targets: ["RussianCornerPlatform"]
         ),
+        .library(
+            name: "RussianCornerUI",
+            targets: ["RussianCornerUI"]
+        ),
+        .executable(
+            name: "RussianCornerApp",
+            targets: ["RussianCornerApp"]
+        ),
     ],
     targets: [
         .target(
@@ -28,6 +36,21 @@ let package = Package(
             name: "RussianCornerPlatform",
             dependencies: ["RussianCornerCore"]
         ),
+        .target(
+            name: "RussianCornerUI",
+            dependencies: [
+                "RussianCornerCore",
+                "RussianCornerPlatform",
+            ]
+        ),
+        .executableTarget(
+            name: "RussianCornerApp",
+            dependencies: [
+                "RussianCornerCore",
+                "RussianCornerPlatform",
+                "RussianCornerUI",
+            ]
+        ),
         .testTarget(
             name: "RussianCornerCoreTests",
             dependencies: ["RussianCornerCore"]
@@ -37,6 +60,14 @@ let package = Package(
             dependencies: [
                 "RussianCornerCore",
                 "RussianCornerPlatform",
+            ]
+        ),
+        .testTarget(
+            name: "RussianCornerAppTests",
+            dependencies: [
+                "RussianCornerCore",
+                "RussianCornerPlatform",
+                "RussianCornerUI",
             ]
         ),
     ]
