@@ -19,8 +19,8 @@
 - `Sources/RussianCornerCore/Diagnostics.swift`: baseline and weekly bottleneck metrics.
 - `Sources/RussianCornerCore/ContentCatalog.swift`: bundle loading and content validation.
 - `Sources/RussianCornerApp/`: SwiftUI application, SwiftData adapter, panel, services, and views.
-- `Sources/RussianCornerApp/Resources/lexemes.json`: reviewed daily vocabulary.
-- `Sources/RussianCornerApp/Resources/sentences.json`: reviewed sentence/chunk cards.
+- `Sources/RussianCornerCore/Resources/lexemes.json`: reviewed daily vocabulary shared by tests and the app.
+- `Sources/RussianCornerCore/Resources/sentences.json`: reviewed sentence/chunk cards shared by tests and the app.
 - `Tests/RussianCornerCoreTests/`: behavior-first tests for all core rules.
 - `Scripts/build-app.sh`: release build, `.app` assembly, Info.plist, and ad-hoc signing.
 
@@ -89,8 +89,8 @@ git commit -m "feat: add adaptive review scheduler"
 **Files:**
 - Create: `Sources/RussianCornerCore/DailyQueue.swift`
 - Create: `Sources/RussianCornerCore/ContentCatalog.swift`
-- Create: `Sources/RussianCornerApp/Resources/lexemes.json`
-- Create: `Sources/RussianCornerApp/Resources/sentences.json`
+- Create: `Sources/RussianCornerCore/Resources/lexemes.json`
+- Create: `Sources/RussianCornerCore/Resources/sentences.json`
 - Test: `Tests/RussianCornerCoreTests/DailyQueueTests.swift`
 - Test: `Tests/RussianCornerCoreTests/ContentCatalogTests.swift`
 
@@ -151,7 +151,7 @@ Expected: all catalog and queue tests pass with zero validation issues.
 - [ ] **Step 6: Commit**
 
 ```bash
-git add Sources/RussianCornerCore Sources/RussianCornerApp/Resources Tests/RussianCornerCoreTests
+git add Sources/RussianCornerCore Tests/RussianCornerCoreTests
 git commit -m "feat: add linked vocabulary and sentence catalog"
 ```
 
