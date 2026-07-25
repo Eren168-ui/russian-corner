@@ -544,6 +544,7 @@ public final class PracticeViewModel {
 
   private func advance(status: String?) {
     guard currentItem != nil else { return }
+    speechService.stop()
     currentIndex += 1
     isRevealed = false
     remainingRecallSeconds = 3
@@ -553,6 +554,13 @@ public final class PracticeViewModel {
 
   public func showStatus(_ message: String) {
     statusMessage = message
+  }
+
+  public func handleDisappear() {
+    speechService.stop()
+    if let cleanupMessage = cleanupRecordingForTransition() {
+      statusMessage = cleanupMessage
+    }
   }
 
   public var isRecording: Bool {

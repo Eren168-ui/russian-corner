@@ -93,6 +93,7 @@ public final class DiagnosticViewModel {
     private let recordingService: any RecordingManaging
     private let speechService: SpeechService
     private let sleeper: any DiagnosticSleeping
+    private let onReportSaved: (@MainActor () -> Void)?
     private let now: () -> Date
     private var recognitionIndex = 0
     private var productionIndex = 0
@@ -118,6 +119,7 @@ public final class DiagnosticViewModel {
         vocabularyCount: Int = 10,
         listeningCount: Int = 10,
         sleeper: any DiagnosticSleeping = SystemDiagnosticSleeper(),
+        onReportSaved: (@MainActor () -> Void)? = nil,
         now: @escaping () -> Date = Date.init
     ) throws {
         let history = try repository.diagnosticHistory()
@@ -166,6 +168,7 @@ public final class DiagnosticViewModel {
         self.recordingService = recordingService
         self.speechService = speechService
         self.sleeper = sleeper
+        self.onReportSaved = onReportSaved
         self.now = now
         itemStartedAt = now()
         report = history.entries.last?.report
@@ -337,14 +340,14 @@ public final class DiagnosticViewModel {
     }
 
     public var recommendedNewWordUpperLimit: Int {
-        guard let findings = report?.findings else { return 7 }
+        guard let findings = report?.findings else { return 10 }
         if findings.contains(where: { $0.type == .vocabularyBreadth }) {
-            return 5
+            return 6
         }
         if findings.contains(where: { $0.type == .activeRetrieval }) {
             return 6
         }
-        return 7
+        return 10
     }
 
     public func start() {
@@ -396,11 +399,32 @@ public final class DiagnosticViewModel {
 
     public func speakListeningSentence() {
         guard let sentence = currentListeningSentence else { return }
+        let sentenceID = sentence.id
         listeningStates[sentence.id] = .playing
-        switch speechService.speak(sentence.speechText) {
+        statusMessage = "正在播放第 \(currentPosition) 条听句"
+        let playbackStatus = speechService.speak(
+            sentence.speechText,
+            voicePolicy: .russianOnly
+        ) { [weak self] outcome in
+            guard let self,
+                self.step == .listening,
+                self.currentListeningSentence?.id == sentenceID,
+                self.listeningStates[sentenceID] == .playing
+            else {
+                return
+            }
+            switch outcome {
+            case .finished:
+                self.listeningStates[sentenceID] = .played
+                self.statusMessage = "第 \(self.currentPosition) 条听句播放完成"
+            case .cancelled:
+                self.listeningStates[sentenceID] = .notPlayed
+                self.statusMessage = "听句播放已取消，请重新播放"
+            }
+        }
+        switch playbackStatus {
         case .russianVoice:
-            listeningStates[sentence.id] = .played
-            statusMessage = "正在播放第 \(currentPosition) 条听句"
+            break
         case .fallbackVoice(_, let language):
             listeningStates[sentence.id] = .unavailable
             statusMessage = "未找到俄语语音（仅有 \(language)），请跳过本条听句"
@@ -437,6 +461,7 @@ public final class DiagnosticViewModel {
     }
 
     private func advanceListening() {
+        speechService.stop()
         listeningIndex += 1
         if listeningIndex >= sample.listening.count {
             move(to: .collocation)
@@ -513,6 +538,12 @@ public final class DiagnosticViewModel {
     }
 
     public func handleDisappear() {
+        speechService.stop()
+        if let sentenceID = currentListeningSentence?.id,
+            listeningStates[sentenceID] == .playing
+        {
+            listeningStates[sentenceID] = .notPlayed
+        }
         guard isRecordingStep else {
             cancelRecordingTimer()
             return
@@ -571,6 +602,7 @@ public final class DiagnosticViewModel {
         report = generated
         do {
             try repository.saveDiagnosticReport(generated)
+            onReportSaved?()
             statusMessage =
                 sampleWasRepaired
                 ? "题目变化，本次重建基线"
@@ -585,6 +617,7 @@ public final class DiagnosticViewModel {
     }
 
     private func resetMeasurements() {
+        speechService.stop()
         cancelRecordingTimer()
         recognitionIndex = 0
         productionIndex = 0

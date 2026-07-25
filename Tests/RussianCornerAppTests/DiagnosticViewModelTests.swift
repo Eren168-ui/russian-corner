@@ -262,7 +262,7 @@ final class DiagnosticViewModelTests: XCTestCase {
                 $0.contains("中文到俄语")
             }
         )
-        XCTAssertLessThanOrEqual(model.recommendedNewWordUpperLimit, 7)
+        XCTAssertEqual(model.recommendedNewWordUpperLimit, 6)
         XCTAssertEqual(
             try repository.diagnosticHistory().entries.map(\.kind),
             [.baseline, .weekly]
@@ -288,6 +288,7 @@ final class DiagnosticViewModelTests: XCTestCase {
             listeningSentenceIDs: ["sentence-1"]
         )
         let repository = FailingDiagnosticStore(report: baselineReport)
+        var reportSaved = false
         let model = try DiagnosticViewModel(
             catalog: makeCatalog(),
             repository: repository,
@@ -296,6 +297,9 @@ final class DiagnosticViewModelTests: XCTestCase {
             seed: 31,
             vocabularyCount: 1,
             listeningCount: 1,
+            onReportSaved: {
+                reportSaved = true
+            },
             now: { self.start }
         )
 
@@ -305,6 +309,30 @@ final class DiagnosticViewModelTests: XCTestCase {
         XCTAssertNotEqual(model.report?.baseline, model.report?.current)
         XCTAssertFalse(model.comparisonRows.isEmpty)
         XCTAssertTrue(model.statusMessage?.contains("保存失败") == true)
+        XCTAssertFalse(reportSaved)
+    }
+
+    func testSuccessfulReportSaveInvokesRefreshCallback() throws {
+        var reportSaved = false
+        let model = try DiagnosticViewModel(
+            catalog: makeCatalog(),
+            repository: ProgressRepository(
+                container: try ProgressRepository.makeInMemoryContainer()
+            ),
+            recordingService: DiagnosticFakeRecordingService(),
+            speechService: makeSpeechService(),
+            seed: 310,
+            vocabularyCount: 1,
+            listeningCount: 1,
+            onReportSaved: {
+                reportSaved = true
+            },
+            now: { self.start }
+        )
+
+        completeDiagnostic(model)
+
+        XCTAssertTrue(reportSaved)
     }
 
     func testCorruptDiagnosticHistoryDoesNotBlockRuntimePracticeOrSettings() throws {
@@ -389,9 +417,13 @@ final class DiagnosticViewModelTests: XCTestCase {
             RussianCornerDiagnosticView.trendLabel(.unchanged),
             "持平"
         )
+        XCTAssertEqual(
+            RussianCornerDiagnosticView.diagnosticSchedulingNotice,
+            "下次日队列会应用该诊断；手动练习模式优先。"
+        )
     }
 
-    func testListeningCannotBeScoredBeforeSuccessfulPlayback() throws {
+    func testDefaultDiagnosticRecommendationUsesTenNewWords() throws {
         let model = try DiagnosticViewModel(
             catalog: makeCatalog(),
             repository: ProgressRepository(
@@ -399,6 +431,26 @@ final class DiagnosticViewModelTests: XCTestCase {
             ),
             recordingService: DiagnosticFakeRecordingService(),
             speechService: makeSpeechService(),
+            seed: 312,
+            vocabularyCount: 1,
+            listeningCount: 1,
+            now: { self.start }
+        )
+
+        XCTAssertEqual(model.recommendedNewWordUpperLimit, 10)
+    }
+
+    func testListeningCannotBeScoredUntilPlaybackActuallyFinishes() throws {
+        let synthesizer = DiagnosticSpeechSynthesizer(
+            automaticallyFinishes: false
+        )
+        let model = try DiagnosticViewModel(
+            catalog: makeCatalog(),
+            repository: ProgressRepository(
+                container: try ProgressRepository.makeInMemoryContainer()
+            ),
+            recordingService: DiagnosticFakeRecordingService(),
+            speechService: makeSpeechService(synthesizer: synthesizer),
             seed: 13,
             vocabularyCount: 1,
             listeningCount: 1,
@@ -411,9 +463,108 @@ final class DiagnosticViewModelTests: XCTestCase {
         XCTAssertEqual(model.step, .listening)
 
         model.speakListeningSentence()
+        XCTAssertEqual(model.currentListeningState, .playing)
+        model.submitListening(understood: true)
+        XCTAssertEqual(model.step, .listening)
+
+        synthesizer.finish(0)
         XCTAssertEqual(model.currentListeningState, .played)
         model.submitListening(understood: true)
         XCTAssertEqual(model.step, .collocation)
+    }
+
+    func testCancelledListeningPlaybackNeverBecomesEvidence() throws {
+        let synthesizer = DiagnosticSpeechSynthesizer(
+            automaticallyFinishes: false
+        )
+        let model = try DiagnosticViewModel(
+            catalog: makeCatalog(),
+            repository: ProgressRepository(
+                container: try ProgressRepository.makeInMemoryContainer()
+            ),
+            recordingService: DiagnosticFakeRecordingService(),
+            speechService: makeSpeechService(synthesizer: synthesizer),
+            seed: 131,
+            vocabularyCount: 1,
+            listeningCount: 1,
+            now: { self.start }
+        )
+        advanceToListening(model)
+
+        model.speakListeningSentence()
+        synthesizer.cancel(0)
+
+        XCTAssertNotEqual(model.currentListeningState, .played)
+        model.submitListening(understood: true)
+        XCTAssertEqual(model.step, .listening)
+    }
+
+    func testLateCompletionFromSkippedSentenceCannotUnlockNextSentence() throws {
+        let synthesizer = DiagnosticSpeechSynthesizer(
+            automaticallyFinishes: false
+        )
+        let model = try DiagnosticViewModel(
+            catalog: makeMultiCatalog(count: 2),
+            repository: ProgressRepository(
+                container: try ProgressRepository.makeInMemoryContainer()
+            ),
+            recordingService: DiagnosticFakeRecordingService(),
+            speechService: makeSpeechService(synthesizer: synthesizer),
+            seed: 132,
+            vocabularyCount: 1,
+            listeningCount: 2,
+            now: { self.start }
+        )
+        advanceToListening(model)
+
+        let firstID = model.currentListeningSentence?.id
+        model.speakListeningSentence()
+        model.skipListening()
+        let secondID = model.currentListeningSentence?.id
+        model.speakListeningSentence()
+
+        XCTAssertNotEqual(firstID, secondID)
+        XCTAssertEqual(model.currentListeningState, .playing)
+
+        synthesizer.finish(0)
+        XCTAssertEqual(model.currentListeningState, .playing)
+
+        synthesizer.finish(1)
+        XCTAssertEqual(model.currentListeningState, .played)
+    }
+
+    func testSkippingAndLeavingDiagnosticStopCurrentSpeech() throws {
+        let synthesizer = DiagnosticSpeechSynthesizer(
+            automaticallyFinishes: false
+        )
+        let model = try DiagnosticViewModel(
+            catalog: makeMultiCatalog(count: 2),
+            repository: ProgressRepository(
+                container: try ProgressRepository.makeInMemoryContainer()
+            ),
+            recordingService: DiagnosticFakeRecordingService(),
+            speechService: makeSpeechService(synthesizer: synthesizer),
+            seed: 133,
+            vocabularyCount: 1,
+            listeningCount: 2,
+            now: { self.start }
+        )
+        advanceToListening(model)
+
+        model.speakListeningSentence()
+        let stopsAfterSpeak = synthesizer.stopCallCount
+        model.skipListening()
+        XCTAssertEqual(synthesizer.stopCallCount, stopsAfterSpeak + 1)
+
+        model.speakListeningSentence()
+        let stopsBeforeDisappear = synthesizer.stopCallCount
+        model.handleDisappear()
+        XCTAssertEqual(
+            synthesizer.stopCallCount,
+            stopsBeforeDisappear + 1
+        )
+        synthesizer.finish(1)
+        XCTAssertEqual(model.currentListeningState, .notPlayed)
     }
 
     func testUnavailableListeningCanBeSkippedWithoutEnteringEvidenceRate() throws {
@@ -452,13 +603,20 @@ final class DiagnosticViewModelTests: XCTestCase {
     }
 
     func testNonRussianFallbackVoiceIsNotAcceptedAsListeningEvidence() throws {
+        let synthesizer = DiagnosticSpeechSynthesizer()
         let model = try DiagnosticViewModel(
             catalog: makeCatalog(),
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
             recordingService: DiagnosticFakeRecordingService(),
-            speechService: makeFallbackSpeechService(),
+            speechService: SpeechService(
+                voiceProvider: DiagnosticVoiceProvider(
+                    hasVoice: true,
+                    language: "en-US"
+                ),
+                synthesizer: synthesizer
+            ),
             seed: 141,
             vocabularyCount: 1,
             listeningCount: 1,
@@ -470,6 +628,7 @@ final class DiagnosticViewModelTests: XCTestCase {
 
         XCTAssertEqual(model.currentListeningState, .unavailable)
         XCTAssertTrue(model.statusMessage?.contains("en-US") == true)
+        XCTAssertTrue(synthesizer.requests.isEmpty)
         model.submitListening(understood: true)
         XCTAssertEqual(model.step, .listening)
         model.skipListening()
@@ -742,10 +901,13 @@ final class DiagnosticViewModelTests: XCTestCase {
         return ContentCatalog(lexemes: lexemes, sentences: sentences)
     }
 
-    private func makeSpeechService() -> SpeechService {
+    private func makeSpeechService(
+        synthesizer: DiagnosticSpeechSynthesizer =
+            DiagnosticSpeechSynthesizer()
+    ) -> SpeechService {
         SpeechService(
             voiceProvider: DiagnosticVoiceProvider(hasVoice: true),
-            synthesizer: DiagnosticSpeechSynthesizer()
+            synthesizer: synthesizer
         )
     }
 
@@ -893,6 +1055,48 @@ private struct DiagnosticVoiceProvider: SpeechVoiceProviding {
 
 @MainActor
 private final class DiagnosticSpeechSynthesizer: SpeechSynthesizing {
-    func speak(_ text: String, voiceIdentifier: String) {}
-    func stop() {}
+    struct Request {
+        let text: String
+        let voiceIdentifier: String
+        let completion: @MainActor @Sendable (SpeechSynthesisOutcome) -> Void
+    }
+
+    let automaticallyFinishes: Bool
+    private(set) var requests: [Request] = []
+    private(set) var stopCallCount = 0
+
+    init(automaticallyFinishes: Bool = true) {
+        self.automaticallyFinishes = automaticallyFinishes
+    }
+
+    func speak(
+        _ text: String,
+        voiceIdentifier: String,
+        completion: @escaping @MainActor @Sendable (
+            SpeechSynthesisOutcome
+        ) -> Void
+    ) {
+        requests.append(
+            Request(
+                text: text,
+                voiceIdentifier: voiceIdentifier,
+                completion: completion
+            )
+        )
+        if automaticallyFinishes {
+            completion(.finished)
+        }
+    }
+
+    func stop() {
+        stopCallCount += 1
+    }
+
+    func finish(_ index: Int) {
+        requests[index].completion(.finished)
+    }
+
+    func cancel(_ index: Int) {
+        requests[index].completion(.cancelled)
+    }
 }

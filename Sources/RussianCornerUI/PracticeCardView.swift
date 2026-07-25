@@ -75,6 +75,9 @@ public struct PracticeCardView: View {
       reduceMotion ? nil : .snappy(duration: 0.24),
       value: appModel.isCollapsed
     )
+    .onDisappear {
+      practice.handleDisappear()
+    }
   }
 
   private var expandedCard: some View {

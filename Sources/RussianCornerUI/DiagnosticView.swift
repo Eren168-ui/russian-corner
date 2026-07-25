@@ -6,6 +6,8 @@ public struct RussianCornerDiagnosticView: View {
         "本诊断不分析录音内容。发音准确度需由老师或母语者评估；二期 AI 反馈接入前，本应用不判断发音或母语地道度。"
     public static let minimumSize = CGSize(width: 540, height: 500)
     public static let collocationAccessibilityLabel = "常用搭配把握度"
+    public static let diagnosticSchedulingNotice =
+        "下次日队列会应用该诊断；手动练习模式优先。"
 
     public static func trendLabel(_ trend: DiagnosticTrend) -> String {
         switch trend {
@@ -318,7 +320,7 @@ public struct RussianCornerDiagnosticView: View {
                     }
                     Text("建议的新词上限：每天 \(model.recommendedNewWordUpperLimit) 个")
                         .font(.subheadline.weight(.semibold))
-                    Text("该上限仅用于展示建议，不会改动复习调度规则。")
+                    Text(Self.diagnosticSchedulingNotice)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }

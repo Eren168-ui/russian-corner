@@ -1051,15 +1051,43 @@ private struct FixedSpeechVoiceProvider: SpeechVoiceProviding {
 
 @MainActor
 private final class FakeSpeechSynthesizer: SpeechSynthesizing {
+    struct Request {
+        let text: String
+        let voiceIdentifier: String
+        let completion: @MainActor @Sendable (SpeechSynthesisOutcome) -> Void
+    }
+
     private(set) var spoken: [(text: String, voiceIdentifier: String)] = []
+    private(set) var requests: [Request] = []
     private(set) var stopCallCount = 0
 
-    func speak(_ text: String, voiceIdentifier: String) {
+    func speak(
+        _ text: String,
+        voiceIdentifier: String,
+        completion: @escaping @MainActor @Sendable (
+            SpeechSynthesisOutcome
+        ) -> Void
+    ) {
         spoken.append((text, voiceIdentifier))
+        requests.append(
+            Request(
+                text: text,
+                voiceIdentifier: voiceIdentifier,
+                completion: completion
+            )
+        )
     }
 
     func stop() {
         stopCallCount += 1
+    }
+
+    func finish(_ index: Int) {
+        requests[index].completion(.finished)
+    }
+
+    func cancel(_ index: Int) {
+        requests[index].completion(.cancelled)
     }
 }
 
@@ -1081,6 +1109,7 @@ final class SpeechServiceTests: XCTestCase {
         XCTAssertEqual(status, .russianVoice(identifier: "russian"))
         XCTAssertEqual(synthesizer.spoken.first?.text, "Здравствуйте")
         XCTAssertEqual(synthesizer.spoken.first?.voiceIdentifier, "russian")
+        XCTAssertEqual(synthesizer.stopCallCount, 1)
     }
 
     func testSpeechFallsBackSafelyWhenRussianVoiceIsMissing() {
@@ -1100,7 +1129,7 @@ final class SpeechServiceTests: XCTestCase {
             .fallbackVoice(identifier: "fallback", language: "en-US")
         )
         XCTAssertEqual(synthesizer.spoken.count, 1)
-        XCTAssertEqual(synthesizer.stopCallCount, 1)
+        XCTAssertEqual(synthesizer.stopCallCount, 2)
     }
 
     func testSpeechReturnsUnavailableWithoutCrashingWhenNoVoiceExists() {
@@ -1114,5 +1143,73 @@ final class SpeechServiceTests: XCTestCase {
 
         XCTAssertEqual(status, .unavailable)
         XCTAssertTrue(synthesizer.spoken.isEmpty)
+        XCTAssertEqual(synthesizer.stopCallCount, 1)
+    }
+
+    func testRussianOnlySpeechNeverPlaysFallbackVoice() {
+        let synthesizer = FakeSpeechSynthesizer()
+        let service = SpeechService(
+            voiceProvider: FixedSpeechVoiceProvider(voices: [
+                SpeechVoice(identifier: "fallback", language: "en-US"),
+            ]),
+            synthesizer: synthesizer
+        )
+
+        let status = service.speak(
+            "Спасибо",
+            voicePolicy: .russianOnly
+        ) { _ in
+            XCTFail("No playback means no lifecycle callback")
+        }
+
+        XCTAssertEqual(
+            status,
+            .fallbackVoice(identifier: "fallback", language: "en-US")
+        )
+        XCTAssertTrue(synthesizer.spoken.isEmpty)
+        XCTAssertEqual(synthesizer.stopCallCount, 1)
+    }
+
+    func testStartingNewSpeechStopsOldAndIgnoresItsLateCompletion() {
+        let synthesizer = FakeSpeechSynthesizer()
+        let service = SpeechService(
+            voiceProvider: FixedSpeechVoiceProvider(voices: [
+                SpeechVoice(identifier: "russian", language: "ru-RU"),
+            ]),
+            synthesizer: synthesizer
+        )
+        var outcomes: [String] = []
+
+        service.speak("Первый") { outcome in
+            outcomes.append("first-\(outcome)")
+        }
+        service.speak("Второй") { outcome in
+            outcomes.append("second-\(outcome)")
+        }
+
+        XCTAssertEqual(synthesizer.stopCallCount, 2)
+        XCTAssertEqual(synthesizer.requests.count, 2)
+
+        synthesizer.finish(0)
+        XCTAssertTrue(outcomes.isEmpty)
+
+        synthesizer.finish(1)
+        XCTAssertEqual(outcomes, ["second-finished"])
+    }
+
+    func testCancellationIsReportedAsCancellationNotFinish() {
+        let synthesizer = FakeSpeechSynthesizer()
+        let service = SpeechService(
+            voiceProvider: FixedSpeechVoiceProvider(voices: [
+                SpeechVoice(identifier: "russian", language: "ru-RU"),
+            ]),
+            synthesizer: synthesizer
+        )
+        var received: SpeechSynthesisOutcome?
+
+        service.speak("Фраза") { received = $0 }
+        synthesizer.cancel(0)
+
+        XCTAssertEqual(received, .cancelled)
     }
 }
