@@ -1196,7 +1196,7 @@
     "speechText": "Помогите, пожалуйста: человек только что потерял кошелёк. Пропажу нужно срочно найти.",
     "theme": "emergencies",
     "lexemeIDs": [
-      "lexeme-emergencies-помогать",
+      "lexeme-emergencies-помочь",
       "lexeme-emergencies-человек",
       "lexeme-emergencies-потерять",
       "lexeme-emergencies-кошелек",

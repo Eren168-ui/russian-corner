@@ -20,6 +20,26 @@ final class ContentCatalogTests: XCTestCase {
         XCTAssertEqual(item.surfaceForms, ["свободен"])
     }
 
+    func testPomogiteBelongsToCanonicalPomochLexeme() throws {
+        let catalog = try ContentCatalog()
+        let pomochEntries = catalog.lexemes.filter { $0.lemma == "помочь" }
+        let pomoch = try XCTUnwrap(pomochEntries.first)
+
+        XCTAssertEqual(pomochEntries.count, 1)
+        XCTAssertEqual(pomoch.id, "lexeme-emergencies-помочь")
+        XCTAssertEqual(pomoch.stressedForm, "помо́чь")
+        XCTAssertEqual(pomoch.speechText, "помочь")
+        XCTAssertEqual(pomoch.partOfSpeech, "verb")
+        XCTAssertEqual(pomoch.aspect, "perfective")
+        XCTAssertEqual(pomoch.aspectPair, "помогать")
+        XCTAssertTrue(pomoch.surfaceForms.contains("помогите"))
+        XCTAssertFalse(
+            catalog.lexemes
+                .filter { $0.lemma == "помогать" }
+                .contains { $0.surfaceForms.contains("помогите") }
+        )
+    }
+
     func testBundleCatalogMeetsReviewedDailyContentContract() throws {
         let catalog = try ContentCatalog()
 

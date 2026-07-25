@@ -23,6 +23,16 @@ The first test-first run exited 1 with 21 assertion failures. It established:
 The raw run was retained at `/tmp/russian-corner-content-red.log` for this
 work session.
 
+The focused morphology regression was also written test-first:
+
+```bash
+swift test --filter ContentCatalogTests/testPomogiteBelongsToCanonicalPomochLexeme
+```
+
+Its RED run failed because `Lexeme` did not yet expose `aspectPair`, proving
+that the bundle could not represent the required canonical relation. The raw
+run is `/tmp/russian-corner-pomoch-red.log`.
+
 ## Full automated audit
 
 The independent resource audit checks normalized Russian word sequences,
@@ -47,6 +57,9 @@ ownership.
 | duplicate surface form within one lexeme | 0 |
 | stressed form normalization mismatch | 0 |
 | multisyllable stressed form missing stress mark | 0 |
+| canonical `помочь` entries | 1 |
+| `помочь` aspect-pair mismatch | 0 |
+| `помогите` noncanonical owner | 0 |
 | missing or non-reciprocal link | 0 |
 | linked form absent from sentence | 0 |
 | duplicate Russian practice sentence | 0 |
@@ -63,7 +76,7 @@ Sentence link-count distribution:
 
 ## Manual semantic and naturalness sample
 
-Fifty lexemes were read as complete learning records: lemma, stress, Chinese
+Fifty-one lexemes were read as complete learning records: lemma, stress, Chinese
 gloss, collocation, example, surface forms, and linked sentence context.
 
 Sample:
@@ -76,7 +89,7 @@ Sample:
 играть, бегать, собираться, бронировать, задерживаться, отправляться,
 позвонить, или, разрядиться, подключиться, впору, волос, видеться,
 если, приглашать, отказываться, чистый, записаться, прозрачный,
-поздравлять, потерять, местонахождение
+поздравлять, помочь, потерять, местонахождение
 ```
 
 Twenty-four sentence cards were read against both languages and every linked
@@ -98,7 +111,8 @@ Issues found during the sample were repaired before final verification:
 - replaced a repetitive mixed farewell with a natural contrast between
   `пока` and `до свидания`;
 - removed aspect partners and derived nouns that had been provisionally
-  treated as surface forms;
+  treated as surface forms, then assigned `помогите` to canonical `помочь`
+  with `aspectPair = помогать`;
 - made family co-residence, a dead phone, an invitation response, a delayed
   flight, and a lost wallet state the same fact in Russian and Chinese;
 - replaced stiff singular generic season wording with natural plurals;

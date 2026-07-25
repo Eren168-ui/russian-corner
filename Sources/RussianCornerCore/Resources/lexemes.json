@@ -6234,20 +6234,22 @@
     ]
   },
   {
-    "id": "lexeme-emergencies-помогать",
-    "lemma": "помогать",
-    "stressedForm": "помога́ть",
-    "speechText": "помогать",
+    "id": "lexeme-emergencies-помочь",
+    "lemma": "помочь",
+    "stressedForm": "помо́чь",
+    "speechText": "помочь",
     "partOfSpeech": "verb",
     "glossZh": "帮助",
     "collocations": [
-      "помогать людям"
+      "помочь людям"
     ],
-    "example": "Соседи пришли помогать после грозы.",
+    "example": "Соседи пришли помочь после грозы.",
     "sentenceIDs": [
       "sentence-emergencies-1"
     ],
     "reviewStatus": "reviewed",
+    "aspect": "perfective",
+    "aspectPair": "помогать",
     "surfaceForms": [
       "помогите"
     ]
