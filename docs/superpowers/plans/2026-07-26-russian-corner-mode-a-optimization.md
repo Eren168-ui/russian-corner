@@ -1066,7 +1066,7 @@ git commit -m "feat: replace recordings with oral activity test"
 - Modify: `Documentation/USAGE.md`
 - Modify: `Tests/RussianCornerAppTests/TransactionalInteractionTests.swift`
 
-- [ ] **Step 1: Write failing integration tests**
+- [x] **Step 1: Write failing integration tests**
 
 ```swift
 func testTrialStoreFailureLeavesPracticeAvailable()
@@ -1077,7 +1077,7 @@ func testCoreProgressAndTodayQueueSurviveAppRuntimeRecreation()
 func testTrialReportFailureShowsStatusWithoutCrashing()
 ```
 
-- [ ] **Step 2: Run and verify RED**
+- [x] **Step 2: Run and verify RED**
 
 Run:
 
@@ -1087,7 +1087,7 @@ swift test --filter TransactionalInteractionTests
 
 Expected: lifecycle assertions fail until runtime wiring is complete.
 
-- [ ] **Step 3: Assemble the runtime with fail-open trial services**
+- [x] **Step 3: Assemble the runtime with fail-open trial services**
 
 During `AppRuntime` initialization:
 
@@ -1110,7 +1110,7 @@ practice completion transition      // close(.completed)
 Use an `NSApplicationDelegateAdaptor` for termination rather than assuming the
 menu quit button is the only exit route.
 
-- [ ] **Step 4: Update documentation to match the product**
+- [x] **Step 4: Update documentation to match the product**
 
 `README.md` and `Documentation/USAGE.md` must state:
 

@@ -220,6 +220,8 @@ public final class AppRuntime {
     repository injectedRepository: ProgressRepository? = nil,
     trialRepository injectedTrialRepository:
       (any TrialDataStoring)? = nil,
+    trialRepositoryFactory injectedTrialRepositoryFactory:
+      (() throws -> any TrialDataStoring)? = nil,
     reminderScheduler injectedReminderScheduler:
       (any ReminderSettingsScheduling)? = nil,
     enableSystemReminders: Bool = true
@@ -261,6 +263,8 @@ public final class AppRuntime {
         let trialRepository: any TrialDataStoring
         if let injectedTrialRepository {
           trialRepository = injectedTrialRepository
+        } else if let injectedTrialRepositoryFactory {
+          trialRepository = try injectedTrialRepositoryFactory()
         } else {
           trialRepository = TrialRepository(
             container: try TrialRepository.makeContainer(

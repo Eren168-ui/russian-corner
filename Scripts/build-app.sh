@@ -563,7 +563,7 @@ plutil -create xml1 "$STAGED_INFO_PLIST"
 /usr/libexec/PlistBuddy -c \
   "Add :LSMinimumSystemVersion string 14.0" "$STAGED_INFO_PLIST"
 /usr/libexec/PlistBuddy -c \
-  "Add :NSMicrophoneUsageDescription string Russian Corner 需要使用麦克风录制你的俄语练习；录音不会自动分析。" \
+  "Add :NSMicrophoneUsageDescription string Russian Corner 需要读取实时麦克风音量以估算口述活动；不会录音或保存音频。" \
   "$STAGED_INFO_PLIST"
 /usr/libexec/PlistBuddy -c \
   "Add :NSHighResolutionCapable bool true" "$STAGED_INFO_PLIST"

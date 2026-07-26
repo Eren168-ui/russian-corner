@@ -3,9 +3,29 @@ import RussianCornerCore
 import RussianCornerUI
 import SwiftUI
 
+@MainActor
+private final class RussianCornerApplicationDelegate:
+  NSObject,
+  NSApplicationDelegate
+{
+  weak var runtime: AppRuntime?
+
+  func applicationWillTerminate(
+    _ notification: Notification
+  ) {
+    runtime?.practice?.handleDisappear()
+    runtime?.diagnostics?.handleDisappear()
+    runtime?.closeTrialSession(reason: .quit)
+  }
+}
+
 @main
 @MainActor
 struct RussianCornerApp: App {
+  @NSApplicationDelegateAdaptor(
+    RussianCornerApplicationDelegate.self
+  ) private var applicationDelegate
+
   private let runtime: AppRuntime
   private let panelController: FloatingPanelController
   private let hotKeyService: GlobalHotKeyService
@@ -22,6 +42,7 @@ struct RussianCornerApp: App {
     self.panelController = panelController
     self.hotKeyService = hotKeyService
     self.reportExporter = reportExporter
+    applicationDelegate.runtime = runtime
 
     let issues = hotKeyService.registerDefaults(
       actions: [

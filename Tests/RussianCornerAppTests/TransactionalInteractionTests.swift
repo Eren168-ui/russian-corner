@@ -93,6 +93,114 @@ final class TransactionalPracticeTests: XCTestCase {
     XCTAssertEqual(fixture.model.currentIndex, 0)
   }
 
+  func testTrialStoreFailureLeavesPracticeAvailable() throws {
+    let repository = ProgressRepository(
+      container: try ProgressRepository.makeInMemoryContainer()
+    )
+    let runtime = AppRuntime(
+      defaults: isolatedDefaults(),
+      catalog: runtimeCatalog(),
+      repository: repository,
+      trialRepositoryFactory: {
+        throw FixtureFailure.database
+      },
+      enableSystemReminders: false
+    )
+
+    XCTAssertNotNil(runtime.practice)
+    XCTAssertNil(runtime.trialRepository)
+    XCTAssertNil(runtime.dailyReflection)
+    XCTAssertNotNil(runtime.trialError)
+    XCTAssertNil(runtime.launchError)
+  }
+
+  func testHideClosesTrialSessionAsHidden() throws {
+    let trial = RuntimeTrialStoreSpy()
+    let runtime = try makeRuntime(trial: trial)
+    let practice = try XCTUnwrap(runtime.practice)
+    practice.reveal()
+    let panel = FloatingPanelController(runtime: runtime)
+
+    panel.hide()
+
+    XCTAssertEqual(trial.sessions.map(\.endReason), [.hidden])
+  }
+
+  func testQuitClosesTrialSessionAsQuit() throws {
+    let trial = RuntimeTrialStoreSpy()
+    let runtime = try makeRuntime(trial: trial)
+    let practice = try XCTUnwrap(runtime.practice)
+    practice.reveal()
+
+    runtime.closeTrialSession(reason: .quit)
+
+    XCTAssertEqual(trial.sessions.map(\.endReason), [.quit])
+  }
+
+  func testTemporalRefreshClosesSessionBeforeReplacingPracticeModel() throws {
+    let trial = RuntimeTrialStoreSpy()
+    let runtime = try makeRuntime(trial: trial)
+    let original = try XCTUnwrap(runtime.practice)
+    original.reveal()
+
+    runtime.refreshPracticeForTemporalBoundary(
+      now: Date().addingTimeInterval(48 * 60 * 60)
+    )
+
+    XCTAssertEqual(trial.sessions.map(\.endReason), [.dayChanged])
+    XCTAssertFalse(original === runtime.practice)
+  }
+
+  func testCoreProgressAndTodayQueueSurviveAppRuntimeRecreation() throws {
+    let repository = ProgressRepository(
+      container: try ProgressRepository.makeInMemoryContainer()
+    )
+    let catalog = runtimeCatalog()
+    let first = AppRuntime(
+      defaults: isolatedDefaults(),
+      catalog: catalog,
+      repository: repository,
+      trialRepository: RuntimeTrialStoreSpy(),
+      enableSystemReminders: false
+    )
+    let practice = try XCTUnwrap(first.practice)
+    practice.reveal()
+    try practice.grade(.easy)
+
+    let second = AppRuntime(
+      defaults: isolatedDefaults(),
+      catalog: catalog,
+      repository: repository,
+      trialRepository: RuntimeTrialStoreSpy(),
+      enableSystemReminders: false
+    )
+
+    XCTAssertEqual(second.practice?.completedToday, 1)
+    XCTAssertFalse(
+      second.practice?.queue.contains {
+        $0.id == "runtime-sentence"
+      } ?? true
+    )
+  }
+
+  func testTrialReportFailureShowsStatusWithoutCrashing() async {
+    let defaults = isolatedDefaults()
+    let appModel = AppModel(defaults: defaults)
+    let exporter = TrialReportExporter(appModel: appModel)
+    let trial = RuntimeTrialStoreSpy()
+    trial.shouldFailFetch = true
+
+    await exporter.exportLastSevenDays(
+      repository: trial,
+      endingAt: now,
+      calendar: utcCalendar
+    )
+
+    XCTAssertTrue(
+      appModel.transientStatus?.contains("导出失败") == true
+    )
+  }
+
   private func makeModel(
     store: TransactionalPracticeStore
   ) throws -> (
@@ -122,6 +230,107 @@ final class TransactionalPracticeTests: XCTestCase {
       ),
       store
     )
+  }
+
+  private func makeRuntime(
+    trial: RuntimeTrialStoreSpy
+  ) throws -> AppRuntime {
+    AppRuntime(
+      defaults: isolatedDefaults(),
+      catalog: runtimeCatalog(),
+      repository: ProgressRepository(
+        container: try ProgressRepository.makeInMemoryContainer()
+      ),
+      trialRepository: trial,
+      enableSystemReminders: false
+    )
+  }
+
+  private func isolatedDefaults() -> UserDefaults {
+    UserDefaults(
+      suiteName: "TransactionalPracticeTests.\(UUID().uuidString)"
+    )!
+  }
+
+  private func runtimeCatalog() -> ContentCatalog {
+    ContentCatalog(
+      lexemes: [],
+      sentences: [
+        SentenceCard(
+          id: "runtime-sentence",
+          promptZh: "请说明计划发生了变化。",
+          cueRu: "Что изменилось?",
+          practiceRu: "Планы неожиданно изменились.",
+          speechText: "Планы неожиданно изменились.",
+          theme: "计划",
+          lexemeIDs: [],
+          sourcePath: "fixture",
+          sourceText: "fixture",
+          reviewStatus: .reviewed
+        ),
+      ]
+    )
+  }
+
+  private var utcCalendar: Calendar {
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+    return calendar
+  }
+}
+
+@MainActor
+private final class RuntimeTrialStoreSpy: TrialDataStoring {
+  var shouldFailFetch = false
+  private(set) var sessions: [TrialSession] = []
+  private(set) var interactions: [TrialInteraction] = []
+  private(set) var reflections: [DailyReflection] = []
+  private(set) var oralAttempts: [OralActivityAttempt] = []
+
+  func save(session: TrialSession) throws {
+    sessions.append(session)
+  }
+
+  func save(interaction: TrialInteraction) throws {
+    interactions.append(interaction)
+  }
+
+  func upsert(
+    reflection: DailyReflection,
+    calendar: Calendar
+  ) throws {
+    reflections.removeAll {
+      calendar.isDate($0.day, inSameDayAs: reflection.day)
+    }
+    reflections.append(reflection)
+  }
+
+  func save(oralAttempt: OralActivityAttempt) throws {
+    oralAttempts.append(oralAttempt)
+  }
+
+  func fetchSnapshot(
+    from start: Date,
+    through end: Date
+  ) throws -> TrialReportSnapshot {
+    if shouldFailFetch {
+      throw FixtureFailure.database
+    }
+    return TrialReportSnapshot(
+      sessions: sessions,
+      interactions: interactions,
+      reflections: reflections,
+      oralAttempts: oralAttempts
+    )
+  }
+
+  func reflection(
+    on day: Date,
+    calendar: Calendar
+  ) throws -> DailyReflection? {
+    reflections.first {
+      calendar.isDate($0.day, inSameDayAs: day)
+    }
   }
 }
 
