@@ -3,7 +3,7 @@ import SwiftUI
 
 public struct RussianCornerDiagnosticView: View {
     public static let pronunciationDisclaimer =
-        "本诊断不分析录音内容。发音准确度需由老师或母语者评估；二期 AI 反馈接入前，本应用不判断发音或母语地道度。"
+        "本诊断不录音、不保存音频，只估算开口活动。发音准确度需由老师或母语者评估；二期 AI 反馈接入前，本应用不判断发音或母语地道度。"
     public static let minimumSize = CGSize(width: 540, height: 500)
     public static let collocationAccessibilityLabel = "常用搭配把握度"
     public static let diagnosticSchedulingNotice =
@@ -19,7 +19,7 @@ public struct RussianCornerDiagnosticView: View {
 
     @Bindable private var model: DiagnosticViewModel
     @State private var collocationDraft = 50.0
-    @State private var selfMonitoringDraft = false
+    @State private var oralSelfRating = 3
 
     public init(model: DiagnosticViewModel) {
         self.model = model
@@ -44,8 +44,8 @@ public struct RussianCornerDiagnosticView: View {
                         listening
                     case .collocation:
                         collocation
-                    case .recordingIntroduction, .recordingDailyLife:
-                        recording
+                    case .oralIntroduction, .oralDailyLife:
+                        oralActivity
                     case .summary:
                         summary
                     }
@@ -208,53 +208,89 @@ public struct RussianCornerDiagnosticView: View {
         }
     }
 
-    private var recording: some View {
+    private var oralActivity: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text(
-                model.step == .recordingIntroduction
+                model.step == .oralIntroduction
                     ? "请用俄语做自我介绍"
                     : "请用俄语描述你的日常生活"
             )
             .font(.title2)
-            Text("尽量连续表达；录音仅供你完成后自评，不会自动分析。")
+            Text("尽量连续表达。应用只读取实时音量活动，不录音、不保存，也不判断发音是否准确。")
                 .foregroundStyle(.secondary)
-            Text("\(model.recordingRemainingSeconds)")
-                .font(
-                    .system(
-                        .largeTitle,
-                        design: .rounded,
-                        weight: .light
-                    )
-                )
-                .monospacedDigit()
-            HStack {
+
+            switch model.oralPhase {
+            case .ready:
+                Text("开始后先准备 3 秒，再口述 60 秒。")
+                    .foregroundStyle(.secondary)
                 Button(
-                    model.isRecording ? "停止录音" : "开始 60 秒录音",
-                    systemImage: model.isRecording ? "stop.circle" : "mic.circle"
+                    "开始口述活动",
+                    systemImage: "waveform"
                 ) {
-                    Task { await model.toggleRecording() }
+                    Task { await model.startOralActivity() }
                 }
                 .buttonStyle(.borderedProminent)
-                Button("跳过麦克风") {
-                    model.skipRecording(
-                        selfMonitoring: selfMonitoringDraft
+
+            case .preparing:
+                Text("准备 \(model.preparationRemainingSeconds)")
+                    .font(
+                        .system(
+                            .largeTitle,
+                            design: .rounded,
+                            weight: .light
+                        )
                     )
-                    selfMonitoringDraft = false
+                    .monospacedDigit()
+                Button("取消本次") {
+                    model.handleDisappear()
                 }
+
+            case .speaking:
+                Text("\(model.oralRemainingSeconds)")
+                    .font(
+                        .system(
+                            .largeTitle,
+                            design: .rounded,
+                            weight: .light
+                        )
+                    )
+                    .monospacedDigit()
+                Button(
+                    "提前结束并自评",
+                    systemImage: "stop.circle"
+                ) {
+                    model.stopOralActivity()
+                }
+
+            case .awaitingSelfRating:
+                if let summary = model.oralSummary {
+                    Text(
+                        "活动估算：开口约 \(summary.estimatedSpeakingMs / 1_000) 秒，长停顿约 \(summary.longPauseCount) 次"
+                    )
+                    .font(.headline)
+                } else {
+                    Text("本段使用计时 + 自评完成。")
+                        .font(.headline)
+                }
+                Text("给刚才的表达流畅度打分：1 = 卡顿很多，5 = 比较顺畅")
+                    .foregroundStyle(.secondary)
+                Picker("自评", selection: $oralSelfRating) {
+                    ForEach(1...5, id: \.self) { score in
+                        Text("\(score) 分").tag(score)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .frame(maxWidth: 360)
+                Button("保存本段摘要并继续") {
+                    model.submitOralActivity(
+                        selfRating: oralSelfRating
+                    )
+                    oralSelfRating = 3
+                }
+                .buttonStyle(.borderedProminent)
             }
-            Toggle(
-                "刚才表达时，我经常卡顿或过度检查自己",
-                isOn: $selfMonitoringDraft
-            )
-            .padding(.top, 8)
+
             Spacer()
-            Button("完成这段并继续") {
-                model.completeRecording(
-                    selfMonitoring: selfMonitoringDraft
-                )
-                selfMonitoringDraft = false
-            }
-            .disabled(model.isRecording)
             notice
         }
     }

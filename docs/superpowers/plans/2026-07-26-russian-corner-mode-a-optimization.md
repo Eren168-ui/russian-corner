@@ -934,7 +934,7 @@ git commit -m "feat: export user readable trial report"
 - Delete: `Sources/RussianCornerPlatform/RecordingService.swift`
 - Modify: `Tests/RussianCornerPlatformTests/ReviewSessionTests.swift`
 
-- [ ] **Step 1: Write failing pure metering tests**
+- [x] **Step 1: Write failing pure metering tests**
 
 Separate audio hardware from the activity algorithm:
 
@@ -962,7 +962,7 @@ public struct SpeechActivityAccumulator: Sendable {
 Default threshold is calibrated ambient dB + 10 dB, clamped to
 `-45 ... -20 dB`; long pause threshold is 1.2 seconds.
 
-- [ ] **Step 2: Run and verify RED**
+- [x] **Step 2: Run and verify RED**
 
 Run:
 
@@ -972,7 +972,7 @@ swift test --filter SpeechActivityMonitorTests
 
 Expected: compilation fails because the accumulator and monitor do not exist.
 
-- [ ] **Step 3: Implement no-file AVAudioEngine monitoring**
+- [x] **Step 3: Implement no-file AVAudioEngine monitoring**
 
 Expose:
 
@@ -995,7 +995,7 @@ Implementation requirements:
 - permission denied/unavailable returns a typed fallback result, not an error that
   blocks diagnostics.
 
-- [ ] **Step 4: Convert both diagnostic steps**
+- [x] **Step 4: Convert both diagnostic steps**
 
 Rename user-facing steps to:
 
@@ -1015,7 +1015,7 @@ Flow:
 If the microphone is denied, continue with timer + self-rating and
 `usedMicrophoneMeter = false`.
 
-- [ ] **Step 5: Remove obsolete recording implementation**
+- [x] **Step 5: Remove obsolete recording implementation**
 
 Once no production target imports `RecordingManaging` or `RecordingPlaying`,
 delete:
@@ -1032,7 +1032,7 @@ rg -n "AVAudioRecorder|RecordingManaging|RecordingPlaying|temporaryRecordingURL"
 
 Expected: no matches.
 
-- [ ] **Step 6: Run diagnostics and permission fallbacks**
+- [x] **Step 6: Run diagnostics and permission fallbacks**
 
 Run:
 
@@ -1049,7 +1049,7 @@ Manual checks:
 - Activity Monitor/open files show no `.m4a`, `.caf`, or `.wav` created;
 - diagnostic copy never claims accent or pronunciation accuracy.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add Sources/RussianCornerPlatform Sources/RussianCornerUI Tests

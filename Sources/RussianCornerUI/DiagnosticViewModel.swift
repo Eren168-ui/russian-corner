@@ -26,8 +26,8 @@ public enum DiagnosticStep:
     case production
     case listening
     case collocation
-    case recordingIntroduction
-    case recordingDailyLife
+    case oralIntroduction
+    case oralDailyLife
     case summary
 
     public var title: String {
@@ -37,8 +37,8 @@ public enum DiagnosticStep:
         case .production: "中文 → 俄语"
         case .listening: "听句"
         case .collocation: "搭配自评"
-        case .recordingIntroduction: "60 秒自我介绍"
-        case .recordingDailyLife: "60 秒日常生活"
+        case .oralIntroduction: "60 秒自我介绍"
+        case .oralDailyLife: "60 秒日常生活口述"
         case .summary: "诊断总结"
         }
     }
@@ -56,6 +56,13 @@ public enum DiagnosticTrend: Equatable, Sendable {
     case improvement
     case regression
     case unchanged
+}
+
+public enum DiagnosticOralPhase: Equatable, Sendable {
+    case ready
+    case preparing
+    case speaking
+    case awaitingSelfRating
 }
 
 public struct DiagnosticComparisonRow: Equatable, Sendable {
@@ -79,7 +86,11 @@ public struct DiagnosticComparisonRow: Equatable, Sendable {
 public final class DiagnosticViewModel {
     public private(set) var step: DiagnosticStep = .intro
     public private(set) var isRevealed = false
-    public private(set) var recordingRemainingSeconds = 60
+    public private(set) var preparationRemainingSeconds = 3
+    public private(set) var oralRemainingSeconds = 60
+    public private(set) var oralPhase: DiagnosticOralPhase = .ready
+    public private(set) var oralSummary: SpeechActivitySummary?
+    public private(set) var oralUsesMicrophoneMeter = false
     public private(set) var report: DiagnosticReport?
     public private(set) var statusMessage: String?
 
@@ -90,7 +101,8 @@ public final class DiagnosticViewModel {
 
     private let repository: any DiagnosticReportStoring
     private let comparisonBaselineMetrics: DiagnosticMetrics?
-    private let recordingService: any RecordingManaging
+    private let activityMonitor: any SpeechActivityMonitoring
+    private let oralAttemptStore: (any TrialDataStoring)?
     private let speechService: SpeechService
     private let sleeper: any DiagnosticSleeping
     private let onReportSaved: (@MainActor () -> Void)?
@@ -107,13 +119,15 @@ public final class DiagnosticViewModel {
     private var responseDurations: [Double] = []
     private var selfMonitoringAnswers: [Bool] = []
     private var itemStartedAt: Date
-    private var recordingStartedAt: Date?
-    private var recordingTimerTask: Task<Void, Never>?
+    private var oralStartedAt: Date?
+    private var oralTimerTask: Task<Void, Never>?
 
     public init(
         catalog: ContentCatalog,
         repository: any DiagnosticReportStoring,
-        recordingService: any RecordingManaging = RecordingService(),
+        activityMonitor: any SpeechActivityMonitoring =
+            SpeechActivityMonitor(),
+        oralAttemptStore: (any TrialDataStoring)? = nil,
         speechService: SpeechService = SpeechService(),
         seed requestedSeed: UInt64? = nil,
         vocabularyCount: Int = 10,
@@ -172,7 +186,8 @@ public final class DiagnosticViewModel {
             }
         )
         self.repository = repository
-        self.recordingService = recordingService
+        self.activityMonitor = activityMonitor
+        self.oralAttemptStore = oralAttemptStore
         self.speechService = speechService
         self.sleeper = sleeper
         self.onReportSaved = onReportSaved
@@ -257,8 +272,8 @@ public final class DiagnosticViewModel {
         Double(step.rawValue) / Double(DiagnosticStep.allCases.count - 1)
     }
 
-    public var isRecording: Bool {
-        recordingService.isRecording
+    public var isOralActivityRunning: Bool {
+        oralPhase == .preparing || oralPhase == .speaking
     }
 
     public var trainingSuggestions: [String] {
@@ -484,64 +499,104 @@ public final class DiagnosticViewModel {
             return
         }
         collocationRate = min(max(rate, 0), 100)
-        move(to: .recordingIntroduction)
+        move(to: .oralIntroduction)
     }
 
-    public func toggleRecording() async {
-        guard isRecordingStep else { return }
-        if recordingService.isRecording {
-            recordingService.stop()
-            cancelRecordingTimer()
-            statusMessage = "录音已停止，请完成自评或跳过"
+    public func startOralActivity() async {
+        guard isOralStep, oralPhase == .ready else { return }
+        preparationRemainingSeconds = 3
+        oralRemainingSeconds = 60
+        oralSummary = nil
+        oralUsesMicrophoneMeter = false
+        oralPhase = .preparing
+        statusMessage = "准备 3 秒后开始；只估算说话活动，不保存音频"
+        let expectedStep = step
+        let result = await activityMonitor.start()
+        guard step == expectedStep, oralPhase == .preparing else {
+            _ = activityMonitor.stop()
             return
-        }
-        var result = await recordingService.start()
-        if result == .permissionUndetermined {
-            if await recordingService.requestPermission() == .granted {
-                result = await recordingService.start()
-            }
         }
         switch result {
         case .started:
-            recordingStartedAt = now()
-            recordingRemainingSeconds = 60
-            statusMessage = "正在录音，最多 60 秒"
-            startRecordingTimer()
-        case .permissionDenied:
-            statusMessage = "麦克风权限未开启，仍可跳过并继续"
-        case .permissionUndetermined:
-            statusMessage = "尚未取得麦克风权限，仍可跳过并继续"
-        case .unavailable:
-            statusMessage = "当前设备无法录音，仍可跳过并继续"
-        case .failed(let message):
-            statusMessage = "录音未开始：\(message)；仍可跳过"
+            oralUsesMicrophoneMeter = true
+        case .timerOnly(let reason):
+            oralUsesMicrophoneMeter = false
+            statusMessage = timerOnlyMessage(reason)
+        }
+        startOralTimer()
+    }
+
+    public func advanceOralClock() {
+        switch oralPhase {
+        case .preparing:
+            preparationRemainingSeconds = max(
+                0,
+                preparationRemainingSeconds - 1
+            )
+            if preparationRemainingSeconds == 0 {
+                oralPhase = .speaking
+                oralStartedAt = now()
+                statusMessage = oralUsesMicrophoneMeter
+                    ? "请开始口述；只显示活动估算，不保存音频"
+                    : "请开始口述；当前使用计时 + 自评模式"
+            }
+        case .speaking:
+            oralRemainingSeconds = max(0, oralRemainingSeconds - 1)
+            if oralRemainingSeconds == 0 {
+                finishOralMeasurement(
+                    message: "60 秒已到，请完成 1–5 分自评"
+                )
+            }
+        case .ready, .awaitingSelfRating:
+            break
         }
     }
 
-    public func refreshRecordingTimer() {
-        guard let recordingStartedAt else { return }
-        let elapsed = max(0, now().timeIntervalSince(recordingStartedAt))
-        recordingRemainingSeconds = max(0, 60 - Int(elapsed.rounded(.down)))
-        if recordingRemainingSeconds == 0 {
-            recordingService.stop()
-            statusMessage = "60 秒已到，请完成自评"
-            self.recordingStartedAt = nil
-            recordingTimerTask = nil
+    public func stopOralActivity() {
+        guard isOralActivityRunning else { return }
+        finishOralMeasurement(
+            message: "本段计时已停止，请完成 1–5 分自评"
+        )
+    }
+
+    public func submitOralActivity(selfRating: Int) {
+        guard isOralStep, oralPhase == .awaitingSelfRating else {
+            return
+        }
+        let rating = min(max(selfRating, 1), 5)
+        selfMonitoringAnswers.append(rating <= 2)
+        let elapsedMs = max(0, 60 - oralRemainingSeconds) * 1_000
+        let attempt = OralActivityAttempt(
+            topic: oralTopic,
+            attemptedAt: now(),
+            elapsedMs: elapsedMs,
+            estimatedSpeakingMs: oralSummary?.estimatedSpeakingMs,
+            longPauseCount: oralSummary?.longPauseCount,
+            selfRating: rating,
+            usedMicrophoneMeter: oralUsesMicrophoneMeter
+                && oralSummary != nil
+        )
+        var persistenceIssue: String?
+        do {
+            try oralAttemptStore?.save(oralAttempt: attempt)
+        } catch {
+            persistenceIssue =
+                "口述摘要暂时无法保存：\(error.localizedDescription)"
+        }
+        advanceOralStep()
+        if let persistenceIssue {
+            statusMessage = persistenceIssue
         }
     }
 
-    public func completeRecording(selfMonitoring: Bool) {
-        guard isRecordingStep else { return }
-        guard cleanupRecording() else { return }
-        selfMonitoringAnswers.append(selfMonitoring)
-        advanceRecordingStep()
-    }
-
-    public func skipRecording(selfMonitoring: Bool) {
-        guard isRecordingStep else { return }
-        guard cleanupRecording() else { return }
-        selfMonitoringAnswers.append(selfMonitoring)
-        advanceRecordingStep()
+    public func skipOralActivity(selfRating: Int = 3) {
+        guard isOralStep else { return }
+        cancelOralTimer()
+        _ = activityMonitor.stop()
+        oralUsesMicrophoneMeter = false
+        oralSummary = nil
+        oralPhase = .awaitingSelfRating
+        submitOralActivity(selfRating: selfRating)
     }
 
     public func handleDisappear() {
@@ -551,23 +606,36 @@ public final class DiagnosticViewModel {
         {
             listeningStates[sentenceID] = .notPlayed
         }
-        guard isRecordingStep else {
-            cancelRecordingTimer()
-            return
+        cancelOralTimer()
+        if isOralStep {
+            _ = activityMonitor.stop()
+            oralPhase = .ready
+            preparationRemainingSeconds = 3
+            oralRemainingSeconds = 60
+            oralStartedAt = nil
+            oralSummary = nil
+            oralUsesMicrophoneMeter = false
         }
-        _ = cleanupRecording()
     }
 
-    private var isRecordingStep: Bool {
-        step == .recordingIntroduction || step == .recordingDailyLife
+    private var isOralStep: Bool {
+        step == .oralIntroduction || step == .oralDailyLife
     }
 
-    private func advanceRecordingStep() {
-        cancelRecordingTimer()
-        recordingStartedAt = nil
-        recordingRemainingSeconds = 60
-        if step == .recordingIntroduction {
-            move(to: .recordingDailyLife)
+    private var oralTopic: String {
+        step == .oralIntroduction ? "自我介绍" : "日常生活"
+    }
+
+    private func advanceOralStep() {
+        cancelOralTimer()
+        oralStartedAt = nil
+        preparationRemainingSeconds = 3
+        oralRemainingSeconds = 60
+        oralPhase = .ready
+        oralSummary = nil
+        oralUsesMicrophoneMeter = false
+        if step == .oralIntroduction {
+            move(to: .oralDailyLife)
         } else {
             finish()
         }
@@ -625,7 +693,8 @@ public final class DiagnosticViewModel {
 
     private func resetMeasurements() {
         speechService.stop()
-        cancelRecordingTimer()
+        cancelOralTimer()
+        _ = activityMonitor.stop()
         recognitionIndex = 0
         productionIndex = 0
         listeningIndex = 0
@@ -641,21 +710,24 @@ public final class DiagnosticViewModel {
         collocationRate = 0
         responseDurations = []
         selfMonitoringAnswers = []
-        recordingStartedAt = nil
-        recordingRemainingSeconds = 60
+        oralStartedAt = nil
+        preparationRemainingSeconds = 3
+        oralRemainingSeconds = 60
+        oralPhase = .ready
+        oralSummary = nil
+        oralUsesMicrophoneMeter = false
         statusMessage = nil
     }
 
-    private func startRecordingTimer() {
-        recordingTimerTask?.cancel()
-        recordingTimerTask = nil
-        recordingTimerTask = Task { [weak self, sleeper] in
+    private func startOralTimer() {
+        oralTimerTask?.cancel()
+        oralTimerTask = Task { [weak self, sleeper] in
             do {
                 while !Task.isCancelled {
                     try await sleeper.sleep()
                     guard !Task.isCancelled, let self else { return }
-                    self.refreshRecordingTimer()
-                    if self.recordingRemainingSeconds == 0 {
+                    self.advanceOralClock()
+                    if self.oralPhase == .awaitingSelfRating {
                         return
                     }
                 }
@@ -663,32 +735,39 @@ public final class DiagnosticViewModel {
                 return
             } catch {
                 guard let self else { return }
-                self.recordingService.stop()
-                self.recordingStartedAt = nil
-                self.recordingTimerTask = nil
+                self.oralSummary = self.activityMonitor.stop()
+                self.oralStartedAt = nil
+                self.oralTimerTask = nil
+                self.oralPhase = .awaitingSelfRating
                 self.statusMessage =
-                    "录音计时已中断：\(error.localizedDescription)"
+                    "口述计时已中断：\(error.localizedDescription)；仍可完成自评"
             }
         }
     }
 
-    private func cancelRecordingTimer() {
-        recordingTimerTask?.cancel()
-        recordingTimerTask = nil
-        recordingStartedAt = nil
+    private func cancelOralTimer() {
+        oralTimerTask?.cancel()
+        oralTimerTask = nil
     }
 
-    @discardableResult
-    private func cleanupRecording() -> Bool {
-        cancelRecordingTimer()
-        recordingService.stop()
-        do {
-            try recordingService.discard()
-            return true
-        } catch {
-            statusMessage =
-                "录音清理失败，请重试：\(error.localizedDescription)"
-            return false
+    private func finishOralMeasurement(message: String) {
+        cancelOralTimer()
+        oralSummary = activityMonitor.stop()
+        oralStartedAt = nil
+        oralPhase = .awaitingSelfRating
+        statusMessage = message
+    }
+
+    private func timerOnlyMessage(
+        _ reason: SpeechActivityFallbackReason
+    ) -> String {
+        switch reason {
+        case .permissionDenied:
+            "麦克风权限未开启；本段改为计时 + 自评，不影响诊断"
+        case .unavailable:
+            "当前设备无法读取麦克风；本段改为计时 + 自评"
+        case .engineFailed:
+            "麦克风活动估算未启动；本段改为计时 + 自评"
         }
     }
 

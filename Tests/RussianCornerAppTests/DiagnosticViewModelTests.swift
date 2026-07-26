@@ -18,7 +18,7 @@ final class DiagnosticViewModelTests: XCTestCase {
         let model = try DiagnosticViewModel(
             catalog: makeCatalog(),
             repository: repository,
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 7,
             vocabularyCount: 1,
@@ -44,10 +44,10 @@ final class DiagnosticViewModelTests: XCTestCase {
         XCTAssertEqual(model.step, .collocation)
 
         model.submitCollocation(rate: 50)
-        XCTAssertEqual(model.step, .recordingIntroduction)
-        model.skipRecording(selfMonitoring: true)
-        XCTAssertEqual(model.step, .recordingDailyLife)
-        model.skipRecording(selfMonitoring: false)
+        XCTAssertEqual(model.step, .oralIntroduction)
+        model.skipOralActivity(selfRating: 2)
+        XCTAssertEqual(model.step, .oralDailyLife)
+        model.skipOralActivity(selfRating: 4)
 
         XCTAssertEqual(model.step, .summary)
         XCTAssertEqual(model.report?.current.recognitionRate, 100)
@@ -66,42 +66,51 @@ final class DiagnosticViewModelTests: XCTestCase {
         )
     }
 
-    func testSkippingMicrophoneNeverBlocksAndDeniedStartCanBeSkipped() async throws {
-        let recording = DiagnosticFakeRecordingService(
-            startResult: .permissionDenied
+    func testDeniedMicrophoneFallsBackToTimerAndSelfRating() async throws {
+        let monitor = DiagnosticFakeActivityMonitor(
+            startResult: .timerOnly(.permissionDenied)
         )
         let model = try DiagnosticViewModel(
             catalog: makeCatalog(),
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: recording,
+            activityMonitor: monitor,
             speechService: makeSpeechService(),
             seed: 8,
             vocabularyCount: 1,
             listeningCount: 1,
             now: { self.start }
         )
-        advanceToFirstRecording(model)
+        advanceToFirstOral(model)
 
-        await model.toggleRecording()
+        await model.startOralActivity()
 
-        XCTAssertEqual(model.step, .recordingIntroduction)
-        XCTAssertTrue(model.statusMessage?.contains("仍可跳过") == true)
+        XCTAssertEqual(model.step, .oralIntroduction)
+        XCTAssertEqual(model.oralPhase, .preparing)
+        XCTAssertFalse(model.oralUsesMicrophoneMeter)
+        XCTAssertTrue(model.statusMessage?.contains("计时 + 自评") == true)
 
-        model.skipRecording(selfMonitoring: false)
-        model.skipRecording(selfMonitoring: false)
+        for _ in 0..<3 {
+            model.advanceOralClock()
+        }
+        XCTAssertEqual(model.oralPhase, .speaking)
+        model.stopOralActivity()
+        model.submitOralActivity(selfRating: 3)
+        model.skipOralActivity(selfRating: 3)
 
         XCTAssertEqual(model.step, .summary)
         XCTAssertNotNil(model.report)
     }
 
-    func testRecordingCountdownStartsAtSixtyAndStopsAtZero() async throws {
-        var now = start
-        let sleeper = ControlledDiagnosticSleeper()
-        let recording = DiagnosticFakeRecordingService(
-            startResult: .started(
-                URL(fileURLWithPath: "/tmp/diagnostic-fixture.m4a")
+    func testOralCountdownPreparesThenStopsAtSixtySeconds() async throws {
+        let monitor = DiagnosticFakeActivityMonitor(
+            startResult: .started,
+            stopSummary: SpeechActivitySummary(
+                elapsedMs: 60_000,
+                estimatedSpeakingMs: 42_000,
+                longPauseCount: 3,
+                usedMicrophoneMeter: true
             )
         )
         let model = try DiagnosticViewModel(
@@ -109,36 +118,73 @@ final class DiagnosticViewModelTests: XCTestCase {
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: recording,
+            activityMonitor: monitor,
             speechService: makeSpeechService(),
             seed: 9,
             vocabularyCount: 1,
             listeningCount: 1,
-            sleeper: sleeper,
-            now: { now }
+            now: { self.start }
         )
-        advanceToFirstRecording(model)
+        advanceToFirstOral(model)
 
-        await model.toggleRecording()
-        XCTAssertEqual(model.recordingRemainingSeconds, 60)
+        await model.startOralActivity()
+        XCTAssertEqual(model.preparationRemainingSeconds, 3)
+        XCTAssertEqual(model.oralRemainingSeconds, 60)
 
-        now = start.addingTimeInterval(61)
-        await Task.yield()
-        await sleeper.resume()
-        for _ in 0..<100 where model.recordingRemainingSeconds != 0 {
-            await Task.yield()
+        for _ in 0..<3 {
+            model.advanceOralClock()
+        }
+        XCTAssertEqual(model.oralPhase, .speaking)
+        for _ in 0..<60 {
+            model.advanceOralClock()
         }
 
-        XCTAssertEqual(model.recordingRemainingSeconds, 0)
-        XCTAssertFalse(recording.isRecording)
-        XCTAssertEqual(recording.stopCallCount, 1)
+        XCTAssertEqual(model.oralRemainingSeconds, 0)
+        XCTAssertEqual(model.oralPhase, .awaitingSelfRating)
+        XCTAssertEqual(model.oralSummary?.estimatedSpeakingMs, 42_000)
+        XCTAssertFalse(monitor.isMonitoring)
+        XCTAssertEqual(monitor.stopCallCount, 1)
     }
 
-    func testWindowDisappearCancelsTimerStopsAndDiscardsRecording() async throws {
-        let sleeper = ControlledDiagnosticSleeper()
-        let recording = DiagnosticFakeRecordingService(
-            startResult: .started(
-                URL(fileURLWithPath: "/tmp/diagnostic-close.m4a")
+    func testWindowDisappearStopsActivityWithoutCreatingSummary() async throws {
+        let monitor = DiagnosticFakeActivityMonitor(
+            startResult: .started
+        )
+        let model = try DiagnosticViewModel(
+            catalog: makeCatalog(),
+            repository: ProgressRepository(
+                container: try ProgressRepository.makeInMemoryContainer()
+            ),
+            activityMonitor: monitor,
+            speechService: makeSpeechService(),
+            seed: 11,
+            vocabularyCount: 1,
+            listeningCount: 1,
+            now: { self.start }
+        )
+        advanceToFirstOral(model)
+        await model.startOralActivity()
+
+        model.handleDisappear()
+
+        XCTAssertFalse(monitor.isMonitoring)
+        XCTAssertEqual(monitor.stopCallCount, 1)
+        XCTAssertEqual(model.step, .oralIntroduction)
+        XCTAssertEqual(model.oralPhase, .ready)
+        XCTAssertNil(model.oralSummary)
+    }
+
+    func testOralSelfRatingAndMeterSummaryAreSavedWithoutAudio() async throws {
+        let trialRepository = TrialRepository(
+            container: try TrialRepository.makeContainer(inMemory: true)
+        )
+        let monitor = DiagnosticFakeActivityMonitor(
+            startResult: .started,
+            stopSummary: SpeechActivitySummary(
+                elapsedMs: 18_000,
+                estimatedSpeakingMs: 12_000,
+                longPauseCount: 2,
+                usedMicrophoneMeter: true
             )
         )
         let model = try DiagnosticViewModel(
@@ -146,49 +192,32 @@ final class DiagnosticViewModelTests: XCTestCase {
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: recording,
+            activityMonitor: monitor,
+            oralAttemptStore: trialRepository,
             speechService: makeSpeechService(),
-            seed: 11,
-            vocabularyCount: 1,
-            listeningCount: 1,
-            sleeper: sleeper,
-            now: { self.start }
-        )
-        advanceToFirstRecording(model)
-        await model.toggleRecording()
-
-        model.handleDisappear()
-
-        XCTAssertFalse(recording.isRecording)
-        XCTAssertEqual(recording.discardCallCount, 1)
-        XCTAssertEqual(model.step, .recordingIntroduction)
-    }
-
-    func testDiscardFailureKeepsRecordingStepForRetry() throws {
-        let recording = DiagnosticFakeRecordingService()
-        recording.discardShouldFail = true
-        recording.temporaryRecordingURL = URL(
-            fileURLWithPath: "/tmp/diagnostic-retry.m4a"
-        )
-        let model = try DiagnosticViewModel(
-            catalog: makeCatalog(),
-            repository: ProgressRepository(
-                container: try ProgressRepository.makeInMemoryContainer()
-            ),
-            recordingService: recording,
-            speechService: makeSpeechService(),
-            seed: 12,
+            seed: 13,
             vocabularyCount: 1,
             listeningCount: 1,
             now: { self.start }
         )
-        advanceToFirstRecording(model)
+        advanceToFirstOral(model)
+        await model.startOralActivity()
+        for _ in 0..<3 {
+            model.advanceOralClock()
+        }
+        model.stopOralActivity()
+        model.submitOralActivity(selfRating: 4)
 
-        model.skipRecording(selfMonitoring: false)
-
-        XCTAssertEqual(model.step, .recordingIntroduction)
-        XCTAssertTrue(model.statusMessage?.contains("清理失败") == true)
-        XCTAssertEqual(recording.discardCallCount, 1)
+        let snapshot = try trialRepository.fetchSnapshot(
+            from: start.addingTimeInterval(-1),
+            through: start.addingTimeInterval(1)
+        )
+        let attempt = try XCTUnwrap(snapshot.oralAttempts.first)
+        XCTAssertEqual(attempt.topic, "自我介绍")
+        XCTAssertEqual(attempt.estimatedSpeakingMs, 12_000)
+        XCTAssertEqual(attempt.longPauseCount, 2)
+        XCTAssertEqual(attempt.selfRating, 4)
+        XCTAssertTrue(attempt.usedMicrophoneMeter)
     }
 
     func testWeeklyRunUsesStoredBaselineAndExposesTrainingSuggestionsWithoutChangingScheduler() throws {
@@ -216,16 +245,16 @@ final class DiagnosticViewModelTests: XCTestCase {
         let model = try DiagnosticViewModel(
             catalog: makeCatalog(),
             repository: repository,
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 10,
             vocabularyCount: 1,
             listeningCount: 1,
             now: { self.start }
         )
-        advanceToFirstRecording(model)
-        model.skipRecording(selfMonitoring: true)
-        model.skipRecording(selfMonitoring: true)
+        advanceToFirstOral(model)
+        model.skipOralActivity(selfRating: 2)
+        model.skipOralActivity(selfRating: 2)
 
         XCTAssertEqual(model.report?.baseline, baselineMetrics)
         XCTAssertFalse(model.comparisonRows.isEmpty)
@@ -292,7 +321,7 @@ final class DiagnosticViewModelTests: XCTestCase {
         let model = try DiagnosticViewModel(
             catalog: makeCatalog(),
             repository: repository,
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 31,
             vocabularyCount: 1,
@@ -319,7 +348,7 @@ final class DiagnosticViewModelTests: XCTestCase {
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 310,
             vocabularyCount: 1,
@@ -429,7 +458,7 @@ final class DiagnosticViewModelTests: XCTestCase {
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 312,
             vocabularyCount: 1,
@@ -449,7 +478,7 @@ final class DiagnosticViewModelTests: XCTestCase {
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(synthesizer: synthesizer),
             seed: 13,
             vocabularyCount: 1,
@@ -482,7 +511,7 @@ final class DiagnosticViewModelTests: XCTestCase {
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(synthesizer: synthesizer),
             seed: 131,
             vocabularyCount: 1,
@@ -508,7 +537,7 @@ final class DiagnosticViewModelTests: XCTestCase {
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(synthesizer: synthesizer),
             seed: 132,
             vocabularyCount: 1,
@@ -542,7 +571,7 @@ final class DiagnosticViewModelTests: XCTestCase {
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(synthesizer: synthesizer),
             seed: 133,
             vocabularyCount: 1,
@@ -573,7 +602,7 @@ final class DiagnosticViewModelTests: XCTestCase {
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeUnavailableSpeechService(),
             seed: 14,
             vocabularyCount: 1,
@@ -587,8 +616,8 @@ final class DiagnosticViewModelTests: XCTestCase {
         model.skipListening()
         XCTAssertEqual(model.step, .collocation)
         model.submitCollocation(rate: 50)
-        model.skipRecording(selfMonitoring: false)
-        model.skipRecording(selfMonitoring: false)
+        model.skipOralActivity(selfRating: 4)
+        model.skipOralActivity(selfRating: 4)
 
         XCTAssertEqual(model.report?.current.listeningEvidenceCount, 0)
         XCTAssertFalse(
@@ -609,7 +638,7 @@ final class DiagnosticViewModelTests: XCTestCase {
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: SpeechService(
                 voiceProvider: DiagnosticVoiceProvider(
                     hasVoice: true,
@@ -641,7 +670,7 @@ final class DiagnosticViewModelTests: XCTestCase {
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 15,
             now: { self.start }
@@ -662,7 +691,7 @@ final class DiagnosticViewModelTests: XCTestCase {
             repository: ProgressRepository(
                 container: try ProgressRepository.makeInMemoryContainer()
             ),
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 16,
             vocabularyCount: 1,
@@ -687,7 +716,7 @@ final class DiagnosticViewModelTests: XCTestCase {
         let baseline = try DiagnosticViewModel(
             catalog: catalog,
             repository: repository,
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 123,
             vocabularyCount: 3,
@@ -700,7 +729,7 @@ final class DiagnosticViewModelTests: XCTestCase {
         let weekly = try DiagnosticViewModel(
             catalog: catalog,
             repository: ProgressRepository(container: repository.container),
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 999,
             vocabularyCount: 3,
@@ -732,7 +761,7 @@ final class DiagnosticViewModelTests: XCTestCase {
         let baseline = try DiagnosticViewModel(
             catalog: catalog,
             repository: repository,
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 222,
             vocabularyCount: 3,
@@ -755,7 +784,7 @@ final class DiagnosticViewModelTests: XCTestCase {
         let first = try DiagnosticViewModel(
             catalog: reducedCatalog,
             repository: repository,
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 999,
             vocabularyCount: 3,
@@ -765,7 +794,7 @@ final class DiagnosticViewModelTests: XCTestCase {
         let second = try DiagnosticViewModel(
             catalog: reducedCatalog,
             repository: ProgressRepository(container: repository.container),
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 1,
             vocabularyCount: 3,
@@ -796,7 +825,7 @@ final class DiagnosticViewModelTests: XCTestCase {
         let next = try DiagnosticViewModel(
             catalog: reducedCatalog,
             repository: repository,
-            recordingService: DiagnosticFakeRecordingService(),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
             speechService: makeSpeechService(),
             seed: 5,
             vocabularyCount: 3,
@@ -807,7 +836,7 @@ final class DiagnosticViewModelTests: XCTestCase {
         XCTAssertEqual(next.sample, first.sample)
     }
 
-    private func advanceToFirstRecording(_ model: DiagnosticViewModel) {
+    private func advanceToFirstOral(_ model: DiagnosticViewModel) {
         advanceToListening(model)
         model.speakListeningSentence()
         model.submitListening(understood: false)
@@ -837,8 +866,8 @@ final class DiagnosticViewModelTests: XCTestCase {
             model.submitListening(understood: true)
         }
         model.submitCollocation(rate: 70)
-        model.skipRecording(selfMonitoring: false)
-        model.skipRecording(selfMonitoring: false)
+        model.skipOralActivity(selfRating: 4)
+        model.skipOralActivity(selfRating: 4)
     }
 
     private func makeCatalog() -> ContentCatalog {
@@ -930,58 +959,42 @@ final class DiagnosticViewModelTests: XCTestCase {
 }
 
 @MainActor
-private final class DiagnosticFakeRecordingService: RecordingManaging {
-    var isRecording = false
-    var temporaryRecordingURL: URL?
-    let startResult: RecordingStartResult
-    var discardShouldFail = false
+private final class DiagnosticFakeActivityMonitor:
+    SpeechActivityMonitoring
+{
+    private(set) var isMonitoring = false
+    let startResult: SpeechActivityStartResult
+    let stopSummary: SpeechActivitySummary?
     private(set) var stopCallCount = 0
-    private(set) var discardCallCount = 0
 
-    init(startResult: RecordingStartResult = .unavailable) {
+    init(
+        startResult: SpeechActivityStartResult =
+            .timerOnly(.unavailable),
+        stopSummary: SpeechActivitySummary? = nil
+    ) {
         self.startResult = startResult
+        self.stopSummary = stopSummary
     }
 
-    func permissionStatus() -> MicrophonePermissionStatus {
-        .denied
-    }
-
-    func requestPermission() async -> MicrophonePermissionStatus {
-        .denied
-    }
-
-    func start() async -> RecordingStartResult {
-        if case let .started(url) = startResult {
-            isRecording = true
-            temporaryRecordingURL = url
+    func start() async -> SpeechActivityStartResult {
+        if startResult == .started {
+            isMonitoring = true
         }
         return startResult
     }
 
-    func stop() {
-        stopCallCount += 1
-        isRecording = false
-    }
-
-    func discard() throws {
-        discardCallCount += 1
-        if discardShouldFail {
-            throw DiagnosticRecordingFixtureError.discardFailed
+    func stop() -> SpeechActivitySummary? {
+        guard isMonitoring else {
+            return nil
         }
-        isRecording = false
-        temporaryRecordingURL = nil
-    }
-
-    func save(to destinationURL: URL) throws -> RecordingSaveOutcome {
-        .saved(
-            destinationURL: destinationURL,
-            temporaryCleanupPending: false
-        )
+        stopCallCount += 1
+        isMonitoring = false
+        return stopSummary
     }
 }
 
-private enum DiagnosticRecordingFixtureError: Error {
-    case discardFailed
+private enum DiagnosticFixtureError: Error {
+    case persistenceFailed
 }
 
 @MainActor
@@ -993,7 +1006,7 @@ private final class FailingDiagnosticStore: DiagnosticReportStoring {
     }
 
     func saveDiagnosticReport(_ report: DiagnosticReport) throws {
-        throw DiagnosticRecordingFixtureError.discardFailed
+        throw DiagnosticFixtureError.persistenceFailed
     }
 
     func diagnosticHistory() throws -> DiagnosticHistorySnapshot {

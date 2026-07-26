@@ -864,8 +864,8 @@ final class AppModelTests: XCTestCase {
     diagnostic.submitProduction(correct: true)
     diagnostic.skipListening()
     diagnostic.submitCollocation(rate: 100)
-    diagnostic.skipRecording(selfMonitoring: true)
-    diagnostic.skipRecording(selfMonitoring: true)
+    diagnostic.skipOralActivity(selfRating: 2)
+    diagnostic.skipOralActivity(selfRating: 2)
 
     XCTAssertEqual(diagnostic.step, .summary)
     XCTAssertEqual(runtime.practice?.mode, .speaking)
