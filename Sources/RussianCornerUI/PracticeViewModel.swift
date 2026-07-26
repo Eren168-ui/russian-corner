@@ -89,6 +89,7 @@ public final class PracticeViewModel {
   public private(set) var remainingRecallSeconds = 3
   public private(set) var completedToday: Int
   public private(set) var statusMessage: String?
+  public private(set) var isDetailExpanded = false
   public let targetCount: Int
   public let newWordLimit: Int
   public let remainingNewWordCount: Int
@@ -103,6 +104,7 @@ public final class PracticeViewModel {
   private let recordingService: any RecordingManaging
   private let playbackService: any RecordingPlaying
   private let recordingsDirectory: URL
+  private let trialTracker: (any PracticeTrialTracking)?
   private let now: () -> Date
   private let calendar: Calendar
   private let sessionDayStart: Date
@@ -112,6 +114,10 @@ public final class PracticeViewModel {
   private var states: [PracticeItemIdentity: ReviewState]
   private var successfulToday: Set<PracticeItemIdentity>
   private var recallStartedAt: Date
+  private var initialBacklogIDs: Set<PracticeItemIdentity> = []
+  private var resolvedBacklogIDs: Set<PracticeItemIdentity> = []
+  private var usedSpeechOnCurrentItem = false
+  private var openedDetailsOnCurrentItem = false
 
   public var currentItem: PracticeQueueEntry? {
     queue.indices.contains(currentIndex) ? queue[currentIndex] : nil
@@ -241,7 +247,8 @@ public final class PracticeViewModel {
     speechService: SpeechService = SpeechService(),
     recordingService: any RecordingManaging = RecordingService(),
     playbackService: any RecordingPlaying = RecordingPlaybackService(),
-    recordingsDirectory: URL? = nil
+    recordingsDirectory: URL? = nil,
+    trialTracker: (any PracticeTrialTracking)? = nil
   ) throws {
     self.repository = repository
     let sentenceTargetCount = min(max(targetCount, 5), 10)
@@ -255,6 +262,7 @@ public final class PracticeViewModel {
     self.playbackService = playbackService
     self.recordingsDirectory =
       recordingsDirectory ?? Self.defaultRecordingsDirectory
+    self.trialTracker = trialTracker
     let instant = now()
     sessionDayStart = calendar.startOfDay(for: instant)
     automaticDirectionAtCreation =
@@ -358,6 +366,14 @@ public final class PracticeViewModel {
         PracticeItemIdentity(kind: .lexeme, id: $0.id)
       )
     }.count
+    initialBacklogIDs = Set(
+      dueLexemes.map {
+        PracticeItemIdentity(kind: .lexeme, id: $0.id)
+      }
+      + dueSentences.map {
+        PracticeItemIdentity(kind: .sentence, id: $0.id)
+      }
+    ).subtracting(successfulTodaySet)
     let weeklyReviewDay =
       calendar.component(.weekday, from: instant) == 1
     let hasLearnedContent =
@@ -541,8 +557,30 @@ public final class PracticeViewModel {
   }
 
   public func reveal() {
+    guard currentItem != nil else { return }
     isRevealed = true
     refreshRecallTimer()
+    trialTracker?.record(
+      kind: .reveal,
+      context: trialContext(
+        kind: .reveal,
+        occurredAt: now()
+      )
+    )
+  }
+
+  public func toggleDetails() {
+    guard currentItem != nil else { return }
+    isDetailExpanded.toggle()
+    guard isDetailExpanded else { return }
+    openedDetailsOnCurrentItem = true
+    trialTracker?.record(
+      kind: .detailsOpened,
+      context: trialContext(
+        kind: .detailsOpened,
+        occurredAt: now()
+      )
+    )
   }
 
   public func toggleLexemeDirection() {
@@ -568,6 +606,7 @@ public final class PracticeViewModel {
     guard let item = currentItem else { return }
     let instant = now()
     let elapsed = max(0, instant.timeIntervalSince(recallStartedAt))
+    let wasNewItem = states[item.identity] == nil && !item.isRetry
     let event = ReviewEvent(
       itemType: item.kind,
       itemId: item.id,
@@ -599,6 +638,11 @@ public final class PracticeViewModel {
     states[item.identity] = newState
     successfulToday = newSuccessfulToday
     completedToday = newCompletedCount
+    if grade != .again,
+      initialBacklogIDs.contains(item.identity)
+    {
+      resolvedBacklogIDs.insert(item.identity)
+    }
     if grade == .again {
       let hasFutureRetry = queue
         .dropFirst(currentIndex + 1)
@@ -611,10 +655,28 @@ public final class PracticeViewModel {
         )
       }
     }
+    trialTracker?.record(
+      kind: .grade,
+      context: trialContext(
+        kind: .grade,
+        grade: grade,
+        responseTimeMs: event.responseTimeMs,
+        isNewItem: wasNewItem,
+        occurredAt: instant
+      )
+    )
     advance(status: cleanupMessage)
   }
 
   public func next() {
+    guard currentItem != nil else { return }
+    trialTracker?.record(
+      kind: .next,
+      context: trialContext(
+        kind: .next,
+        occurredAt: now()
+      )
+    )
     let cleanupMessage = cleanupRecordingForTransition()
     advance(status: cleanupMessage)
   }
@@ -624,9 +686,15 @@ public final class PracticeViewModel {
     speechService.stop()
     currentIndex += 1
     isRevealed = false
+    isDetailExpanded = false
+    usedSpeechOnCurrentItem = false
+    openedDetailsOnCurrentItem = false
     remainingRecallSeconds = 3
     recallStartedAt = now()
     statusMessage = status
+    if isComplete {
+      trialTracker?.close(reason: .completed)
+    }
   }
 
   public func showStatus(_ message: String) {
@@ -663,6 +731,14 @@ public final class PracticeViewModel {
       text = nil
     }
     guard let text else { return }
+    usedSpeechOnCurrentItem = true
+    trialTracker?.record(
+      kind: .speak,
+      context: trialContext(
+        kind: .speak,
+        occurredAt: now()
+      )
+    )
     switch speechService.speak(text) {
     case .russianVoice:
       statusMessage = "正在朗读俄语"
@@ -794,6 +870,58 @@ public final class PracticeViewModel {
         isDirectory: true
       )
       .appendingPathComponent("Recordings", isDirectory: true)
+  }
+
+  private func trialContext(
+    kind: TrialInteractionKind,
+    grade: ReviewGrade? = nil,
+    responseTimeMs: Int? = nil,
+    isNewItem explicitIsNewItem: Bool? = nil,
+    occurredAt: Date
+  ) -> TrialInteractionContext {
+    guard let item = currentItem else {
+      preconditionFailure("Trial context requires a current practice item")
+    }
+    let beforeCount = max(0, queue.count - currentIndex)
+    let consumesCurrentItem = kind == .grade || kind == .next
+    let afterCount = max(
+      0,
+      beforeCount - (consumesCurrentItem ? 1 : 0)
+    )
+    let direction: TrialPromptDirection
+    let promptLevel: TrialPromptLevel
+    switch item.content {
+    case .lexeme:
+      direction =
+        lexemeDirection == .recognition
+        ? .recognition : .production
+      promptLevel =
+        lexemeDirection == .recognition
+        ? .russian : .chinese
+    case .sentence:
+      direction = .sentenceProduction
+      promptLevel = prompt == currentCard?.promptZh
+        ? .chinese : .scene
+    }
+    return TrialInteractionContext(
+      itemType: item.kind,
+      itemID: item.id,
+      direction: direction,
+      promptLevel: promptLevel,
+      grade: grade,
+      responseTimeMs: responseTimeMs,
+      usedSpeech: usedSpeechOnCurrentItem,
+      openedDetails: openedDetailsOnCurrentItem,
+      practiceMode: mode,
+      occurredAt: occurredAt,
+      queueCountBeforeAction: beforeCount,
+      queueCountAfterAction: afterCount,
+      queuePosition: currentIndex,
+      remainingBacklogCount: initialBacklogIDs
+        .subtracting(resolvedBacklogIDs).count,
+      isNewItem: explicitIsNewItem
+        ?? (states[item.identity] == nil && !item.isRetry)
+    )
   }
 
   private static func recallRate(
