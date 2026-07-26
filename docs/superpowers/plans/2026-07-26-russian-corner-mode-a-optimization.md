@@ -54,6 +54,36 @@
 - `Sources/RussianCornerCore/Resources/*.json`: 本轮不扩充语料、不改原始 Obsidian。
 - 原始 OneDrive 俄语资料：继续只读。
 
+## Approved scope amendment: A2-to-B1 vocabulary floor
+
+The learner clarified during implementation that A1/A2 material is already
+known and must not consume new-word slots. The default profile is therefore
+`A2 已完成、正在冲 B1`:
+
+- absolute beginner lemmas such as `привет`, `здравствуйте`, `спасибо`,
+  `понимать`, `знать`, basic family/home/food/time words are suppressed as
+  standalone vocabulary cards;
+- suppressed words may remain inside natural example sentences and dialogues;
+- higher-value A2-to-B1 bridge verbs, collocations, government, aspect pairs,
+  connectors and scenario expressions remain eligible;
+- diagnostics use the same profile so a repaired baseline does not test known
+  greeting vocabulary;
+- at least 250 reviewed standalone lexemes must remain eligible;
+- the original JSON and Obsidian sources remain unchanged.
+
+Implementation files:
+
+- `Sources/RussianCornerCore/LearnerVocabularyProfile.swift`
+- `Tests/RussianCornerCoreTests/VocabularyProfileTests.swift`
+- `Sources/RussianCornerUI/PracticeViewModel.swift`
+- `Sources/RussianCornerUI/DiagnosticViewModel.swift`
+- `Tests/RussianCornerAppTests/PracticeViewModelTests.swift`
+
+- [x] Write failing profile and queue tests.
+- [x] Add the A2-to-B1 standalone-word suppression profile.
+- [x] Apply it to daily practice and diagnostics.
+- [x] Verify at least 250 reviewed words remain eligible.
+
 ## Data and behavior contracts
 
 ```swift

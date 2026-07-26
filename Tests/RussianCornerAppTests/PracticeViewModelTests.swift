@@ -133,6 +133,57 @@ final class PracticeViewModelTests: XCTestCase {
     XCTAssertEqual(model.queue.filter { $0.kind == .sentence }.count, 7)
   }
 
+  func testA2ToB1ProfileKeepsBasicWordsOutOfStandaloneQueue() throws {
+    let repository = try makeRepository()
+    let basic = Lexeme(
+      id: "basic-hello",
+      lemma: "привет",
+      stressedForm: "приве́т",
+      speechText: "привет",
+      partOfSpeech: "interjection",
+      glossZh: "你好",
+      collocations: ["передать привет"],
+      example: "Передай ему привет.",
+      sentenceIDs: [],
+      reviewStatus: .reviewed
+    )
+    let bridge = Lexeme(
+      id: "bridge-delay",
+      lemma: "задерживаться",
+      stressedForm: "заде́рживаться",
+      speechText: "задерживаться",
+      partOfSpeech: "verb",
+      glossZh: "耽搁；延误",
+      collocations: ["задерживаться на работе"],
+      example: "Я иногда задерживаюсь на работе.",
+      sentenceIDs: [],
+      reviewStatus: .reviewed,
+      aspect: "imperfective",
+      aspectPairNote: "完成体：задержаться",
+      government: "где? / на чём?"
+    )
+
+    let model = try PracticeViewModel(
+      catalog: ContentCatalog(
+        lexemes: [basic, bridge],
+        sentences: []
+      ),
+      repository: repository,
+      now: { self.start },
+      calendar: utcCalendar
+    )
+
+    XCTAssertEqual(
+      model.queue.compactMap {
+        guard case .lexeme(let lexeme) = $0.content else {
+          return nil
+        }
+        return lexeme.lemma
+      },
+      ["задерживаться"]
+    )
+  }
+
   func testLowPreviousDayRecallReducesNewLexemesToSix() throws {
     let repository = try makeRepository()
     addEvents(

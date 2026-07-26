@@ -240,6 +240,7 @@ public final class PracticeViewModel {
     now: @escaping () -> Date = Date.init,
     calendar: Calendar = .current,
     diagnosticFindings: [DiagnosticFindingType] = [],
+    vocabularyProfile: LearnerVocabularyProfile = .a2ToB1Bridge,
     scheduler: ReviewScheduler = ReviewScheduler(),
     speechService: SpeechService = SpeechService(),
     trialTracker: (any PracticeTrialTracking)? = nil
@@ -301,7 +302,9 @@ public final class PracticeViewModel {
     var learnedLexemes: [Lexeme] = []
     var freshLexemes: [Lexeme] = []
     for lexeme in catalog.lexemes
-    where lexeme.reviewStatus != .draft {
+    where lexeme.reviewStatus != .draft
+      && vocabularyProfile.shouldServeAsStandalone(lexeme: lexeme)
+    {
       let identity = PracticeItemIdentity(kind: .lexeme, id: lexeme.id)
       if let state = try repository.progress(
         itemType: .lexeme,

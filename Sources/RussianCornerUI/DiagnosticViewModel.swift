@@ -118,6 +118,7 @@ public final class DiagnosticViewModel {
         seed requestedSeed: UInt64? = nil,
         vocabularyCount: Int = 10,
         listeningCount: Int = 10,
+        vocabularyProfile: LearnerVocabularyProfile = .a2ToB1Bridge,
         sleeper: any DiagnosticSleeping = SystemDiagnosticSleeper(),
         onReportSaved: (@MainActor () -> Void)? = nil,
         now: @escaping () -> Date = Date.init
@@ -137,8 +138,14 @@ public final class DiagnosticViewModel {
         let resolvedListeningCount =
             baselineListeningIDs.isEmpty
             ? listeningCount : baselineListeningIDs.count
+        let levelAdjustedCatalog = ContentCatalog(
+            lexemes: catalog.lexemes.filter {
+                vocabularyProfile.shouldServeAsStandalone(lexeme: $0)
+            },
+            sentences: catalog.sentences
+        )
         let selectedSample = DiagnosticSampler().sample(
-            from: catalog,
+            from: levelAdjustedCatalog,
             seed: resolvedSeed,
             vocabularyCount: resolvedVocabularyCount,
             listeningCount: resolvedListeningCount,
