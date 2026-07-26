@@ -26,16 +26,18 @@ struct RussianCornerResourceProbe {
                 )
             }
             guard catalog.lexemes.count == 360,
-                catalog.sentences.count == 72
+                catalog.sentences.count == 72,
+                catalog.trialSlice?.cardCount == 50
             else {
                 throw ProbeError(
                     message:
                         "unexpected resource counts " +
-                        "\(catalog.lexemes.count)/\(catalog.sentences.count)"
+                        "\(catalog.lexemes.count)/\(catalog.sentences.count)/" +
+                        "\(catalog.trialSlice?.cardCount ?? 0)"
                 )
             }
             print(
-                "resource_probe=PASS lexemes=360 sentences=72 " +
+                "resource_probe=PASS lexemes=360 sentences=72 trial=50 " +
                     "directory=\(resourceDirectory.path)"
             )
         } catch {

@@ -226,7 +226,7 @@ public final class PracticeViewModel {
       lexemeDirection == .recognition
         ? lexeme.glossZh : lexeme.stressedForm
     case .sentence(let sentence):
-      sentence.practiceRu
+      sentence.stressedForm ?? sentence.practiceRu
     case nil:
       nil
     }
@@ -261,11 +261,13 @@ public final class PracticeViewModel {
       ? .recognition : .production
     lexemeDirection = automaticDirectionAtCreation
     recallStartedAt = instant
+    let servedLexemes = catalog.practiceLexemes
+    let servedSentences = catalog.practiceSentences
     sentencesByID = Dictionary(
-      uniqueKeysWithValues: catalog.sentences.map { ($0.id, $0) }
+      uniqueKeysWithValues: servedSentences.map { ($0.id, $0) }
     )
     sentencesByTheme = Dictionary(
-      grouping: catalog.sentences,
+      grouping: servedSentences,
       by: \.theme
     )
 
@@ -301,7 +303,7 @@ public final class PracticeViewModel {
     var dueLexemes: [Lexeme] = []
     var learnedLexemes: [Lexeme] = []
     var freshLexemes: [Lexeme] = []
-    for lexeme in catalog.lexemes
+    for lexeme in servedLexemes
     where lexeme.reviewStatus != .draft
       && vocabularyProfile.shouldServeAsStandalone(lexeme: lexeme)
     {
@@ -323,7 +325,7 @@ public final class PracticeViewModel {
     var dueSentences: [SentenceCard] = []
     var learnedSentences: [SentenceCard] = []
     var freshSentences: [SentenceCard] = []
-    for sentence in catalog.sentences
+    for sentence in servedSentences
     where sentence.reviewStatus != .draft {
       let identity = PracticeItemIdentity(
         kind: .sentence,
@@ -458,7 +460,7 @@ public final class PracticeViewModel {
     var lexemeEntries: [PracticeQueueEntry] = orderedRetryIdentities
       .filter { $0.kind == .lexeme }
       .compactMap { identity in
-        catalog.lexemes.first { $0.id == identity.id }
+        servedLexemes.first { $0.id == identity.id }
       }
       .map { PracticeQueueEntry(content: .lexeme($0), isRetry: true) }
     if weeklyReviewDay && hasLearnedContent {
@@ -516,7 +518,7 @@ public final class PracticeViewModel {
     var sentenceEntries: [PracticeQueueEntry] = orderedRetryIdentities
       .filter { $0.kind == .sentence }
       .compactMap { identity in
-        catalog.sentences.first { $0.id == identity.id }
+        servedSentences.first { $0.id == identity.id }
       }
       .map { PracticeQueueEntry(content: .sentence($0), isRetry: true) }
     var seenSentenceIDs = Set(sentenceEntries.map(\.id))
@@ -536,7 +538,9 @@ public final class PracticeViewModel {
     remainingSentenceCardCount = sentenceCardsRemaining
     successfulToday = successfulTodaySet
     completedToday = successfulTodaySet.count
-    queue = lexemeEntries + sentenceEntries
+    queue = catalog.trialSlice == nil
+      ? lexemeEntries + sentenceEntries
+      : sentenceEntries + lexemeEntries
   }
 
   public func needsTemporalReload(at instant: Date) -> Bool {

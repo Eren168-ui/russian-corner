@@ -153,10 +153,10 @@ public final class DiagnosticViewModel {
             baselineListeningIDs.isEmpty
             ? listeningCount : baselineListeningIDs.count
         let levelAdjustedCatalog = ContentCatalog(
-            lexemes: catalog.lexemes.filter {
+            lexemes: catalog.practiceLexemes.filter {
                 vocabularyProfile.shouldServeAsStandalone(lexeme: $0)
             },
-            sentences: catalog.sentences
+            sentences: catalog.practiceSentences
         )
         let selectedSample = DiagnosticSampler().sample(
             from: levelAdjustedCatalog,

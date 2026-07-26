@@ -284,6 +284,8 @@ final_dist_is_valid() {
     [ ! -L "$recovery_resources/lexemes.json" ] &&
     [ -f "$recovery_resources/sentences.json" ] &&
     [ ! -L "$recovery_resources/sentences.json" ] &&
+    [ -f "$recovery_resources/trial-slice.json" ] &&
+    [ ! -L "$recovery_resources/trial-slice.json" ] &&
     "$CODESIGN_BIN" --verify --deep --strict "$recovery_app" \
       >/dev/null 2>&1
 }
@@ -476,7 +478,8 @@ if [ ! -x "$BUILT_RESOURCE_PROBE" ]; then
   exit 1
 fi
 if [ ! -f "$SOURCE_RESOURCES_DIR/lexemes.json" ] ||
-  [ ! -f "$SOURCE_RESOURCES_DIR/sentences.json" ]; then
+  [ ! -f "$SOURCE_RESOURCES_DIR/sentences.json" ] ||
+  [ ! -f "$SOURCE_RESOURCES_DIR/trial-slice.json" ]; then
   printf 'error: source JSON resources are incomplete\n' >&2
   exit 1
 fi
@@ -498,6 +501,9 @@ SOURCE_LEXEMES_SHA_BEFORE=$(
 SOURCE_SENTENCES_SHA_BEFORE=$(
   shasum -a 256 "$SOURCE_RESOURCES_DIR/sentences.json" | awk '{print $1}'
 )
+SOURCE_TRIAL_SLICE_SHA_BEFORE=$(
+  shasum -a 256 "$SOURCE_RESOURCES_DIR/trial-slice.json" | awk '{print $1}'
+)
 
 mkdir -p "$STAGED_MACOS" "$STAGED_RESOURCES"
 chmod 0755 \
@@ -513,6 +519,9 @@ install -m 0644 \
 install -m 0644 \
   "$SOURCE_RESOURCES_DIR/sentences.json" \
   "$STAGED_RESOURCES/sentences.json"
+install -m 0644 \
+  "$SOURCE_RESOURCES_DIR/trial-slice.json" \
+  "$STAGED_RESOURCES/trial-slice.json"
 
 SOURCE_LEXEMES_SHA_AFTER=$(
   shasum -a 256 "$SOURCE_RESOURCES_DIR/lexemes.json" | awk '{print $1}'
@@ -520,16 +529,24 @@ SOURCE_LEXEMES_SHA_AFTER=$(
 SOURCE_SENTENCES_SHA_AFTER=$(
   shasum -a 256 "$SOURCE_RESOURCES_DIR/sentences.json" | awk '{print $1}'
 )
+SOURCE_TRIAL_SLICE_SHA_AFTER=$(
+  shasum -a 256 "$SOURCE_RESOURCES_DIR/trial-slice.json" | awk '{print $1}'
+)
 STAGED_LEXEMES_SHA=$(
   shasum -a 256 "$STAGED_RESOURCES/lexemes.json" | awk '{print $1}'
 )
 STAGED_SENTENCES_SHA=$(
   shasum -a 256 "$STAGED_RESOURCES/sentences.json" | awk '{print $1}'
 )
+STAGED_TRIAL_SLICE_SHA=$(
+  shasum -a 256 "$STAGED_RESOURCES/trial-slice.json" | awk '{print $1}'
+)
 if [ "$SOURCE_LEXEMES_SHA_BEFORE" != "$SOURCE_LEXEMES_SHA_AFTER" ] ||
   [ "$SOURCE_SENTENCES_SHA_BEFORE" != "$SOURCE_SENTENCES_SHA_AFTER" ] ||
+  [ "$SOURCE_TRIAL_SLICE_SHA_BEFORE" != "$SOURCE_TRIAL_SLICE_SHA_AFTER" ] ||
   [ "$SOURCE_LEXEMES_SHA_AFTER" != "$STAGED_LEXEMES_SHA" ] ||
-  [ "$SOURCE_SENTENCES_SHA_AFTER" != "$STAGED_SENTENCES_SHA" ]; then
+  [ "$SOURCE_SENTENCES_SHA_AFTER" != "$STAGED_SENTENCES_SHA" ] ||
+  [ "$SOURCE_TRIAL_SLICE_SHA_AFTER" != "$STAGED_TRIAL_SLICE_SHA" ]; then
   printf 'error: JSON resources changed or differed during staging\n' >&2
   exit 1
 fi
@@ -591,7 +608,8 @@ printf 'missing_resource_probe=PASS\n'
 if [ "$(stat -f '%Lp' "$STAGED_RESOURCES")" != "755" ] ||
   [ "$(stat -f '%Lp' "$STAGED_EXECUTABLE")" != "755" ] ||
   [ "$(stat -f '%Lp' "$STAGED_RESOURCES/lexemes.json")" != "644" ] ||
-  [ "$(stat -f '%Lp' "$STAGED_RESOURCES/sentences.json")" != "644" ]; then
+  [ "$(stat -f '%Lp' "$STAGED_RESOURCES/sentences.json")" != "644" ] ||
+  [ "$(stat -f '%Lp' "$STAGED_RESOURCES/trial-slice.json")" != "644" ]; then
   printf 'error: staged app permissions are incorrect\n' >&2
   exit 1
 fi
@@ -673,16 +691,24 @@ FINAL_LEXEMES_SHA=$(
 FINAL_SENTENCES_SHA=$(
   shasum -a 256 "$FINAL_RESOURCES/sentences.json" | awk '{print $1}'
 )
+FINAL_TRIAL_SLICE_SHA=$(
+  shasum -a 256 "$FINAL_RESOURCES/trial-slice.json" | awk '{print $1}'
+)
 CURRENT_SOURCE_LEXEMES_SHA=$(
   shasum -a 256 "$SOURCE_RESOURCES_DIR/lexemes.json" | awk '{print $1}'
 )
 CURRENT_SOURCE_SENTENCES_SHA=$(
   shasum -a 256 "$SOURCE_RESOURCES_DIR/sentences.json" | awk '{print $1}'
 )
+CURRENT_SOURCE_TRIAL_SLICE_SHA=$(
+  shasum -a 256 "$SOURCE_RESOURCES_DIR/trial-slice.json" | awk '{print $1}'
+)
 if [ "$CURRENT_SOURCE_LEXEMES_SHA" != "$STAGED_LEXEMES_SHA" ] ||
   [ "$CURRENT_SOURCE_SENTENCES_SHA" != "$STAGED_SENTENCES_SHA" ] ||
+  [ "$CURRENT_SOURCE_TRIAL_SLICE_SHA" != "$STAGED_TRIAL_SLICE_SHA" ] ||
   [ "$FINAL_LEXEMES_SHA" != "$STAGED_LEXEMES_SHA" ] ||
-  [ "$FINAL_SENTENCES_SHA" != "$STAGED_SENTENCES_SHA" ]; then
+  [ "$FINAL_SENTENCES_SHA" != "$STAGED_SENTENCES_SHA" ] ||
+  [ "$FINAL_TRIAL_SLICE_SHA" != "$STAGED_TRIAL_SLICE_SHA" ]; then
   printf 'error: final JSON resources differ from source or staging\n' >&2
   exit 1
 fi
@@ -692,7 +718,8 @@ plutil -lint "$FINAL_APP/Contents/Info.plist"
 if [ "$(stat -f '%Lp' "$FINAL_RESOURCES")" != "755" ] ||
   [ "$(stat -f '%Lp' "$FINAL_EXECUTABLE")" != "755" ] ||
   [ "$(stat -f '%Lp' "$FINAL_RESOURCES/lexemes.json")" != "644" ] ||
-  [ "$(stat -f '%Lp' "$FINAL_RESOURCES/sentences.json")" != "644" ]; then
+  [ "$(stat -f '%Lp' "$FINAL_RESOURCES/sentences.json")" != "644" ] ||
+  [ "$(stat -f '%Lp' "$FINAL_RESOURCES/trial-slice.json")" != "644" ]; then
   printf 'error: published app permissions are incorrect\n' >&2
   exit 1
 fi
@@ -710,7 +737,8 @@ STAGING_ROOT=""
 remove_owned_transaction_state
 
 printf \
-  'resource_sha256=PASS lexemes=%s sentences=%s\n' \
+  'resource_sha256=PASS lexemes=%s sentences=%s trial_slice=%s\n' \
   "$FINAL_LEXEMES_SHA" \
-  "$FINAL_SENTENCES_SHA"
+  "$FINAL_SENTENCES_SHA" \
+  "$FINAL_TRIAL_SLICE_SHA"
 printf 'Published app: %s\n' "$FINAL_APP"

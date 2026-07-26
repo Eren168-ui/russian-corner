@@ -1206,3 +1206,19 @@ git commit -m "feat: complete mode a trial optimization"
   obsolete recording protocol remains.
 - [ ] Record final commit, test count, build result, codesign result, app path,
   trial store path, and source-hash verification in the implementation handoff.
+
+### Task 10: Add the MODE A content-safety gate and trial slice
+
+- [x] Commit the completed runtime as a safe checkpoint.
+- [x] Re-read only the allowlisted `口语Диалоги` source with Obsidian CLI.
+- [x] Preserve the existing 360/72 derived catalog.
+- [x] Add provenance, quality, pragmatic, role and address metadata.
+- [x] Add a 50-card trial whitelist covering six daily-life scenes.
+- [x] Keep unsplit variants and annotated text out of `practiceRu` and TTS.
+- [x] Make production practice use only the whitelist, with expressions first.
+- [x] Add source-text exact-match and source-root verification.
+- [x] Record 35 non-automated semantic readbacks without claiming native review.
+- [x] Record dialogue continuation, role exchange, personalization, repair
+  language and register variants as MODE B candidates only.
+- [ ] Run the full Swift, packaging, build, codesign and source-hash acceptance.
+- [ ] Commit the content-safety patch and record the final handoff.

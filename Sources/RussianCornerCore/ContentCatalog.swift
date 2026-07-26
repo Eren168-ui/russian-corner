@@ -30,6 +30,7 @@ public enum ContentCatalogError: LocalizedError, Equatable {
 public struct ContentCatalog: Sendable {
     public let lexemes: [Lexeme]
     public let sentences: [SentenceCard]
+    public let trialSlice: TrialContentSlice?
 
     public init() throws {
         try self.init(
@@ -59,9 +60,16 @@ public struct ContentCatalog: Sendable {
             resourceDirectory: resourceDirectory,
             decoder: decoder
         )
+        let trialSlice = try Self.decode(
+            TrialContentSlice.self,
+            resource: "trial-slice",
+            resourceDirectory: resourceDirectory,
+            decoder: decoder
+        )
         let catalog = ContentCatalog(
             lexemes: lexemes,
-            sentences: sentences
+            sentences: sentences,
+            trialSlice: trialSlice
         )
         let issues = catalog.validate()
         guard issues.isEmpty else {
@@ -97,12 +105,36 @@ public struct ContentCatalog: Sendable {
             .appendingPathComponent("Resources", isDirectory: true)
     }
 
-    public init(lexemes: [Lexeme], sentences: [SentenceCard]) {
+    public init(
+        lexemes: [Lexeme],
+        sentences: [SentenceCard],
+        trialSlice: TrialContentSlice? = nil
+    ) {
         let allowedStatuses: Set<ReviewStatus> = [.reviewed, .verified]
         self.lexemes = lexemes.filter {
             allowedStatuses.contains($0.reviewStatus)
         }
         self.sentences = sentences.filter {
+            allowedStatuses.contains($0.reviewStatus)
+        }
+        self.trialSlice = trialSlice
+    }
+
+    public var practiceLexemes: [Lexeme] {
+        guard let trialSlice else {
+            return lexemes
+        }
+        return lexemes.filter {
+            trialSlice.lexemeIDs.contains($0.id)
+        }
+    }
+
+    public var practiceSentences: [SentenceCard] {
+        guard let trialSlice else {
+            return sentences
+        }
+        let allowedStatuses: Set<ReviewStatus> = [.reviewed, .verified]
+        return trialSlice.sentences.filter {
             allowedStatuses.contains($0.reviewStatus)
         }
     }
@@ -367,8 +399,11 @@ public struct ContentCatalog: Sendable {
                     issues: &issues
                 )
                 require(
-                    Self.containsLexeme(lexeme, in: sentence.practiceRu)
-                        && Self.containsLexeme(
+                    Self.containsLexemeFamily(
+                        lexeme,
+                        in: sentence.practiceRu
+                    )
+                        && Self.containsLexemeFamily(
                             lexeme,
                             in: sentence.speechText
                         ),
@@ -473,8 +508,11 @@ public struct ContentCatalog: Sendable {
                     continue
                 }
                 require(
-                    Self.containsLexeme(lexeme, in: sentence.practiceRu)
-                        && Self.containsLexeme(
+                    Self.containsLexemeFamily(
+                        lexeme,
+                        in: sentence.practiceRu
+                    )
+                        && Self.containsLexemeFamily(
                             lexeme,
                             in: sentence.speechText
                         ),
@@ -504,6 +542,257 @@ public struct ContentCatalog: Sendable {
             )
         }
 
+        if let trialSlice {
+            issues += validate(
+                trialSlice: trialSlice,
+                lexemesByID: lexemesByID
+            )
+        }
+
+        return issues
+    }
+
+    private func validate(
+        trialSlice: TrialContentSlice,
+        lexemesByID: [String: Lexeme]
+    ) -> [CatalogIssue] {
+        var issues: [CatalogIssue] = []
+        let allowedStatuses: Set<ReviewStatus> = [.reviewed, .verified]
+        let disqualifyingFlags: Set<ContentQualityFlag> = [
+            .typo,
+            .grammarSuspect,
+            .unnatural,
+            .ambiguousTranslation,
+            .incomplete,
+            .emptyDialogue,
+            .possiblyDated,
+            .needsNativeReview,
+        ]
+        let sentenceIDs = Set(trialSlice.sentences.map(\.id))
+        let allCardIDs = sentenceIDs.union(
+            trialSlice.lexemeReviews.map(\.lexemeID)
+        )
+
+        require(
+            trialSlice.schemaVersion == 1,
+            itemID: "trialSlice",
+            message: "unsupported schema version",
+            issues: &issues
+        )
+        require(
+            trialSlice.sourceRoot == Self.allowedTrialSourceRoot,
+            itemID: "trialSlice",
+            message: "trial source root is not allowlisted",
+            issues: &issues
+        )
+        require(
+            (50...80).contains(trialSlice.cardCount),
+            itemID: "trialSlice",
+            message: "trial slice must contain 50 through 80 cards",
+            issues: &issues
+        )
+        require(
+            sentenceIDs.count == trialSlice.sentences.count,
+            itemID: "trialSlice.sentences",
+            message: "trial sentence IDs must be unique",
+            issues: &issues
+        )
+        require(
+            trialSlice.lexemeIDs.count == trialSlice.lexemeReviews.count,
+            itemID: "trialSlice.lexemes",
+            message: "trial lexeme IDs must be unique",
+            issues: &issues
+        )
+        require(
+            Set(trialSlice.manualReviewSampleIDs).count >= 30,
+            itemID: "trialSlice.manualReviewSampleIDs",
+            message: "at least 30 distinct cards require manual readback",
+            issues: &issues
+        )
+        for cardID in trialSlice.manualReviewSampleIDs
+        where !allCardIDs.contains(cardID) {
+            issues.append(
+                CatalogIssue(
+                    itemID: cardID,
+                    message: "manual review ID is outside the trial slice"
+                )
+            )
+        }
+
+        let trialSentencesByID = trialSlice.sentences.reduce(
+            into: [String: SentenceCard]()
+        ) { result, sentence in
+            if result[sentence.id] == nil {
+                result[sentence.id] = sentence
+            }
+        }
+        for sentence in trialSlice.sentences {
+            require(
+                allowedStatuses.contains(sentence.reviewStatus),
+                itemID: sentence.id,
+                message: "trial content must be reviewed or verified",
+                issues: &issues
+            )
+            require(
+                sentence.provenanceType == .courseMaterial
+                    || sentence.provenanceType == .userNote
+                    || sentence.provenanceType == .derived,
+                itemID: sentence.id,
+                message: "trial provenance is missing or unsafe",
+                issues: &issues
+            )
+            require(
+                Set(sentence.qualityFlags)
+                    .isDisjoint(with: disqualifyingFlags),
+                itemID: sentence.id,
+                message: "trial sentence has a disqualifying quality flag",
+                issues: &issues
+            )
+            require(
+                Self.isNonempty(sentence.practiceRu)
+                    && Self.isNonempty(sentence.stressedForm)
+                    && Self.isNonempty(sentence.speechText),
+                itemID: sentence.id,
+                message: "trial display or speech text is empty",
+                issues: &issues
+            )
+            require(
+                Self.isCleanRussianSpeech(sentence.practiceRu)
+                    && Self.isCleanRussianSpeech(
+                        sentence.stressedForm ?? ""
+                    )
+                    && Self.isCleanRussianSpeech(sentence.speechText),
+                itemID: sentence.id,
+                message: "trial speech contains annotation or an unsplit variant",
+                issues: &issues
+            )
+            require(
+                Self.isNonempty(sentence.sourcePath)
+                    && sentence.sourcePath.hasPrefix(
+                        "具体场景对话/"
+                    )
+                    && !sentence.sourcePath
+                        .split(separator: "/")
+                        .contains("..")
+                    && !sentence.sourcePath.lowercased().contains("conflict")
+                    && !sentence.sourcePath.lowercased().contains("ai生成"),
+                itemID: sentence.id,
+                message: "trial source path is missing or outside the allowlist",
+                issues: &issues
+            )
+            require(
+                Self.isNonempty(sentence.sourceText),
+                itemID: sentence.id,
+                message: "trial source text is empty",
+                issues: &issues
+            )
+            require(
+                Self.isNonempty(sentence.dialogueAct)
+                    && sentence.register != nil
+                    && Self.isNonempty(sentence.speakerRole)
+                    && sentence.addressForm != nil
+                    && Self.isNonempty(sentence.expectedReply),
+                itemID: sentence.id,
+                message: "trial pragmatic metadata is incomplete",
+                issues: &issues
+            )
+            require(
+                sentence.expectedReply.map(
+                    Self.isCleanRussianSpeech
+                ) ?? false,
+                itemID: sentence.id,
+                message: "expected reply is not clean Russian",
+                issues: &issues
+            )
+            for replyID in sentence.alternativeReplyIDs
+            where !sentenceIDs.contains(replyID) {
+                issues.append(
+                    CatalogIssue(
+                        itemID: sentence.id,
+                        message: "missing alternative reply \(replyID)"
+                    )
+                )
+            }
+            for lexemeID in sentence.lexemeIDs {
+                guard let lexeme = lexemesByID[lexemeID] else {
+                    issues.append(
+                        CatalogIssue(
+                            itemID: sentence.id,
+                            message: "missing trial lexeme \(lexemeID)"
+                        )
+                    )
+                    continue
+                }
+                require(
+                    Self.containsLexemeFamily(
+                        lexeme,
+                        in: sentence.practiceRu
+                    )
+                        && Self.containsLexemeFamily(
+                            lexeme,
+                            in: sentence.speechText
+                        ),
+                    itemID: sentence.id,
+                    message: "trial lexeme form is absent from speech text",
+                    issues: &issues
+                )
+            }
+        }
+
+        for review in trialSlice.lexemeReviews {
+            guard let lexeme = lexemesByID[review.lexemeID] else {
+                issues.append(
+                    CatalogIssue(
+                        itemID: review.lexemeID,
+                        message: "trial lexeme does not exist"
+                    )
+                )
+                continue
+            }
+            guard let sentence = trialSentencesByID[
+                review.supportingSentenceID
+            ] else {
+                issues.append(
+                    CatalogIssue(
+                        itemID: review.lexemeID,
+                        message: "supporting trial sentence is missing"
+                    )
+                )
+                continue
+            }
+            require(
+                allowedStatuses.contains(review.reviewStatus),
+                itemID: review.lexemeID,
+                message: "trial lexeme must be reviewed or verified",
+                issues: &issues
+            )
+            require(
+                review.provenanceType != .aiGenerated
+                    && Set(review.qualityFlags)
+                        .isDisjoint(with: disqualifyingFlags),
+                itemID: review.lexemeID,
+                message: "trial lexeme review is unsafe",
+                issues: &issues
+            )
+            require(
+                sentence.lexemeIDs.contains(review.lexemeID)
+                    && Self.containsLexemeFamily(
+                        lexeme,
+                        in: sentence.practiceRu
+                    ),
+                itemID: review.lexemeID,
+                message: "trial lexeme lacks a real supporting sentence",
+                issues: &issues
+            )
+            require(
+                !lexeme.collocations.isEmpty
+                    && !lexeme.sentenceIDs.isEmpty,
+                itemID: review.lexemeID,
+                message: "trial lexeme lacks a collocation or scene",
+                issues: &issues
+            )
+        }
+
         return issues
     }
 
@@ -522,6 +811,19 @@ public struct ContentCatalog: Sendable {
         return try decoder.decode(Value.self, from: Data(contentsOf: url))
     }
 
+    private static func isCleanRussianSpeech(_ value: String) -> Bool {
+        guard !value.contains(where: { character in
+            "[]()（）/*_#`".contains(character)
+        }) else {
+            return false
+        }
+        return !value.unicodeScalars.contains { scalar in
+            (0x3400...0x4DBF).contains(scalar.value)
+                || (0x4E00...0x9FFF).contains(scalar.value)
+                || (0xF900...0xFAFF).contains(scalar.value)
+        }
+    }
+
     private static func containsLexeme(
         _ lexeme: Lexeme,
         in text: String
@@ -530,6 +832,22 @@ public struct ContentCatalog: Sendable {
         return ([lexeme.lemma] + lexeme.surfaceForms).contains {
             contains(tokens(in: $0), in: textTokens)
         }
+    }
+
+    private static func containsLexemeFamily(
+        _ lexeme: Lexeme,
+        in text: String
+    ) -> Bool {
+        if containsLexeme(lexeme, in: text) {
+            return true
+        }
+        guard let aspectPair = lexeme.aspectPair else {
+            return false
+        }
+        return contains(
+            tokens(in: aspectPair),
+            in: tokens(in: text)
+        )
     }
 
     private static func contains(
@@ -568,6 +886,12 @@ public struct ContentCatalog: Sendable {
     private static let allowedVerbalAspects: Set<String> = [
         "perfective", "imperfective", "biaspectual",
     ]
+
+    private static let allowedTrialSourceRoot =
+        "/Users/Openclawworkspace/Library/CloudStorage/" +
+        "OneDrive-个人/Documents/20-语言学习与专业/" +
+        "大学知识库（俄语学习+专业）/01-按学期/" +
+        "大一下——莫斯科/口语Диалоги"
 
     private static func isNonempty(_ value: String?) -> Bool {
         guard let value else {

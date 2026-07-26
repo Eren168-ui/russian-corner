@@ -79,6 +79,40 @@ public enum ReviewStatus: String, Codable, Equatable, Sendable {
     case verified
 }
 
+public enum ProvenanceType: String, Codable, Equatable, Sendable {
+    case courseMaterial
+    case userNote
+    case aiGenerated
+    case derived
+}
+
+public enum ContentQualityFlag: String, Codable, Equatable, Sendable {
+    case typo
+    case grammarSuspect
+    case unnatural
+    case ambiguousTranslation
+    case incomplete
+    case emptyDialogue
+    case mixedAnnotation
+    case possiblyDated
+    case needsNativeReview
+}
+
+public enum DialogueRegister: String, Codable, Equatable, Sendable {
+    case informal
+    case neutral
+    case polite
+    case formal
+    case textbook
+    case possiblyDated
+}
+
+public enum AddressForm: String, Codable, Equatable, Sendable {
+    case `ты`
+    case `вы`
+    case notApplicable
+}
+
 public enum PracticeItemKind: String, Codable, Equatable, Sendable {
     case lexeme
     case sentence
@@ -157,35 +191,62 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
     public let promptZh: String
     public let cueRu: String
     public let practiceRu: String
+    public let stressedForm: String?
     public let speechText: String
     public let theme: String
     public let lexemeIDs: [String]
     public let sourcePath: String
     public let sourceText: String
     public let reviewStatus: ReviewStatus
+    public let provenanceType: ProvenanceType?
+    public let qualityFlags: [ContentQualityFlag]
+    public let dialogueAct: String?
+    public let register: DialogueRegister?
+    public let speakerRole: String?
+    public let addressForm: AddressForm?
+    public let expectedReply: String?
+    public let alternativeReplyIDs: [String]
 
     public init(
         id: String,
         promptZh: String,
         cueRu: String,
         practiceRu: String,
+        stressedForm: String? = nil,
         speechText: String,
         theme: String,
         lexemeIDs: [String],
         sourcePath: String,
         sourceText: String,
-        reviewStatus: ReviewStatus
+        reviewStatus: ReviewStatus,
+        provenanceType: ProvenanceType? = nil,
+        qualityFlags: [ContentQualityFlag] = [],
+        dialogueAct: String? = nil,
+        register: DialogueRegister? = nil,
+        speakerRole: String? = nil,
+        addressForm: AddressForm? = nil,
+        expectedReply: String? = nil,
+        alternativeReplyIDs: [String] = []
     ) {
         self.id = id
         self.promptZh = promptZh
         self.cueRu = cueRu
         self.practiceRu = practiceRu
+        self.stressedForm = stressedForm
         self.speechText = speechText
         self.theme = theme
         self.lexemeIDs = lexemeIDs
         self.sourcePath = sourcePath
         self.sourceText = sourceText
         self.reviewStatus = reviewStatus
+        self.provenanceType = provenanceType
+        self.qualityFlags = qualityFlags
+        self.dialogueAct = dialogueAct
+        self.register = register
+        self.speakerRole = speakerRole
+        self.addressForm = addressForm
+        self.expectedReply = expectedReply
+        self.alternativeReplyIDs = alternativeReplyIDs
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -193,12 +254,21 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
         case promptZh
         case cueRu
         case practiceRu
+        case stressedForm
         case speechText
         case theme
         case lexemeIDs
         case sourcePath
         case sourceText
         case reviewStatus
+        case provenanceType
+        case qualityFlags
+        case dialogueAct
+        case register
+        case speakerRole
+        case addressForm
+        case expectedReply
+        case alternativeReplyIDs
     }
 
     public init(from decoder: any Decoder) throws {
@@ -208,6 +278,10 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
         practiceRu = try container.decode(
             String.self,
             forKey: .practiceRu
+        )
+        stressedForm = try container.decodeIfPresent(
+            String.self,
+            forKey: .stressedForm
         )
         cueRu = try container.decodeIfPresent(
             String.self,
@@ -234,5 +308,89 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
             ReviewStatus.self,
             forKey: .reviewStatus
         )
+        provenanceType = try container.decodeIfPresent(
+            ProvenanceType.self,
+            forKey: .provenanceType
+        )
+        qualityFlags = try container.decodeIfPresent(
+            [ContentQualityFlag].self,
+            forKey: .qualityFlags
+        ) ?? []
+        dialogueAct = try container.decodeIfPresent(
+            String.self,
+            forKey: .dialogueAct
+        )
+        register = try container.decodeIfPresent(
+            DialogueRegister.self,
+            forKey: .register
+        )
+        speakerRole = try container.decodeIfPresent(
+            String.self,
+            forKey: .speakerRole
+        )
+        addressForm = try container.decodeIfPresent(
+            AddressForm.self,
+            forKey: .addressForm
+        )
+        expectedReply = try container.decodeIfPresent(
+            String.self,
+            forKey: .expectedReply
+        )
+        alternativeReplyIDs = try container.decodeIfPresent(
+            [String].self,
+            forKey: .alternativeReplyIDs
+        ) ?? []
+    }
+}
+
+public struct TrialLexemeReview: Codable, Equatable, Sendable {
+    public let lexemeID: String
+    public let supportingSentenceID: String
+    public let reviewStatus: ReviewStatus
+    public let provenanceType: ProvenanceType
+    public let qualityFlags: [ContentQualityFlag]
+
+    public init(
+        lexemeID: String,
+        supportingSentenceID: String,
+        reviewStatus: ReviewStatus,
+        provenanceType: ProvenanceType,
+        qualityFlags: [ContentQualityFlag] = []
+    ) {
+        self.lexemeID = lexemeID
+        self.supportingSentenceID = supportingSentenceID
+        self.reviewStatus = reviewStatus
+        self.provenanceType = provenanceType
+        self.qualityFlags = qualityFlags
+    }
+}
+
+public struct TrialContentSlice: Codable, Equatable, Sendable {
+    public let schemaVersion: Int
+    public let sourceRoot: String
+    public let sentences: [SentenceCard]
+    public let lexemeReviews: [TrialLexemeReview]
+    public let manualReviewSampleIDs: [String]
+
+    public init(
+        schemaVersion: Int,
+        sourceRoot: String,
+        sentences: [SentenceCard],
+        lexemeReviews: [TrialLexemeReview],
+        manualReviewSampleIDs: [String]
+    ) {
+        self.schemaVersion = schemaVersion
+        self.sourceRoot = sourceRoot
+        self.sentences = sentences
+        self.lexemeReviews = lexemeReviews
+        self.manualReviewSampleIDs = manualReviewSampleIDs
+    }
+
+    public var cardCount: Int {
+        sentences.count + lexemeReviews.count
+    }
+
+    public var lexemeIDs: Set<String> {
+        Set(lexemeReviews.map(\.lexemeID))
     }
 }

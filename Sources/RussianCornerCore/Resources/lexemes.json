@@ -48,7 +48,9 @@
       "sentence-greetings-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": [],
+    "surfaceForms": [
+      "познакомимся"
+    ],
     "aspect": "perfective",
     "aspectPair": "знакомиться",
     "government": "с + 第五格（познакомиться с соседями）"
@@ -1023,7 +1025,9 @@
       "sentence-shopping-2"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": [],
+    "surfaceForms": [
+      "выбрали"
+    ],
     "aspect": "imperfective",
     "aspectPair": "выбрать",
     "government": "直接接第四格；从范围中选择用 из + 第二格"
@@ -1768,7 +1772,8 @@
     ],
     "reviewStatus": "reviewed",
     "surfaceForms": [
-      "перекрёстке"
+      "перекрёстке",
+      "перекрёстка"
     ],
     "grammaticalGender": "masculine"
   },
@@ -3053,7 +3058,9 @@
       "sentence-health-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": [],
+    "surfaceForms": [
+      "болит"
+    ],
     "aspect": "imperfective",
     "aspectPairNote": "表示状态时无自然完成体对应词",
     "government": "身体部位作第一格（болит голова）；疾病可用 чем + 第五格"
@@ -3302,7 +3309,9 @@
       "sentence-feelings-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": [],
+    "surfaceForms": [
+      "чувствую"
+    ],
     "aspect": "imperfective",
     "aspectPair": "почувствовать",
     "government": "直接接第四格；状态常用 чувствовать себя + 副词"
@@ -4592,7 +4601,9 @@
       "sentence-communication-1"
     ],
     "reviewStatus": "reviewed",
-    "surfaceForms": [],
+    "surfaceForms": [
+      "позвоните"
+    ],
     "aspect": "perfective",
     "aspectPair": "звонить",
     "government": "第三格表示致电对象（позвонить родителям）"

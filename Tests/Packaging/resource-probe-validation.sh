@@ -17,6 +17,7 @@ swift build \
 
 cp "$SOURCE_RESOURCES/lexemes.json" "$TEMP_DIR/lexemes.json"
 cp "$SOURCE_RESOURCES/sentences.json" "$TEMP_DIR/sentences.json"
+cp "$SOURCE_RESOURCES/trial-slice.json" "$TEMP_DIR/trial-slice.json"
 
 "$PROBE" "$TEMP_DIR" >/dev/null
 

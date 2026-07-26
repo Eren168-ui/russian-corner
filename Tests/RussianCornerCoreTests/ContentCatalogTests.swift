@@ -21,6 +21,26 @@ final class ContentCatalogTests: XCTestCase {
         XCTAssertEqual(catalog.sentences.count, 72)
     }
 
+    func testBundleTrialSliceMeetsContentSafetyContract() throws {
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
+        let slice = try XCTUnwrap(catalog.trialSlice)
+
+        XCTAssertTrue((50...80).contains(slice.cardCount))
+        XCTAssertEqual(slice.sentences.count, 35)
+        XCTAssertEqual(slice.lexemeReviews.count, 15)
+        XCTAssertGreaterThanOrEqual(
+            Set(slice.manualReviewSampleIDs).count,
+            30
+        )
+        XCTAssertEqual(catalog.practiceSentences, slice.sentences)
+        XCTAssertEqual(
+            Set(catalog.practiceLexemes.map(\.id)),
+            slice.lexemeIDs
+        )
+    }
+
     func testMissingExplicitResourcesFailWithoutFallback() throws {
         let emptyDirectory = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString, isDirectory: true)
@@ -52,7 +72,11 @@ final class ContentCatalogTests: XCTestCase {
         addTeardownBlock {
             try? FileManager.default.removeItem(at: resourceDirectory)
         }
-        for name in ["lexemes.json", "sentences.json"] {
+        for name in [
+            "lexemes.json",
+            "sentences.json",
+            "trial-slice.json",
+        ] {
             try FileManager.default.copyItem(
                 at: sourceResourceDirectory.appendingPathComponent(name),
                 to: resourceDirectory.appendingPathComponent(name)
@@ -90,6 +114,56 @@ final class ContentCatalogTests: XCTestCase {
                 error.localizedDescription.contains(
                     "lexeme-does-not-exist"
                 )
+            )
+        }
+    }
+
+    func testTrialSliceRejectsUnsplitVariantBeforeServing() throws {
+        let resourceDirectory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(
+            at: resourceDirectory,
+            withIntermediateDirectories: true
+        )
+        addTeardownBlock {
+            try? FileManager.default.removeItem(at: resourceDirectory)
+        }
+        for name in [
+            "lexemes.json",
+            "sentences.json",
+            "trial-slice.json",
+        ] {
+            try FileManager.default.copyItem(
+                at: sourceResourceDirectory.appendingPathComponent(name),
+                to: resourceDirectory.appendingPathComponent(name)
+            )
+        }
+        let sliceURL = resourceDirectory
+            .appendingPathComponent("trial-slice.json")
+        let validSlice = try String(
+            contentsOf: sliceURL,
+            encoding: .utf8
+        )
+        let corruptedSlice = validSlice.replacingOccurrences(
+            of: #""speechText":"Здравствуйте! Можно войти?""#,
+            with: #""speechText":"Рад(а) вас видеть.""#
+        )
+        XCTAssertNotEqual(validSlice, corruptedSlice)
+        try Data(corruptedSlice.utf8).write(to: sliceURL)
+
+        XCTAssertThrowsError(
+            try ContentCatalog(resourceDirectory: resourceDirectory)
+        ) { error in
+            guard case let ContentCatalogError.validationFailed(issues) = error
+            else {
+                return XCTFail("expected validation issues, got \(error)")
+            }
+            XCTAssertTrue(
+                issues.contains {
+                    $0.itemID == "trial-greeting-01"
+                        && $0.message.contains("unsplit variant")
+                },
+                "\(issues)"
             )
         }
     }

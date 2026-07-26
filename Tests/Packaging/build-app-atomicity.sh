@@ -85,6 +85,8 @@ prepare_case() {
     "$SANDBOX_REPO/Sources/RussianCornerCore/Resources/lexemes.json"
   cp Sources/RussianCornerCore/Resources/sentences.json \
     "$SANDBOX_REPO/Sources/RussianCornerCore/Resources/sentences.json"
+  cp Sources/RussianCornerCore/Resources/trial-slice.json \
+    "$SANDBOX_REPO/Sources/RussianCornerCore/Resources/trial-slice.json"
 
   cat >"$FAKE_BIN/swift" <<'SH'
 #!/usr/bin/env bash
@@ -111,8 +113,9 @@ SH
 #!/usr/bin/env bash
 resource_directory=$1
 if [ -f "$resource_directory/lexemes.json" ] &&
-  [ -f "$resource_directory/sentences.json" ]; then
-  printf 'resource_probe=PASS lexemes=360 sentences=72 directory=%s\n' \
+  [ -f "$resource_directory/sentences.json" ] &&
+  [ -f "$resource_directory/trial-slice.json" ]; then
+  printf 'resource_probe=PASS lexemes=360 sentences=72 trial=50 directory=%s\n' \
     "$resource_directory"
   exit 0
 fi

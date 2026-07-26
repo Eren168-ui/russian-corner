@@ -492,7 +492,7 @@ public final class AppRuntime {
       cursor = previous
     }
     var mastered = 0
-    for lexeme in catalog.lexemes {
+    for lexeme in catalog.practiceLexemes {
       if try repository.progress(
         itemType: .lexeme,
         itemId: lexeme.id
@@ -500,7 +500,7 @@ public final class AppRuntime {
         mastered += 1
       }
     }
-    for sentence in catalog.sentences {
+    for sentence in catalog.practiceSentences {
       if try repository.progress(
         itemType: .sentence,
         itemId: sentence.id

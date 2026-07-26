@@ -104,6 +104,42 @@ final class PracticeViewModelTests: XCTestCase {
     )
   }
 
+  func testBundledPracticeQueueCannotEscapeTrialSlice() throws {
+    let resourceDirectory = URL(fileURLWithPath: #filePath)
+      .deletingLastPathComponent()
+      .deletingLastPathComponent()
+      .deletingLastPathComponent()
+      .appendingPathComponent("Sources", isDirectory: true)
+      .appendingPathComponent("RussianCornerCore", isDirectory: true)
+      .appendingPathComponent("Resources", isDirectory: true)
+    let catalog = try ContentCatalog(
+      resourceDirectory: resourceDirectory
+    )
+    let slice = try XCTUnwrap(catalog.trialSlice)
+    let model = try PracticeViewModel(
+      catalog: catalog,
+      repository: ProgressRepository(
+        container: try ProgressRepository.makeInMemoryContainer()
+      ),
+      targetCount: 7,
+      now: { self.start }
+    )
+    let allowedSentenceIDs = Set(slice.sentences.map(\.id))
+
+    XCTAssertFalse(model.queue.isEmpty)
+    XCTAssertEqual(model.queue.first?.kind, .sentence)
+    XCTAssertTrue(
+      model.queue.allSatisfy { entry in
+        switch entry.content {
+        case .lexeme(let lexeme):
+          return slice.lexemeIDs.contains(lexeme.id)
+        case .sentence(let sentence):
+          return allowedSentenceIDs.contains(sentence.id)
+        }
+      }
+    )
+  }
+
   func testNextAdvancesThroughRequestedDailyCards() throws {
     let fixture = try makeFixture(targetCount: 7, sentenceCount: 12)
 
