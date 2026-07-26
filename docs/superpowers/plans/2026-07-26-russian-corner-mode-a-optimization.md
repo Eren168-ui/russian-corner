@@ -717,7 +717,7 @@ git commit -m "feat: add compact aim style practice card"
 - Modify: `Sources/RussianCornerUI/FloatingPanelController.swift`
 - Modify: `Sources/RussianCornerApp/RussianCornerApp.swift`
 
-- [ ] **Step 1: Write failing feedback tests**
+- [x] **Step 1: Write failing feedback tests**
 
 ```swift
 func testCompletedDayOffersReflectionOnlyOnce()
@@ -727,7 +727,7 @@ func testRepositoryFailureKeepsCoreCompletionUsable()
 func testReflectionTextIsTrimmedAndLimitedToTwoHundredCharacters()
 ```
 
-- [ ] **Step 2: Run and verify RED**
+- [x] **Step 2: Run and verify RED**
 
 Run:
 
@@ -737,7 +737,7 @@ swift test --filter DailyReflectionViewModelTests
 
 Expected: compilation fails because the view model does not exist.
 
-- [ ] **Step 3: Implement the feedback view model**
+- [x] **Step 3: Implement the feedback view model**
 
 ```swift
 @MainActor
@@ -760,7 +760,7 @@ public final class DailyReflectionViewModel {
 Repository failures set `statusMessage`; they do not throw into practice
 completion.
 
-- [ ] **Step 4: Implement a short user-facing form**
+- [x] **Step 4: Implement a short user-facing form**
 
 The view contains:
 
@@ -783,7 +783,7 @@ Window("今日反馈", id: "daily-reflection") {
 
 Add menu item “今日反馈…”, which may always open the existing entry for editing.
 
-- [ ] **Step 5: Run tests and manual check**
+- [x] **Step 5: Run tests and manual check**
 
 Run:
 
@@ -795,7 +795,7 @@ swift test
 Manual check: complete the final card, dismiss feedback, reopen it from the menu,
 save twice, and confirm only one record exists for today.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add Sources/RussianCornerUI Sources/RussianCornerApp Tests/RussianCornerAppTests/DailyReflectionViewModelTests.swift

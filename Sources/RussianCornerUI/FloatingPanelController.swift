@@ -20,10 +20,12 @@ public enum PracticePanelPresentation: Equatable, Sendable {
 
   public static func resolve(
     isCollapsed: Bool,
-    isDetailExpanded: Bool
+    isDetailExpanded: Bool,
+    isReflectionPresented: Bool = false
   ) -> Self {
     if isCollapsed { return .collapsed }
-    return isDetailExpanded ? .details : .compact
+    return isDetailExpanded || isReflectionPresented
+      ? .details : .compact
   }
 }
 
@@ -118,6 +120,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
 
   public func hide() {
     runtime?.practice?.handleDisappear()
+    runtime?.closeTrialSession(reason: .hidden)
     appModel.isCardVisible = false
     panel.orderOut(nil)
   }
@@ -149,7 +152,9 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     let presentation = PracticePanelPresentation.resolve(
       isCollapsed: appModel.isCollapsed,
       isDetailExpanded:
-        runtime?.practice?.isDetailExpanded == true
+        runtime?.practice?.isDetailExpanded == true,
+      isReflectionPresented:
+        runtime?.dailyReflection?.isCompletionOfferPresented == true
     )
     panel.setContentSize(presentation.size)
     snapToCorner()
@@ -246,6 +251,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       _ = appModel.isCollapsed
       _ = appModel.preferredScreenIdentifier
       _ = runtime?.practice?.isDetailExpanded
+      _ = runtime?.dailyReflection?.isCompletionOfferPresented
     } onChange: { [weak self] in
       Task { @MainActor in
         self?.refreshLayout()
@@ -265,6 +271,7 @@ private struct FloatingPracticeRoot: View {
       PracticeCardView(
         appModel: runtime.appModel,
         practice: practice,
+        reflectionModel: runtime.dailyReflection,
         onLayoutChanged: onLayoutChanged
       )
     } else {

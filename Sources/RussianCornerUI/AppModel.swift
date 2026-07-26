@@ -199,13 +199,18 @@ public final class AppRuntime {
   public let appModel: AppModel
   public private(set) var practice: PracticeViewModel?
   public private(set) var diagnostics: DiagnosticViewModel?
+  public private(set) var dailyReflection: DailyReflectionViewModel?
+  public private(set) var trialRepository:
+    (any TrialDataStoring)?
   public private(set) var progress = LearningProgressSnapshot()
   public private(set) var launchError: String?
   public private(set) var diagnosticError: String?
+  public private(set) var trialError: String?
   public private(set) var diagnosticHistoryIssueCount = 0
 
   private var catalog: ContentCatalog?
   private var repository: ProgressRepository?
+  private var trialSessionCoordinator: TrialSessionCoordinator?
   private let reminderScheduler: (any ReminderSettingsScheduling)?
   private var reminderSettingsCoordinator: ReminderSettingsCoordinator?
 
@@ -213,6 +218,8 @@ public final class AppRuntime {
     defaults: UserDefaults = .standard,
     catalog injectedCatalog: ContentCatalog? = nil,
     repository injectedRepository: ProgressRepository? = nil,
+    trialRepository injectedTrialRepository:
+      (any TrialDataStoring)? = nil,
     reminderScheduler injectedReminderScheduler:
       (any ReminderSettingsScheduling)? = nil,
     enableSystemReminders: Bool = true
@@ -249,6 +256,37 @@ public final class AppRuntime {
       let persistedSettings = try repository.settings()
       appModel.morningReminder = persistedSettings.morningReminder
       appModel.eveningReminder = persistedSettings.eveningReminder
+
+      do {
+        let trialRepository: any TrialDataStoring
+        if let injectedTrialRepository {
+          trialRepository = injectedTrialRepository
+        } else {
+          trialRepository = TrialRepository(
+            container: try TrialRepository.makeContainer(
+              inMemory: injectedRepository != nil
+            )
+          )
+        }
+        self.trialRepository = trialRepository
+        let statusModel = appModel
+        trialSessionCoordinator = TrialSessionCoordinator(
+          repository: trialRepository,
+          onIssue: { [weak statusModel] message in
+            statusModel?.transientStatus = message
+          }
+        )
+        let reflection = DailyReflectionViewModel(
+          repository: trialRepository
+        )
+        _ = reflection.loadToday()
+        dailyReflection = reflection
+      } catch {
+        trialError =
+          "试用统计暂时不可用，学习功能不受影响：\(error.localizedDescription)"
+        appModel.transientStatus = trialError
+      }
+
       try reloadPractice()
       try refreshProgress()
     } catch {
@@ -294,7 +332,8 @@ public final class AppRuntime {
       targetCount: appModel.dailyCardCount,
       mode: appModel.mode,
       now: now,
-      diagnosticFindings: findings
+      diagnosticFindings: findings,
+      trialTracker: trialSessionCoordinator
     )
     practice?.handleDisappear()
     practice = nextPractice
@@ -307,12 +346,20 @@ public final class AppRuntime {
       return
     }
     do {
+      trialSessionCoordinator?.close(reason: .dayChanged)
       try reloadPractice(now: { instant })
       try refreshProgress(now: instant)
+      _ = dailyReflection?.loadToday()
     } catch {
       appModel.transientStatus =
         "跨时段队列刷新失败：\(error.localizedDescription)"
     }
+  }
+
+  public func closeTrialSession(
+    reason: TrialSessionEndReason
+  ) {
+    trialSessionCoordinator?.close(reason: reason)
   }
 
   private func applyLatestDiagnosticStrategy() {

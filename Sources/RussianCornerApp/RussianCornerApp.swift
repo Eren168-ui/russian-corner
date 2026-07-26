@@ -104,6 +104,22 @@ struct RussianCornerApp: App {
     }
     .windowResizability(.contentSize)
 
+    Window("今日反馈", id: "daily-reflection") {
+      if let dailyReflection = runtime.dailyReflection {
+        DailyReflectionView(model: dailyReflection)
+      } else {
+        ContentUnavailableView(
+          "今日反馈暂时不可用",
+          systemImage: "square.and.pencil",
+          description: Text(
+            runtime.trialError ?? "核心学习功能仍可正常使用"
+          )
+        )
+        .frame(width: 420, height: 260)
+      }
+    }
+    .windowResizability(.contentSize)
+
     Window("Russian Corner 诊断", id: "diagnostics") {
       if let diagnostics = runtime.diagnostics {
         RussianCornerDiagnosticView(model: diagnostics)
@@ -161,6 +177,11 @@ private struct MenuBarContent: View {
       openWindow(id: "progress")
       NSApplication.shared.activate(ignoringOtherApps: true)
     }
+    Button("今日反馈…", systemImage: "square.and.pencil") {
+      runtime.dailyReflection?.openForEditing()
+      openWindow(id: "daily-reflection")
+      NSApplication.shared.activate(ignoringOtherApps: true)
+    }
     Button("学习诊断…", systemImage: "waveform.badge.magnifyingglass") {
       openWindow(id: "diagnostics")
       NSApplication.shared.activate(ignoringOtherApps: true)
@@ -178,6 +199,7 @@ private struct MenuBarContent: View {
 
     Button("退出 Russian Corner", systemImage: "power") {
       runtime.practice?.handleDisappear()
+      runtime.closeTrialSession(reason: .quit)
       NSApplication.shared.terminate(nil)
     }
     .keyboardShortcut("q")

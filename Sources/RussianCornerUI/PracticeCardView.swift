@@ -7,15 +7,18 @@ public struct PracticeCardView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
 
+    private let reflectionModel: DailyReflectionViewModel?
     private let onLayoutChanged: () -> Void
 
     public init(
         appModel: AppModel,
         practice: PracticeViewModel,
+        reflectionModel: DailyReflectionViewModel? = nil,
         onLayoutChanged: @escaping () -> Void = {}
     ) {
         self.appModel = appModel
         self.practice = practice
+        self.reflectionModel = reflectionModel
         self.onLayoutChanged = onLayoutChanged
     }
 
@@ -36,6 +39,16 @@ public struct PracticeCardView: View {
             reduceMotion ? nil : .snappy(duration: 0.22),
             value: practice.isDetailExpanded
         )
+        .animation(
+            reduceMotion ? nil : .snappy(duration: 0.22),
+            value: reflectionModel?.isCompletionOfferPresented ?? false
+        )
+        .onChange(of: practice.isComplete) { wasComplete, isComplete in
+            guard !wasComplete, isComplete else { return }
+            if reflectionModel?.presentAfterCompletionIfNeeded() == true {
+                onLayoutChanged()
+            }
+        }
         .onDisappear {
             practice.handleDisappear()
         }
@@ -45,7 +58,24 @@ public struct PracticeCardView: View {
         CardTheme.palette(for: colorScheme)
     }
 
+    @ViewBuilder
     private var practiceCard: some View {
+        if practice.isComplete,
+            let reflectionModel,
+            reflectionModel.isCompletionOfferPresented
+        {
+            DailyReflectionView(
+                model: reflectionModel,
+                embedded: true,
+                onLayoutChanged: onLayoutChanged
+            )
+            .shadow(color: .black.opacity(0.16), radius: 16, y: 7)
+        } else {
+            standardPracticeCard
+        }
+    }
+
+    private var standardPracticeCard: some View {
         VStack(spacing: 0) {
             header
             Divider().overlay(palette.border)
