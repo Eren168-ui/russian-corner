@@ -331,38 +331,10 @@ public struct PracticeCardView: View {
           }
           .accessibilityHint("切换认词和主动提取方向")
         }
-        utilityButton(
-          practice.isRecording ? "停止" : "录音",
-          systemImage: practice.isRecording ? "stop.circle" : "mic"
-        ) {
-          Task { await practice.toggleRecording() }
-        }
-        .accessibilityHint("全局快捷键 Control Option M")
         utilityButton("下一项", systemImage: "arrow.right") {
           practice.next()
         }
         Spacer()
-      }
-
-      if practice.hasRecording {
-        HStack(spacing: 12) {
-          utilityButton("播放", systemImage: "play.circle") {
-            practice.playRecording()
-          }
-          utilityButton("保存", systemImage: "square.and.arrow.down") {
-            do {
-              try practice.saveRecording()
-            } catch {
-              practice.showStatus(
-                "录音保存失败：\(error.localizedDescription)"
-              )
-            }
-          }
-          utilityButton("丢弃", systemImage: "trash") {
-            practice.discardRecording()
-          }
-          Spacer()
-        }
       }
 
       HStack(spacing: 8) {

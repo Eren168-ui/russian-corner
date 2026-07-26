@@ -41,9 +41,6 @@ struct RussianCornerApp: App {
         .gradeEasy: { [weak runtime] in
           Self.grade(.easy, runtime: runtime)
         },
-        .toggleRecording: { [weak runtime] in
-          Task { await runtime?.practice?.toggleRecording() }
-        },
         .toggleCollapsed: { [weak runtime] in
           runtime?.appModel.isCollapsed.toggle()
         },

@@ -26,9 +26,9 @@ open "dist/Russian Corner.app"
 3. 揭晓后按实际感受选择 `Again`、`Hard` 或 `Easy`。
 4. 用“下一项”跳过当前项不会记录评分。
 
-卡片支持朗读、录音、播放、保存、丢弃、收起和展开。未明确保存的临时录音会在切换练习项或退出时清理；已保存的录音留在本地。
+卡片支持朗读、收起和展开。日常卡片不再提供录音、播放或保存入口。
 
-## 9 个全局快捷键
+## 8 个全局快捷键
 
 这些快捷键在其他应用处于前台时也可使用：
 
@@ -41,7 +41,6 @@ open "dist/Russian Corner.app"
 | `Control+Option+1` | 评分 `Again` |
 | `Control+Option+2` | 评分 `Hard` |
 | `Control+Option+3` | 评分 `Easy` |
-| `Control+Option+M` | 开始或停止录音 |
 | `Control+Option+C` | 收起或展开卡片 |
 
 若快捷键已被 macOS 或其他软件占用，菜单栏会显示“部分全局快捷键被占用”。请先修改冲突软件的快捷键。
@@ -51,7 +50,7 @@ open "dist/Russian Corner.app"
 在“设置 → 练习”中选择：
 
 - “安静默读”：适合公共空间，不要求主动开口。
-- “开口练习”：用于朗读、复述和录音自查。
+- “开口练习”：用于朗读和复述。
 
 两种方式都会记录卡片评分和反应时间。切换练习方式不会让应用自动评价发音。
 
@@ -96,14 +95,13 @@ open "dist/Russian Corner.app"
 
 - 卡片显示、练习方式等偏好：`~/Library/Preferences/com.openclaw.russiancorner.plist`
 - 学习进度、评分、提醒设置和诊断历史：`~/Library/Application Support/com.openclaw.russiancorner/RussianCorner.store` 及同目录的 `RussianCorner.store-*` 辅助文件（由 SwiftData 管理）
-- 手动保存的录音：`~/Library/Application Support/com.openclaw.russiancorner/Recordings/`
-- 未保存的录音：系统临时目录，切换练习项或退出时清理
+- 旧版本中用户手动保存的录音仍保留在原位置；本版本不会删除或迁移它们
 
 首版不会读取、迁移或删除 `~/Library/Application Support/default.store`。这个通用文件名可能属于其他 SwiftData 程序，因此 Russian Corner 只使用自己的专属目录；如你曾运行过内部开发版，旧 `default.store` 会原样保留，不会被本应用盲目接管。
 
 ## 卸载
 
-退出 Russian Corner 后，删除你放置的 `Russian Corner.app` 即可卸载。删除 `.app` 不会自动删除上述学习数据、偏好或已保存录音；需要保留历史时请先备份这些位置。本文只说明数据位置，不自动执行数据删除。
+退出 Russian Corner 后，删除你放置的 `Russian Corner.app` 即可卸载。删除 `.app` 不会自动删除上述学习数据、偏好或旧版本保存的录音；需要保留历史时请先备份这些位置。本文只说明数据位置，不自动执行数据删除。
 
 ## 当前验收边界
 
@@ -112,5 +110,5 @@ open "dist/Russian Corner.app"
 - 麦克风授权、录制、播放与实际音质；
 - 通知授权后两次提醒的实际送达；
 - 系统是否安装可用的 `ru-RU` 语音及朗读效果；
-- 9 个全局快捷键是否与本机软件冲突；
+- 8 个全局快捷键是否与本机软件冲突；
 - 多显示器移动、四角吸附和不同缩放比例下的视觉效果。

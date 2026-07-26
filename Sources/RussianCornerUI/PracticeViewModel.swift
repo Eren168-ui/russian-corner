@@ -101,9 +101,6 @@ public final class PracticeViewModel {
   private let repository: any PracticeProgressStoring
   private let scheduler: ReviewScheduler
   private let speechService: SpeechService
-  private let recordingService: any RecordingManaging
-  private let playbackService: any RecordingPlaying
-  private let recordingsDirectory: URL
   private let trialTracker: (any PracticeTrialTracking)?
   private let now: () -> Date
   private let calendar: Calendar
@@ -245,9 +242,6 @@ public final class PracticeViewModel {
     diagnosticFindings: [DiagnosticFindingType] = [],
     scheduler: ReviewScheduler = ReviewScheduler(),
     speechService: SpeechService = SpeechService(),
-    recordingService: any RecordingManaging = RecordingService(),
-    playbackService: any RecordingPlaying = RecordingPlaybackService(),
-    recordingsDirectory: URL? = nil,
     trialTracker: (any PracticeTrialTracking)? = nil
   ) throws {
     self.repository = repository
@@ -258,10 +252,6 @@ public final class PracticeViewModel {
     self.calendar = calendar
     self.scheduler = scheduler
     self.speechService = speechService
-    self.recordingService = recordingService
-    self.playbackService = playbackService
-    self.recordingsDirectory =
-      recordingsDirectory ?? Self.defaultRecordingsDirectory
     self.trialTracker = trialTracker
     let instant = now()
     sessionDayStart = calendar.startOfDay(for: instant)
@@ -634,7 +624,6 @@ public final class PracticeViewModel {
       dailyCompletedCount: newCompletedCount,
       calendar: calendar
     )
-    let cleanupMessage = cleanupRecordingForTransition()
     states[item.identity] = newState
     successfulToday = newSuccessfulToday
     completedToday = newCompletedCount
@@ -665,7 +654,7 @@ public final class PracticeViewModel {
         occurredAt: instant
       )
     )
-    advance(status: cleanupMessage)
+    advance(status: nil)
   }
 
   public func next() {
@@ -677,8 +666,7 @@ public final class PracticeViewModel {
         occurredAt: now()
       )
     )
-    let cleanupMessage = cleanupRecordingForTransition()
-    advance(status: cleanupMessage)
+    advance(status: nil)
   }
 
   private func advance(status: String?) {
@@ -703,21 +691,6 @@ public final class PracticeViewModel {
 
   public func handleDisappear() {
     speechService.stop()
-    if let cleanupMessage = cleanupRecordingForTransition() {
-      statusMessage = cleanupMessage
-    }
-  }
-
-  public var isRecording: Bool {
-    recordingService.isRecording
-  }
-
-  public var hasRecording: Bool {
-    recordingService.temporaryRecordingURL != nil
-  }
-
-  public var isPlayingRecording: Bool {
-    playbackService.isPlaying
   }
 
   public func speak() {
@@ -749,127 +722,6 @@ public final class PracticeViewModel {
     case .emptyText:
       statusMessage = "本卡没有可朗读内容"
     }
-  }
-
-  public func toggleRecording() async {
-    if recordingService.isRecording {
-      recordingService.stop()
-      statusMessage = "录音已停止，可播放、保存或丢弃"
-      return
-    }
-    var result = await recordingService.start()
-    if result == .permissionUndetermined {
-      let permission = await recordingService.requestPermission()
-      if permission == .granted {
-        result = await recordingService.start()
-      }
-    }
-    switch result {
-    case .started:
-      statusMessage = "正在录音"
-    case .permissionDenied:
-      statusMessage = "麦克风权限未开启，仍可继续练习"
-    case .permissionUndetermined:
-      statusMessage = "尚未取得麦克风权限，仍可继续练习"
-    case .unavailable:
-      statusMessage = "当前设备无法录音，仍可继续练习"
-    case .failed(let message):
-      statusMessage = "录音未开始：\(message)"
-    }
-  }
-
-  public func playRecording() {
-    guard let url = recordingService.temporaryRecordingURL else {
-      statusMessage = "没有可播放的录音"
-      return
-    }
-    if recordingService.isRecording {
-      recordingService.stop()
-    }
-    switch playbackService.play(url: url) {
-    case .playing:
-      statusMessage = "正在播放录音"
-    case .failed(let message):
-      statusMessage = "录音播放失败：\(message)"
-    }
-  }
-
-  @discardableResult
-  public func saveRecording() throws -> URL {
-    guard recordingService.temporaryRecordingURL != nil else {
-      throw RecordingServiceError.noTemporaryRecording
-    }
-    if recordingService.isRecording {
-      recordingService.stop()
-    }
-    playbackService.stop()
-    try FileManager.default.createDirectory(
-      at: recordingsDirectory,
-      withIntermediateDirectories: true
-    )
-    let destination =
-      recordingsDirectory
-      .appendingPathComponent(
-        "recording-\(UUID().uuidString)",
-        isDirectory: false
-      )
-      .appendingPathExtension("m4a")
-    let outcome = try recordingService.save(to: destination)
-    switch outcome {
-    case .saved(_, let cleanupPending):
-      statusMessage =
-        cleanupPending
-        ? "录音已保存，临时文件稍后清理"
-        : "录音已保存"
-    }
-    return destination
-  }
-
-  public func discardRecording() {
-    playbackService.stop()
-    if recordingService.isRecording {
-      recordingService.stop()
-    }
-    do {
-      try recordingService.discard()
-      statusMessage = "录音已丢弃"
-    } catch {
-      statusMessage = "录音暂未清理：\(error.localizedDescription)"
-    }
-  }
-
-  private func cleanupRecordingForTransition() -> String? {
-    playbackService.stop()
-    guard
-      recordingService.isRecording
-        || recordingService.temporaryRecordingURL != nil
-    else {
-      return nil
-    }
-    if recordingService.isRecording {
-      recordingService.stop()
-    }
-    do {
-      try recordingService.discard()
-      return nil
-    } catch {
-      return "切换已继续，录音暂未清理：\(error.localizedDescription)"
-    }
-  }
-
-  private static var defaultRecordingsDirectory: URL {
-    let base =
-      FileManager.default.urls(
-        for: .applicationSupportDirectory,
-        in: .userDomainMask
-      ).first ?? FileManager.default.temporaryDirectory
-    return
-      base
-      .appendingPathComponent(
-        "com.openclaw.russiancorner",
-        isDirectory: true
-      )
-      .appendingPathComponent("Recordings", isDirectory: true)
   }
 
   private func trialContext(

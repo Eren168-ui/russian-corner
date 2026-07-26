@@ -9,7 +9,6 @@ public enum GlobalHotKeyAction: UInt32, CaseIterable, Sendable {
   case gradeAgain = 5
   case gradeHard = 6
   case gradeEasy = 7
-  case toggleRecording = 8
   case toggleCollapsed = 9
 
   public var title: String {
@@ -21,7 +20,6 @@ public enum GlobalHotKeyAction: UInt32, CaseIterable, Sendable {
     case .gradeAgain: "评分 Again"
     case .gradeHard: "评分 Hard"
     case .gradeEasy: "评分 Easy"
-    case .toggleRecording: "录音或停止"
     case .toggleCollapsed: "收起或展开"
     }
   }
@@ -34,7 +32,6 @@ public enum GlobalHotKeyAction: UInt32, CaseIterable, Sendable {
     .gradeAgain: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_1)),
     .gradeHard: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_2)),
     .gradeEasy: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_3)),
-    .toggleRecording: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_M)),
     .toggleCollapsed: GlobalHotKeyShortcut(keyCode: UInt32(kVK_ANSI_C)),
   ]
 }

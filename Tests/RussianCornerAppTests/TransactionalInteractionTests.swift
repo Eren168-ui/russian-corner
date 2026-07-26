@@ -54,79 +54,13 @@ private final class TransactionalPracticeStore: PracticeProgressStoring {
 }
 
 @MainActor
-private final class FakeRecordingManager: RecordingManaging {
-  var isRecording = false
-  var temporaryRecordingURL: URL?
-  private(set) var stopCallCount = 0
-  private(set) var discardCallCount = 0
-  private(set) var savedURLs: [URL] = []
-
-  func permissionStatus() -> MicrophonePermissionStatus { .granted }
-  func requestPermission() async -> MicrophonePermissionStatus { .granted }
-
-  func start() async -> RecordingStartResult {
-    isRecording = true
-    let url = FileManager.default.temporaryDirectory
-      .appendingPathComponent("fixture-recording.m4a")
-    temporaryRecordingURL = url
-    return .started(url)
-  }
-
-  func stop() {
-    stopCallCount += 1
-    isRecording = false
-  }
-
-  func discard() throws {
-    discardCallCount += 1
-    temporaryRecordingURL = nil
-    isRecording = false
-  }
-
-  func save(to destinationURL: URL) throws -> RecordingSaveOutcome {
-    savedURLs.append(destinationURL)
-    temporaryRecordingURL = nil
-    return .saved(
-      destinationURL: destinationURL,
-      temporaryCleanupPending: false
-    )
-  }
-}
-
-@MainActor
-private final class FakeRecordingPlayer: RecordingPlaying {
-  private(set) var playedURLs: [URL] = []
-  private(set) var stopCallCount = 0
-  var isPlaying = false
-
-  func play(url: URL) -> RecordingPlaybackResult {
-    playedURLs.append(url)
-    isPlaying = true
-    return .playing(url)
-  }
-
-  func stop() {
-    stopCallCount += 1
-    isPlaying = false
-  }
-}
-
-@MainActor
 final class TransactionalPracticeTests: XCTestCase {
   private let now = Date(timeIntervalSince1970: 1_700_000_000)
 
   func testGradeFailureDoesNotAdvanceAndRetryCommitsOnlyOnce() throws {
     let store = TransactionalPracticeStore()
     store.shouldFailCommit = true
-    let recording = FakeRecordingManager()
-    recording.isRecording = true
-    recording.temporaryRecordingURL = URL(
-      fileURLWithPath: "/tmp/russian-corner-grade-retry.m4a"
-    )
-    let fixture = try makeModel(
-      store: store,
-      recording: recording
-    )
+    let fixture = try makeModel(store: store)
     fixture.model.reveal()
 
     XCTAssertThrowsError(try fixture.model.grade(.easy))
@@ -136,13 +70,6 @@ final class TransactionalPracticeTests: XCTestCase {
     XCTAssertEqual(fixture.model.completedToday, 0)
     XCTAssertEqual(store.commitCallCount, 1)
     XCTAssertTrue(store.events.isEmpty)
-    XCTAssertTrue(recording.isRecording)
-    XCTAssertEqual(
-      recording.temporaryRecordingURL,
-      URL(fileURLWithPath: "/tmp/russian-corner-grade-retry.m4a")
-    )
-    XCTAssertEqual(recording.stopCallCount, 0)
-    XCTAssertEqual(recording.discardCallCount, 0)
 
     try fixture.model.grade(.easy)
 
@@ -150,10 +77,6 @@ final class TransactionalPracticeTests: XCTestCase {
     XCTAssertFalse(fixture.model.isRevealed)
     XCTAssertEqual(store.commitCallCount, 2)
     XCTAssertEqual(store.events.count, 1)
-    XCTAssertFalse(recording.isRecording)
-    XCTAssertNil(recording.temporaryRecordingURL)
-    XCTAssertEqual(recording.stopCallCount, 1)
-    XCTAssertEqual(recording.discardCallCount, 1)
   }
 
   func testGradeBeforeRevealIsRejectedWithoutCommit() throws {
@@ -170,64 +93,11 @@ final class TransactionalPracticeTests: XCTestCase {
     XCTAssertEqual(fixture.model.currentIndex, 0)
   }
 
-  func testNextStopsAndDiscardsRecordingBeforeAdvancing() throws {
-    let store = TransactionalPracticeStore()
-    let recording = FakeRecordingManager()
-    recording.isRecording = true
-    recording.temporaryRecordingURL = URL(
-      fileURLWithPath: "/tmp/russian-corner-fixture.m4a"
-    )
-    let fixture = try makeModel(
-      store: store,
-      recording: recording
-    )
-
-    fixture.model.next()
-
-    XCTAssertEqual(recording.stopCallCount, 1)
-    XCTAssertEqual(recording.discardCallCount, 1)
-    XCTAssertNil(recording.temporaryRecordingURL)
-    XCTAssertEqual(fixture.model.currentIndex, 1)
-  }
-
-  func testStoppedRecordingCanPlayAndSaveToRecordingsDirectory() throws {
-    let store = TransactionalPracticeStore()
-    let recording = FakeRecordingManager()
-    let player = FakeRecordingPlayer()
-    recording.temporaryRecordingURL = URL(
-      fileURLWithPath: "/tmp/russian-corner-fixture.m4a"
-    )
-    let destinationDirectory = FileManager.default.temporaryDirectory
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
-    defer { try? FileManager.default.removeItem(at: destinationDirectory) }
-    let fixture = try makeModel(
-      store: store,
-      recording: recording,
-      player: player,
-      recordingsDirectory: destinationDirectory
-    )
-
-    fixture.model.playRecording()
-    let savedURL = try fixture.model.saveRecording()
-
-    XCTAssertEqual(
-      player.playedURLs,
-      [URL(fileURLWithPath: "/tmp/russian-corner-fixture.m4a")]
-    )
-    XCTAssertEqual(recording.savedURLs, [savedURL])
-    XCTAssertEqual(savedURL.deletingLastPathComponent(), destinationDirectory)
-    XCTAssertFalse(fixture.model.hasRecording)
-  }
-
   private func makeModel(
-    store: TransactionalPracticeStore,
-    recording: FakeRecordingManager = FakeRecordingManager(),
-    player: FakeRecordingPlayer = FakeRecordingPlayer(),
-    recordingsDirectory: URL? = nil
+    store: TransactionalPracticeStore
   ) throws -> (
     model: PracticeViewModel,
-    recording: FakeRecordingManager,
-    player: FakeRecordingPlayer
+    store: TransactionalPracticeStore
   ) {
     let sentences = (0..<2).map { index in
       SentenceCard(
@@ -248,13 +118,9 @@ final class TransactionalPracticeTests: XCTestCase {
         catalog: ContentCatalog(lexemes: [], sentences: sentences),
         repository: store,
         targetCount: 5,
-        now: { self.now },
-        recordingService: recording,
-        playbackService: player,
-        recordingsDirectory: recordingsDirectory
+        now: { self.now }
       ),
-      recording,
-      player
+      store
     )
   }
 }
@@ -476,7 +342,6 @@ final class GlobalHotKeyMappingTests: XCTestCase {
       .gradeAgain,
       .gradeHard,
       .gradeEasy,
-      .toggleRecording,
       .toggleCollapsed,
     ]
 
@@ -488,5 +353,6 @@ final class GlobalHotKeyMappingTests: XCTestCase {
       Set(GlobalHotKeyAction.defaultShortcuts.values).count,
       required.count
     )
+    XCTAssertEqual(required.count, 8)
   }
 }
