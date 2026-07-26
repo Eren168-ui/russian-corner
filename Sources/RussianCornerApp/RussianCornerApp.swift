@@ -9,14 +9,19 @@ struct RussianCornerApp: App {
   private let runtime: AppRuntime
   private let panelController: FloatingPanelController
   private let hotKeyService: GlobalHotKeyService
+  private let reportExporter: TrialReportExporter
 
   init() {
     let runtime = AppRuntime()
     let panelController = FloatingPanelController(runtime: runtime)
     let hotKeyService = GlobalHotKeyService()
+    let reportExporter = TrialReportExporter(
+      appModel: runtime.appModel
+    )
     self.runtime = runtime
     self.panelController = panelController
     self.hotKeyService = hotKeyService
+    self.reportExporter = reportExporter
 
     let issues = hotKeyService.registerDefaults(
       actions: [
@@ -84,7 +89,8 @@ struct RussianCornerApp: App {
     MenuBarExtra {
       MenuBarContent(
         runtime: runtime,
-        panelController: panelController
+        panelController: panelController,
+        reportExporter: reportExporter
       )
     } label: {
       Label(
@@ -143,6 +149,7 @@ struct RussianCornerApp: App {
 private struct MenuBarContent: View {
   @Bindable var runtime: AppRuntime
   let panelController: FloatingPanelController
+  let reportExporter: TrialReportExporter
 
   @Environment(\.openWindow) private var openWindow
 
@@ -186,6 +193,22 @@ private struct MenuBarContent: View {
       openWindow(id: "diagnostics")
       NSApplication.shared.activate(ignoringOtherApps: true)
     }
+    Button(
+      "导出 7 天试用报告…",
+      systemImage: "square.and.arrow.up"
+    ) {
+      guard let trialRepository = runtime.trialRepository else {
+        runtime.appModel.transientStatus =
+          runtime.trialError ?? "试用报告暂时不可用"
+        return
+      }
+      Task {
+        await reportExporter.exportLastSevenDays(
+          repository: trialRepository
+        )
+      }
+    }
+    .disabled(runtime.trialRepository == nil)
 
     if let status = runtime.appModel.transientStatus
       ?? runtime.launchError

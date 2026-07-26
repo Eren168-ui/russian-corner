@@ -810,7 +810,7 @@ git commit -m "feat: add daily trial reflection"
 - Create: `Sources/RussianCornerUI/TrialReportExporter.swift`
 - Modify: `Sources/RussianCornerApp/RussianCornerApp.swift`
 
-- [ ] **Step 1: Write failing report tests**
+- [x] **Step 1: Write failing report tests**
 
 Use fixed UTC dates and assert exact sections:
 
@@ -835,7 +835,7 @@ Expected headings:
 ## 口述活动
 ```
 
-- [ ] **Step 2: Run and verify RED**
+- [x] **Step 2: Run and verify RED**
 
 Run:
 
@@ -845,7 +845,7 @@ swift test --filter TrialReportBuilderTests
 
 Expected: report tests fail because the builder does not exist.
 
-- [ ] **Step 3: Implement deterministic aggregation**
+- [x] **Step 3: Implement deterministic aggregation**
 
 ```swift
 public struct TrialReportBuilder: Sendable {
@@ -871,7 +871,7 @@ Required calculations:
 - do not generate automatic learning advice or decide the next iteration for the
   user.
 
-- [ ] **Step 4: Implement NSSavePanel export**
+- [x] **Step 4: Implement NSSavePanel export**
 
 `TrialReportExporter`:
 
@@ -895,7 +895,7 @@ Defaults:
 Do not auto-write to OneDrive, Obsidian, or a hard-coded path. Do not export
 JSON.
 
-- [ ] **Step 5: Add the menu action and verify output**
+- [x] **Step 5: Add the menu action and verify output**
 
 Add “导出 7 天试用报告…” under the progress/diagnostic menu group. Export a fixed
 fixture during tests and assert:
@@ -906,7 +906,7 @@ rg -n '\"sessionID\"|file:///|\\.m4a|sourcePath' /tmp/俄语角落卡-7天试用
 
 Expected: no matches.
 
-- [ ] **Step 6: Run tests and commit**
+- [x] **Step 6: Run tests and commit**
 
 Run:
 
