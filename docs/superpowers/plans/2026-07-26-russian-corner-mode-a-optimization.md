@@ -1220,5 +1220,5 @@ git commit -m "feat: complete mode a trial optimization"
 - [x] Record 35 non-automated semantic readbacks without claiming native review.
 - [x] Record dialogue continuation, role exchange, personalization, repair
   language and register variants as MODE B candidates only.
-- [ ] Run the full Swift, packaging, build, codesign and source-hash acceptance.
-- [ ] Commit the content-safety patch and record the final handoff.
+- [x] Run the full Swift, packaging, build, codesign and source-hash acceptance.
+- [x] Commit the content-safety patch and record the final handoff.
