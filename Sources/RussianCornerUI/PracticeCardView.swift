@@ -1,459 +1,413 @@
-import AppKit
-import Observation
 import RussianCornerCore
 import SwiftUI
 
-private enum CardPalette {
-  static let paper = Color(
-    nsColor: NSColor(
-      name: nil,
-      dynamicProvider: { appearance in
-        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
-          ? NSColor(calibratedRed: 0.12, green: 0.11, blue: 0.095, alpha: 1)
-          : NSColor(calibratedRed: 0.96, green: 0.925, blue: 0.82, alpha: 1)
-      }
-    )
-  )
-  static let ink = Color(
-    nsColor: NSColor(
-      name: nil,
-      dynamicProvider: { appearance in
-        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
-          ? NSColor(calibratedWhite: 0.91, alpha: 1)
-          : NSColor(calibratedWhite: 0.10, alpha: 1)
-      }
-    )
-  )
-  static let mutedInk = ink.opacity(0.58)
-  static let rust = Color(
-    nsColor: NSColor(
-      name: nil,
-      dynamicProvider: { appearance in
-        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
-          ? NSColor(calibratedRed: 0.78, green: 0.33, blue: 0.23, alpha: 1)
-          : NSColor(calibratedRed: 0.56, green: 0.16, blue: 0.10, alpha: 1)
-      }
-    )
-  )
-}
-
 public struct PracticeCardView: View {
-  @Bindable private var appModel: AppModel
-  @Bindable private var practice: PracticeViewModel
-  @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Bindable private var appModel: AppModel
+    @Bindable private var practice: PracticeViewModel
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
-  private let onLayoutChanged: () -> Void
+    private let onLayoutChanged: () -> Void
 
-  public init(
-    appModel: AppModel,
-    practice: PracticeViewModel,
-    onLayoutChanged: @escaping () -> Void = {}
-  ) {
-    self.appModel = appModel
-    self.practice = practice
-    self.onLayoutChanged = onLayoutChanged
-  }
+    public init(
+        appModel: AppModel,
+        practice: PracticeViewModel,
+        onLayoutChanged: @escaping () -> Void = {}
+    ) {
+        self.appModel = appModel
+        self.practice = practice
+        self.onLayoutChanged = onLayoutChanged
+    }
 
-  public var body: some View {
-    Group {
-      if appModel.isCollapsed {
-        collapsedCard
-      } else {
-        expandedCard
-      }
-    }
-    .foregroundStyle(CardPalette.ink)
-    .background(CardPalette.paper)
-    .clipShape(RoundedRectangle(cornerRadius: 9, style: .continuous))
-    .overlay {
-      RoundedRectangle(cornerRadius: 9, style: .continuous)
-        .stroke(CardPalette.ink.opacity(0.18), lineWidth: 1)
-    }
-    .shadow(color: .black.opacity(0.22), radius: 18, y: 8)
-    .opacity(appModel.opacity)
-    .animation(
-      reduceMotion ? nil : .snappy(duration: 0.24),
-      value: appModel.isCollapsed
-    )
-    .onDisappear {
-      practice.handleDisappear()
-    }
-  }
-
-  private var expandedCard: some View {
-    VStack(spacing: 0) {
-      header
-      rule
-      promptArea
-      rule
-      controls
-    }
-    .background {
-      PaperGrain()
-        .allowsHitTesting(false)
-    }
-    .frame(width: 430, height: 386)
-    .task(id: practice.currentIndex) {
-      while !Task.isCancelled
-        && !practice.isRevealed
-        && practice.remainingRecallSeconds > 0
-      {
-        try? await Task.sleep(for: .milliseconds(200))
-        practice.refreshRecallTimer()
-      }
-    }
-  }
-
-  private var collapsedCard: some View {
-    Button {
-      appModel.isCollapsed = false
-      onLayoutChanged()
-    } label: {
-      ZStack {
-        CardPalette.rust.opacity(0.14)
-        VStack(spacing: 1) {
-          Text("Я")
-            .font(.custom("PT Serif", size: 25))
-          Text(
-            practice.isComplete
-              ? "✓" : "\(practice.currentIndex + 1)"
-          )
-            .font(.system(size: 8, design: .monospaced))
+    public var body: some View {
+        Group {
+            if appModel.isCollapsed {
+                collapsedCard
+            } else {
+                practiceCard
+            }
         }
-      }
-    }
-    .buttonStyle(.plain)
-    .frame(width: 58, height: 58)
-    .accessibilityLabel("展开俄语练习卡")
-  }
-
-  private var header: some View {
-    HStack(alignment: .center, spacing: 9) {
-      Text("РУССКИЙ УГОЛОК")
-        .font(.system(size: 10, weight: .semibold, design: .monospaced))
-        .tracking(1.3)
-      Text("•")
-        .foregroundStyle(CardPalette.rust)
-      Text(practice.currentTheme.uppercased())
-        .font(.system(size: 9, design: .monospaced))
-        .foregroundStyle(CardPalette.mutedInk)
-      Spacer()
-      Text(
-        "\(min(practice.currentIndex + 1, max(practice.totalCount, 1)))"
-          + " / \(max(practice.totalCount, 1))"
-      )
-        .font(.system(size: 10, design: .monospaced))
-        .foregroundStyle(CardPalette.mutedInk)
-      Button {
-        appModel.isCollapsed = true
-        onLayoutChanged()
-      } label: {
-        Image(systemName: "minus")
-      }
-      .buttonStyle(.plain)
-      .accessibilityLabel("收起练习卡")
-      .accessibilityHint("全局快捷键 Control Option C")
-    }
-    .padding(.horizontal, 20)
-    .frame(height: 43)
-  }
-
-  private var promptArea: some View {
-    ScrollView {
-      VStack(alignment: .leading, spacing: 14) {
-        HStack {
-          Text(practice.mode == .quiet ? "默读 · 主动回忆" : "开口 · 主动回忆")
-            .font(.system(size: 10, weight: .medium, design: .monospaced))
-            .foregroundStyle(CardPalette.rust)
-          Spacer()
-          Text("\(practice.remainingRecallSeconds) SEC")
-            .font(.system(size: 10, design: .monospaced))
-            .foregroundStyle(
-              practice.remainingRecallSeconds == 0
-                ? CardPalette.rust : CardPalette.mutedInk
-            )
+        .opacity(appModel.opacity)
+        .animation(
+            reduceMotion ? nil : .snappy(duration: 0.22),
+            value: appModel.isCollapsed
+        )
+        .animation(
+            reduceMotion ? nil : .snappy(duration: 0.22),
+            value: practice.isDetailExpanded
+        )
+        .onDisappear {
+            practice.handleDisappear()
         }
+    }
 
-        if practice.isComplete {
-          completionMessage
-        } else {
-          Text(practice.prompt ?? "")
-            .font(.system(size: 17 * appModel.fontScale, weight: .regular))
-            .lineSpacing(5)
-            .fixedSize(horizontal: false, vertical: true)
-            .accessibilityLabel("提示：\(practice.prompt ?? "")")
+    private var palette: CardThemePalette {
+        CardTheme.palette(for: colorScheme)
+    }
 
-          if let answer = practice.answer {
-            VStack(alignment: .leading, spacing: 10) {
-              Text("ОТВЕТ")
-                .font(
-                  .system(
-                    size: 9,
-                    weight: .semibold,
-                    design: .monospaced
-                  )
+    private var practiceCard: some View {
+        VStack(spacing: 0) {
+            header
+            Divider().overlay(palette.border)
+            mainContent
+            if practice.isDetailExpanded, !practice.isComplete {
+                Divider().overlay(palette.border)
+                PracticeDetailSection(
+                    appModel: appModel,
+                    practice: practice,
+                    palette: palette
                 )
-                .tracking(1.2)
-                .foregroundStyle(CardPalette.rust)
-              Text(answer)
-                .font(.custom("PT Serif", size: 24 * appModel.fontScale))
-                .lineSpacing(4)
+                .padding(.horizontal, 18)
+                .padding(.vertical, 10)
+                .frame(maxHeight: 136)
+            }
+            Divider().overlay(palette.border)
+            bottomControls
+        }
+        .foregroundStyle(palette.primary)
+        .background(palette.background)
+        .clipShape(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .stroke(palette.border, lineWidth: 1)
+        }
+        .shadow(color: .black.opacity(0.16), radius: 16, y: 7)
+        .frame(
+            width: practice.isDetailExpanded ? 430 : 360,
+            height: practice.isDetailExpanded ? 386 : 240
+        )
+        .task(id: practice.currentIndex) {
+            while !Task.isCancelled
+                && !practice.isRevealed
+                && practice.remainingRecallSeconds > 0
+            {
+                try? await Task.sleep(for: .milliseconds(200))
+                practice.refreshRecallTimer()
+            }
+        }
+    }
+
+    private var collapsedCard: some View {
+        Button {
+            appModel.isCollapsed = false
+            onLayoutChanged()
+        } label: {
+            ZStack {
+                palette.background
+                Circle()
+                    .fill(palette.accentSurface)
+                    .frame(width: 42, height: 42)
+                VStack(spacing: 0) {
+                    Text("Я")
+                        .font(.system(size: 23, design: .serif))
+                        .foregroundStyle(palette.primary)
+                    Text(
+                        practice.isComplete
+                            ? "✓" : "\(practice.currentIndex + 1)"
+                    )
+                    .font(.system(size: 8, weight: .semibold))
+                    .foregroundStyle(palette.accent)
+                }
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .stroke(palette.border, lineWidth: 1)
+            }
+        }
+        .buttonStyle(.plain)
+        .frame(width: 58, height: 58)
+        .clipShape(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+        )
+        .shadow(color: .black.opacity(0.15), radius: 10, y: 5)
+        .accessibilityLabel("展开俄语练习卡")
+    }
+
+    private var header: some View {
+        HStack(spacing: 7) {
+            Text("РУССКИЙ УГОЛОК")
+                .font(.system(size: 9, weight: .semibold))
+                .tracking(1.1)
+            Circle()
+                .fill(palette.accent)
+                .frame(width: 4, height: 4)
+            Text(practice.currentTheme.uppercased())
+                .font(.system(size: 8, weight: .medium))
+                .foregroundStyle(palette.muted)
+                .lineLimit(1)
+            Spacer(minLength: 8)
+            Text(progressText)
+                .font(.system(size: 9, weight: .medium))
+                .foregroundStyle(palette.muted)
+            Button {
+                appModel.isCollapsed = true
+                onLayoutChanged()
+            } label: {
+                Image(systemName: "minus")
+                    .font(.system(size: 10, weight: .semibold))
+                    .frame(width: 18, height: 18)
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(palette.muted)
+            .accessibilityLabel("收起练习卡")
+            .accessibilityHint("全局快捷键 Control Option C")
+        }
+        .padding(.horizontal, 16)
+        .frame(height: 34)
+    }
+
+    private var mainContent: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if practice.isComplete {
+                completionMessage
+            } else {
+                HStack {
+                    Text(
+                        practice.mode == .quiet
+                            ? "默读 · 主动回忆"
+                            : "开口 · 主动回忆"
+                    )
+                    .font(.system(size: 9, weight: .semibold))
+                    .foregroundStyle(palette.accent)
+                    Spacer()
+                    Text("\(practice.remainingRecallSeconds) 秒")
+                        .font(.system(size: 9, weight: .medium))
+                        .foregroundStyle(
+                            practice.remainingRecallSeconds == 0
+                                ? palette.accent : palette.muted
+                        )
+                }
+
+                Text(practice.prompt ?? "")
+                    .font(
+                        .system(
+                            size: 16 * appModel.fontScale,
+                            weight: .medium
+                        )
+                    )
+                    .foregroundStyle(palette.primary)
+                    .lineLimit(practice.isDetailExpanded ? 3 : 2)
+                    .minimumScaleFactor(0.82)
+                    .accessibilityLabel("提示：\(practice.prompt ?? "")")
+
+                if let answer = practice.answer {
+                    revealedAnswer(answer)
+                } else {
+                    recallHint
+                }
+            }
+
+            if let status = practice.statusMessage
+                ?? appModel.transientStatus
+            {
+                Text(status)
+                    .font(.system(size: 9))
+                    .foregroundStyle(palette.muted)
+                    .lineLimit(1)
+                    .accessibilityLabel(status)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .padding(.horizontal, 18)
+        .padding(.vertical, 11)
+    }
+
+    private var recallHint: some View {
+        HStack(spacing: 7) {
+            Image(systemName: "timer")
+                .font(.system(size: 10, weight: .semibold))
+            Text(
+                practice.remainingRecallSeconds > 0
+                    ? "先说出来，再核对答案"
+                    : "现在核对你的表达"
+            )
+            .font(.system(size: 10))
+        }
+        .foregroundStyle(palette.muted)
+        .padding(.horizontal, 10)
+        .frame(height: 27)
+        .background(palette.accentSurface)
+        .clipShape(Capsule())
+    }
+
+    private func revealedAnswer(_ answer: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(answer)
+                .font(
+                    .system(
+                        size: 20 * appModel.fontScale,
+                        weight: .medium,
+                        design: .serif
+                    )
+                )
+                .foregroundStyle(palette.secondary)
+                .lineLimit(practice.isDetailExpanded ? 3 : 2)
+                .minimumScaleFactor(0.78)
                 .textSelection(.enabled)
-                .fixedSize(horizontal: false, vertical: true)
                 .accessibilityLabel("答案：\(answer)")
-              if practice.currentLexeme != nil {
-                lexemeDetails
-              } else if practice.microDialogueTurns.count >= 2 {
-                microDialogue
-              }
+
+            if let collocation = practice.currentLexeme?
+                .collocations.first
+            {
+                Text("搭配 · \(collocation)")
+                    .font(.system(size: 10 * appModel.fontScale))
+                    .foregroundStyle(palette.muted)
+                    .lineLimit(1)
             }
-            .transition(.opacity.combined(with: .move(edge: .bottom)))
-          } else {
-            Button("显示答案") {
-              practice.reveal()
+        }
+        .transition(.opacity)
+    }
+
+    private var completionMessage: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Сегодня всё.")
+                .font(
+                    .system(
+                        size: 25 * appModel.fontScale,
+                        weight: .medium,
+                        design: .serif
+                    )
+                )
+            Text("今天的卡片已经完成。")
+                .font(.system(size: 12 * appModel.fontScale))
+                .foregroundStyle(palette.muted)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("今天的卡片已完成")
+    }
+
+    private var bottomControls: some View {
+        HStack(spacing: 7) {
+            if !practice.isComplete {
+                compactButton(
+                    practice.isDetailExpanded ? "收起详情" : "详情",
+                    systemImage: practice.isDetailExpanded
+                        ? "chevron.up" : "text.alignleft"
+                ) {
+                    practice.toggleDetails()
+                    onLayoutChanged()
+                }
+                compactButton("朗读", systemImage: "speaker.wave.2") {
+                    practice.speak()
+                }
+                if practice.currentLexeme != nil {
+                    compactButton(
+                        practice.lexemeDirection == .recognition
+                            ? "俄→中" : "中→俄",
+                        systemImage: "arrow.left.arrow.right"
+                    ) {
+                        practice.toggleLexemeDirection()
+                    }
+                }
             }
-            .buttonStyle(RustOutlineButtonStyle())
-            .keyboardShortcut(.space, modifiers: [])
-            .accessibilityHint("显示俄语答案")
-          }
+            Spacer(minLength: 4)
+            if practice.isRevealed, !practice.isComplete {
+                gradeButton("Again", grade: .again)
+                gradeButton("Hard", grade: .hard)
+                gradeButton("Easy", grade: .easy, prominent: true)
+            } else if !practice.isComplete {
+                compactButton("下一项", systemImage: "arrow.right") {
+                    practice.next()
+                    onLayoutChanged()
+                }
+                Button("显示答案") {
+                    practice.reveal()
+                }
+                .buttonStyle(AccentButtonStyle(palette: palette))
+                .keyboardShortcut(.space, modifiers: [])
+            }
         }
-
-        if let status = practice.statusMessage ?? appModel.transientStatus {
-          Text(status)
-            .font(.system(size: 10, design: .monospaced))
-            .foregroundStyle(CardPalette.mutedInk)
-            .fixedSize(horizontal: false, vertical: true)
-            .accessibilityLabel(status)
-        }
-      }
-      .frame(maxWidth: .infinity, alignment: .topLeading)
+        .padding(.horizontal, 14)
+        .frame(height: 42)
     }
-    .padding(.horizontal, 22)
-    .padding(.vertical, 17)
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-  }
 
-  private var completionMessage: some View {
-    VStack(alignment: .leading, spacing: 9) {
-      Text("Сегодня всё.")
-        .font(.custom("PT Serif", size: 28 * appModel.fontScale))
-      Text("今天的卡片已完成。Again 卡也已经重新练过。")
-        .font(.system(size: 14 * appModel.fontScale))
-        .foregroundStyle(CardPalette.mutedInk)
+    private func compactButton(
+        _ title: String,
+        systemImage: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            Label(title, systemImage: systemImage)
+                .labelStyle(.titleAndIcon)
+                .font(.system(size: 9, weight: .medium))
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(palette.muted)
+        .accessibilityLabel(title)
     }
-    .frame(maxWidth: .infinity, alignment: .leading)
-    .accessibilityElement(children: .combine)
-    .accessibilityLabel("今天的卡片已完成")
-  }
 
-  private var lexemeDetails: some View {
-    VStack(alignment: .leading, spacing: 9) {
-      if !practice.lexemeGrammarLabels.isEmpty {
-        Text(practice.lexemeGrammarLabels.joined(separator: " · "))
-          .font(.system(size: 11, weight: .medium))
-          .foregroundStyle(CardPalette.mutedInk)
-          .fixedSize(horizontal: false, vertical: true)
-      }
-      if let lexeme = practice.currentLexeme {
-        Text("中文：\(lexeme.glossZh)")
-          .font(.system(size: 12 * appModel.fontScale))
-        if !lexeme.collocations.isEmpty {
-          detailBlock(
-            title: "搭配",
-            value: lexeme.collocations.prefix(2).joined(separator: "  ·  ")
-          )
+    private func gradeButton(
+        _ title: String,
+        grade: ReviewGrade,
+        prominent: Bool = false
+    ) -> some View {
+        Button(title) {
+            do {
+                try practice.grade(grade)
+                onLayoutChanged()
+            } catch {
+                practice.showStatus(error.localizedDescription)
+            }
         }
-        if let government = lexeme.government, !government.isEmpty {
-          detailBlock(title: "支配 / 用法", value: government)
-        }
-        if let aspectPairNote = lexeme.aspectPairNote,
-          !aspectPairNote.isEmpty
-        {
-          detailBlock(title: "体对说明", value: aspectPairNote)
-        }
-        detailBlock(title: "例句", value: lexeme.example)
-      }
-      if let context = practice.currentContextSentence {
-        detailBlock(
-          title: "场景 · \(context.theme)",
-          value: context.practiceRu
+        .buttonStyle(
+            GradeButtonStyle(
+                palette: palette,
+                prominent: prominent
+            )
         )
-      }
+        .accessibilityHint("提交 \(title) 评分并进入下一项")
     }
-    .textSelection(.enabled)
-  }
 
-  private var microDialogue: some View {
-    VStack(alignment: .leading, spacing: 8) {
-      Text("МИКРО-ДИАЛОГ · 场景串练")
-        .font(.system(size: 8, weight: .semibold, design: .monospaced))
-        .tracking(0.8)
-        .foregroundStyle(CardPalette.rust)
-      ForEach(Array(practice.microDialogueTurns.enumerated()), id: \.element.id) {
-        index, turn in
-        VStack(alignment: .leading, spacing: 2) {
-          Text("A\(index + 1) · \(turn.cue)")
-            .font(.system(size: 11 * appModel.fontScale))
-            .foregroundStyle(CardPalette.mutedInk)
-          Text("Вы · \(turn.response)")
-            .font(.system(size: 12 * appModel.fontScale))
-            .fixedSize(horizontal: false, vertical: true)
-        }
-      }
+    private var progressText: String {
+        guard !practice.isComplete else { return "完成" }
+        return "\(practice.currentIndex + 1) / \(max(practice.totalCount, 1))"
     }
-    .textSelection(.enabled)
-  }
-
-  private func detailBlock(title: String, value: String) -> some View {
-    VStack(alignment: .leading, spacing: 2) {
-      Text(title.uppercased())
-        .font(.system(size: 8, weight: .semibold, design: .monospaced))
-        .tracking(0.8)
-        .foregroundStyle(CardPalette.rust)
-      Text(value)
-        .font(.system(size: 12 * appModel.fontScale))
-        .fixedSize(horizontal: false, vertical: true)
-    }
-  }
-
-  private var controls: some View {
-    VStack(spacing: 10) {
-      HStack(spacing: 8) {
-        utilityButton("朗读", systemImage: "speaker.wave.2") {
-          practice.speak()
-        }
-        if practice.currentLexeme != nil {
-          utilityButton(
-            practice.lexemeDirection == .recognition ? "俄→中" : "中→俄",
-            systemImage: "arrow.left.arrow.right"
-          ) {
-            practice.toggleLexemeDirection()
-          }
-          .accessibilityHint("切换认词和主动提取方向")
-        }
-        utilityButton("下一项", systemImage: "arrow.right") {
-          practice.next()
-        }
-        Spacer()
-      }
-
-      HStack(spacing: 8) {
-        gradeButton("Again", grade: .again)
-        gradeButton("Hard", grade: .hard)
-        gradeButton("Easy", grade: .easy, prominent: true)
-      }
-    }
-    .padding(.horizontal, 20)
-    .padding(.vertical, 13)
-  }
-
-  private var rule: some View {
-    Rectangle()
-      .fill(CardPalette.ink.opacity(0.16))
-      .frame(height: 1)
-  }
-
-  private func utilityButton(
-    _ title: String,
-    systemImage: String,
-    action: @escaping () -> Void
-  ) -> some View {
-    Button(action: action) {
-      Label(title, systemImage: systemImage)
-        .font(.system(size: 11, weight: .medium))
-    }
-    .buttonStyle(.plain)
-    .foregroundStyle(CardPalette.mutedInk)
-    .accessibilityLabel(title)
-  }
-
-  private func gradeButton(
-    _ title: String,
-    grade: ReviewGrade,
-    prominent: Bool = false
-  ) -> some View {
-    Button(title) {
-      do {
-        try practice.grade(grade)
-      } catch {
-        practice.showStatus("进度暂未保存：\(error.localizedDescription)")
-      }
-    }
-    .buttonStyle(
-      GradeButtonStyle(
-        prominent: prominent,
-        enabled: practice.isRevealed
-      )
-    )
-    .disabled(!practice.isRevealed)
-    .accessibilityLabel("评分 \(title)")
-    .accessibilityHint(
-      "显示答案后可评分；全局快捷键 Control Option \(gradeShortcut(grade))"
-    )
-  }
-
-  private func gradeShortcut(_ grade: ReviewGrade) -> String {
-    switch grade {
-    case .again: "1"
-    case .hard: "2"
-    case .easy: "3"
-    }
-  }
 }
 
-private struct PaperGrain: View {
-  var body: some View {
-    Canvas { context, size in
-      for index in 0..<90 {
-        let x = CGFloat((index * 47) % 431) / 431 * size.width
-        let y = CGFloat((index * 83) % 389) / 389 * size.height
-        let rect = CGRect(x: x, y: y, width: 0.8, height: 0.8)
-        context.fill(
-          Path(ellipseIn: rect),
-          with: .color(CardPalette.ink.opacity(0.045))
-        )
-      }
-    }
-  }
-}
+private struct AccentButtonStyle: ButtonStyle {
+    let palette: CardThemePalette
 
-private struct RustOutlineButtonStyle: ButtonStyle {
-  func makeBody(configuration: Configuration) -> some View {
-    configuration.label
-      .font(.system(size: 12, weight: .semibold))
-      .foregroundStyle(CardPalette.rust)
-      .padding(.horizontal, 14)
-      .padding(.vertical, 8)
-      .overlay {
-        RoundedRectangle(cornerRadius: 4)
-          .stroke(CardPalette.rust.opacity(0.75), lineWidth: 1)
-      }
-      .opacity(configuration.isPressed ? 0.65 : 1)
-  }
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.system(size: 10, weight: .semibold))
+            .foregroundStyle(.white)
+            .padding(.horizontal, 12)
+            .frame(height: 27)
+            .background(
+                palette.accent.opacity(configuration.isPressed ? 0.78 : 1)
+            )
+            .clipShape(Capsule())
+    }
 }
 
 private struct GradeButtonStyle: ButtonStyle {
-  let prominent: Bool
-  let enabled: Bool
+    let palette: CardThemePalette
+    let prominent: Bool
 
-  func makeBody(configuration: Configuration) -> some View {
-    configuration.label
-      .font(.system(size: 11, weight: .semibold, design: .monospaced))
-      .frame(maxWidth: .infinity)
-      .padding(.vertical, 8)
-      .foregroundStyle(
-        prominent && enabled ? CardPalette.paper : CardPalette.ink
-      )
-      .background(
-        prominent && enabled
-          ? CardPalette.rust
-          : CardPalette.ink.opacity(configuration.isPressed ? 0.12 : 0.045)
-      )
-      .overlay {
-        RoundedRectangle(cornerRadius: 4)
-          .stroke(CardPalette.ink.opacity(0.19), lineWidth: 1)
-      }
-      .clipShape(RoundedRectangle(cornerRadius: 4))
-      .opacity(enabled ? 1 : 0.38)
-  }
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.system(size: 9, weight: .semibold))
+            .foregroundStyle(
+                prominent ? Color.white : palette.secondary
+            )
+            .padding(.horizontal, 8)
+            .frame(height: 25)
+            .background(
+                prominent
+                    ? palette.accent.opacity(
+                        configuration.isPressed ? 0.78 : 1
+                    )
+                    : palette.accentSurface
+            )
+            .clipShape(Capsule())
+            .overlay {
+                if !prominent {
+                    Capsule()
+                        .stroke(palette.border, lineWidth: 1)
+                }
+            }
+    }
 }

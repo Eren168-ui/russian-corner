@@ -356,3 +356,43 @@ final class GlobalHotKeyMappingTests: XCTestCase {
     XCTAssertEqual(required.count, 8)
   }
 }
+
+final class PracticePanelPresentationTests: XCTestCase {
+  func testCollapsedPanelIs58By58() {
+    XCTAssertEqual(
+      PracticePanelPresentation.collapsed.size,
+      CGSize(width: 58, height: 58)
+    )
+  }
+
+  func testCompactPanelIs360By240() {
+    XCTAssertEqual(
+      PracticePanelPresentation.compact.size,
+      CGSize(width: 360, height: 240)
+    )
+  }
+
+  func testDetailsPanelIs430By386() {
+    XCTAssertEqual(
+      PracticePanelPresentation.details.size,
+      CGSize(width: 430, height: 386)
+    )
+  }
+
+  func testCollapseTakesPriorityOverDetailsExpansion() {
+    XCTAssertEqual(
+      PracticePanelPresentation.resolve(
+        isCollapsed: true,
+        isDetailExpanded: true
+      ),
+      .collapsed
+    )
+    XCTAssertEqual(
+      PracticePanelPresentation.resolve(
+        isCollapsed: false,
+        isDetailExpanded: true
+      ),
+      .details
+    )
+  }
+}

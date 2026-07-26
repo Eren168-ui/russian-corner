@@ -2,6 +2,31 @@ import AppKit
 import Observation
 import SwiftUI
 
+public enum PracticePanelPresentation: Equatable, Sendable {
+  case collapsed
+  case compact
+  case details
+
+  public var size: CGSize {
+    switch self {
+    case .collapsed:
+      CGSize(width: 58, height: 58)
+    case .compact:
+      CGSize(width: 360, height: 240)
+    case .details:
+      CGSize(width: 430, height: 386)
+    }
+  }
+
+  public static func resolve(
+    isCollapsed: Bool,
+    isDetailExpanded: Bool
+  ) -> Self {
+    if isCollapsed { return .collapsed }
+    return isDetailExpanded ? .details : .compact
+  }
+}
+
 private final class PassiveFloatingPanel: NSPanel {
   override var canBecomeKey: Bool { true }
   override var canBecomeMain: Bool { false }
@@ -20,7 +45,10 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     self.runtime = runtime
     appModel = runtime.appModel
     panel = PassiveFloatingPanel(
-      contentRect: CGRect(origin: .zero, size: Self.expandedSize),
+      contentRect: CGRect(
+        origin: .zero,
+        size: PracticePanelPresentation.compact.size
+      ),
       styleMask: [.borderless, .nonactivatingPanel],
       backing: .buffered,
       defer: false
@@ -118,10 +146,12 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   }
 
   public func refreshLayout() {
-    let size =
-      appModel.isCollapsed
-      ? Self.collapsedSize : Self.expandedSize
-    panel.setContentSize(size)
+    let presentation = PracticePanelPresentation.resolve(
+      isCollapsed: appModel.isCollapsed,
+      isDetailExpanded:
+        runtime?.practice?.isDetailExpanded == true
+    )
+    panel.setContentSize(presentation.size)
     snapToCorner()
     if appModel.isCardVisible {
       panel.orderFrontRegardless()
@@ -215,6 +245,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       _ = appModel.corner
       _ = appModel.isCollapsed
       _ = appModel.preferredScreenIdentifier
+      _ = runtime?.practice?.isDetailExpanded
     } onChange: { [weak self] in
       Task { @MainActor in
         self?.refreshLayout()
@@ -222,9 +253,6 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       }
     }
   }
-
-  private static let expandedSize = CGSize(width: 430, height: 386)
-  private static let collapsedSize = CGSize(width: 58, height: 58)
 
 }
 
