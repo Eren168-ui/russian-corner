@@ -72,6 +72,7 @@ prepare_case() {
   mkdir -p \
     "$SANDBOX_REPO/Scripts" \
     "$SANDBOX_REPO/Sources/RussianCornerCore/Resources" \
+    "$SANDBOX_REPO/Assets/AppIcon" \
     "$FAKE_BIN" \
     "$FAKE_BUILD"
   git -C "$SANDBOX_REPO" init -q
@@ -87,6 +88,12 @@ prepare_case() {
     "$SANDBOX_REPO/Sources/RussianCornerCore/Resources/sentences.json"
   cp Sources/RussianCornerCore/Resources/trial-slice.json \
     "$SANDBOX_REPO/Sources/RussianCornerCore/Resources/trial-slice.json"
+  cp Sources/RussianCornerCore/Resources/topics.json \
+    "$SANDBOX_REPO/Sources/RussianCornerCore/Resources/topics.json"
+  cp Sources/RussianCornerCore/Resources/long-term-sentences.json \
+    "$SANDBOX_REPO/Sources/RussianCornerCore/Resources/long-term-sentences.json"
+  cp Assets/AppIcon/RussianCorner.icns \
+    "$SANDBOX_REPO/Assets/AppIcon/RussianCorner.icns"
 
   cat >"$FAKE_BIN/swift" <<'SH'
 #!/usr/bin/env bash
@@ -114,8 +121,10 @@ SH
 resource_directory=$1
 if [ -f "$resource_directory/lexemes.json" ] &&
   [ -f "$resource_directory/sentences.json" ] &&
-  [ -f "$resource_directory/trial-slice.json" ]; then
-  printf 'resource_probe=PASS lexemes=360 sentences=72 trial=50 directory=%s\n' \
+  [ -f "$resource_directory/trial-slice.json" ] &&
+  [ -f "$resource_directory/topics.json" ] &&
+  [ -f "$resource_directory/long-term-sentences.json" ]; then
+  printf 'resource_probe=PASS lexemes=360 sentences=72 trial=50 topics=32 long_term_sentences=214 directory=%s\n' \
     "$resource_directory"
   exit 0
 fi

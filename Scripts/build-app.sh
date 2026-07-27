@@ -18,6 +18,7 @@ BUNDLE_IDENTIFIER="com.openclaw.russiancorner"
 DIST_DIR="$REPO_ROOT/dist"
 STATE_FILE="$REPO_ROOT/.build-app-transaction"
 SOURCE_RESOURCES_DIR="$REPO_ROOT/Sources/RussianCornerCore/Resources"
+APP_ICON_PATH="$REPO_ROOT/Assets/AppIcon/RussianCorner.icns"
 CODESIGN_BIN=${CODESIGN_BIN:-/usr/bin/codesign}
 
 STAGING_ROOT=""
@@ -485,6 +486,10 @@ if [ ! -f "$SOURCE_RESOURCES_DIR/lexemes.json" ] ||
   printf 'error: source JSON resources are incomplete\n' >&2
   exit 1
 fi
+if [ ! -f "$APP_ICON_PATH" ]; then
+  printf 'error: app icon is missing: %s\n' "$APP_ICON_PATH" >&2
+  exit 1
+fi
 
 if strings "$BUILT_EXECUTABLE" | grep -F "$REPO_ROOT" >/dev/null; then
   printf 'error: production executable contains repository path\n' >&2
@@ -536,6 +541,9 @@ install -m 0644 \
 install -m 0644 \
   "$SOURCE_RESOURCES_DIR/long-term-sentences.json" \
   "$STAGED_RESOURCES/long-term-sentences.json"
+install -m 0644 \
+  "$APP_ICON_PATH" \
+  "$STAGED_RESOURCES/RussianCorner.icns"
 
 SOURCE_LEXEMES_SHA_AFTER=$(
   shasum -a 256 "$SOURCE_RESOURCES_DIR/lexemes.json" | awk '{print $1}'
@@ -606,6 +614,8 @@ plutil -create xml1 "$STAGED_INFO_PLIST"
   "Add :CFBundleVersion string 1" "$STAGED_INFO_PLIST"
 /usr/libexec/PlistBuddy -c \
   "Add :CFBundlePackageType string APPL" "$STAGED_INFO_PLIST"
+/usr/libexec/PlistBuddy -c \
+  "Add :CFBundleIconFile string RussianCorner.icns" "$STAGED_INFO_PLIST"
 /usr/libexec/PlistBuddy -c "Add :LSUIElement bool true" "$STAGED_INFO_PLIST"
 /usr/libexec/PlistBuddy -c \
   "Add :LSMinimumSystemVersion string 14.0" "$STAGED_INFO_PLIST"
@@ -639,7 +649,8 @@ if [ "$(stat -f '%Lp' "$STAGED_RESOURCES")" != "755" ] ||
   [ "$(stat -f '%Lp' "$STAGED_EXECUTABLE")" != "755" ] ||
   [ "$(stat -f '%Lp' "$STAGED_RESOURCES/lexemes.json")" != "644" ] ||
   [ "$(stat -f '%Lp' "$STAGED_RESOURCES/sentences.json")" != "644" ] ||
-  [ "$(stat -f '%Lp' "$STAGED_RESOURCES/trial-slice.json")" != "644" ]; then
+  [ "$(stat -f '%Lp' "$STAGED_RESOURCES/trial-slice.json")" != "644" ] ||
+  [ "$(stat -f '%Lp' "$STAGED_RESOURCES/RussianCorner.icns")" != "644" ]; then
   printf 'error: staged app permissions are incorrect\n' >&2
   exit 1
 fi
@@ -767,7 +778,8 @@ if [ "$(stat -f '%Lp' "$FINAL_RESOURCES")" != "755" ] ||
   [ "$(stat -f '%Lp' "$FINAL_RESOURCES/sentences.json")" != "644" ] ||
   [ "$(stat -f '%Lp' "$FINAL_RESOURCES/trial-slice.json")" != "644" ] ||
   [ "$(stat -f '%Lp' "$FINAL_RESOURCES/topics.json")" != "644" ] ||
-  [ "$(stat -f '%Lp' "$FINAL_RESOURCES/long-term-sentences.json")" != "644" ]; then
+  [ "$(stat -f '%Lp' "$FINAL_RESOURCES/long-term-sentences.json")" != "644" ] ||
+  [ "$(stat -f '%Lp' "$FINAL_RESOURCES/RussianCorner.icns")" != "644" ]; then
   printf 'error: published app permissions are incorrect\n' >&2
   exit 1
 fi
