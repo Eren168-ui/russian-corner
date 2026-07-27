@@ -206,6 +206,8 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
     public let addressForm: AddressForm?
     public let expectedReply: String?
     public let alternativeReplyIDs: [String]
+    public let topicID: String?
+    public let sourceHash: String?
 
     public init(
         id: String,
@@ -226,7 +228,9 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
         speakerRole: String? = nil,
         addressForm: AddressForm? = nil,
         expectedReply: String? = nil,
-        alternativeReplyIDs: [String] = []
+        alternativeReplyIDs: [String] = [],
+        topicID: String? = nil,
+        sourceHash: String? = nil
     ) {
         self.id = id
         self.promptZh = promptZh
@@ -247,6 +251,8 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
         self.addressForm = addressForm
         self.expectedReply = expectedReply
         self.alternativeReplyIDs = alternativeReplyIDs
+        self.topicID = topicID
+        self.sourceHash = sourceHash
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -269,6 +275,8 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
         case addressForm
         case expectedReply
         case alternativeReplyIDs
+        case topicID
+        case sourceHash
     }
 
     public init(from decoder: any Decoder) throws {
@@ -340,6 +348,14 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
             [String].self,
             forKey: .alternativeReplyIDs
         ) ?? []
+        topicID = try container.decodeIfPresent(
+            String.self,
+            forKey: .topicID
+        )
+        sourceHash = try container.decodeIfPresent(
+            String.self,
+            forKey: .sourceHash
+        )
     }
 }
 

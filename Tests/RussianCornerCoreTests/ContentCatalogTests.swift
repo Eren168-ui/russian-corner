@@ -34,7 +34,10 @@ final class ContentCatalogTests: XCTestCase {
             Set(slice.manualReviewSampleIDs).count,
             30
         )
-        XCTAssertEqual(catalog.practiceSentences, slice.sentences)
+        XCTAssertEqual(
+            catalog.practiceSentences.map(\.id),
+            slice.sentences.map(\.id)
+        )
         XCTAssertEqual(
             Set(catalog.practiceLexemes.map(\.id)),
             slice.lexemeIDs
@@ -112,6 +115,8 @@ final class ContentCatalogTests: XCTestCase {
             "lexemes.json",
             "sentences.json",
             "trial-slice.json",
+            "topics.json",
+            "long-term-sentences.json",
         ] {
             try FileManager.default.copyItem(
                 at: sourceResourceDirectory.appendingPathComponent(name),
@@ -168,6 +173,8 @@ final class ContentCatalogTests: XCTestCase {
             "lexemes.json",
             "sentences.json",
             "trial-slice.json",
+            "topics.json",
+            "long-term-sentences.json",
         ] {
             try FileManager.default.copyItem(
                 at: sourceResourceDirectory.appendingPathComponent(name),

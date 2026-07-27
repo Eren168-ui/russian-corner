@@ -31,6 +31,9 @@ public struct ContentCatalog: Sendable {
     public let lexemes: [Lexeme]
     public let sentences: [SentenceCard]
     public let trialSlice: TrialContentSlice?
+    public let topics: [TopicDefinition]
+    public let longTermManifest: LongTermContentManifest
+    public let longTermSentences: [SentenceCard]
 
     public init() throws {
         try self.init(
@@ -66,10 +69,24 @@ public struct ContentCatalog: Sendable {
             resourceDirectory: resourceDirectory,
             decoder: decoder
         )
+        let topics = try Self.decode(
+            [TopicDefinition].self,
+            resource: "topics",
+            resourceDirectory: resourceDirectory,
+            decoder: decoder
+        )
+        let longTermManifest = try Self.decode(
+            LongTermContentManifest.self,
+            resource: "long-term-sentences",
+            resourceDirectory: resourceDirectory,
+            decoder: decoder
+        )
         let catalog = ContentCatalog(
             lexemes: lexemes,
             sentences: sentences,
-            trialSlice: trialSlice
+            trialSlice: trialSlice,
+            topics: topics,
+            longTermManifest: longTermManifest
         )
         let issues = catalog.validate()
         guard issues.isEmpty else {
@@ -108,7 +125,9 @@ public struct ContentCatalog: Sendable {
     public init(
         lexemes: [Lexeme],
         sentences: [SentenceCard],
-        trialSlice: TrialContentSlice? = nil
+        trialSlice: TrialContentSlice? = nil,
+        topics: [TopicDefinition] = [],
+        longTermManifest: LongTermContentManifest? = nil
     ) {
         let allowedStatuses: Set<ReviewStatus> = [.reviewed, .verified]
         self.lexemes = lexemes.filter {
@@ -118,6 +137,20 @@ public struct ContentCatalog: Sendable {
             allowedStatuses.contains($0.reviewStatus)
         }
         self.trialSlice = trialSlice
+        self.topics = topics
+        let fallbackManifest = LongTermContentManifest(
+            schemaVersion: 1,
+            sourceRoot: "",
+            sourceCorpusSHA256: "",
+            contentGateClosed: false,
+            sentences: self.sentences
+        )
+        self.longTermManifest = longTermManifest ?? fallbackManifest
+        self.longTermSentences = (
+            longTermManifest?.sentences ?? self.sentences
+        ).filter {
+            allowedStatuses.contains($0.reviewStatus)
+        }
     }
 
     public var practiceLexemes: [Lexeme] {
@@ -130,13 +163,7 @@ public struct ContentCatalog: Sendable {
     }
 
     public var practiceSentences: [SentenceCard] {
-        guard let trialSlice else {
-            return sentences
-        }
-        let allowedStatuses: Set<ReviewStatus> = [.reviewed, .verified]
-        return trialSlice.sentences.filter {
-            allowedStatuses.contains($0.reviewStatus)
-        }
+        longTermSentences
     }
 
     public func wordAnalyses(
@@ -643,7 +670,120 @@ public struct ContentCatalog: Sendable {
                 lexemesByID: lexemesByID
             )
         }
+        if !topics.isEmpty || !longTermManifest.sourceRoot.isEmpty {
+            issues += validateLongTermContent()
+        }
 
+        return issues
+    }
+
+    private func validateLongTermContent() -> [CatalogIssue] {
+        var issues: [CatalogIssue] = []
+        let topicIDs = Set(topics.map(\.id))
+        let topicPaths = Set(topics.map(\.sourcePath))
+        let expectedNumbers = Set(1...32)
+        require(
+            topics.count == 32
+                && Set(topics.map(\.number)) == expectedNumbers,
+            itemID: "longTerm.topics",
+            message: "topic numbers must be exactly 1 through 32",
+            issues: &issues
+        )
+        require(
+            topicIDs.count == topics.count,
+            itemID: "longTerm.topics",
+            message: "topic IDs must be unique",
+            issues: &issues
+        )
+        require(
+            topicPaths.count == topics.count,
+            itemID: "longTerm.topics",
+            message: "topic source paths must be unique",
+            issues: &issues
+        )
+
+        let sentenceIDs = Set(longTermSentences.map(\.id))
+        require(
+            sentenceIDs.count == longTermSentences.count,
+            itemID: "longTerm.sentences",
+            message: "long-term sentence IDs must be unique",
+            issues: &issues
+        )
+        let allowedStatuses: Set<ReviewStatus> = [.reviewed, .verified]
+        for sentence in longTermSentences {
+            require(
+                sentence.topicID.map(topicIDs.contains) == true,
+                itemID: sentence.id,
+                message: "missing or unknown topic ID",
+                issues: &issues
+            )
+            require(
+                Self.isNonempty(sentence.sourceHash)
+                    && sentence.sourceHash?.count == 64,
+                itemID: sentence.id,
+                message: "missing source SHA-256",
+                issues: &issues
+            )
+            require(
+                !sentence.sourcePath.isEmpty
+                    && !sentence.sourceText.isEmpty,
+                itemID: sentence.id,
+                message: "missing source trace",
+                issues: &issues
+            )
+            require(
+                !sentence.practiceRu.isEmpty
+                    && !sentence.speechText.isEmpty
+                    && Self.isCleanRussianSpeech(sentence.practiceRu)
+                    && Self.isCleanRussianSpeech(sentence.speechText),
+                itemID: sentence.id,
+                message: "unclean Russian practice or speech text",
+                issues: &issues
+            )
+            require(
+                Self.isNonempty(sentence.dialogueAct)
+                    && Self.isNonempty(sentence.speakerRole)
+                    && sentence.register != nil
+                    && sentence.addressForm != nil
+                    && Self.isNonempty(sentence.expectedReply),
+                itemID: sentence.id,
+                message: "missing pragmatic metadata",
+                issues: &issues
+            )
+            require(
+                allowedStatuses.contains(sentence.reviewStatus),
+                itemID: sentence.id,
+                message: "unreviewed sentence cannot enter long-term content",
+                issues: &issues
+            )
+            require(
+                sentence.provenanceType != .aiGenerated,
+                itemID: sentence.id,
+                message: "AI-generated source is not eligible",
+                issues: &issues
+            )
+        }
+
+        if longTermManifest.contentGateClosed {
+            require(
+                longTermSentences.count >= 200,
+                itemID: "longTerm.sentences",
+                message: "closed content gate requires at least 200 sentences",
+                issues: &issues
+            )
+            let counts = Dictionary(
+                grouping: longTermSentences,
+                by: \.topicID
+            ).mapValues(\.count)
+            for topic in topics {
+                require(
+                    counts[topic.id, default: 0] >= 4,
+                    itemID: topic.id,
+                    message: "closed content gate requires four sentences",
+                    issues: &issues
+                )
+            }
+        }
         return issues
     }
 
