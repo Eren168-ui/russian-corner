@@ -24,10 +24,33 @@ final class LongTermContentTests: XCTestCase {
             catalog.practiceSentences,
             catalog.longTermSentences
         )
-        XCTAssertEqual(catalog.practiceSentences.count, 35)
-        XCTAssertFalse(
+        XCTAssertGreaterThan(catalog.practiceSentences.count, 35)
+        XCTAssertTrue(
             catalog.longTermManifest.contentGateClosed
         )
+    }
+
+    func testClosedManifestMeetsLongTermContentGate() throws {
+        let catalog = try ContentCatalog(
+            resourceDirectory: resourceDirectory
+        )
+
+        XCTAssertTrue(
+            catalog.longTermManifest.contentGateClosed
+        )
+        XCTAssertGreaterThanOrEqual(
+            catalog.longTermSentences.count,
+            200
+        )
+        for topic in catalog.topics {
+            XCTAssertGreaterThanOrEqual(
+                catalog.longTermSentences.filter {
+                    $0.topicID == topic.id
+                }.count,
+                4,
+                topic.id
+            )
+        }
     }
 
     private var resourceDirectory: URL {

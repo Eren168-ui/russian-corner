@@ -25,3 +25,11 @@
   - possiblyDated: 1
 
 所有候选均保持 draft；本报告不改写原始笔记。
+
+## Final manifest readback
+
+- reviewedCount: 220
+- accepted: 214
+- rejected: 6
+- rejectedIDs: [longterm-t04-14b373ff336c, longterm-t06-78b8c6d9974a, longterm-t07-8c3992359bad, longterm-t24-5878045dcfbf, longterm-t31-373e0c924ba2, longterm-t32-89d9a0d9955a]
+- reasons: possiblyDated / mixedPrompt / possiblyDated / unnatural / punctuationSuspect / governmentSuspect
