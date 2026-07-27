@@ -85,6 +85,19 @@ public struct RussianCornerSettingsView: View {
           Text("开口练习").tag(PracticeMode.speaking)
         }
         .pickerStyle(.segmented)
+        LabeledContent(
+          "长期语料",
+          value: "\(runtime.topics.count) 个话题"
+        )
+        LabeledContent(
+          "待人工审核候选",
+          value: "\(runtime.pendingCandidateCount) 条"
+        )
+        if let syncText {
+          Text(syncText)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+        }
       }
 
       Section("在线词典（可选）") {
@@ -150,6 +163,19 @@ public struct RussianCornerSettingsView: View {
     .navigationTitle("Russian Corner 设置")
     .onChange(of: appModel.mode) {
       runtime.practice?.mode = appModel.mode
+    }
+  }
+
+  private var syncText: String? {
+    switch runtime.sourceSyncResult {
+    case .unchanged:
+      return "原始笔记无变化，继续使用已审核语料。"
+    case .updated(let candidateCount, let changedFileCount):
+      return "发现 \(changedFileCount) 个文件变化，\(candidateCount) 条内容已隔离为待审核候选，不会直接投放。"
+    case .unavailableUsingBundledCorpus:
+      return "当前无法读取原始笔记，已安全使用应用内已审核语料。"
+    case nil:
+      return nil
     }
   }
 

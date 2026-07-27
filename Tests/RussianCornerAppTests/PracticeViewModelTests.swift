@@ -1296,6 +1296,85 @@ final class AppModelTests: XCTestCase {
     XCTAssertEqual(model.preferredScreenIdentifier, "69733248")
   }
 
+  func testPreferredTopicPersistsOnlyForSelectedCalendarDay() {
+    let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+    let today = Date(timeIntervalSince1970: 1_700_000_000)
+    let tomorrow = today.addingTimeInterval(86_400)
+
+    var model = AppModel(defaults: defaults)
+    model.setPreferredTopic("topic-19", on: today)
+    model = AppModel(defaults: defaults)
+
+    XCTAssertEqual(model.preferredTopic(on: today), "topic-19")
+    XCTAssertNil(model.preferredTopic(on: tomorrow))
+  }
+
+  func testRuntimeSyncsChangedNotesIntoDraftCandidatesOnly() throws {
+    let temporaryRoot = FileManager.default.temporaryDirectory
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    try FileManager.default.createDirectory(
+      at: temporaryRoot,
+      withIntermediateDirectories: true
+    )
+    defer { try? FileManager.default.removeItem(at: temporaryRoot) }
+    let noteURL = temporaryRoot.appendingPathComponent("topic.md")
+    let originalNote =
+      "1. Я хочу уточнить детали. — 我想确认细节。"
+    try originalNote.write(
+      to: noteURL,
+      atomically: true,
+      encoding: .utf8
+    )
+    let topic = TopicDefinition(
+      id: "topic-01",
+      number: 1,
+      titleRu: "Тема",
+      titleZh: "话题",
+      sourcePath: "topic.md"
+    )
+    let manifest = LongTermContentManifest(
+      schemaVersion: 1,
+      sourceRoot: temporaryRoot.path,
+      sourceCorpusSHA256: "fixture",
+      contentGateClosed: true,
+      sentences: []
+    )
+    let storeURL = temporaryRoot.appendingPathComponent(
+      "derived/CandidateCorpus.json"
+    )
+    let repository = ProgressRepository(
+      container: try ProgressRepository.makeInMemoryContainer()
+    )
+    let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+
+    let runtime = AppRuntime(
+      defaults: defaults,
+      catalog: ContentCatalog(
+        lexemes: [],
+        sentences: [],
+        topics: [topic],
+        longTermManifest: manifest
+      ),
+      repository: repository,
+      enableSystemReminders: false,
+      candidateCorpusStore: CandidateCorpusStore(fileURL: storeURL),
+      enableSourceSync: true
+    )
+
+    let state = try CandidateCorpusStore(fileURL: storeURL).load()
+    XCTAssertEqual(state.candidates.count, 1)
+    XCTAssertEqual(state.candidates.first?.status, .draft)
+    XCTAssertEqual(runtime.pendingCandidateCount, 1)
+    XCTAssertEqual(
+      try String(contentsOf: noteURL, encoding: .utf8),
+      originalNote
+    )
+  }
+
   private func diagnosticReport(
     recognition: Double,
     production: Double,

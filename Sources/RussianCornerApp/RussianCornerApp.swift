@@ -32,7 +32,7 @@ struct RussianCornerApp: App {
   private let reportExporter: TrialReportExporter
 
   init() {
-    let runtime = AppRuntime()
+    let runtime = AppRuntime(enableSourceSync: true)
     let panelController = FloatingPanelController(runtime: runtime)
     let hotKeyService = GlobalHotKeyService()
     let reportExporter = TrialReportExporter(
@@ -196,6 +196,24 @@ private struct MenuBarContent: View {
 
     Divider()
 
+    Menu(
+      runtime.selectedTopic.map {
+        "今天的话题：\($0.number). \($0.titleZh)"
+      } ?? "今天的话题"
+    ) {
+      Button("自动轮换") {
+        runtime.selectTopicForToday(nil)
+      }
+      Divider()
+      ForEach(runtime.topics) { topic in
+        Button("\(topic.number). \(topic.titleZh)") {
+          runtime.selectTopicForToday(topic.id)
+        }
+      }
+    }
+
+    Divider()
+
     Button("设置…", systemImage: "gearshape") {
       openWindow(id: "settings")
       NSApplication.shared.activate(ignoringOtherApps: true)
@@ -215,12 +233,12 @@ private struct MenuBarContent: View {
       NSApplication.shared.activate(ignoringOtherApps: true)
     }
     Button(
-      "导出 7 天试用报告…",
+      "导出近 7 天学习报告…",
       systemImage: "square.and.arrow.up"
     ) {
       guard let trialRepository = runtime.trialRepository else {
         runtime.appModel.transientStatus =
-          runtime.trialError ?? "试用报告暂时不可用"
+          runtime.trialError ?? "学习报告暂时不可用"
         return
       }
       Task {

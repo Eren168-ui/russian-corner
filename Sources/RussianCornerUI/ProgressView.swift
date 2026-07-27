@@ -32,6 +32,11 @@ public struct RussianCornerProgressView: View {
           ""
         )
         metric("已掌握", "\(runtime.progress.masteredCount)", "句")
+        metric(
+          "话题覆盖",
+          "\(runtime.progress.coveredTopicCount) / \(runtime.progress.totalTopicCount)",
+          ""
+        )
       }
 
       Divider()
@@ -44,7 +49,7 @@ public struct RussianCornerProgressView: View {
       Spacer()
     }
     .padding(28)
-    .frame(width: 460, height: 390)
+    .frame(width: 460, height: 450)
     .task {
       try? runtime.refreshProgress()
     }

@@ -46,10 +46,10 @@ public final class TrialReportExporter {
                 range: start...end
             )
             let panel = NSSavePanel()
-            panel.title = "导出 7 天试用报告"
+            panel.title = "导出近 7 天学习报告"
             panel.prompt = "导出"
             panel.nameFieldStringValue =
-                "俄语角落卡-7天试用报告-\(date(end, calendar: calendar)).md"
+                "俄语角落卡-近7天学习报告-\(date(end, calendar: calendar)).md"
             panel.allowedContentTypes = [
                 UTType(filenameExtension: "md") ?? .plainText,
             ]
@@ -71,10 +71,10 @@ public final class TrialReportExporter {
                 encoding: .utf8
             )
             appModel.transientStatus =
-                "7 天试用报告已导出：\(url.lastPathComponent)"
+                "近 7 天学习报告已导出：\(url.lastPathComponent)"
         } catch {
             appModel.transientStatus =
-                "7 天试用报告导出失败：\(error.localizedDescription)"
+                "近 7 天学习报告导出失败：\(error.localizedDescription)"
         }
     }
 

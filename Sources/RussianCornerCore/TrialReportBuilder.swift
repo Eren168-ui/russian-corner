@@ -49,7 +49,7 @@ public struct TrialReportBuilder: Sendable {
         }
 
         var lines: [String] = [
-            "# 俄语角落卡｜7 天试用报告",
+            "# 俄语角落卡｜近 7 天学习报告",
             "",
             "报告周期：\(date(range.lowerBound)) 至 \(date(range.upperBound))",
             "",

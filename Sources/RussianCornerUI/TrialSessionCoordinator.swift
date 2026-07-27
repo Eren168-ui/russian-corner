@@ -149,7 +149,7 @@ public final class TrialSessionCoordinator: PracticeTrialTracking {
             try repository.save(interaction: interaction)
         } catch {
             report(
-                "试用统计暂时无法记录：\(error.localizedDescription)"
+                "学习统计暂时无法记录：\(error.localizedDescription)"
             )
         }
         scheduleIdleExpiration()
@@ -247,7 +247,7 @@ public final class TrialSessionCoordinator: PracticeTrialTracking {
             try repository.save(session: value)
         } catch {
             report(
-                "试用会话暂时无法保存：\(error.localizedDescription)"
+                "学习会话暂时无法保存：\(error.localizedDescription)"
             )
         }
     }

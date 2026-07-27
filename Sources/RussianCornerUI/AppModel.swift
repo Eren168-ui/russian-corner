@@ -44,6 +44,8 @@ public final class AppModel {
     static let morningMinute = "reminder.morning.minute"
     static let eveningHour = "reminder.evening.hour"
     static let eveningMinute = "reminder.evening.minute"
+    static let preferredTopicID = "practice.preferredTopicID"
+    static let preferredTopicDay = "practice.preferredTopicDay"
   }
 
   private let defaults: UserDefaults
@@ -122,6 +124,8 @@ public final class AppModel {
     }
   }
   public var transientStatus: String?
+  public private(set) var preferredTopicID: String?
+  public private(set) var preferredTopicDay: Date?
 
   public init(defaults: UserDefaults = .standard) {
     self.defaults = defaults
@@ -161,6 +165,10 @@ public final class AppModel {
         ? 30 : defaults.integer(forKey: Key.eveningMinute)
     )
     isCollapsed = defaults.bool(forKey: Key.collapsed)
+    preferredTopicID = defaults.string(forKey: Key.preferredTopicID)
+    preferredTopicDay = defaults.object(
+      forKey: Key.preferredTopicDay
+    ) as? Date
     opacity = min(max(opacity, 0.55), 1)
     fontScale = min(max(fontScale, 0.85), 1.35)
     isLoading = false
@@ -177,6 +185,33 @@ public final class AppModel {
     isLoading = false
   }
 
+  public func preferredTopic(
+    on date: Date,
+    calendar: Calendar = .current
+  ) -> String? {
+    guard let preferredTopicID, let preferredTopicDay,
+      calendar.isDate(preferredTopicDay, inSameDayAs: date)
+    else {
+      return nil
+    }
+    return preferredTopicID
+  }
+
+  public func setPreferredTopic(
+    _ topicID: String?,
+    on date: Date = Date()
+  ) {
+    preferredTopicID = topicID
+    preferredTopicDay = topicID == nil ? nil : date
+    if let topicID {
+      defaults.set(topicID, forKey: Key.preferredTopicID)
+      defaults.set(date, forKey: Key.preferredTopicDay)
+    } else {
+      defaults.removeObject(forKey: Key.preferredTopicID)
+      defaults.removeObject(forKey: Key.preferredTopicDay)
+    }
+  }
+
   private func persist(_ value: Any, forKey key: String) {
     guard !isLoading else { return }
     defaults.set(value, forKey: key)
@@ -188,17 +223,23 @@ public struct LearningProgressSnapshot: Equatable, Sendable {
   public var streakDays: Int
   public var accuracy: Double
   public var masteredCount: Int
+  public var coveredTopicCount: Int
+  public var totalTopicCount: Int
 
   public init(
     completedToday: Int = 0,
     streakDays: Int = 0,
     accuracy: Double = 0,
-    masteredCount: Int = 0
+    masteredCount: Int = 0,
+    coveredTopicCount: Int = 0,
+    totalTopicCount: Int = 0
   ) {
     self.completedToday = completedToday
     self.streakDays = streakDays
     self.accuracy = accuracy
     self.masteredCount = masteredCount
+    self.coveredTopicCount = coveredTopicCount
+    self.totalTopicCount = totalTopicCount
   }
 }
 
@@ -216,9 +257,15 @@ public final class AppRuntime {
   public private(set) var diagnosticError: String?
   public private(set) var trialError: String?
   public private(set) var diagnosticHistoryIssueCount = 0
+  public private(set) var sourceSyncResult: SourceSyncResult?
+  public private(set) var pendingCandidateCount = 0
+  public private(set) var lastSourceSyncAt: Date?
 
   private var catalog: ContentCatalog?
   private var repository: ProgressRepository?
+  private var candidateCorpusStore: CandidateCorpusStore?
+  private let sourceCorpusScanner = SourceCorpusScanner()
+  private let enableSourceSync: Bool
   private var trialSessionCoordinator: TrialSessionCoordinator?
   private let reminderScheduler: (any ReminderSettingsScheduling)?
   private var reminderSettingsCoordinator: ReminderSettingsCoordinator?
@@ -235,9 +282,20 @@ public final class AppRuntime {
       (() throws -> any TrialDataStoring)? = nil,
     reminderScheduler injectedReminderScheduler:
       (any ReminderSettingsScheduling)? = nil,
-    enableSystemReminders: Bool = true
+    enableSystemReminders: Bool = true,
+    candidateCorpusStore injectedCandidateCorpusStore:
+      CandidateCorpusStore? = nil,
+    enableSourceSync: Bool = false
   ) {
     appModel = AppModel(defaults: defaults)
+    self.enableSourceSync = enableSourceSync
+    if let injectedCandidateCorpusStore {
+      candidateCorpusStore = injectedCandidateCorpusStore
+    } else if enableSourceSync,
+      let fileURL = try? CandidateCorpusStore.defaultFileURL()
+    {
+      candidateCorpusStore = CandidateCorpusStore(fileURL: fileURL)
+    }
     if let injectedReminderScheduler {
       reminderScheduler = injectedReminderScheduler
     } else {
@@ -298,12 +356,15 @@ public final class AppRuntime {
         dailyReflection = reflection
       } catch {
         trialError =
-          "试用统计暂时不可用，学习功能不受影响：\(error.localizedDescription)"
+          "学习统计暂时不可用，学习功能不受影响：\(error.localizedDescription)"
         appModel.transientStatus = trialError
       }
 
       try reloadPractice()
       try refreshProgress()
+      if enableSourceSync {
+        syncSourceCorpus()
+      }
     } catch {
       launchError = "学习数据暂时无法载入：\(error.localizedDescription)"
       return
@@ -347,6 +408,7 @@ public final class AppRuntime {
       repository: repository,
       targetCount: appModel.dailyCardCount,
       mode: appModel.mode,
+      preferredTopicID: appModel.preferredTopic(on: now()),
       now: now,
       diagnosticFindings: findings,
       trialTracker: trialSessionCoordinator,
@@ -364,12 +426,94 @@ public final class AppRuntime {
     }
     do {
       trialSessionCoordinator?.close(reason: .dayChanged)
+      if enableSourceSync {
+        syncSourceCorpus(now: instant)
+      }
       try reloadPractice(now: { instant })
       try refreshProgress(now: instant)
       _ = dailyReflection?.loadToday()
     } catch {
       appModel.transientStatus =
         "跨时段队列刷新失败：\(error.localizedDescription)"
+    }
+  }
+
+  public var topics: [TopicDefinition] {
+    catalog?.topics.sorted { $0.number < $1.number } ?? []
+  }
+
+  public var selectedTopic: TopicDefinition? {
+    guard let topicID = practice?.selectedTopicID else { return nil }
+    return topics.first { $0.id == topicID }
+  }
+
+  public func selectTopicForToday(
+    _ topicID: String?,
+    now: Date = Date()
+  ) {
+    guard topicID == nil || topics.contains(where: { $0.id == topicID })
+    else { return }
+    appModel.setPreferredTopic(topicID, on: now)
+    do {
+      try reloadPractice(now: { now })
+      appModel.transientStatus =
+        topicID == nil ? "今天已恢复自动选题" : "今天的话题已切换"
+    } catch {
+      appModel.transientStatus =
+        "话题切换失败：\(error.localizedDescription)"
+    }
+  }
+
+  public func syncSourceCorpus(now: Date = Date()) {
+    guard enableSourceSync, let catalog, let candidateCorpusStore,
+      !catalog.longTermManifest.sourceRoot.isEmpty
+    else { return }
+    do {
+      let previous = try candidateCorpusStore.load()
+      let output = sourceCorpusScanner.scan(
+        sourceRoot: URL(
+          fileURLWithPath: catalog.longTermManifest.sourceRoot,
+          isDirectory: true
+        ),
+        topics: catalog.topics,
+        previousSnapshots: previous.snapshots
+      )
+      sourceSyncResult = output.result
+      switch output.result {
+      case .unavailableUsingBundledCorpus:
+        pendingCandidateCount = previous.candidates.count
+        lastSourceSyncAt = previous.lastSyncedAt
+      case .unchanged:
+        pendingCandidateCount = previous.candidates.count
+        lastSourceSyncAt = previous.lastSyncedAt
+      case .updated:
+        let previousHashes = Dictionary(
+          uniqueKeysWithValues: previous.snapshots.map {
+            ($0.relativePath, $0.sha256)
+          }
+        )
+        let changedPaths = Set(
+          output.snapshots.compactMap {
+            previousHashes[$0.relativePath] == $0.sha256
+              ? nil : $0.relativePath
+          }
+        )
+        let merged = previous.candidates.filter {
+          !changedPaths.contains($0.sourcePath)
+        } + output.candidates
+        let state = CandidateCorpusState(
+          snapshots: output.snapshots,
+          candidates: merged,
+          lastSyncedAt: now
+        )
+        try candidateCorpusStore.save(state)
+        pendingCandidateCount = merged.count
+        lastSourceSyncAt = now
+      }
+    } catch {
+      sourceSyncResult = .unavailableUsingBundledCorpus(
+        error.localizedDescription
+      )
     }
   }
 
@@ -524,7 +668,16 @@ public final class AppRuntime {
       completedToday: completedItems.count,
       streakDays: streak,
       accuracy: accuracy,
-      masteredCount: mastered
+      masteredCount: mastered,
+      coveredTopicCount: Set<String>(
+        events.compactMap { event in
+          guard event.itemType == .sentence else { return nil }
+          return catalog.practiceSentences.first {
+            $0.id == event.itemId
+          }?.topicID
+        }
+      ).count,
+      totalTopicCount: catalog.topics.count
     )
   }
 }

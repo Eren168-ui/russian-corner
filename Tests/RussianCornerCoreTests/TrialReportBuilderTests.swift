@@ -44,7 +44,7 @@ final class TrialReportBuilderTests: XCTestCase {
             range: fixture.range
         )
 
-        XCTAssertTrue(report.contains("# 俄语角落卡｜7 天试用报告"))
+        XCTAssertTrue(report.contains("# 俄语角落卡｜近 7 天学习报告"))
         XCTAssertTrue(report.contains("## 使用概览"))
         XCTAssertTrue(report.contains("使用天数：1 / 7"))
         XCTAssertTrue(report.contains("完成量：3 / 4（75%）"))

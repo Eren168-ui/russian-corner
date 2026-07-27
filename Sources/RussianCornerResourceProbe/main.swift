@@ -27,17 +27,22 @@ struct RussianCornerResourceProbe {
             }
             guard catalog.lexemes.count == 360,
                 catalog.sentences.count == 72,
-                catalog.trialSlice?.cardCount == 50
+                catalog.trialSlice?.cardCount == 50,
+                catalog.topics.count == 32,
+                catalog.longTermSentences.count == 214
             else {
                 throw ProbeError(
                     message:
                         "unexpected resource counts " +
                         "\(catalog.lexemes.count)/\(catalog.sentences.count)/" +
-                        "\(catalog.trialSlice?.cardCount ?? 0)"
+                        "\(catalog.trialSlice?.cardCount ?? 0)/" +
+                        "\(catalog.topics.count)/" +
+                        "\(catalog.longTermSentences.count)"
                 )
             }
             print(
                 "resource_probe=PASS lexemes=360 sentences=72 trial=50 " +
+                    "topics=32 long_term_sentences=214 " +
                     "directory=\(resourceDirectory.path)"
             )
         } catch {
