@@ -128,7 +128,7 @@ public struct RussianCornerSettingsView: View {
             deleteDictionaryKey()
           }
         }
-        Text("密钥只保存在 macOS 钥匙串；点击句中单词时仅发送该词原形，不上传句子和学习记录。")
+        Text("密钥保存在当前 Mac 的应用偏好设置中，不再调用钥匙串；点击单词时仅发送原形，不上传句子和学习记录。")
           .font(.caption)
           .foregroundStyle(.secondary)
       }
@@ -192,17 +192,17 @@ public struct RussianCornerSettingsView: View {
 
   private func refreshDictionaryKeyStatus() {
     do {
-      let key = try YandexDictionaryKeychainStore().loadKey()
+      let key = try DictionaryPreferenceKeyStore().loadKey()
       dictionaryKeyStatus =
         key?.isEmpty == false ? "已配置" : "未配置（使用本地解析）"
     } catch {
-      dictionaryKeyStatus = "钥匙串不可用"
+      dictionaryKeyStatus = "本地设置不可用"
     }
   }
 
   private func saveDictionaryKey() {
     do {
-      try YandexDictionaryKeychainStore().saveKey(dictionaryKeyDraft)
+      try DictionaryPreferenceKeyStore().saveKey(dictionaryKeyDraft)
       dictionaryKeyDraft = ""
       dictionaryKeyStatus = "已配置"
     } catch {
@@ -212,7 +212,7 @@ public struct RussianCornerSettingsView: View {
 
   private func deleteDictionaryKey() {
     do {
-      try YandexDictionaryKeychainStore().deleteKey()
+      try DictionaryPreferenceKeyStore().deleteKey()
       dictionaryKeyDraft = ""
       dictionaryKeyStatus = "未配置（使用本地解析）"
     } catch {

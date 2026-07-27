@@ -31,4 +31,30 @@ final class UniversalWordResolutionTests: XCTestCase {
             analyses.allSatisfy { $0.source == .unavailable }
         )
     }
+
+    func testUnknownInflectedWordUsesBundledLemmaMap() {
+        let sentence = SentenceCard(
+            id: "inflected-noun",
+            promptZh: "从这里一览无余。",
+            cueRu: "",
+            practiceRu: "Всё как на ладони.",
+            speechText: "Всё как на ладони.",
+            theme: "city",
+            lexemeIDs: [],
+            sourcePath: "source.md",
+            sourceText: "Всё как на ладони.",
+            reviewStatus: .reviewed
+        )
+        let catalog = ContentCatalog(
+            lexemes: [],
+            sentences: [sentence],
+            surfaceLemmas: ["ладони": "ладонь"]
+        )
+
+        let analysis = catalog.wordAnalyses(for: sentence)[3]
+
+        XCTAssertEqual(analysis.surfaceText, "ладони")
+        XCTAssertEqual(analysis.lemma, "ладонь")
+        XCTAssertEqual(analysis.source, .unavailable)
+    }
 }

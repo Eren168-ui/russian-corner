@@ -61,18 +61,53 @@ final class YandexDictionaryServiceTests: XCTestCase {
     }
 
     func testConfiguredKeyLiveLookupWhenExplicitlyEnabled() async throws {
-        guard ProcessInfo.processInfo.environment[
-            "RUN_YANDEX_DICTIONARY_LIVE_TEST"
-        ] == "1" else {
+        let environment = ProcessInfo.processInfo.environment
+        guard environment["RUN_YANDEX_DICTIONARY_LIVE_TEST"] == "1",
+            let key = environment["YANDEX_DICTIONARY_API_KEY"],
+            !key.isEmpty
+        else {
             throw XCTSkip("Live dictionary test is opt-in")
         }
 
-        let result = try await YandexDictionaryService().lookup(
-            lemma: "заплатить"
+        let result = try await YandexDictionaryService(
+            keyStore: RuntimeDictionaryKeyStore(key: key)
+        ).lookup(
+            lemma: "ладонь"
         )
 
         XCTAssertFalse(result.translations.isEmpty)
-        XCTAssertEqual(result.lemma, "заплатить")
+        XCTAssertEqual(result.lemma, "ладонь")
+        XCTAssertEqual(result.translationLanguage, .chinese)
+    }
+
+    func testPreferenceStorePersistsWithoutKeychainAccess() throws {
+        let suiteName = "YandexDictionaryServiceTests.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        let store = DictionaryPreferenceKeyStore(defaults: defaults)
+
+        XCTAssertNil(try store.loadKey())
+
+        try store.saveKey("  test-key  ")
+        XCTAssertEqual(try store.loadKey(), "test-key")
+
+        try store.deleteKey()
+        XCTAssertNil(try store.loadKey())
+    }
+
+    func testFallsBackToEnglishWhenChineseDictionaryHasNoEntry() async throws {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [DictionaryFallbackURLProtocol.self]
+        let service = YandexDictionaryService(
+            session: URLSession(configuration: configuration),
+            keyStore: FixedDictionaryKeyStore()
+        )
+
+        let result = try await service.lookup(lemma: "отсюда")
+
+        XCTAssertEqual(result.lemma, "отсюда")
+        XCTAssertEqual(result.translations, ["hence", "from here"])
+        XCTAssertEqual(result.translationLanguage, .english)
     }
 }
 
@@ -80,4 +115,61 @@ private struct EmptyDictionaryKeyStore: DictionaryAPIKeyStoring {
     func loadKey() throws -> String? { nil }
     func saveKey(_ key: String) throws {}
     func deleteKey() throws {}
+}
+
+private struct FixedDictionaryKeyStore: DictionaryAPIKeyStoring {
+    func loadKey() throws -> String? { "test-key" }
+    func saveKey(_ key: String) throws {}
+    func deleteKey() throws {}
+}
+
+private struct RuntimeDictionaryKeyStore: DictionaryAPIKeyStoring {
+    let key: String
+
+    func loadKey() throws -> String? { key }
+    func saveKey(_ key: String) throws {}
+    func deleteKey() throws {}
+}
+
+private final class DictionaryFallbackURLProtocol: URLProtocol {
+    override class func canInit(with request: URLRequest) -> Bool { true }
+    override class func canonicalRequest(
+        for request: URLRequest
+    ) -> URLRequest {
+        request
+    }
+
+    override func startLoading() {
+        let components = URLComponents(
+            url: request.url!,
+            resolvingAgainstBaseURL: false
+        )
+        let language = components?.queryItems?
+            .first(where: { $0.name == "lang" })?.value
+        let body: String
+        if language == "ru-zh" {
+            body = #"{"def":[]}"#
+        } else {
+            body = """
+                {"def":[{"text":"отсюда","pos":"adverb","tr":[
+                  {"text":"hence"},{"text":"from here"}
+                ]}]}
+                """
+        }
+        let response = HTTPURLResponse(
+            url: request.url!,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: ["Content-Type": "application/json"]
+        )!
+        client?.urlProtocol(
+            self,
+            didReceive: response,
+            cacheStoragePolicy: .notAllowed
+        )
+        client?.urlProtocol(self, didLoad: Data(body.utf8))
+        client?.urlProtocolDidFinishLoading(self)
+    }
+
+    override func stopLoading() {}
 }

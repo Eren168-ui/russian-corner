@@ -96,7 +96,7 @@ open "dist/Russian Corner.app"
 设置窗口可调整：
 
 - 练习卡所在显示器、四角吸附位置、不透明度和字号；
-- Yandex Dictionary 在线补充密钥（可选，安全存入 macOS 钥匙串）；
+- Yandex Dictionary 在线补充密钥（可选，存入当前 Mac 的应用偏好设置，不调用钥匙串）；
 - 每日 5–10 张卡及安静/开口方式；
 - 上午、下午两次本地提醒，默认时间为 11:30 和 17:30。
 
@@ -120,7 +120,7 @@ open "dist/Russian Corner.app"
 - 卡片显示、练习方式等偏好：`~/Library/Preferences/com.openclaw.russiancorner.plist`
 - 学习进度、评分、提醒设置和诊断历史：`~/Library/Application Support/com.openclaw.russiancorner/RussianCorner.store` 及同目录的 `RussianCorner.store-*` 辅助文件（由 SwiftData 管理）
 - 试用会话、交互、每日反馈和口述活动数字摘要：同目录的 `RussianCornerTrial.store` 及 `RussianCornerTrial.store-*` 辅助文件
-- Yandex Dictionary API 密钥（若配置）：macOS 钥匙串项目 `com.openclaw.russiancorner.yandex-dictionary`
+- Yandex Dictionary API 密钥（若配置）：当前用户的应用偏好设置键 `RussianCorner.YandexDictionaryAPIKey`
 
 两个数据库彼此独立。试用统计库损坏或不可写时，评分、复习进度和当天队列仍继续使用核心数据库；应用只显示非阻塞提示。口述活动摘要只含时长、估算开口秒数、估算长停顿次数和自评分，不含音频数据或文件路径。
 

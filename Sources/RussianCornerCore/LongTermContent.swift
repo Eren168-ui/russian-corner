@@ -37,18 +37,21 @@ public struct LongTermContentManifest:
     public let sourceCorpusSHA256: String
     public let contentGateClosed: Bool
     public let sentences: [SentenceCard]
+    public let surfaceLemmas: [String: String]?
 
     public init(
         schemaVersion: Int,
         sourceRoot: String,
         sourceCorpusSHA256: String,
         contentGateClosed: Bool,
-        sentences: [SentenceCard]
+        sentences: [SentenceCard],
+        surfaceLemmas: [String: String]? = nil
     ) {
         self.schemaVersion = schemaVersion
         self.sourceRoot = sourceRoot
         self.sourceCorpusSHA256 = sourceCorpusSHA256
         self.contentGateClosed = contentGateClosed
         self.sentences = sentences
+        self.surfaceLemmas = surfaceLemmas
     }
 }

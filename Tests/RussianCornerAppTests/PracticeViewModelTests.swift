@@ -149,6 +149,43 @@ final class PracticeViewModelTests: XCTestCase {
     )
   }
 
+  func testUnknownInflectedWordLooksUpResolvedLemma() async throws {
+    let sentence = SentenceCard(
+      id: "inflected-noun",
+      promptZh: "从这里一览无余。",
+      cueRu: "",
+      practiceRu: "Всё как на ладони.",
+      speechText: "Всё как на ладони.",
+      theme: "city",
+      lexemeIDs: [],
+      sourcePath: "source.md",
+      sourceText: "Всё как на ладони.",
+      reviewStatus: .reviewed
+    )
+    let dictionary = RecordingOnlineDictionary()
+    let model = try PracticeViewModel(
+      catalog: ContentCatalog(
+        lexemes: [],
+        sentences: [sentence],
+        surfaceLemmas: ["ладони": "ладонь"]
+      ),
+      repository: try makeRepository(),
+      targetCount: 5,
+      now: { self.start },
+      calendar: utcCalendar,
+      onlineDictionary: dictionary
+    )
+
+    model.reveal()
+    model.toggleWordAnalysis(tokenIndex: 3)
+
+    for _ in 0..<20 where await dictionary.recordedQueries().isEmpty {
+      await Task.yield()
+    }
+    let queries = await dictionary.recordedQueries()
+    XCTAssertEqual(queries, ["ладонь"])
+  }
+
   func testManualTopicControlsFreshSentences() throws {
     let resourceDirectory = URL(fileURLWithPath: #filePath)
       .deletingLastPathComponent()
@@ -863,6 +900,25 @@ final class PracticeViewModelTests: XCTestCase {
         )
       )
     }
+  }
+}
+
+private actor RecordingOnlineDictionary: OnlineDictionaryLookingUp {
+  private var queries: [String] = []
+
+  func recordedQueries() -> [String] {
+    queries
+  }
+
+  func lookup(lemma: String) async throws -> OnlineDictionaryResult {
+    queries.append(lemma)
+    return OnlineDictionaryResult(
+      lemma: lemma,
+      partOfSpeech: "noun",
+      translations: ["手掌"],
+      synonyms: [],
+      examples: []
+    )
   }
 }
 

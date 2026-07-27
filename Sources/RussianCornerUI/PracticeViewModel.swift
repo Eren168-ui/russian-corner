@@ -640,9 +640,7 @@ public final class PracticeViewModel {
       return
     }
     selectedWordAnalysis = analysis
-    let lookupText =
-      analysis.source == .unavailable
-      ? analysis.surfaceText : analysis.lemma
+    let lookupText = analysis.lemma
     startOnlineLookup(
       for: lookupText,
       selectionID: analysis.id

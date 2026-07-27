@@ -34,6 +34,7 @@ public struct ContentCatalog: Sendable {
     public let topics: [TopicDefinition]
     public let longTermManifest: LongTermContentManifest
     public let longTermSentences: [SentenceCard]
+    public let surfaceLemmas: [String: String]
 
     public init() throws {
         try self.init(
@@ -86,7 +87,8 @@ public struct ContentCatalog: Sendable {
             sentences: sentences,
             trialSlice: trialSlice,
             topics: topics,
-            longTermManifest: longTermManifest
+            longTermManifest: longTermManifest,
+            surfaceLemmas: longTermManifest.surfaceLemmas ?? [:]
         )
         let issues = catalog.validate()
         guard issues.isEmpty else {
@@ -127,7 +129,8 @@ public struct ContentCatalog: Sendable {
         sentences: [SentenceCard],
         trialSlice: TrialContentSlice? = nil,
         topics: [TopicDefinition] = [],
-        longTermManifest: LongTermContentManifest? = nil
+        longTermManifest: LongTermContentManifest? = nil,
+        surfaceLemmas: [String: String] = [:]
     ) {
         let allowedStatuses: Set<ReviewStatus> = [.reviewed, .verified]
         self.lexemes = lexemes.filter {
@@ -151,6 +154,11 @@ public struct ContentCatalog: Sendable {
         ).filter {
             allowedStatuses.contains($0.reviewStatus)
         }
+        self.surfaceLemmas = Dictionary(
+            uniqueKeysWithValues: surfaceLemmas.map {
+                (Self.normalizedForm($0.key), Self.normalizedForm($0.value))
+            }
+        )
     }
 
     public var practiceLexemes: [Lexeme] {
@@ -241,7 +249,9 @@ public struct ContentCatalog: Sendable {
                     tokenIndex: index,
                     surfaceText: surface,
                     stressedForm: surface,
-                    lemma: Self.normalizedForm(surface),
+                    lemma: surfaceLemmas[
+                        Self.normalizedForm(surface)
+                    ] ?? Self.normalizedForm(surface),
                     glossZh: "本地暂无审核释义",
                     partOfSpeech: "待查询",
                     morphology: "当前词形：\(surface)",

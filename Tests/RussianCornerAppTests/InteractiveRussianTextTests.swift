@@ -1,5 +1,6 @@
 import Foundation
 import RussianCornerCore
+import RussianCornerPlatform
 import XCTest
 
 @testable import RussianCornerUI
@@ -88,6 +89,41 @@ final class InteractiveRussianTextTests: XCTestCase {
                 sentence.id
             )
         }
+    }
+
+    func testOnlineResultReplacesUnavailablePlaceholderSummary() {
+        let word = ResolvedWordAnalysis(
+            cardID: "city",
+            tokenIndex: 0,
+            surfaceText: "ладони",
+            stressedForm: "ладо́ни",
+            lemma: "ладонь",
+            glossZh: "本地暂无审核释义",
+            partOfSpeech: "待查询",
+            morphology: "当前词形：ладони",
+            usageNote: "可查询在线词典",
+            reviewStatus: .draft,
+            source: .unavailable
+        )
+        let result = OnlineDictionaryResult(
+            lemma: "ладонь",
+            partOfSpeech: "noun",
+            translations: ["手", "手掌", "手心"],
+            synonyms: [],
+            examples: []
+        )
+
+        let summary = WordDetailSummaryBuilder.make(
+            word: word,
+            lookupState: .result(result)
+        )
+
+        XCTAssertEqual(summary.qualityLabel, "在线词典结果 · 未人工审核")
+        XCTAssertEqual(summary.glossZh, "手；手掌；手心")
+        XCTAssertEqual(summary.lemma, "ладонь")
+        XCTAssertEqual(summary.partOfSpeech, "noun")
+        XCTAssertFalse(summary.glossZh.contains("暂无"))
+        XCTAssertFalse(summary.partOfSpeech.contains("待查询"))
     }
 
     private func analysis(

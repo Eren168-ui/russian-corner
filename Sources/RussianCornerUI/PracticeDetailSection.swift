@@ -1,5 +1,52 @@
 import RussianCornerCore
+import RussianCornerPlatform
 import SwiftUI
+
+public struct WordDetailSummary: Equatable, Sendable {
+    public let qualityLabel: String
+    public let glossZh: String
+    public let lemma: String
+    public let partOfSpeech: String
+}
+
+public enum WordDetailSummaryBuilder {
+    public static func make(
+        word: ResolvedWordAnalysis,
+        lookupState: OnlineWordLookupState
+    ) -> WordDetailSummary {
+        if word.source == .unavailable,
+            case .result(let result) = lookupState
+        {
+            return WordDetailSummary(
+                qualityLabel: "在线词典结果 · 未人工审核",
+                glossZh: result.translations.joined(separator: "；"),
+                lemma: result.lemma,
+                partOfSpeech: result.partOfSpeech ?? word.partOfSpeech
+            )
+        }
+        return WordDetailSummary(
+            qualityLabel: qualityLabel(for: word.source),
+            glossZh: word.glossZh,
+            lemma: word.lemma,
+            partOfSpeech: word.partOfSpeech
+        )
+    }
+
+    public static func qualityLabel(
+        for source: WordAnalysisSource
+    ) -> String {
+        switch source {
+        case .reviewedContext:
+            return "本句人工审核"
+        case .reviewedLexeme:
+            return "本地审核词条 · 本句词形未专项审核"
+        case .onlineUnreviewed:
+            return "在线词典结果 · 未人工审核"
+        case .unavailable:
+            return "本地暂无审核解析"
+        }
+    }
+}
 
 public struct PracticeDetailSection: View {
     @Bindable private var appModel: AppModel
@@ -37,7 +84,11 @@ public struct PracticeDetailSection: View {
 
     @ViewBuilder
     private func wordContent(_ word: ResolvedWordAnalysis) -> some View {
-        Text(wordQualityLabel(word.source))
+        let summary = WordDetailSummaryBuilder.make(
+            word: word,
+            lookupState: practice.onlineWordLookupState
+        )
+        Text(summary.qualityLabel)
             .font(.system(size: 9 * appModel.fontScale, weight: .medium))
             .foregroundStyle(palette.muted)
         HStack(alignment: .firstTextBaseline, spacing: 8) {
@@ -50,11 +101,11 @@ public struct PracticeDetailSection: View {
                     )
                 )
                 .foregroundStyle(palette.primary)
-            Text(word.glossZh)
+            Text(summary.glossZh)
                 .font(.system(size: 12 * appModel.fontScale))
                 .foregroundStyle(palette.secondary)
             Spacer()
-            if let url = OnlineDictionary.wiktionaryURL(for: word.lemma) {
+            if let url = OnlineDictionary.wiktionaryURL(for: summary.lemma) {
                 Link(destination: url) {
                     Label("词典", systemImage: "arrow.up.right.square")
                         .font(.system(size: 9, weight: .medium))
@@ -64,7 +115,7 @@ public struct PracticeDetailSection: View {
         }
         detail(
             "词形",
-            "\(localizedPartOfSpeech(word.partOfSpeech)) · \(word.morphology) · 原形 \(word.lemma)"
+            "\(localizedPartOfSpeech(summary.partOfSpeech)) · \(word.morphology) · 原形 \(summary.lemma)"
         )
         if let pair = word.aspectPair, !pair.isEmpty {
             detail("体对", pair)
@@ -77,21 +128,6 @@ public struct PracticeDetailSection: View {
         }
         detail("在本句中", word.usageNote)
         onlineDictionaryContent
-    }
-
-    private func wordQualityLabel(
-        _ source: WordAnalysisSource
-    ) -> String {
-        switch source {
-        case .reviewedContext:
-            return "本句人工审核"
-        case .reviewedLexeme:
-            return "本地审核词条 · 本句词形未专项审核"
-        case .onlineUnreviewed:
-            return "在线词典结果 · 未人工审核"
-        case .unavailable:
-            return "本地暂无审核解析"
-        }
     }
 
     @ViewBuilder
@@ -108,9 +144,13 @@ public struct PracticeDetailSection: View {
                     .foregroundStyle(palette.muted)
             }
         case .result(let result):
-            if !result.translations.isEmpty {
+            if practice.selectedWordAnalysis?.source != .unavailable,
+                !result.translations.isEmpty
+            {
                 detail(
-                    "Yandex 在线补充",
+                    result.translationLanguage == .chinese
+                        ? "Yandex 中文释义"
+                        : "Yandex 英文释义（中文暂缺）",
                     result.translations.joined(separator: "；")
                 )
             }

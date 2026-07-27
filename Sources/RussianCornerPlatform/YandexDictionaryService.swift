@@ -1,5 +1,4 @@
 import Foundation
-import Security
 
 public struct DictionaryExample: Equatable, Sendable {
     public let russian: String
@@ -11,25 +10,37 @@ public struct DictionaryExample: Equatable, Sendable {
     }
 }
 
+public enum DictionaryTranslationLanguage:
+    String,
+    Equatable,
+    Sendable
+{
+    case chinese
+    case english
+}
+
 public struct OnlineDictionaryResult: Equatable, Sendable {
     public let lemma: String
     public let partOfSpeech: String?
     public let translations: [String]
     public let synonyms: [String]
     public let examples: [DictionaryExample]
+    public let translationLanguage: DictionaryTranslationLanguage
 
     public init(
         lemma: String,
         partOfSpeech: String?,
         translations: [String],
         synonyms: [String],
-        examples: [DictionaryExample]
+        examples: [DictionaryExample],
+        translationLanguage: DictionaryTranslationLanguage = .chinese
     ) {
         self.lemma = lemma
         self.partOfSpeech = partOfSpeech
         self.translations = translations
         self.synonyms = synonyms
         self.examples = examples
+        self.translationLanguage = translationLanguage
     }
 }
 
@@ -45,7 +56,6 @@ public enum YandexDictionaryError:
     case networkUnavailable
     case httpStatus(Int)
     case noResults
-    case keychain(Int32)
 
     public var errorDescription: String? {
         switch self {
@@ -61,8 +71,6 @@ public enum YandexDictionaryError:
             "在线词典暂时不可用（HTTP \(status)）"
         case .noResults:
             "在线词典没有找到这个词"
-        case .keychain:
-            "无法访问在线词典密钥"
         }
     }
 }
@@ -73,83 +81,37 @@ public protocol DictionaryAPIKeyStoring: Sendable {
     func deleteKey() throws
 }
 
-public struct YandexDictionaryKeychainStore:
+public struct DictionaryPreferenceKeyStore:
     DictionaryAPIKeyStoring,
     @unchecked Sendable
 {
-    public static let service =
-        "com.openclaw.russiancorner.yandex-dictionary"
-    public static let account = "russian-corner"
+    public static let defaultsKey =
+        "RussianCorner.YandexDictionaryAPIKey"
 
-    public init() {}
+    private let defaults: UserDefaults
+
+    public init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+    }
 
     public func loadKey() throws -> String? {
-        var query = baseQuery
-        query[kSecReturnData as String] = true
-        query[kSecMatchLimit as String] = kSecMatchLimitOne
-        var item: CFTypeRef?
-        let status = SecItemCopyMatching(
-            query as CFDictionary,
-            &item
-        )
-        if status == errSecItemNotFound {
-            return nil
-        }
-        guard status == errSecSuccess else {
-            throw YandexDictionaryError.keychain(status)
-        }
-        guard
-            let data = item as? Data,
-            let value = String(data: data, encoding: .utf8)
-        else {
-            throw YandexDictionaryError.keychain(errSecDecode)
-        }
-        return value
+        defaults.string(forKey: Self.defaultsKey)?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     public func saveKey(_ key: String) throws {
         let normalized = key.trimmingCharacters(
             in: .whitespacesAndNewlines
         )
-        guard !normalized.isEmpty else {
+        if normalized.isEmpty {
             try deleteKey()
-            return
-        }
-        let value = Data(normalized.utf8)
-        let updateStatus = SecItemUpdate(
-            baseQuery as CFDictionary,
-            [kSecValueData as String: value] as CFDictionary
-        )
-        if updateStatus == errSecSuccess {
-            return
-        }
-        if updateStatus != errSecItemNotFound {
-            throw YandexDictionaryError.keychain(updateStatus)
-        }
-        var insert = baseQuery
-        insert[kSecValueData as String] = value
-        insert[kSecAttrLabel as String] =
-            "Russian Corner Yandex Dictionary API"
-        let insertStatus = SecItemAdd(insert as CFDictionary, nil)
-        guard insertStatus == errSecSuccess else {
-            throw YandexDictionaryError.keychain(insertStatus)
+        } else {
+            defaults.set(normalized, forKey: Self.defaultsKey)
         }
     }
 
     public func deleteKey() throws {
-        let status = SecItemDelete(baseQuery as CFDictionary)
-        guard status == errSecSuccess || status == errSecItemNotFound
-        else {
-            throw YandexDictionaryError.keychain(status)
-        }
-    }
-
-    private var baseQuery: [String: Any] {
-        [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: Self.service,
-            kSecAttrAccount as String: Self.account,
-        ]
+        defaults.removeObject(forKey: Self.defaultsKey)
     }
 }
 
@@ -165,7 +127,7 @@ public actor YandexDictionaryService: OnlineDictionaryLookingUp {
     public init(
         session: URLSession = .shared,
         keyStore: any DictionaryAPIKeyStoring =
-            YandexDictionaryKeychainStore()
+            DictionaryPreferenceKeyStore()
     ) {
         self.session = session
         self.keyStore = keyStore
@@ -190,52 +152,35 @@ public actor YandexDictionaryService: OnlineDictionaryLookingUp {
         else {
             throw YandexDictionaryError.missingAPIKey
         }
-        guard var components = URLComponents(
-            string:
-                "https://dictionary.yandex.net/api/v1/dicservice.json/lookup"
-        ) else {
-            throw YandexDictionaryError.invalidRequest
-        }
-        components.queryItems = [
-            URLQueryItem(name: "key", value: key),
-            URLQueryItem(name: "lang", value: "ru-zh"),
-            URLQueryItem(name: "ui", value: "zh"),
-            URLQueryItem(name: "text", value: normalized),
+        let languages: [
+            (DictionaryTranslationLanguage, String)
+        ] = [
+            (.chinese, "ru-zh"),
+            (.english, "ru-en"),
         ]
-        guard let url = components.url else {
-            throw YandexDictionaryError.invalidRequest
-        }
-        var request = URLRequest(url: url)
-        request.timeoutInterval = 6
-        let data: Data
-        let response: URLResponse
-        do {
-            (data, response) = try await session.data(for: request)
-        } catch {
-            throw YandexDictionaryError.networkUnavailable
-        }
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw YandexDictionaryError.invalidResponse
-        }
-        guard (200..<300).contains(httpResponse.statusCode) else {
-            throw YandexDictionaryError.httpStatus(
-                httpResponse.statusCode
+        for (translationLanguage, languagePair) in languages {
+            let data = try await requestData(
+                text: normalized,
+                key: key,
+                languagePair: languagePair
             )
+            let result = try Self.decodeResponse(
+                data,
+                fallbackLemma: normalized,
+                translationLanguage: translationLanguage
+            )
+            if !result.translations.isEmpty {
+                cache[normalized] = result
+                return result
+            }
         }
-        let result = try Self.decodeResponse(
-            data,
-            fallbackLemma: normalized
-        )
-        guard !result.translations.isEmpty else {
-            throw YandexDictionaryError.noResults
-        }
-        cache[normalized] = result
-        return result
+        throw YandexDictionaryError.noResults
     }
 
     public nonisolated static func decodeResponse(
         _ data: Data,
-        fallbackLemma: String
+        fallbackLemma: String,
+        translationLanguage: DictionaryTranslationLanguage = .chinese
     ) throws -> OnlineDictionaryResult {
         let response: Response
         do {
@@ -271,8 +216,49 @@ public actor YandexDictionaryService: OnlineDictionaryLookingUp {
             partOfSpeech: first?.partOfSpeech,
             translations: translations,
             synonyms: synonyms,
-            examples: examples
+            examples: examples,
+            translationLanguage: translationLanguage
         )
+    }
+
+    private func requestData(
+        text: String,
+        key: String,
+        languagePair: String
+    ) async throws -> Data {
+        guard var components = URLComponents(
+            string:
+                "https://dictionary.yandex.net/api/v1/dicservice.json/lookup"
+        ) else {
+            throw YandexDictionaryError.invalidRequest
+        }
+        components.queryItems = [
+            URLQueryItem(name: "key", value: key),
+            URLQueryItem(name: "lang", value: languagePair),
+            URLQueryItem(name: "ui", value: "zh"),
+            URLQueryItem(name: "text", value: text),
+        ]
+        guard let url = components.url else {
+            throw YandexDictionaryError.invalidRequest
+        }
+        var request = URLRequest(url: url)
+        request.timeoutInterval = 6
+        let data: Data
+        let response: URLResponse
+        do {
+            (data, response) = try await session.data(for: request)
+        } catch {
+            throw YandexDictionaryError.networkUnavailable
+        }
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw YandexDictionaryError.invalidResponse
+        }
+        guard (200..<300).contains(httpResponse.statusCode) else {
+            throw YandexDictionaryError.httpStatus(
+                httpResponse.statusCode
+            )
+        }
+        return data
     }
 
     private nonisolated static func unique(
