@@ -33,3 +33,16 @@
 - rejected: 6
 - rejectedIDs: [longterm-t04-14b373ff336c, longterm-t06-78b8c6d9974a, longterm-t07-8c3992359bad, longterm-t24-5878045dcfbf, longterm-t31-373e0c924ba2, longterm-t32-89d9a0d9955a]
 - reasons: possiblyDated / mixedPrompt / possiblyDated / unnatural / punctuationSuspect / governmentSuspect
+
+## Stress annotation audit
+
+- engine: Silero Stress 1.4 (local inference, MIT)
+- annotatedSentences: 214
+- automaticGate: every multisyllabic Cyrillic word has a combining acute mark or `ё`
+- canonicalTextGate: removing stress marks and normalizing `ё/е` must reproduce `practiceRu`
+- manualReadback: 54 evenly distributed sentences
+- contextualCorrections:
+  - `Мне уже́ лу́чше.`
+  - `У нас экза́мены уже́ на носу́.`
+  - `Ско́лько сто́ит э́та су́мка?`
+- sourceNotesChanged: 0

@@ -35,6 +35,24 @@ const cleanSpeech = (text) =>
   && !/[\u3400-\u4DBF\u4E00-\u9FFF\[\]（）()/*_#`]/u.test(text);
 const nonempty = (value) =>
   typeof value === "string" && value.trim() !== "";
+const acute = "\u0301";
+const russianWord =
+  /[\p{Script=Cyrillic}\u0301]+(?:-[\p{Script=Cyrillic}\u0301]+)*/gu;
+const vowel = /[АЕЁИОУЫЭЮЯаеёиоуыэюя]/gu;
+const canonical = (value) => value
+  .normalize("NFD")
+  .replaceAll(acute, "")
+  .replaceAll("ё", "е")
+  .replaceAll("Ё", "Е");
+const unstressedMultisyllabic = (value) =>
+  [...value.matchAll(russianWord)]
+    .map((match) => match[0])
+    .filter((word) => {
+      const vowelCount = [...word.matchAll(vowel)].length;
+      return vowelCount > 1
+        && !word.includes(acute)
+        && !/[Ёё]/u.test(word);
+    });
 const topicIDs = new Set(topics.map((topic) => topic.id));
 const topicPaths = new Set(topics.map((topic) => topic.sourcePath));
 const sentenceIDs = new Set();
@@ -75,6 +93,19 @@ for (const sentence of manifest.sentences) {
   }
   if (!nonempty(sentence.stressedForm)) {
     failures.push(`missing_stressed_form:${sentence.id}`);
+  } else {
+    if (canonical(sentence.stressedForm)
+      !== canonical(sentence.practiceRu)) {
+      failures.push(`stress_changed_text:${sentence.id}`);
+    }
+    const missingStress = unstressedMultisyllabic(
+      sentence.stressedForm,
+    );
+    if (missingStress.length > 0) {
+      failures.push(
+        `unstressed_multisyllabic:${sentence.id}:${missingStress.join(",")}`,
+      );
+    }
   }
   if (!nonempty(sentence.dialogueAct)
     || !nonempty(sentence.speakerRole)
