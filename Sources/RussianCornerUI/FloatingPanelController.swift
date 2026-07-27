@@ -90,7 +90,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       queue: .main
     ) { [weak self] _ in
       MainActor.assumeIsolated {
-        self?.snapToCorner()
+        self?.refreshLayout()
       }
     }
     observeLayoutPreferences()
@@ -111,7 +111,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     moveDebounceTask = Task { [weak self] in
       try? await Task.sleep(for: .milliseconds(180))
       guard !Task.isCancelled else { return }
-      self?.recordDraggedScreenAndSnap()
+      self?.recordDraggedPosition()
     }
   }
 
@@ -160,7 +160,12 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
         runtime?.dailyReflection?.isCompletionOfferPresented == true
     )
     panel.setContentSize(presentation.size)
-    snapToCorner()
+    switch appModel.placementMode {
+    case .free:
+      placeAtFreeOrigin()
+    case .snap:
+      snapToCorner()
+    }
     if appModel.isCardVisible {
       panel.orderFrontRegardless()
     }
@@ -201,6 +206,23 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     }
   }
 
+  nonisolated public static func constrainedOrigin(
+    _ origin: CGPoint,
+    panelSize: CGSize,
+    visibleFrame: CGRect
+  ) -> CGPoint {
+    CGPoint(
+      x: min(
+        max(origin.x, visibleFrame.minX),
+        max(visibleFrame.minX, visibleFrame.maxX - panelSize.width)
+      ),
+      y: min(
+        max(origin.y, visibleFrame.minY),
+        max(visibleFrame.minY, visibleFrame.maxY - panelSize.height)
+      )
+    )
+  }
+
   nonisolated public static func nearestCorner(
     panelFrame: CGRect,
     visibleFrame: CGRect
@@ -238,7 +260,28 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     })?.screen
   }
 
-  private func recordDraggedScreenAndSnap() {
+  private func placeAtFreeOrigin() {
+    guard let screen = targetScreen() else { return }
+    let requestedOrigin = appModel.freeOrigin ?? Self.origin(
+      for: appModel.corner,
+      panelSize: panel.frame.size,
+      visibleFrame: screen.visibleFrame
+    )
+    let origin = Self.constrainedOrigin(
+      requestedOrigin,
+      panelSize: panel.frame.size,
+      visibleFrame: screen.visibleFrame
+    )
+    if appModel.freeOrigin != origin {
+      appModel.freeOrigin = origin
+    }
+    suppressMoveRecordingUntil = Date().addingTimeInterval(0.6)
+    isSnapping = true
+    panel.setFrameOrigin(origin)
+    isSnapping = false
+  }
+
+  private func recordDraggedPosition() {
     guard
       let draggedScreen = panel.screen,
       let descriptor = ScreenPlacement.descriptor(
@@ -246,15 +289,21 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
         isMain: draggedScreen == NSScreen.main
       )
     else {
-      snapToCorner()
+      placeAtFreeOrigin()
       return
     }
-    appModel.preferredScreenIdentifier = descriptor.identifier
-    appModel.corner = Self.nearestCorner(
-      panelFrame: panel.frame,
+    let origin = Self.constrainedOrigin(
+      panel.frame.origin,
+      panelSize: panel.frame.size,
       visibleFrame: draggedScreen.visibleFrame
     )
-    snapToCorner()
+    appModel.preferredScreenIdentifier = descriptor.identifier
+    appModel.freeOrigin = origin
+    appModel.placementMode = .free
+    if panel.frame.origin != origin {
+      suppressMoveRecordingUntil = Date().addingTimeInterval(0.6)
+      panel.setFrameOrigin(origin)
+    }
   }
 
   private func systemScreenPairs() -> [(screen: NSScreen, descriptor: ScreenDescriptor)] {
@@ -274,6 +323,8 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   private func observeLayoutPreferences() {
     withObservationTracking {
       _ = appModel.corner
+      _ = appModel.placementMode
+      _ = appModel.freeOrigin
       _ = appModel.isCollapsed
       _ = appModel.preferredScreenIdentifier
       _ = runtime?.practice?.isDetailExpanded

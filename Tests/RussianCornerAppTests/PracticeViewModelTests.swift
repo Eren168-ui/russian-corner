@@ -1296,6 +1296,34 @@ final class AppModelTests: XCTestCase {
     XCTAssertEqual(model.preferredScreenIdentifier, "69733248")
   }
 
+  func testFreePlacementAndDraggedOriginPersistAndRestore() {
+    let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+
+    var model = AppModel(defaults: defaults)
+    model.placementMode = .free
+    model.freeOrigin = CGPoint(x: 418, y: 236)
+
+    model = AppModel(defaults: defaults)
+
+    XCTAssertEqual(model.placementMode, .free)
+    XCTAssertEqual(model.freeOrigin, CGPoint(x: 418, y: 236))
+  }
+
+  func testChoosingCornerExplicitlyEnablesSnapPlacement() {
+    let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+    let model = AppModel(defaults: defaults)
+    model.placementMode = .free
+
+    model.snap(to: .bottomLeft)
+
+    XCTAssertEqual(model.placementMode, .snap)
+    XCTAssertEqual(model.corner, .bottomLeft)
+  }
+
   func testPreferredTopicPersistsOnlyForSelectedCalendarDay() {
     let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
     let defaults = UserDefaults(suiteName: suiteName)!

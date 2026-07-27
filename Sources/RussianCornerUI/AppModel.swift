@@ -28,6 +28,23 @@ public enum FloatingCorner: String, CaseIterable, Codable, Sendable {
   }
 }
 
+public enum FloatingPlacementMode:
+  String,
+  CaseIterable,
+  Codable,
+  Sendable
+{
+  case free
+  case snap
+
+  public var title: String {
+    switch self {
+    case .free: "自由拖放"
+    case .snap: "四角吸附"
+    }
+  }
+}
+
 @MainActor
 @Observable
 public final class AppModel {
@@ -40,6 +57,9 @@ public final class AppModel {
     static let collapsed = "floating.collapsed"
     static let preferredScreenIdentifier =
       "floating.preferredScreenIdentifier"
+    static let placementMode = "floating.placementMode"
+    static let freeOriginX = "floating.freeOriginX"
+    static let freeOriginY = "floating.freeOriginY"
     static let morningHour = "reminder.morning.hour"
     static let morningMinute = "reminder.morning.minute"
     static let eveningHour = "reminder.evening.hour"
@@ -58,6 +78,23 @@ public final class AppModel {
   }
   public var corner: FloatingCorner {
     didSet { persist(corner.rawValue, forKey: Key.corner) }
+  }
+  public var placementMode: FloatingPlacementMode {
+    didSet {
+      persist(placementMode.rawValue, forKey: Key.placementMode)
+    }
+  }
+  public var freeOrigin: CGPoint? {
+    didSet {
+      guard !isLoading else { return }
+      if let freeOrigin {
+        defaults.set(freeOrigin.x, forKey: Key.freeOriginX)
+        defaults.set(freeOrigin.y, forKey: Key.freeOriginY)
+      } else {
+        defaults.removeObject(forKey: Key.freeOriginX)
+        defaults.removeObject(forKey: Key.freeOriginY)
+      }
+    }
   }
   public var preferredScreenIdentifier: String? {
     didSet {
@@ -135,6 +172,20 @@ public final class AppModel {
       FloatingCorner(
         rawValue: defaults.string(forKey: Key.corner) ?? ""
       ) ?? .topRight
+    placementMode =
+      FloatingPlacementMode(
+        rawValue: defaults.string(forKey: Key.placementMode) ?? ""
+      ) ?? .free
+    if defaults.object(forKey: Key.freeOriginX) != nil,
+      defaults.object(forKey: Key.freeOriginY) != nil
+    {
+      freeOrigin = CGPoint(
+        x: defaults.double(forKey: Key.freeOriginX),
+        y: defaults.double(forKey: Key.freeOriginY)
+      )
+    } else {
+      freeOrigin = nil
+    }
     preferredScreenIdentifier = defaults.string(
       forKey: Key.preferredScreenIdentifier
     )
@@ -176,6 +227,11 @@ public final class AppModel {
 
   public func toggleCard() {
     isCardVisible.toggle()
+  }
+
+  public func snap(to corner: FloatingCorner) {
+    self.corner = corner
+    placementMode = .snap
   }
 
   public func applyDiagnosticDefaultMode(_ proposed: PracticeMode) {

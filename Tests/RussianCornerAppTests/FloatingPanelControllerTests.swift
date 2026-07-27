@@ -49,4 +49,34 @@ final class FloatingPanelControllerTests: XCTestCase {
             .bottomRight
         )
     }
+
+    func testFreeOriginStaysWhereDraggedWhenFullyVisible() {
+        let origin = FloatingPanelController.constrainedOrigin(
+            CGPoint(x: 410, y: 260),
+            panelSize: CGSize(width: 360, height: 240),
+            visibleFrame: CGRect(
+                x: 0,
+                y: 0,
+                width: 1_440,
+                height: 900
+            )
+        )
+
+        XCTAssertEqual(origin, CGPoint(x: 410, y: 260))
+    }
+
+    func testFreeOriginIsOnlyClampedWhenOutsideVisibleScreen() {
+        let origin = FloatingPanelController.constrainedOrigin(
+            CGPoint(x: 1_360, y: -80),
+            panelSize: CGSize(width: 360, height: 240),
+            visibleFrame: CGRect(
+                x: 0,
+                y: 0,
+                width: 1_440,
+                height: 900
+            )
+        )
+
+        XCTAssertEqual(origin, CGPoint(x: 1_080, y: 0))
+    }
 }

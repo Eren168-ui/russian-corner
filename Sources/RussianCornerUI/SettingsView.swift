@@ -41,7 +41,18 @@ public struct RussianCornerSettingsView: View {
             }
           }
         }
-        Picker("吸附位置", selection: $appModel.corner) {
+        Picker("定位方式", selection: $appModel.placementMode) {
+          ForEach(FloatingPlacementMode.allCases, id: \.self) {
+            Text($0.title).tag($0)
+          }
+        }
+        Picker(
+          "吸附位置",
+          selection: Binding(
+            get: { appModel.corner },
+            set: { appModel.snap(to: $0) }
+          )
+        ) {
           ForEach(FloatingCorner.allCases, id: \.self) {
             Text($0.title).tag($0)
           }

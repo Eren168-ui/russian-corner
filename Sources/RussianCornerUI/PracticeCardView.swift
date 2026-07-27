@@ -171,10 +171,12 @@ public struct PracticeCardView: View {
             Menu {
                 ForEach(FloatingCorner.allCases, id: \.self) { corner in
                     Button {
-                        appModel.corner = corner
+                        appModel.snap(to: corner)
                         onLayoutChanged()
                     } label: {
-                        if appModel.corner == corner {
+                        if appModel.placementMode == .snap
+                            && appModel.corner == corner
+                        {
                             Label(
                                 corner.title,
                                 systemImage: "checkmark"
@@ -185,7 +187,11 @@ public struct PracticeCardView: View {
                     }
                 }
             } label: {
-                Image(systemName: appModel.corner.symbolName)
+                Image(
+                    systemName: appModel.placementMode == .free
+                        ? "move.3d"
+                        : appModel.corner.symbolName
+                )
                     .font(.system(size: 9, weight: .semibold))
                     .frame(width: 18, height: 18)
             }
@@ -193,7 +199,11 @@ public struct PracticeCardView: View {
             .menuIndicator(.hidden)
             .fixedSize()
             .foregroundStyle(palette.muted)
-            .accessibilityLabel("移动卡片位置，当前\(appModel.corner.title)")
+            .accessibilityLabel(
+                appModel.placementMode == .free
+                    ? "卡片当前为自由拖放"
+                    : "移动卡片位置，当前\(appModel.corner.title)"
+            )
             Text(progressText)
                 .font(.system(size: 9, weight: .medium))
                 .foregroundStyle(palette.muted)
