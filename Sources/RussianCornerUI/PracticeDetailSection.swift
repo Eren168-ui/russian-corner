@@ -37,6 +37,9 @@ public struct PracticeDetailSection: View {
 
     @ViewBuilder
     private func wordContent(_ word: ResolvedWordAnalysis) -> some View {
+        Text(wordQualityLabel(word.source))
+            .font(.system(size: 9 * appModel.fontScale, weight: .medium))
+            .foregroundStyle(palette.muted)
         HStack(alignment: .firstTextBaseline, spacing: 8) {
             Text(word.stressedForm)
                 .font(
@@ -74,6 +77,21 @@ public struct PracticeDetailSection: View {
         }
         detail("在本句中", word.usageNote)
         onlineDictionaryContent
+    }
+
+    private func wordQualityLabel(
+        _ source: WordAnalysisSource
+    ) -> String {
+        switch source {
+        case .reviewedContext:
+            return "本句人工审核"
+        case .reviewedLexeme:
+            return "本地审核词条 · 本句词形未专项审核"
+        case .onlineUnreviewed:
+            return "在线词典结果 · 未人工审核"
+        case .unavailable:
+            return "本地暂无审核解析"
+        }
     }
 
     @ViewBuilder

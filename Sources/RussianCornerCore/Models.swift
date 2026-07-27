@@ -436,6 +436,13 @@ public struct SentenceWordToken: Codable, Equatable, Sendable {
     }
 }
 
+public enum WordAnalysisSource: String, Codable, Equatable, Sendable {
+    case reviewedContext
+    case reviewedLexeme
+    case onlineUnreviewed
+    case unavailable
+}
+
 public struct ResolvedWordAnalysis: Identifiable, Equatable, Sendable {
     public let cardID: String
     public let tokenIndex: Int
@@ -451,6 +458,7 @@ public struct ResolvedWordAnalysis: Identifiable, Equatable, Sendable {
     public let usageNote: String
     public let lexemeID: String?
     public let reviewStatus: ReviewStatus
+    public let source: WordAnalysisSource
 
     public var id: String {
         "\(cardID):\(tokenIndex)"
@@ -470,7 +478,8 @@ public struct ResolvedWordAnalysis: Identifiable, Equatable, Sendable {
         collocations: [String] = [],
         usageNote: String,
         lexemeID: String? = nil,
-        reviewStatus: ReviewStatus
+        reviewStatus: ReviewStatus,
+        source: WordAnalysisSource = .reviewedContext
     ) {
         self.cardID = cardID
         self.tokenIndex = tokenIndex
@@ -486,6 +495,7 @@ public struct ResolvedWordAnalysis: Identifiable, Equatable, Sendable {
         self.usageNote = usageNote
         self.lexemeID = lexemeID
         self.reviewStatus = reviewStatus
+        self.source = source
     }
 }
 

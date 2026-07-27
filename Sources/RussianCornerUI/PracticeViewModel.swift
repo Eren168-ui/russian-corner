@@ -294,7 +294,7 @@ public final class PracticeViewModel {
     )
     wordAnalysesByCardID = Dictionary(
       uniqueKeysWithValues: servedSentences.map {
-        ($0.id, catalog.wordAnalyses(for: $0.id))
+        ($0.id, catalog.wordAnalyses(for: $0))
       }
     )
 
@@ -622,7 +622,13 @@ public final class PracticeViewModel {
       return
     }
     selectedWordAnalysis = analysis
-    startOnlineLookup(for: analysis.lemma)
+    let lookupText =
+      analysis.source == .unavailable
+      ? analysis.surfaceText : analysis.lemma
+    startOnlineLookup(
+      for: lookupText,
+      selectionID: analysis.id
+    )
     guard !isDetailExpanded else { return }
     isDetailExpanded = true
     openedDetailsOnCurrentItem = true
@@ -643,24 +649,29 @@ public final class PracticeViewModel {
     isDetailExpanded = false
   }
 
-  private func startOnlineLookup(for lemma: String) {
+  private func startOnlineLookup(
+    for lookupText: String,
+    selectionID: String
+  ) {
     onlineLookupTask?.cancel()
     guard let onlineDictionary else {
       onlineWordLookupState = .idle
       return
     }
-    onlineWordLookupState = .loading(lemma)
+    onlineWordLookupState = .loading(lookupText)
     onlineLookupTask = Task { [weak self] in
       do {
-        let result = try await onlineDictionary.lookup(lemma: lemma)
+        let result = try await onlineDictionary.lookup(
+          lemma: lookupText
+        )
         guard !Task.isCancelled else { return }
-        guard self?.selectedWordAnalysis?.lemma == lemma else {
+        guard self?.selectedWordAnalysis?.id == selectionID else {
           return
         }
         self?.onlineWordLookupState = .result(result)
       } catch {
         guard !Task.isCancelled else { return }
-        guard self?.selectedWordAnalysis?.lemma == lemma else {
+        guard self?.selectedWordAnalysis?.id == selectionID else {
           return
         }
         self?.onlineWordLookupState = .unavailable(

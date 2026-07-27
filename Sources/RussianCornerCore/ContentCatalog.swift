@@ -176,6 +176,64 @@ public struct ContentCatalog: Sendable {
             }
     }
 
+    public func wordAnalyses(
+        for sentence: SentenceCard
+    ) -> [ResolvedWordAnalysis] {
+        let exactByIndex = Dictionary(
+            uniqueKeysWithValues: wordAnalyses(for: sentence.id).map {
+                ($0.tokenIndex, $0)
+            }
+        )
+        return RussianWordTokenizer.words(in: sentence.practiceRu)
+            .enumerated()
+            .map { index, surface in
+                if let exact = exactByIndex[index] {
+                    return exact
+                }
+                if let lexeme = matchingLexeme(for: surface) {
+                    return ResolvedWordAnalysis(
+                        cardID: sentence.id,
+                        tokenIndex: index,
+                        surfaceText: surface,
+                        stressedForm: lexeme.stressedForm,
+                        lemma: lexeme.lemma,
+                        glossZh: lexeme.glossZh,
+                        partOfSpeech: lexeme.partOfSpeech,
+                        morphology: "当前词形：\(surface)",
+                        aspectPair: lexeme.aspectPair,
+                        government: lexeme.government,
+                        collocations: lexeme.collocations,
+                        usageNote: "通用审核词条；本句词形尚无人工语境解析",
+                        lexemeID: lexeme.id,
+                        reviewStatus: lexeme.reviewStatus,
+                        source: .reviewedLexeme
+                    )
+                }
+                return ResolvedWordAnalysis(
+                    cardID: sentence.id,
+                    tokenIndex: index,
+                    surfaceText: surface,
+                    stressedForm: surface,
+                    lemma: Self.normalizedForm(surface),
+                    glossZh: "本地暂无审核释义",
+                    partOfSpeech: "待查询",
+                    morphology: "当前词形：\(surface)",
+                    usageNote: "可查询在线词典；在线结果不会自动标记为已审核",
+                    reviewStatus: .draft,
+                    source: .unavailable
+                )
+            }
+    }
+
+    private func matchingLexeme(for surface: String) -> Lexeme? {
+        let normalized = Self.normalizedForm(surface)
+        return lexemes.first { lexeme in
+            ([lexeme.lemma] + lexeme.surfaceForms).contains {
+                Self.normalizedForm($0) == normalized
+            }
+        }
+    }
+
     public func validate() -> [CatalogIssue] {
         var issues: [CatalogIssue] = []
 

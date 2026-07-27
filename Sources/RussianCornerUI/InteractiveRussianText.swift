@@ -11,9 +11,7 @@ public enum InteractiveRussianTextBuilder {
         analyses: [ResolvedWordAnalysis],
         selectedTokenIndex: Int?
     ) -> AttributedString {
-        let byIndex = Dictionary(
-            uniqueKeysWithValues: analyses.map { ($0.tokenIndex, $0) }
-        )
+        _ = analyses
         var output = AttributedString()
         var buffer = ""
         var word = ""
@@ -25,11 +23,7 @@ public enum InteractiveRussianTextBuilder {
 
         func linked(_ value: String, index: Int) -> AttributedString {
             var result = AttributedString(value)
-            if byIndex[index] != nil,
-                let url = URL(
-                    string: "\(scheme)://\(host)/\(index)"
-                )
-            {
+            if let url = URL(string: "\(scheme)://\(host)/\(index)") {
                 result.link = url
                 result.underlineStyle = .single
                 if selectedTokenIndex == index {

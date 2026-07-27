@@ -35,6 +35,16 @@ final class InteractiveRussianTextTests: XCTestCase {
         )
     }
 
+    func testBuilderLinksWordsEvenWhenAnalysesAreEmpty() {
+        let value = InteractiveRussianTextBuilder.make(
+            text: "Новый разговор.",
+            analyses: [],
+            selectedTokenIndex: nil
+        )
+
+        XCTAssertEqual(value.runs.compactMap(\.link).count, 2)
+    }
+
     func testWiktionaryURLUsesHTTPSAndEncodesLemma() throws {
         let url = try XCTUnwrap(
             OnlineDictionary.wiktionaryURL(for: "чувствовать себя")
