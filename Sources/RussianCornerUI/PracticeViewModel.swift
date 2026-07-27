@@ -38,6 +38,13 @@ public enum LexemePromptDirection: Equatable, Sendable {
   case production
 }
 
+public enum OnlineWordLookupState: Equatable, Sendable {
+  case idle
+  case loading(String)
+  case result(OnlineDictionaryResult)
+  case unavailable(String)
+}
+
 public struct MicroDialogueTurn: Identifiable, Equatable, Sendable {
   public let cardID: String
   public let cue: String
@@ -90,6 +97,9 @@ public final class PracticeViewModel {
   public private(set) var completedToday: Int
   public private(set) var statusMessage: String?
   public private(set) var isDetailExpanded = false
+  public private(set) var selectedWordAnalysis: ResolvedWordAnalysis?
+  public private(set) var onlineWordLookupState:
+    OnlineWordLookupState = .idle
   public let targetCount: Int
   public let newWordLimit: Int
   public let remainingNewWordCount: Int
@@ -102,12 +112,14 @@ public final class PracticeViewModel {
   private let scheduler: ReviewScheduler
   private let speechService: SpeechService
   private let trialTracker: (any PracticeTrialTracking)?
+  private let onlineDictionary: (any OnlineDictionaryLookingUp)?
   private let now: () -> Date
   private let calendar: Calendar
   private let sessionDayStart: Date
   private let automaticDirectionAtCreation: LexemePromptDirection
   private let sentencesByID: [String: SentenceCard]
   private let sentencesByTheme: [String: [SentenceCard]]
+  private let wordAnalysesByCardID: [String: [ResolvedWordAnalysis]]
   private var states: [PracticeItemIdentity: ReviewState]
   private var successfulToday: Set<PracticeItemIdentity>
   private var recallStartedAt: Date
@@ -115,6 +127,7 @@ public final class PracticeViewModel {
   private var resolvedBacklogIDs: Set<PracticeItemIdentity> = []
   private var usedSpeechOnCurrentItem = false
   private var openedDetailsOnCurrentItem = false
+  private var onlineLookupTask: Task<Void, Never>?
 
   public var currentItem: PracticeQueueEntry? {
     queue.indices.contains(currentIndex) ? queue[currentIndex] : nil
@@ -129,6 +142,13 @@ public final class PracticeViewModel {
       return nil
     }
     return sentence
+  }
+
+  public var currentSentenceWords: [ResolvedWordAnalysis] {
+    guard let currentCard else {
+      return []
+    }
+    return wordAnalysesByCardID[currentCard.id] ?? []
   }
 
   public var currentLexeme: Lexeme? {
@@ -243,7 +263,8 @@ public final class PracticeViewModel {
     vocabularyProfile: LearnerVocabularyProfile = .a2ToB1Bridge,
     scheduler: ReviewScheduler = ReviewScheduler(),
     speechService: SpeechService = SpeechService(),
-    trialTracker: (any PracticeTrialTracking)? = nil
+    trialTracker: (any PracticeTrialTracking)? = nil,
+    onlineDictionary: (any OnlineDictionaryLookingUp)? = nil
   ) throws {
     self.repository = repository
     let sentenceTargetCount = min(max(targetCount, 5), 10)
@@ -254,6 +275,7 @@ public final class PracticeViewModel {
     self.scheduler = scheduler
     self.speechService = speechService
     self.trialTracker = trialTracker
+    self.onlineDictionary = onlineDictionary
     let instant = now()
     sessionDayStart = calendar.startOfDay(for: instant)
     automaticDirectionAtCreation =
@@ -269,6 +291,11 @@ public final class PracticeViewModel {
     sentencesByTheme = Dictionary(
       grouping: servedSentences,
       by: \.theme
+    )
+    wordAnalysesByCardID = Dictionary(
+      uniqueKeysWithValues: servedSentences.map {
+        ($0.id, catalog.wordAnalyses(for: $0.id))
+      }
     )
 
     let events = try repository.reviewEvents()
@@ -569,7 +596,10 @@ public final class PracticeViewModel {
   public func toggleDetails() {
     guard currentItem != nil else { return }
     isDetailExpanded.toggle()
-    guard isDetailExpanded else { return }
+    guard isDetailExpanded else {
+      clearWordAnalysis()
+      return
+    }
     openedDetailsOnCurrentItem = true
     trialTracker?.record(
       kind: .detailsOpened,
@@ -580,6 +610,67 @@ public final class PracticeViewModel {
     )
   }
 
+  public func toggleWordAnalysis(tokenIndex: Int) {
+    guard isRevealed else { return }
+    guard let analysis = currentSentenceWords.first(where: {
+      $0.tokenIndex == tokenIndex
+    }) else {
+      return
+    }
+    if selectedWordAnalysis?.id == analysis.id {
+      clearWordAnalysis()
+      return
+    }
+    selectedWordAnalysis = analysis
+    startOnlineLookup(for: analysis.lemma)
+    guard !isDetailExpanded else { return }
+    isDetailExpanded = true
+    openedDetailsOnCurrentItem = true
+    trialTracker?.record(
+      kind: .detailsOpened,
+      context: trialContext(
+        kind: .detailsOpened,
+        occurredAt: now()
+      )
+    )
+  }
+
+  public func clearWordAnalysis() {
+    onlineLookupTask?.cancel()
+    onlineLookupTask = nil
+    selectedWordAnalysis = nil
+    onlineWordLookupState = .idle
+    isDetailExpanded = false
+  }
+
+  private func startOnlineLookup(for lemma: String) {
+    onlineLookupTask?.cancel()
+    guard let onlineDictionary else {
+      onlineWordLookupState = .idle
+      return
+    }
+    onlineWordLookupState = .loading(lemma)
+    onlineLookupTask = Task { [weak self] in
+      do {
+        let result = try await onlineDictionary.lookup(lemma: lemma)
+        guard !Task.isCancelled else { return }
+        guard self?.selectedWordAnalysis?.lemma == lemma else {
+          return
+        }
+        self?.onlineWordLookupState = .result(result)
+      } catch {
+        guard !Task.isCancelled else { return }
+        guard self?.selectedWordAnalysis?.lemma == lemma else {
+          return
+        }
+        self?.onlineWordLookupState = .unavailable(
+          (error as? LocalizedError)?.errorDescription
+            ?? "在线补充暂时不可用"
+        )
+      }
+    }
+  }
+
   public func toggleLexemeDirection() {
     guard currentLexeme != nil else { return }
     lexemeDirection =
@@ -588,6 +679,7 @@ public final class PracticeViewModel {
     isRevealed = false
     remainingRecallSeconds = 3
     recallStartedAt = now()
+    clearWordAnalysis()
     speechService.stop()
   }
 
@@ -681,7 +773,7 @@ public final class PracticeViewModel {
     speechService.stop()
     currentIndex += 1
     isRevealed = false
-    isDetailExpanded = false
+    clearWordAnalysis()
     usedSpeechOnCurrentItem = false
     openedDetailsOnCurrentItem = false
     remainingRecallSeconds = 3

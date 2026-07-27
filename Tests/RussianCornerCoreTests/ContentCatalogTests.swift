@@ -41,6 +41,42 @@ final class ContentCatalogTests: XCTestCase {
         )
     }
 
+    func testEveryTrialSentenceWordHasExactlyOneReviewedAnalysis() throws {
+        let catalog = try ContentCatalog(
+            resourceDirectory: sourceResourceDirectory
+        )
+
+        for sentence in catalog.practiceSentences {
+            let words = RussianWordTokenizer.words(
+                in: sentence.practiceRu
+            )
+            let analyses = catalog.wordAnalyses(for: sentence.id)
+
+            XCTAssertEqual(
+                analyses.map(\.tokenIndex),
+                Array(words.indices),
+                sentence.id
+            )
+            XCTAssertEqual(
+                analyses.map(\.surfaceText),
+                words,
+                sentence.id
+            )
+            XCTAssertTrue(
+                analyses.allSatisfy {
+                    !$0.lemma.isEmpty
+                        && !$0.glossZh.isEmpty
+                        && !$0.partOfSpeech.isEmpty
+                        && !$0.morphology.isEmpty
+                        && [.reviewed, .verified].contains(
+                            $0.reviewStatus
+                        )
+                },
+                sentence.id
+            )
+        }
+    }
+
     func testMissingExplicitResourcesFailWithoutFallback() throws {
         let emptyDirectory = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString, isDirectory: true)
@@ -145,8 +181,8 @@ final class ContentCatalogTests: XCTestCase {
             encoding: .utf8
         )
         let corruptedSlice = validSlice.replacingOccurrences(
-            of: #""speechText":"Здравствуйте! Можно войти?""#,
-            with: #""speechText":"Рад(а) вас видеть.""#
+            of: #""speechText": "Здравствуйте! Можно войти?""#,
+            with: #""speechText": "Рад(а) вас видеть.""#
         )
         XCTAssertNotEqual(validSlice, corruptedSlice)
         try Data(corruptedSlice.utf8).write(to: sliceURL)

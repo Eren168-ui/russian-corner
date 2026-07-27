@@ -19,7 +19,9 @@ public struct PracticeDetailSection: View {
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 9) {
-                if let lexeme = practice.currentLexeme {
+                if let word = practice.selectedWordAnalysis {
+                    wordContent(word)
+                } else if let lexeme = practice.currentLexeme {
                     lexemeContent(lexeme)
                 } else {
                     dialogueContent
@@ -31,6 +33,91 @@ public struct PracticeDetailSection: View {
         .scrollIndicators(.hidden)
         .textSelection(.enabled)
         .accessibilityLabel("词汇和场景详情")
+    }
+
+    @ViewBuilder
+    private func wordContent(_ word: ResolvedWordAnalysis) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text(word.stressedForm)
+                .font(
+                    .system(
+                        size: 17 * appModel.fontScale,
+                        weight: .semibold,
+                        design: .serif
+                    )
+                )
+                .foregroundStyle(palette.primary)
+            Text(word.glossZh)
+                .font(.system(size: 12 * appModel.fontScale))
+                .foregroundStyle(palette.secondary)
+            Spacer()
+            if let url = OnlineDictionary.wiktionaryURL(for: word.lemma) {
+                Link(destination: url) {
+                    Label("词典", systemImage: "arrow.up.right.square")
+                        .font(.system(size: 9, weight: .medium))
+                }
+                .foregroundStyle(palette.accent)
+            }
+        }
+        detail(
+            "词形",
+            "\(localizedPartOfSpeech(word.partOfSpeech)) · \(word.morphology) · 原形 \(word.lemma)"
+        )
+        if let pair = word.aspectPair, !pair.isEmpty {
+            detail("体对", pair)
+        }
+        if let government = word.government, !government.isEmpty {
+            detail("支配", government)
+        }
+        if !word.collocations.isEmpty {
+            detail("搭配", word.collocations.joined(separator: " · "))
+        }
+        detail("在本句中", word.usageNote)
+        onlineDictionaryContent
+    }
+
+    @ViewBuilder
+    private var onlineDictionaryContent: some View {
+        switch practice.onlineWordLookupState {
+        case .idle:
+            EmptyView()
+        case .loading:
+            HStack(spacing: 6) {
+                ProgressView()
+                    .controlSize(.mini)
+                Text("正在补充在线词典释义…")
+                    .font(.system(size: 9 * appModel.fontScale))
+                    .foregroundStyle(palette.muted)
+            }
+        case .result(let result):
+            if !result.translations.isEmpty {
+                detail(
+                    "Yandex 在线补充",
+                    result.translations.joined(separator: "；")
+                )
+            }
+            if !result.synonyms.isEmpty {
+                detail(
+                    "近义表达",
+                    result.synonyms.joined(separator: " · ")
+                )
+            }
+            if let example = result.examples.first {
+                detail(
+                    "在线例句",
+                    [
+                        example.russian,
+                        example.translationZh,
+                    ]
+                    .compactMap { $0 }
+                    .joined(separator: " — ")
+                )
+            }
+        case .unavailable(let message):
+            Text(message)
+                .font(.system(size: 9 * appModel.fontScale))
+                .foregroundStyle(palette.muted)
+        }
     }
 
     @ViewBuilder
@@ -99,6 +186,22 @@ public struct PracticeDetailSection: View {
                 .font(.system(size: 11 * appModel.fontScale))
                 .foregroundStyle(palette.secondary)
                 .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    private func localizedPartOfSpeech(_ value: String) -> String {
+        switch value {
+        case "noun": "名词"
+        case "verb": "动词"
+        case "adjective": "形容词"
+        case "adverb": "副词"
+        case "preposition": "介词"
+        case "pronoun": "代词"
+        case "conjunction": "连词"
+        case "particle": "语气词"
+        case "numeral": "数词"
+        case "interjection": "感叹词"
+        default: value
         }
     }
 }

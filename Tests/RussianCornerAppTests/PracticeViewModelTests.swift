@@ -140,6 +140,42 @@ final class PracticeViewModelTests: XCTestCase {
     )
   }
 
+  func testRevealedSentenceExposesAndTogglesEveryInteractiveWord() throws {
+    let resourceDirectory = URL(fileURLWithPath: #filePath)
+      .deletingLastPathComponent()
+      .deletingLastPathComponent()
+      .deletingLastPathComponent()
+      .appendingPathComponent("Sources", isDirectory: true)
+      .appendingPathComponent("RussianCornerCore", isDirectory: true)
+      .appendingPathComponent("Resources", isDirectory: true)
+    let model = try PracticeViewModel(
+      catalog: try ContentCatalog(resourceDirectory: resourceDirectory),
+      repository: try makeRepository(),
+      targetCount: 7,
+      now: { self.start }
+    )
+    let card = try XCTUnwrap(model.currentCard)
+
+    model.reveal()
+
+    XCTAssertEqual(
+      model.currentSentenceWords.count,
+      RussianWordTokenizer.words(in: card.practiceRu).count
+    )
+    XCTAssertNil(model.selectedWordAnalysis)
+
+    model.toggleWordAnalysis(tokenIndex: 0)
+    XCTAssertEqual(model.selectedWordAnalysis?.tokenIndex, 0)
+    XCTAssertTrue(model.isDetailExpanded)
+
+    model.toggleWordAnalysis(tokenIndex: 1)
+    XCTAssertEqual(model.selectedWordAnalysis?.tokenIndex, 1)
+
+    model.toggleWordAnalysis(tokenIndex: 1)
+    XCTAssertNil(model.selectedWordAnalysis)
+    XCTAssertFalse(model.isDetailExpanded)
+  }
+
   func testNextAdvancesThroughRequestedDailyCards() throws {
     let fixture = try makeFixture(targetCount: 7, sentenceCount: 12)
 

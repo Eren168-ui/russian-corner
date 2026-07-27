@@ -42,6 +42,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   nonisolated(unsafe) private var screenObserver: NSObjectProtocol?
   private var moveDebounceTask: Task<Void, Never>?
   private var isSnapping = false
+  private var suppressMoveRecordingUntil = Date.distantPast
 
   public init(runtime: AppRuntime) {
     self.runtime = runtime
@@ -103,7 +104,9 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   }
 
   public func windowDidMove(_ notification: Notification) {
-    guard !isSnapping else { return }
+    guard !isSnapping, Date() >= suppressMoveRecordingUntil else {
+      return
+    }
     moveDebounceTask?.cancel()
     moveDebounceTask = Task { [weak self] in
       try? await Task.sleep(for: .milliseconds(180))
@@ -170,6 +173,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       panelSize: panel.frame.size,
       visibleFrame: screen.visibleFrame
     )
+    suppressMoveRecordingUntil = Date().addingTimeInterval(0.6)
     isSnapping = true
     panel.setFrameOrigin(origin)
     isSnapping = false
@@ -194,6 +198,24 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       return CGPoint(x: left, y: bottom)
     case .bottomRight:
       return CGPoint(x: right, y: bottom)
+    }
+  }
+
+  nonisolated public static func nearestCorner(
+    panelFrame: CGRect,
+    visibleFrame: CGRect
+  ) -> FloatingCorner {
+    let isLeft = panelFrame.midX < visibleFrame.midX
+    let isTop = panelFrame.midY >= visibleFrame.midY
+    switch (isLeft, isTop) {
+    case (true, true):
+      return .topLeft
+    case (false, true):
+      return .topRight
+    case (true, false):
+      return .bottomLeft
+    case (false, false):
+      return .bottomRight
     }
   }
 
@@ -228,6 +250,10 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       return
     }
     appModel.preferredScreenIdentifier = descriptor.identifier
+    appModel.corner = Self.nearestCorner(
+      panelFrame: panel.frame,
+      visibleFrame: draggedScreen.visibleFrame
+    )
     snapToCorner()
   }
 

@@ -17,6 +17,15 @@ public enum FloatingCorner: String, CaseIterable, Codable, Sendable {
     case .bottomRight: "右下角"
     }
   }
+
+  public var symbolName: String {
+    switch self {
+    case .topLeft: "arrow.up.left"
+    case .topRight: "arrow.up.right"
+    case .bottomLeft: "arrow.down.left"
+    case .bottomRight: "arrow.down.right"
+    }
+  }
 }
 
 @MainActor
@@ -213,6 +222,8 @@ public final class AppRuntime {
   private var trialSessionCoordinator: TrialSessionCoordinator?
   private let reminderScheduler: (any ReminderSettingsScheduling)?
   private var reminderSettingsCoordinator: ReminderSettingsCoordinator?
+  private let onlineDictionary: any OnlineDictionaryLookingUp =
+    YandexDictionaryService()
 
   public init(
     defaults: UserDefaults = .standard,
@@ -338,7 +349,8 @@ public final class AppRuntime {
       mode: appModel.mode,
       now: now,
       diagnosticFindings: findings,
-      trialTracker: trialSessionCoordinator
+      trialTracker: trialSessionCoordinator,
+      onlineDictionary: onlineDictionary
     )
     practice?.handleDisappear()
     practice = nextPractice

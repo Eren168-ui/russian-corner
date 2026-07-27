@@ -1,4 +1,5 @@
 import RussianCornerCore
+import RussianCornerPlatform
 import SwiftUI
 
 public struct RussianCornerSettingsView: View {
@@ -7,6 +8,8 @@ public struct RussianCornerSettingsView: View {
   @State private var dailyCardCountDraft: Int
   @State private var morningDraft: Date
   @State private var eveningDraft: Date
+  @State private var dictionaryKeyDraft = ""
+  @State private var dictionaryKeyStatus = "正在检查…"
 
   public init(runtime: AppRuntime) {
     self.runtime = runtime
@@ -84,6 +87,28 @@ public struct RussianCornerSettingsView: View {
         .pickerStyle(.segmented)
       }
 
+      Section("在线词典（可选）") {
+        LabeledContent("Yandex Dictionary", value: dictionaryKeyStatus)
+        SecureField("粘贴新的 API key", text: $dictionaryKeyDraft)
+          .textContentType(.password)
+        HStack {
+          Button("保存密钥") {
+            saveDictionaryKey()
+          }
+          .disabled(
+            dictionaryKeyDraft.trimmingCharacters(
+              in: .whitespacesAndNewlines
+            ).isEmpty
+          )
+          Button("移除密钥", role: .destructive) {
+            deleteDictionaryKey()
+          }
+        }
+        Text("密钥只保存在 macOS 钥匙串；点击句中单词时仅发送该词原形，不上传句子和学习记录。")
+          .font(.caption)
+          .foregroundStyle(.secondary)
+      }
+
       Section("提醒") {
         DatePicker(
           "上午提醒",
@@ -118,10 +143,43 @@ public struct RussianCornerSettingsView: View {
       }
     }
     .formStyle(.grouped)
+    .onAppear {
+      refreshDictionaryKeyStatus()
+    }
     .frame(width: 470, height: 550)
     .navigationTitle("Russian Corner 设置")
     .onChange(of: appModel.mode) {
       runtime.practice?.mode = appModel.mode
+    }
+  }
+
+  private func refreshDictionaryKeyStatus() {
+    do {
+      let key = try YandexDictionaryKeychainStore().loadKey()
+      dictionaryKeyStatus =
+        key?.isEmpty == false ? "已配置" : "未配置（使用本地解析）"
+    } catch {
+      dictionaryKeyStatus = "钥匙串不可用"
+    }
+  }
+
+  private func saveDictionaryKey() {
+    do {
+      try YandexDictionaryKeychainStore().saveKey(dictionaryKeyDraft)
+      dictionaryKeyDraft = ""
+      dictionaryKeyStatus = "已配置"
+    } catch {
+      dictionaryKeyStatus = "保存失败"
+    }
+  }
+
+  private func deleteDictionaryKey() {
+    do {
+      try YandexDictionaryKeychainStore().deleteKey()
+      dictionaryKeyDraft = ""
+      dictionaryKeyStatus = "未配置（使用本地解析）"
+    } catch {
+      dictionaryKeyStatus = "移除失败"
     }
   }
 

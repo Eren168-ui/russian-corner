@@ -168,10 +168,37 @@ public struct PracticeCardView: View {
                 .foregroundStyle(palette.muted)
                 .lineLimit(1)
             Spacer(minLength: 8)
+            Menu {
+                ForEach(FloatingCorner.allCases, id: \.self) { corner in
+                    Button {
+                        appModel.corner = corner
+                        onLayoutChanged()
+                    } label: {
+                        if appModel.corner == corner {
+                            Label(
+                                corner.title,
+                                systemImage: "checkmark"
+                            )
+                        } else {
+                            Text(corner.title)
+                        }
+                    }
+                }
+            } label: {
+                Image(systemName: appModel.corner.symbolName)
+                    .font(.system(size: 9, weight: .semibold))
+                    .frame(width: 18, height: 18)
+            }
+            .menuStyle(.borderlessButton)
+            .menuIndicator(.hidden)
+            .fixedSize()
+            .foregroundStyle(palette.muted)
+            .accessibilityLabel("移动卡片位置，当前\(appModel.corner.title)")
             Text(progressText)
                 .font(.system(size: 9, weight: .medium))
                 .foregroundStyle(palette.muted)
             Button {
+                practice.clearWordAnalysis()
                 appModel.isCollapsed = true
                 onLayoutChanged()
             } label: {
@@ -264,19 +291,37 @@ public struct PracticeCardView: View {
 
     private func revealedAnswer(_ answer: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(answer)
-                .font(
-                    .system(
-                        size: 20 * appModel.fontScale,
-                        weight: .medium,
-                        design: .serif
-                    )
+            Group {
+                if practice.currentCard != nil,
+                    !practice.currentSentenceWords.isEmpty
+                {
+                    InteractiveRussianText(
+                        text: answer,
+                        analyses: practice.currentSentenceWords,
+                        selectedTokenIndex:
+                            practice.selectedWordAnalysis?.tokenIndex
+                    ) { tokenIndex in
+                        practice.toggleWordAnalysis(
+                            tokenIndex: tokenIndex
+                        )
+                        onLayoutChanged()
+                    }
+                } else {
+                    Text(answer)
+                        .accessibilityLabel("答案：\(answer)")
+                }
+            }
+            .font(
+                .system(
+                    size: 20 * appModel.fontScale,
+                    weight: .medium,
+                    design: .serif
                 )
-                .foregroundStyle(palette.secondary)
-                .lineLimit(practice.isDetailExpanded ? 3 : 2)
-                .minimumScaleFactor(0.78)
-                .textSelection(.enabled)
-                .accessibilityLabel("答案：\(answer)")
+            )
+            .foregroundStyle(palette.secondary)
+            .lineLimit(practice.isDetailExpanded ? 3 : 2)
+            .minimumScaleFactor(0.78)
+            .textSelection(.enabled)
 
             if let collocation = practice.currentLexeme?
                 .collocations.first

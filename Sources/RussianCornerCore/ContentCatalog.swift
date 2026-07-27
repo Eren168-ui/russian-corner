@@ -139,6 +139,43 @@ public struct ContentCatalog: Sendable {
         }
     }
 
+    public func wordAnalyses(
+        for cardID: String
+    ) -> [ResolvedWordAnalysis] {
+        guard let trialSlice else {
+            return []
+        }
+        let entriesByID = Dictionary(
+            uniqueKeysWithValues: trialSlice.wordEntries.map {
+                ($0.id, $0)
+            }
+        )
+        return trialSlice.sentenceWordTokens
+            .filter { $0.cardID == cardID }
+            .sorted { $0.tokenIndex < $1.tokenIndex }
+            .compactMap { token in
+                guard let entry = entriesByID[token.wordEntryID] else {
+                    return nil
+                }
+                return ResolvedWordAnalysis(
+                    cardID: token.cardID,
+                    tokenIndex: token.tokenIndex,
+                    surfaceText: token.surfaceText,
+                    stressedForm: entry.stressedForm,
+                    lemma: entry.lemma,
+                    glossZh: entry.glossZh,
+                    partOfSpeech: entry.partOfSpeech,
+                    morphology: token.morphology,
+                    aspectPair: entry.aspectPair,
+                    government: entry.government,
+                    collocations: entry.collocations,
+                    usageNote: entry.usageNote,
+                    lexemeID: entry.lexemeID,
+                    reviewStatus: entry.reviewStatus
+                )
+            }
+    }
+
     public func validate() -> [CatalogIssue] {
         var issues: [CatalogIssue] = []
 
@@ -789,6 +826,151 @@ public struct ContentCatalog: Sendable {
                     && !lexeme.sentenceIDs.isEmpty,
                 itemID: review.lexemeID,
                 message: "trial lexeme lacks a collocation or scene",
+                issues: &issues
+            )
+        }
+
+        issues += validateWordAnalyses(
+            trialSlice: trialSlice,
+            lexemesByID: lexemesByID,
+            allowedStatuses: allowedStatuses,
+            disqualifyingFlags: disqualifyingFlags
+        )
+
+        return issues
+    }
+
+    private func validateWordAnalyses(
+        trialSlice: TrialContentSlice,
+        lexemesByID: [String: Lexeme],
+        allowedStatuses: Set<ReviewStatus>,
+        disqualifyingFlags: Set<ContentQualityFlag>
+    ) -> [CatalogIssue] {
+        var issues: [CatalogIssue] = []
+        let entryIDs = Set(trialSlice.wordEntries.map(\.id))
+        let entriesByID = trialSlice.wordEntries.reduce(
+            into: [String: TrialWordEntry]()
+        ) { result, entry in
+            if result[entry.id] == nil {
+                result[entry.id] = entry
+            }
+        }
+        let sentenceIDs = Set(trialSlice.sentences.map(\.id))
+
+        require(
+            !trialSlice.wordEntries.isEmpty,
+            itemID: "trialSlice.wordEntries",
+            message: "trial word entries are missing",
+            issues: &issues
+        )
+        require(
+            entryIDs.count == trialSlice.wordEntries.count,
+            itemID: "trialSlice.wordEntries",
+            message: "trial word entry IDs must be unique",
+            issues: &issues
+        )
+        for entry in trialSlice.wordEntries {
+            require(
+                Self.isNonempty(entry.id)
+                    && Self.isNonempty(entry.lookupForm)
+                    && Self.isNonempty(entry.stressedForm)
+                    && Self.isNonempty(entry.lemma)
+                    && Self.isNonempty(entry.glossZh)
+                    && Self.isNonempty(entry.partOfSpeech)
+                    && Self.isNonempty(entry.usageNote),
+                itemID: entry.id,
+                message: "trial word entry has missing core fields",
+                issues: &issues
+            )
+            require(
+                allowedStatuses.contains(entry.reviewStatus),
+                itemID: entry.id,
+                message: "trial word entry must be reviewed or verified",
+                issues: &issues
+            )
+            require(
+                entry.provenanceType != .aiGenerated
+                    && Set(entry.qualityFlags)
+                        .isDisjoint(with: disqualifyingFlags),
+                itemID: entry.id,
+                message: "trial word entry is unsafe",
+                issues: &issues
+            )
+            require(
+                RussianWordTokenizer.words(in: entry.lookupForm).count == 1
+                    && RussianWordTokenizer.words(
+                        in: entry.stressedForm
+                    ).count == 1,
+                itemID: entry.id,
+                message: "trial word entry must describe one Russian word",
+                issues: &issues
+            )
+            if let lexemeID = entry.lexemeID {
+                require(
+                    lexemesByID[lexemeID] != nil,
+                    itemID: entry.id,
+                    message: "trial word entry references missing lexeme",
+                    issues: &issues
+                )
+            }
+        }
+
+        for token in trialSlice.sentenceWordTokens {
+            require(
+                sentenceIDs.contains(token.cardID),
+                itemID: "\(token.cardID):\(token.tokenIndex)",
+                message: "word token references missing sentence",
+                issues: &issues
+            )
+            require(
+                entriesByID[token.wordEntryID] != nil,
+                itemID: "\(token.cardID):\(token.tokenIndex)",
+                message: "word token references missing entry",
+                issues: &issues
+            )
+            require(
+                token.tokenIndex >= 0
+                    && Self.isNonempty(token.surfaceText)
+                    && Self.isNonempty(token.morphology),
+                itemID: "\(token.cardID):\(token.tokenIndex)",
+                message: "word token has missing contextual fields",
+                issues: &issues
+            )
+            if let entry = entriesByID[token.wordEntryID] {
+                require(
+                    Self.normalizedForm(token.surfaceText)
+                        == Self.normalizedForm(entry.lookupForm),
+                    itemID: "\(token.cardID):\(token.tokenIndex)",
+                    message: "word token surface does not match entry",
+                    issues: &issues
+                )
+            }
+        }
+
+        for sentence in trialSlice.sentences {
+            let words = RussianWordTokenizer.words(in: sentence.practiceRu)
+            let tokens = trialSlice.sentenceWordTokens
+                .filter { $0.cardID == sentence.id }
+                .sorted { $0.tokenIndex < $1.tokenIndex }
+            require(
+                tokens.count == words.count,
+                itemID: sentence.id,
+                message: "every Russian word needs one analysis",
+                issues: &issues
+            )
+            require(
+                tokens.map(\.tokenIndex) == Array(words.indices),
+                itemID: sentence.id,
+                message: "word analysis indices must be complete and unique",
+                issues: &issues
+            )
+            require(
+                zip(tokens.map(\.surfaceText), words).allSatisfy {
+                    Self.normalizedForm($0)
+                        == Self.normalizedForm($1)
+                },
+                itemID: sentence.id,
+                message: "word analysis surface does not match sentence",
                 issues: &issues
             )
         }

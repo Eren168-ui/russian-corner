@@ -365,25 +365,224 @@ public struct TrialLexemeReview: Codable, Equatable, Sendable {
     }
 }
 
+public struct TrialWordEntry: Identifiable, Codable, Equatable, Sendable {
+    public let id: String
+    public let lookupForm: String
+    public let stressedForm: String
+    public let lemma: String
+    public let glossZh: String
+    public let partOfSpeech: String
+    public let aspectPair: String?
+    public let government: String?
+    public let collocations: [String]
+    public let usageNote: String
+    public let lexemeID: String?
+    public let reviewStatus: ReviewStatus
+    public let provenanceType: ProvenanceType
+    public let qualityFlags: [ContentQualityFlag]
+
+    public init(
+        id: String,
+        lookupForm: String,
+        stressedForm: String,
+        lemma: String,
+        glossZh: String,
+        partOfSpeech: String,
+        aspectPair: String? = nil,
+        government: String? = nil,
+        collocations: [String] = [],
+        usageNote: String,
+        lexemeID: String? = nil,
+        reviewStatus: ReviewStatus,
+        provenanceType: ProvenanceType,
+        qualityFlags: [ContentQualityFlag] = []
+    ) {
+        self.id = id
+        self.lookupForm = lookupForm
+        self.stressedForm = stressedForm
+        self.lemma = lemma
+        self.glossZh = glossZh
+        self.partOfSpeech = partOfSpeech
+        self.aspectPair = aspectPair
+        self.government = government
+        self.collocations = collocations
+        self.usageNote = usageNote
+        self.lexemeID = lexemeID
+        self.reviewStatus = reviewStatus
+        self.provenanceType = provenanceType
+        self.qualityFlags = qualityFlags
+    }
+}
+
+public struct SentenceWordToken: Codable, Equatable, Sendable {
+    public let cardID: String
+    public let tokenIndex: Int
+    public let surfaceText: String
+    public let wordEntryID: String
+    public let morphology: String
+
+    public init(
+        cardID: String,
+        tokenIndex: Int,
+        surfaceText: String,
+        wordEntryID: String,
+        morphology: String
+    ) {
+        self.cardID = cardID
+        self.tokenIndex = tokenIndex
+        self.surfaceText = surfaceText
+        self.wordEntryID = wordEntryID
+        self.morphology = morphology
+    }
+}
+
+public struct ResolvedWordAnalysis: Identifiable, Equatable, Sendable {
+    public let cardID: String
+    public let tokenIndex: Int
+    public let surfaceText: String
+    public let stressedForm: String
+    public let lemma: String
+    public let glossZh: String
+    public let partOfSpeech: String
+    public let morphology: String
+    public let aspectPair: String?
+    public let government: String?
+    public let collocations: [String]
+    public let usageNote: String
+    public let lexemeID: String?
+    public let reviewStatus: ReviewStatus
+
+    public var id: String {
+        "\(cardID):\(tokenIndex)"
+    }
+
+    public init(
+        cardID: String,
+        tokenIndex: Int,
+        surfaceText: String,
+        stressedForm: String,
+        lemma: String,
+        glossZh: String,
+        partOfSpeech: String,
+        morphology: String,
+        aspectPair: String? = nil,
+        government: String? = nil,
+        collocations: [String] = [],
+        usageNote: String,
+        lexemeID: String? = nil,
+        reviewStatus: ReviewStatus
+    ) {
+        self.cardID = cardID
+        self.tokenIndex = tokenIndex
+        self.surfaceText = surfaceText
+        self.stressedForm = stressedForm
+        self.lemma = lemma
+        self.glossZh = glossZh
+        self.partOfSpeech = partOfSpeech
+        self.morphology = morphology
+        self.aspectPair = aspectPair
+        self.government = government
+        self.collocations = collocations
+        self.usageNote = usageNote
+        self.lexemeID = lexemeID
+        self.reviewStatus = reviewStatus
+    }
+}
+
+public enum RussianWordTokenizer {
+    public static func words(in text: String) -> [String] {
+        var words: [String] = []
+        var current = ""
+
+        for character in text {
+            if character.unicodeScalars.allSatisfy(isRussianLetter) {
+                current.append(character)
+            } else if !current.isEmpty {
+                words.append(current)
+                current = ""
+            }
+        }
+        if !current.isEmpty {
+            words.append(current)
+        }
+        return words
+    }
+
+    private static func isRussianLetter(_ scalar: UnicodeScalar) -> Bool {
+        (0x0410...0x044F).contains(scalar.value)
+            || scalar.value == 0x0401
+            || scalar.value == 0x0451
+            || scalar.value == 0x0301
+    }
+}
+
 public struct TrialContentSlice: Codable, Equatable, Sendable {
     public let schemaVersion: Int
     public let sourceRoot: String
     public let sentences: [SentenceCard]
     public let lexemeReviews: [TrialLexemeReview]
     public let manualReviewSampleIDs: [String]
+    public let wordEntries: [TrialWordEntry]
+    public let sentenceWordTokens: [SentenceWordToken]
 
     public init(
         schemaVersion: Int,
         sourceRoot: String,
         sentences: [SentenceCard],
         lexemeReviews: [TrialLexemeReview],
-        manualReviewSampleIDs: [String]
+        manualReviewSampleIDs: [String],
+        wordEntries: [TrialWordEntry] = [],
+        sentenceWordTokens: [SentenceWordToken] = []
     ) {
         self.schemaVersion = schemaVersion
         self.sourceRoot = sourceRoot
         self.sentences = sentences
         self.lexemeReviews = lexemeReviews
         self.manualReviewSampleIDs = manualReviewSampleIDs
+        self.wordEntries = wordEntries
+        self.sentenceWordTokens = sentenceWordTokens
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion
+        case sourceRoot
+        case sentences
+        case lexemeReviews
+        case manualReviewSampleIDs
+        case wordEntries
+        case sentenceWordTokens
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        schemaVersion = try container.decode(
+            Int.self,
+            forKey: .schemaVersion
+        )
+        sourceRoot = try container.decode(
+            String.self,
+            forKey: .sourceRoot
+        )
+        sentences = try container.decode(
+            [SentenceCard].self,
+            forKey: .sentences
+        )
+        lexemeReviews = try container.decode(
+            [TrialLexemeReview].self,
+            forKey: .lexemeReviews
+        )
+        manualReviewSampleIDs = try container.decode(
+            [String].self,
+            forKey: .manualReviewSampleIDs
+        )
+        wordEntries = try container.decodeIfPresent(
+            [TrialWordEntry].self,
+            forKey: .wordEntries
+        ) ?? []
+        sentenceWordTokens = try container.decodeIfPresent(
+            [SentenceWordToken].self,
+            forKey: .sentenceWordTokens
+        ) ?? []
     }
 
     public var cardCount: Int {
