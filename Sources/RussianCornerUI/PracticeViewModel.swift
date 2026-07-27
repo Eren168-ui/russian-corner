@@ -105,6 +105,7 @@ public final class PracticeViewModel {
   public let remainingNewWordCount: Int
   public let remainingSentenceCardCount: Int
   public let isWeeklyReviewDay: Bool
+  public let selectedTopicID: String?
   public var mode: PracticeMode
   public var lexemeDirection: LexemePromptDirection
 
@@ -257,6 +258,7 @@ public final class PracticeViewModel {
     repository: any PracticeProgressStoring,
     targetCount: Int = 7,
     mode: PracticeMode = .quiet,
+    preferredTopicID: String? = nil,
     now: @escaping () -> Date = Date.init,
     calendar: Calendar = .current,
     diagnosticFindings: [DiagnosticFindingType] = [],
@@ -278,6 +280,17 @@ public final class PracticeViewModel {
     self.onlineDictionary = onlineDictionary
     let instant = now()
     sessionDayStart = calendar.startOfDay(for: instant)
+    let dayIndex = Int(
+      floor(sessionDayStart.timeIntervalSince1970 / 86_400)
+    )
+    let primaryTopicID = TopicSelector().select(
+      dayIndex: dayIndex,
+      topics: catalog.topics,
+      recentTopicIDs: [],
+      weaknessByTopic: [:],
+      manualTopicID: preferredTopicID
+    )?.id
+    selectedTopicID = primaryTopicID
     automaticDirectionAtCreation =
       calendar.component(.hour, from: instant) < 12
       ? .recognition : .production
@@ -446,9 +459,6 @@ public final class PracticeViewModel {
       sentenceTargetCount - attemptedSentenceCount
     )
 
-    let dayIndex = Int(
-      floor(todayStart.timeIntervalSince1970 / 86_400)
-    )
     let orderedRetryIdentities = retryToday.sorted {
       if $0.kind.rawValue == $1.kind.rawValue {
         return $0.id < $1.id
@@ -512,6 +522,10 @@ public final class PracticeViewModel {
           !sentenceExcluded.contains(
             PracticeItemIdentity(kind: .sentence, id: $0.id)
           )
+            && (
+              primaryTopicID == nil
+                || $0.topicID == primaryTopicID
+            )
         },
         dayIndex: dayIndex,
         salt: 29
@@ -538,6 +552,10 @@ public final class PracticeViewModel {
           }
           return dueAt > instant
             && !sentenceExcluded.contains(identity)
+            && (
+              primaryTopicID == nil
+                || $0.topicID == primaryTopicID
+            )
         },
         dayIndex: dayIndex,
         salt: 31
@@ -565,7 +583,7 @@ public final class PracticeViewModel {
     remainingSentenceCardCount = sentenceCardsRemaining
     successfulToday = successfulTodaySet
     completedToday = successfulTodaySet.count
-    queue = catalog.trialSlice == nil
+    queue = catalog.topics.isEmpty
       ? lexemeEntries + sentenceEntries
       : sentenceEntries + lexemeEntries
   }

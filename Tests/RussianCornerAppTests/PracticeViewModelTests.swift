@@ -104,7 +104,7 @@ final class PracticeViewModelTests: XCTestCase {
     )
   }
 
-  func testBundledPracticeQueueCannotEscapeTrialSlice() throws {
+  func testBundledPracticeQueueUsesLongTermCorpus() throws {
     let resourceDirectory = URL(fileURLWithPath: #filePath)
       .deletingLastPathComponent()
       .deletingLastPathComponent()
@@ -115,7 +115,6 @@ final class PracticeViewModelTests: XCTestCase {
     let catalog = try ContentCatalog(
       resourceDirectory: resourceDirectory
     )
-    let slice = try XCTUnwrap(catalog.trialSlice)
     let model = try PracticeViewModel(
       catalog: catalog,
       repository: ProgressRepository(
@@ -124,19 +123,59 @@ final class PracticeViewModelTests: XCTestCase {
       targetCount: 7,
       now: { self.start }
     )
-    let allowedSentenceIDs = Set(slice.sentences.map(\.id))
+    let allowedSentenceIDs = Set(
+      catalog.longTermSentences.map(\.id)
+    )
 
     XCTAssertFalse(model.queue.isEmpty)
     XCTAssertEqual(model.queue.first?.kind, .sentence)
     XCTAssertTrue(
       model.queue.allSatisfy { entry in
         switch entry.content {
-        case .lexeme(let lexeme):
-          return slice.lexemeIDs.contains(lexeme.id)
+        case .lexeme:
+          return true
         case .sentence(let sentence):
           return allowedSentenceIDs.contains(sentence.id)
         }
       }
+    )
+    XCTAssertTrue(
+      model.queue.contains { entry in
+        guard case .sentence(let sentence) = entry.content else {
+          return false
+        }
+        return !sentence.id.hasPrefix("trial-")
+      }
+    )
+  }
+
+  func testManualTopicControlsFreshSentences() throws {
+    let resourceDirectory = URL(fileURLWithPath: #filePath)
+      .deletingLastPathComponent()
+      .deletingLastPathComponent()
+      .deletingLastPathComponent()
+      .appendingPathComponent("Sources", isDirectory: true)
+      .appendingPathComponent("RussianCornerCore", isDirectory: true)
+      .appendingPathComponent("Resources", isDirectory: true)
+    let model = try PracticeViewModel(
+      catalog: try ContentCatalog(
+        resourceDirectory: resourceDirectory
+      ),
+      repository: try makeRepository(),
+      targetCount: 7,
+      preferredTopicID: "topic-19",
+      now: { self.start }
+    )
+    let sentenceTopics = model.queue.compactMap { entry in
+      guard case .sentence(let sentence) = entry.content else {
+        return nil as String?
+      }
+      return sentence.topicID
+    }
+
+    XCTAssertFalse(sentenceTopics.isEmpty)
+    XCTAssertTrue(
+      sentenceTopics.allSatisfy { $0 == "topic-19" }
     )
   }
 

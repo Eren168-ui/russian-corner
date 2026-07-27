@@ -34,9 +34,10 @@ final class ContentCatalogTests: XCTestCase {
             Set(slice.manualReviewSampleIDs).count,
             30
         )
-        XCTAssertEqual(
-            catalog.practiceSentences.map(\.id),
-            slice.sentences.map(\.id)
+        XCTAssertTrue(
+            Set(slice.sentences.map(\.id)).isSubset(
+                of: Set(catalog.practiceSentences.map(\.id))
+            )
         )
         XCTAssertEqual(
             Set(catalog.practiceLexemes.map(\.id)),
@@ -44,7 +45,7 @@ final class ContentCatalogTests: XCTestCase {
         )
     }
 
-    func testEveryTrialSentenceWordHasExactlyOneReviewedAnalysis() throws {
+    func testEveryLongTermSentenceWordHasOneResolvableAnalysis() throws {
         let catalog = try ContentCatalog(
             resourceDirectory: sourceResourceDirectory
         )
@@ -53,7 +54,7 @@ final class ContentCatalogTests: XCTestCase {
             let words = RussianWordTokenizer.words(
                 in: sentence.practiceRu
             )
-            let analyses = catalog.wordAnalyses(for: sentence.id)
+            let analyses = catalog.wordAnalyses(for: sentence)
 
             XCTAssertEqual(
                 analyses.map(\.tokenIndex),
@@ -71,8 +72,12 @@ final class ContentCatalogTests: XCTestCase {
                         && !$0.glossZh.isEmpty
                         && !$0.partOfSpeech.isEmpty
                         && !$0.morphology.isEmpty
-                        && [.reviewed, .verified].contains(
-                            $0.reviewStatus
+                        && (
+                            $0.source == .unavailable
+                                ? $0.reviewStatus == .draft
+                                : [.reviewed, .verified].contains(
+                                    $0.reviewStatus
+                                )
                         )
                 },
                 sentence.id
