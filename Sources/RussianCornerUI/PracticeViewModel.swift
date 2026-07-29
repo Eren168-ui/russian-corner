@@ -883,7 +883,15 @@ public final class PracticeViewModel {
         ?? sourcePath
       return "应用内策展语料 · \(name)"
     }
-    return URL(fileURLWithPath: sourcePath).lastPathComponent
+    let fileName = URL(fileURLWithPath: sourcePath).lastPathComponent
+    let title = fileName.lowercased().hasSuffix(".md")
+      ? (fileName as NSString).deletingPathExtension
+      : fileName
+    return title.trimmingCharacters(
+      in: .whitespacesAndNewlines.union(
+        CharacterSet(charactersIn: ".")
+      )
+    )
   }
 
   private static func localizedProvenance(

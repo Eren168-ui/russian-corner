@@ -126,6 +126,26 @@ final class InteractiveRussianTextTests: XCTestCase {
         XCTAssertFalse(summary.partOfSpeech.contains("待查询"))
     }
 
+    func testUnavailableWordHidesInternalLookupUsageNote() {
+        let word = ResolvedWordAnalysis(
+            cardID: "city",
+            tokenIndex: 0,
+            surfaceText: "выглядит",
+            stressedForm: "выглядит",
+            lemma: "выглядеть",
+            glossZh: "本地暂无审核释义",
+            partOfSpeech: "待查询",
+            morphology: "当前词形：выглядит",
+            usageNote: "可查询在线词典；在线结果不会自动标记为已审核",
+            reviewStatus: .draft,
+            source: .unavailable
+        )
+
+        XCTAssertNil(
+            WordDetailSummaryBuilder.visibleUsageNote(for: word)
+        )
+    }
+
     private func analysis(
         index: Int,
         surface: String

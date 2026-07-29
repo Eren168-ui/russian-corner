@@ -613,7 +613,7 @@ final class PracticeViewModelTests: XCTestCase {
     XCTAssertEqual(model.currentSentenceSource?.theme, "共同场景")
     XCTAssertEqual(
       model.currentSentenceSource?.fileName,
-      "Тема 23. Мои ребята..md"
+      "Тема 23. Мои ребята"
     )
     XCTAssertEqual(
       model.currentSentenceSource?.dialogueActLabel,

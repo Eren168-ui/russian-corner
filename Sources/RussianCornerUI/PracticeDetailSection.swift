@@ -46,6 +46,18 @@ public enum WordDetailSummaryBuilder {
             return "本地暂无审核解析"
         }
     }
+
+    public static func visibleUsageNote(
+        for word: ResolvedWordAnalysis
+    ) -> String? {
+        guard word.source == .reviewedContext else {
+            return nil
+        }
+        let value = word.usageNote.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+        return value.isEmpty ? nil : value
+    }
 }
 
 public struct PracticeDetailSection: View {
@@ -126,7 +138,11 @@ public struct PracticeDetailSection: View {
         if !word.collocations.isEmpty {
             detail("搭配", word.collocations.joined(separator: " · "))
         }
-        detail("在本句中", word.usageNote)
+        if let usageNote = WordDetailSummaryBuilder.visibleUsageNote(
+            for: word
+        ) {
+            detail("在本句中", usageNote)
+        }
         onlineDictionaryContent
     }
 
