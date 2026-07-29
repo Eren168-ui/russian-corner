@@ -400,6 +400,8 @@ public final class AppRuntime {
   public private(set) var trialRepository:
     (any TrialDataStoring)?
   public private(set) var progress = LearningProgressSnapshot()
+  public private(set) var learningHistory = LearningHistorySnapshot()
+  public private(set) var learningHistoryStatus: String?
   public private(set) var launchError: String?
   public private(set) var diagnosticError: String?
   public private(set) var trialError: String?
@@ -811,74 +813,73 @@ public final class AppRuntime {
     now: Date = Date(),
     calendar: Calendar = .current
   ) throws {
+    try refreshLearningHistory(now: now, calendar: calendar)
+    progress = LearningProgressSnapshot(
+      completedToday: learningHistory.todayCompleted,
+      streakDays: learningHistory.streakDays,
+      accuracy: learningHistory.todayAccuracy ?? 0,
+      masteredCount: learningHistory.masteredTotal,
+      coveredTopicCount: learningHistory.coveredTopics.count,
+      totalTopicCount: learningHistory.totalTopicCount
+    )
+  }
+
+  public func refreshLearningHistory(
+    now: Date = Date(),
+    calendar: Calendar = .current
+  ) throws {
     guard let repository, let catalog else { return }
     let events = try repository.reviewEvents()
-    let today = calendar.startOfDay(for: now)
-    let todayEvents = events.filter {
-      calendar.startOfDay(for: $0.createdAt) == today
-    }
-    let correct = todayEvents.filter { $0.grade != .again }.count
-    let completedItems = Set(
-      todayEvents.compactMap { event in
-        event.grade == .again
-          ? nil
-          : PracticeItemIdentity(
-            kind: event.itemType,
-            id: event.itemId
-          )
-      }
-    )
-    let accuracy =
-      todayEvents.isEmpty
-      ? 0 : Double(correct) / Double(todayEvents.count)
-    let activeDays = Set(
-      events.map {
-        calendar.startOfDay(for: $0.createdAt)
-      })
-    var streak = 0
-    var cursor = today
-    while activeDays.contains(cursor) {
-      streak += 1
-      guard
-        let previous = calendar.date(
-          byAdding: .day,
-          value: -1,
-          to: cursor
-        )
-      else { break }
-      cursor = previous
-    }
-    var mastered = 0
+    var masteryByItem: [PracticeItemIdentity: ReviewState] = [:]
     for lexeme in catalog.practiceLexemes {
-      if try repository.progress(
+      if let state = try repository.progress(
         itemType: .lexeme,
         itemId: lexeme.id
-      )?.masteryLevel ?? 0 >= 3 {
-        mastered += 1
+      ) {
+        masteryByItem[
+          PracticeItemIdentity(kind: .lexeme, id: lexeme.id)
+        ] = state
       }
     }
     for sentence in catalog.practiceSentences {
-      if try repository.progress(
+      if let state = try repository.progress(
         itemType: .sentence,
         itemId: sentence.id
-      )?.masteryLevel ?? 0 >= 3 {
-        mastered += 1
+      ) {
+        masteryByItem[
+          PracticeItemIdentity(kind: .sentence, id: sentence.id)
+        ] = state
       }
     }
-    progress = LearningProgressSnapshot(
-      completedToday: completedItems.count,
-      streakDays: streak,
-      accuracy: accuracy,
-      masteredCount: mastered,
-      coveredTopicCount: Set<String>(
-        events.compactMap { event in
-          guard event.itemType == .sentence else { return nil }
-          return catalog.practiceSentences.first {
-            $0.id == event.itemId
-          }?.topicID
-        }
-      ).count,
-      totalTopicCount: catalog.topics.count
+
+    let today = calendar.startOfDay(for: now)
+    let start =
+      calendar.date(byAdding: .day, value: -6, to: today) ?? today
+    var trialSnapshot = TrialReportSnapshot.empty
+    learningHistoryStatus = nil
+    if let trialRepository {
+      do {
+        trialSnapshot = try trialRepository.fetchSnapshot(
+          from: start,
+          through: now
+        )
+      } catch {
+        learningHistoryStatus =
+          "部分学习时长暂时无法读取，核心复习记录仍可使用"
+      }
+    } else {
+      learningHistoryStatus =
+        trialError ?? "部分学习时长暂时不可用"
+    }
+
+    learningHistory = LearningHistoryBuilder.build(
+      events: events,
+      masteryByItem: masteryByItem,
+      catalog: catalog,
+      trialSnapshot: trialSnapshot,
+      currentTarget: practice?.totalCount ?? appModel.dailyCardCount,
+      now: now,
+      calendar: calendar
     )
   }
 }

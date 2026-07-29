@@ -1,9 +1,11 @@
 import Foundation
 import RussianCornerCore
+import RussianCornerPlatform
 import XCTest
 
 @testable import RussianCornerUI
 
+@MainActor
 final class LearningHistoryTests: XCTestCase {
   private var calendar: Calendar {
     var calendar = Calendar(identifier: .gregorian)
@@ -127,6 +129,60 @@ final class LearningHistoryTests: XCTestCase {
     XCTAssertEqual(snapshot.totalTopicCount, 2)
   }
 
+  func testRuntimeLearningHistoryUsesPersistedEventsAndCurrentQueueTarget()
+    throws
+  {
+    let now = date(2026, 7, 29, hour: 12)
+    let repository = ProgressRepository(
+      container: try ProgressRepository.makeInMemoryContainer()
+    )
+    try repository.save(reviewEvent: event(.easy, item: "word-1", at: now))
+    let suiteName = "LearningHistoryTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+    let runtime = AppRuntime(
+      defaults: defaults,
+      catalog: catalog(),
+      repository: repository,
+      enableSystemReminders: false
+    )
+
+    try runtime.refreshLearningHistory(now: now, calendar: calendar)
+
+    XCTAssertEqual(runtime.learningHistory.todayCompleted, 1)
+    XCTAssertEqual(
+      runtime.learningHistory.todayTarget,
+      runtime.practice?.totalCount
+    )
+    XCTAssertEqual(runtime.learningHistory.recentDays.count, 7)
+  }
+
+  func testRuntimeLearningHistoryKeepsCoreDataWhenTrialHistoryFails()
+    throws
+  {
+    let now = date(2026, 7, 29, hour: 12)
+    let repository = ProgressRepository(
+      container: try ProgressRepository.makeInMemoryContainer()
+    )
+    try repository.save(reviewEvent: event(.hard, item: "word-1", at: now))
+    let suiteName = "LearningHistoryTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+    let runtime = AppRuntime(
+      defaults: defaults,
+      catalog: catalog(),
+      repository: repository,
+      trialRepository: ThrowingHistoryTrialStore(),
+      enableSystemReminders: false
+    )
+
+    try runtime.refreshLearningHistory(now: now, calendar: calendar)
+
+    XCTAssertEqual(runtime.learningHistory.todayCompleted, 1)
+    XCTAssertEqual(runtime.learningHistory.recentDays.count, 7)
+    XCTAssertNotNil(runtime.learningHistoryStatus)
+  }
+
   private func event(
     _ grade: ReviewGrade,
     kind: PracticeItemKind = .lexeme,
@@ -232,5 +288,34 @@ final class LearningHistoryTests: XCTestCase {
 
   private func dayOffset(_ value: Int, from date: Date) -> Date {
     calendar.date(byAdding: .day, value: value, to: date)!
+  }
+}
+
+@MainActor
+private final class ThrowingHistoryTrialStore: TrialDataStoring {
+  enum Failure: Error {
+    case unavailable
+  }
+
+  func save(session: TrialSession) throws {}
+  func save(interaction: TrialInteraction) throws {}
+  func upsert(
+    reflection: DailyReflection,
+    calendar: Calendar
+  ) throws {}
+  func save(oralAttempt: OralActivityAttempt) throws {}
+
+  func fetchSnapshot(
+    from start: Date,
+    through end: Date
+  ) throws -> TrialReportSnapshot {
+    throw Failure.unavailable
+  }
+
+  func reflection(
+    on day: Date,
+    calendar: Calendar
+  ) throws -> DailyReflection? {
+    nil
   }
 }
