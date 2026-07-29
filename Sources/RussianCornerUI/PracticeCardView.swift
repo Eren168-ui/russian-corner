@@ -1,6 +1,11 @@
 import RussianCornerCore
 import SwiftUI
 
+public enum PracticeCardMetrics {
+    public static let headerActionHitWidth: CGFloat = 38
+    public static let headerActionHitHeight: CGFloat = 34
+}
+
 public struct PracticeCardView: View {
     @Bindable private var appModel: AppModel
     @Bindable private var practice: PracticeViewModel
@@ -217,10 +222,15 @@ public struct PracticeCardView: View {
             } label: {
                 Image(systemName: "minus")
                     .font(.system(size: 10, weight: .semibold))
-                    .frame(width: 18, height: 18)
+                    .frame(
+                        width: PracticeCardMetrics.headerActionHitWidth,
+                        height: PracticeCardMetrics.headerActionHitHeight
+                    )
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             .foregroundStyle(palette.muted)
+            .help("收起练习卡（Control Option C）")
             .accessibilityLabel("收起练习卡")
             .accessibilityHint("全局快捷键 Control Option C")
         }

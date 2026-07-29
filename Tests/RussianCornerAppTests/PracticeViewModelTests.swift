@@ -1011,6 +1011,17 @@ private actor RuntimeReminderScheduler: ReminderSettingsScheduling {
 
 @MainActor
 final class AppModelTests: XCTestCase {
+  func testCollapseControlHasComfortableHitTarget() {
+    XCTAssertGreaterThanOrEqual(
+      PracticeCardMetrics.headerActionHitWidth,
+      36
+    )
+    XCTAssertGreaterThanOrEqual(
+      PracticeCardMetrics.headerActionHitHeight,
+      34
+    )
+  }
+
   func testRuntimeReloadsPracticeAfterTemporalBoundary() throws {
     let repository = ProgressRepository(
       container: try ProgressRepository.makeInMemoryContainer()
