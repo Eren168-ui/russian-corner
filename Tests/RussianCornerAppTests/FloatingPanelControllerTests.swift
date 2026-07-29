@@ -4,16 +4,15 @@ import XCTest
 @testable import RussianCornerUI
 
 final class FloatingPanelControllerTests: XCTestCase {
-    func testSelectedWordUsesReadableDetailPresentation() {
+    func testSelectedWordKeepsStableDetailPresentation() {
         let presentation = PracticePanelPresentation.resolve(
             isCollapsed: false,
             isDetailExpanded: true,
             hasSelectedWord: true
         )
 
-        XCTAssertEqual(presentation, .wordDetails)
-        XCTAssertGreaterThanOrEqual(presentation.size.width, 470)
-        XCTAssertGreaterThanOrEqual(presentation.size.height, 500)
+        XCTAssertEqual(presentation, .details)
+        XCTAssertEqual(presentation.size, CGSize(width: 430, height: 386))
     }
 
     func testLearningHistoryEntryIsVisibleAndComfortablyClickable() {

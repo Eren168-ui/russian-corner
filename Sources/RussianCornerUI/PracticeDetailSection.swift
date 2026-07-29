@@ -94,7 +94,10 @@ public struct PracticeDetailSection: View {
 
     public var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 9) {
+            VStack(
+                alignment: .leading,
+                spacing: practice.selectedWordAnalysis == nil ? 9 : 7
+            ) {
                 if let word = practice.selectedWordAnalysis {
                     wordContent(word)
                 } else if let lexeme = practice.currentLexeme {
@@ -122,7 +125,7 @@ public struct PracticeDetailSection: View {
                 Text(word.stressedForm)
                     .font(
                         .system(
-                            size: 25 * appModel.fontScale,
+                            size: 22 * appModel.fontScale,
                             weight: .semibold,
                             design: .serif
                         )
@@ -236,7 +239,7 @@ public struct PracticeDetailSection: View {
                                 .foregroundStyle(palette.muted)
                         }
                     }
-                    .padding(9)
+                    .padding(7)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(palette.accentSurface)
                     .clipShape(
@@ -414,8 +417,8 @@ public struct PracticeDetailSection: View {
                 .foregroundStyle(palette.primary)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(9)
-        .frame(maxWidth: .infinity, minHeight: 58, alignment: .topLeading)
+        .padding(7)
+        .frame(maxWidth: .infinity, minHeight: 44, alignment: .topLeading)
         .background(palette.accentSurface)
         .clipShape(
             RoundedRectangle(cornerRadius: 8, style: .continuous)
@@ -433,7 +436,7 @@ public struct PracticeDetailSection: View {
                 .foregroundStyle(palette.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(9)
+        .padding(7)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(palette.accentSurface)
         .clipShape(
@@ -452,7 +455,7 @@ public struct PracticeDetailSection: View {
             )
             .foregroundStyle(palette.primary)
             .padding(.horizontal, 9)
-            .frame(height: 26)
+            .frame(height: 24)
             .background(palette.accentSurface)
             .clipShape(Capsule())
     }

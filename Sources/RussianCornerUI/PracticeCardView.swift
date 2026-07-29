@@ -105,7 +105,7 @@ public struct PracticeCardView: View {
                 .padding(.vertical, 10)
                 .frame(
                     maxHeight: practice.selectedWordAnalysis == nil
-                        ? 136 : 260
+                        ? 136 : 215
                 )
             }
             Divider().overlay(palette.border)
@@ -122,12 +122,8 @@ public struct PracticeCardView: View {
         }
         .shadow(color: .black.opacity(0.16), radius: 16, y: 7)
         .frame(
-            width: practice.selectedWordAnalysis != nil
-                ? 470
-                : (practice.isDetailExpanded ? 430 : 360),
-            height: practice.selectedWordAnalysis != nil
-                ? 510
-                : (practice.isDetailExpanded ? 386 : 240)
+            width: practice.isDetailExpanded ? 430 : 360,
+            height: practice.isDetailExpanded ? 386 : 240
         )
         .task(id: practice.currentIndex) {
             while !Task.isCancelled
