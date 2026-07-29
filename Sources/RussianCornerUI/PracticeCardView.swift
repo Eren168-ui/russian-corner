@@ -4,6 +4,8 @@ import SwiftUI
 public enum PracticeCardMetrics {
     public static let headerActionHitWidth: CGFloat = 38
     public static let headerActionHitHeight: CGFloat = 34
+    public static let historyActionTitle = "记录"
+    public static let historyActionHitHeight: CGFloat = 30
 }
 
 public struct PracticeCardView: View {
@@ -15,19 +17,22 @@ public struct PracticeCardView: View {
     private let reflectionModel: DailyReflectionViewModel?
     private let onLayoutChanged: () -> Void
     private let onReminderPermissionAction: () -> Void
+    private let onOpenLearningHistory: () -> Void
 
     public init(
         appModel: AppModel,
         practice: PracticeViewModel,
         reflectionModel: DailyReflectionViewModel? = nil,
         onLayoutChanged: @escaping () -> Void = {},
-        onReminderPermissionAction: @escaping () -> Void = {}
+        onReminderPermissionAction: @escaping () -> Void = {},
+        onOpenLearningHistory: @escaping () -> Void = {}
     ) {
         self.appModel = appModel
         self.practice = practice
         self.reflectionModel = reflectionModel
         self.onLayoutChanged = onLayoutChanged
         self.onReminderPermissionAction = onReminderPermissionAction
+        self.onOpenLearningHistory = onOpenLearningHistory
     }
 
     public var body: some View {
@@ -175,6 +180,22 @@ public struct PracticeCardView: View {
                 .font(.system(size: 8, weight: .medium))
                 .foregroundStyle(palette.muted)
                 .lineLimit(1)
+            Button(action: onOpenLearningHistory) {
+                Label(
+                    PracticeCardMetrics.historyActionTitle,
+                    systemImage: "chart.bar.xaxis"
+                )
+                .font(.system(size: 8, weight: .semibold))
+                .frame(
+                    minHeight:
+                        PracticeCardMetrics.historyActionHitHeight
+                )
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(palette.accent)
+            .help("打开学习记录")
+            .accessibilityLabel("打开学习记录")
             Spacer(minLength: 8)
             Menu {
                 ForEach(FloatingCorner.allCases, id: \.self) { corner in

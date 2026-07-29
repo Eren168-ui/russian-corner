@@ -19,6 +19,54 @@ private final class RussianCornerApplicationDelegate:
   }
 }
 
+@MainActor
+private final class LearningHistoryWindowController:
+  NSWindowController
+{
+  private let runtime: AppRuntime
+
+  init(runtime: AppRuntime) {
+    self.runtime = runtime
+    let window = NSWindow(
+      contentRect: NSRect(x: 0, y: 0, width: 820, height: 720),
+      styleMask: [
+        .titled,
+        .closable,
+        .miniaturizable,
+        .resizable,
+      ],
+      backing: .buffered,
+      defer: false
+    )
+    window.title = "Russian Corner 学习记录"
+    window.minSize = NSSize(width: 720, height: 600)
+    window.isReleasedWhenClosed = false
+    window.contentViewController = NSHostingController(
+      rootView: RussianCornerProgressView(runtime: runtime)
+    )
+    super.init(window: window)
+    window.setFrameAutosaveName("RussianCornerLearningHistory")
+    window.center()
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  func show() {
+    do {
+      try runtime.refreshProgress()
+    } catch {
+      runtime.appModel.transientStatus =
+        "学习记录刷新失败：\(error.localizedDescription)"
+    }
+    showWindow(nil)
+    window?.makeKeyAndOrderFront(nil)
+    NSApplication.shared.activate(ignoringOtherApps: true)
+  }
+}
+
 @main
 @MainActor
 struct RussianCornerApp: App {
@@ -30,10 +78,19 @@ struct RussianCornerApp: App {
   private let panelController: FloatingPanelController
   private let hotKeyService: GlobalHotKeyService
   private let reportExporter: TrialReportExporter
+  private let learningHistoryWindowController:
+    LearningHistoryWindowController
 
   init() {
     let runtime = AppRuntime(enableSourceSync: true)
-    let panelController = FloatingPanelController(runtime: runtime)
+    let learningHistoryWindowController =
+      LearningHistoryWindowController(runtime: runtime)
+    let panelController = FloatingPanelController(
+      runtime: runtime,
+      onOpenLearningHistory: {
+        learningHistoryWindowController.show()
+      }
+    )
     let hotKeyService = GlobalHotKeyService()
     let reportExporter = TrialReportExporter(
       appModel: runtime.appModel
@@ -42,6 +99,8 @@ struct RussianCornerApp: App {
     self.panelController = panelController
     self.hotKeyService = hotKeyService
     self.reportExporter = reportExporter
+    self.learningHistoryWindowController =
+      learningHistoryWindowController
     applicationDelegate.runtime = runtime
 
     let issues = hotKeyService.registerDefaults(
@@ -111,7 +170,9 @@ struct RussianCornerApp: App {
       MenuBarContent(
         runtime: runtime,
         panelController: panelController,
-        reportExporter: reportExporter
+        reportExporter: reportExporter,
+        learningHistoryWindowController:
+          learningHistoryWindowController
       )
     } label: {
       Label(
@@ -123,11 +184,6 @@ struct RussianCornerApp: App {
 
     Window("Russian Corner 设置", id: "settings") {
       RussianCornerSettingsView(runtime: runtime)
-    }
-    .windowResizability(.contentSize)
-
-    Window("Russian Corner 进度", id: "progress") {
-      RussianCornerProgressView(runtime: runtime)
     }
     .windowResizability(.contentSize)
 
@@ -171,6 +227,8 @@ private struct MenuBarContent: View {
   @Bindable var runtime: AppRuntime
   let panelController: FloatingPanelController
   let reportExporter: TrialReportExporter
+  let learningHistoryWindowController:
+    LearningHistoryWindowController
 
   @Environment(\.openWindow) private var openWindow
 
@@ -218,10 +276,8 @@ private struct MenuBarContent: View {
       openWindow(id: "settings")
       NSApplication.shared.activate(ignoringOtherApps: true)
     }
-    Button("学习进度…", systemImage: "chart.bar") {
-      try? runtime.refreshProgress()
-      openWindow(id: "progress")
-      NSApplication.shared.activate(ignoringOtherApps: true)
+    Button("学习记录…", systemImage: "chart.bar") {
+      learningHistoryWindowController.show()
     }
     Button("今日反馈…", systemImage: "square.and.pencil") {
       runtime.dailyReflection?.openForEditing()

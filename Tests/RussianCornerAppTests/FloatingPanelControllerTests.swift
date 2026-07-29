@@ -4,6 +4,14 @@ import XCTest
 @testable import RussianCornerUI
 
 final class FloatingPanelControllerTests: XCTestCase {
+    func testLearningHistoryEntryIsVisibleAndComfortablyClickable() {
+        XCTAssertEqual(PracticeCardMetrics.historyActionTitle, "记录")
+        XCTAssertGreaterThanOrEqual(
+            PracticeCardMetrics.historyActionHitHeight,
+            28
+        )
+    }
+
     func testNearestCornerUsesPanelCenterAndScreenCoordinates() {
         let screen = CGRect(x: 1200, y: -900, width: 1600, height: 900)
         let panelSize = CGSize(width: 360, height: 240)
