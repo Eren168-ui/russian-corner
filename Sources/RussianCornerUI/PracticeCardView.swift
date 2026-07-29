@@ -98,11 +98,15 @@ public struct PracticeCardView: View {
                 PracticeDetailSection(
                     appModel: appModel,
                     practice: practice,
-                    palette: palette
+                    palette: palette,
+                    onLayoutChanged: onLayoutChanged
                 )
                 .padding(.horizontal, 18)
                 .padding(.vertical, 10)
-                .frame(maxHeight: 136)
+                .frame(
+                    maxHeight: practice.selectedWordAnalysis == nil
+                        ? 136 : 260
+                )
             }
             Divider().overlay(palette.border)
             bottomControls
@@ -118,8 +122,12 @@ public struct PracticeCardView: View {
         }
         .shadow(color: .black.opacity(0.16), radius: 16, y: 7)
         .frame(
-            width: practice.isDetailExpanded ? 430 : 360,
-            height: practice.isDetailExpanded ? 386 : 240
+            width: practice.selectedWordAnalysis != nil
+                ? 470
+                : (practice.isDetailExpanded ? 430 : 360),
+            height: practice.selectedWordAnalysis != nil
+                ? 510
+                : (practice.isDetailExpanded ? 386 : 240)
         )
         .task(id: practice.currentIndex) {
             while !Task.isCancelled

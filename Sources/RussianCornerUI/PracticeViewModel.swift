@@ -98,6 +98,12 @@ public struct RelatedSentenceExpression:
   public var id: String { cardID }
 }
 
+public struct WordLearningExample: Equatable, Sendable {
+  public let label: String
+  public let russian: String
+  public let translationZh: String?
+}
+
 public struct PracticeQueueEntry: Identifiable, Equatable, Sendable {
   public let content: PracticeContent
   public let isRetry: Bool
@@ -165,6 +171,7 @@ public final class PracticeViewModel {
   private let automaticDirectionAtCreation: LexemePromptDirection
   private let sentencesByID: [String: SentenceCard]
   private let sentencesByTheme: [String: [SentenceCard]]
+  private let lexemesByID: [String: Lexeme]
   private let wordAnalysesByCardID: [String: [ResolvedWordAnalysis]]
   private var states: [PracticeItemIdentity: ReviewState]
   private var successfulToday: Set<PracticeItemIdentity>
@@ -202,6 +209,37 @@ public final class PracticeViewModel {
       return nil
     }
     return lexeme
+  }
+
+  public var selectedWordExamples: [WordLearningExample] {
+    guard let word = selectedWordAnalysis else { return [] }
+    var examples: [WordLearningExample] = []
+    if let sentence = sentencesByID[word.cardID] {
+      examples.append(
+        WordLearningExample(
+          label: "本句场景",
+          russian: sentence.stressedForm ?? sentence.practiceRu,
+          translationZh: sentence.promptZh
+        )
+      )
+    }
+    if let lexemeID = word.lexemeID,
+      let lexeme = lexemesByID[lexemeID],
+      !lexeme.example.isEmpty,
+      !examples.contains(where: {
+        $0.russian.caseInsensitiveCompare(lexeme.example)
+          == .orderedSame
+      })
+    {
+      examples.append(
+        WordLearningExample(
+          label: "词条例句",
+          russian: lexeme.example,
+          translationZh: nil
+        )
+      )
+    }
+    return examples
   }
 
   public var currentContextSentence: SentenceCard? {
@@ -392,6 +430,9 @@ public final class PracticeViewModel {
     recallStartedAt = instant
     let servedLexemes = catalog.practiceLexemes
     let servedSentences = catalog.practiceSentences
+    lexemesByID = Dictionary(
+      uniqueKeysWithValues: servedLexemes.map { ($0.id, $0) }
+    )
     sentencesByID = Dictionary(
       uniqueKeysWithValues: servedSentences.map { ($0.id, $0) }
     )

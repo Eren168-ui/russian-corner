@@ -58,21 +58,38 @@ public enum WordDetailSummaryBuilder {
         )
         return value.isEmpty ? nil : value
     }
+
+    public static func visibleMorphology(
+        for word: ResolvedWordAnalysis
+    ) -> String? {
+        let value = word.morphology.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+        guard !value.isEmpty,
+            !value.hasPrefix("当前词形：")
+        else {
+            return nil
+        }
+        return value
+    }
 }
 
 public struct PracticeDetailSection: View {
     @Bindable private var appModel: AppModel
     @Bindable private var practice: PracticeViewModel
     private let palette: CardThemePalette
+    private let onLayoutChanged: () -> Void
 
     public init(
         appModel: AppModel,
         practice: PracticeViewModel,
-        palette: CardThemePalette
+        palette: CardThemePalette,
+        onLayoutChanged: @escaping () -> Void = {}
     ) {
         self.appModel = appModel
         self.practice = practice
         self.palette = palette
+        self.onLayoutChanged = onLayoutChanged
     }
 
     public var body: some View {
@@ -100,22 +117,34 @@ public struct PracticeDetailSection: View {
             word: word,
             lookupState: practice.onlineWordLookupState
         )
-        Text(summary.qualityLabel)
-            .font(.system(size: 9 * appModel.fontScale, weight: .medium))
-            .foregroundStyle(palette.muted)
-        HStack(alignment: .firstTextBaseline, spacing: 8) {
-            Text(word.stressedForm)
-                .font(
-                    .system(
-                        size: 17 * appModel.fontScale,
-                        weight: .semibold,
-                        design: .serif
+        HStack(alignment: .top, spacing: 10) {
+            VStack(alignment: .leading, spacing: 5) {
+                Text(word.stressedForm)
+                    .font(
+                        .system(
+                            size: 25 * appModel.fontScale,
+                            weight: .semibold,
+                            design: .serif
+                        )
                     )
-                )
-                .foregroundStyle(palette.primary)
-            Text(summary.glossZh)
-                .font(.system(size: 12 * appModel.fontScale))
-                .foregroundStyle(palette.secondary)
+                    .foregroundStyle(palette.primary)
+                Text(summary.glossZh)
+                    .font(
+                        .system(
+                            size: 15 * appModel.fontScale,
+                            weight: .medium
+                        )
+                    )
+                    .foregroundStyle(palette.accent)
+                Text(summary.qualityLabel)
+                    .font(
+                        .system(
+                            size: 8 * appModel.fontScale,
+                            weight: .medium
+                        )
+                    )
+                    .foregroundStyle(palette.muted)
+            }
             Spacer()
             if let url = OnlineDictionary.wiktionaryURL(for: summary.lemma) {
                 Link(destination: url) {
@@ -125,23 +154,99 @@ public struct PracticeDetailSection: View {
                 .foregroundStyle(palette.accent)
             }
         }
-        detail(
-            "词形",
-            "\(localizedPartOfSpeech(summary.partOfSpeech)) · \(word.morphology) · 原形 \(summary.lemma)"
-        )
-        if let pair = word.aspectPair, !pair.isEmpty {
-            detail("体对", pair)
+
+        LazyVGrid(
+            columns: [
+                GridItem(.flexible(), spacing: 7),
+                GridItem(.flexible(), spacing: 7),
+            ],
+            spacing: 7
+        ) {
+            factCell("原形", summary.lemma)
+            factCell("当前词形", word.surfaceText)
+            factCell(
+                "词性",
+                localizedPartOfSpeech(summary.partOfSpeech)
+            )
+            if let morphology =
+                WordDetailSummaryBuilder.visibleMorphology(for: word)
+            {
+                factCell("语法身份", morphology)
+            } else if let pair = word.aspectPair, !pair.isEmpty {
+                factCell("体对", pair)
+            }
         }
-        if let government = word.government, !government.isEmpty {
-            detail("支配", government)
+        if WordDetailSummaryBuilder.visibleMorphology(for: word) != nil,
+            let pair = word.aspectPair,
+            !pair.isEmpty
+        {
+            factCell("体对", pair)
+        }
+        if let government = word.government,
+            !government.isEmpty
+        {
+            learningBlock("常见支配", government)
         }
         if !word.collocations.isEmpty {
-            detail("搭配", word.collocations.joined(separator: " · "))
+            VStack(alignment: .leading, spacing: 5) {
+                sectionTitle("固定搭配")
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 6) {
+                        ForEach(word.collocations, id: \.self) {
+                            collocationChip($0)
+                        }
+                    }
+                    VStack(alignment: .leading, spacing: 5) {
+                        ForEach(word.collocations, id: \.self) {
+                            collocationChip($0)
+                        }
+                    }
+                }
+            }
         }
         if let usageNote = WordDetailSummaryBuilder.visibleUsageNote(
             for: word
         ) {
-            detail("在本句中", usageNote)
+            learningBlock("在本句中怎么用", usageNote)
+        }
+        if !practice.selectedWordExamples.isEmpty {
+            VStack(alignment: .leading, spacing: 6) {
+                sectionTitle("场景例句")
+                ForEach(
+                    Array(practice.selectedWordExamples.enumerated()),
+                    id: \.offset
+                ) { _, example in
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(example.russian)
+                            .font(
+                                .system(
+                                    size: 12 * appModel.fontScale,
+                                    weight: .medium,
+                                    design: .serif
+                                )
+                            )
+                            .foregroundStyle(palette.primary)
+                        if let translation = example.translationZh {
+                            Text(translation)
+                                .font(
+                                    .system(
+                                        size: 9 * appModel.fontScale
+                                    )
+                                )
+                                .foregroundStyle(palette.muted)
+                        }
+                    }
+                    .padding(9)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(palette.accentSurface)
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: 8,
+                            style: .continuous
+                        )
+                    )
+                }
+            }
         }
         onlineDictionaryContent
     }
@@ -269,6 +374,7 @@ public struct PracticeDetailSection: View {
                             cardID: expression.cardID,
                             tokenIndex: tokenIndex
                         )
+                        onLayoutChanged()
                     }
                     .font(
                         .system(
@@ -290,6 +396,72 @@ public struct PracticeDetailSection: View {
             .frame(height: 18)
             .background(palette.accentSurface)
             .clipShape(Capsule())
+    }
+
+    private func factCell(
+        _ title: String,
+        _ value: String
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            sectionTitle(title)
+            Text(value)
+                .font(
+                    .system(
+                        size: 11 * appModel.fontScale,
+                        weight: .medium
+                    )
+                )
+                .foregroundStyle(palette.primary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(9)
+        .frame(maxWidth: .infinity, minHeight: 58, alignment: .topLeading)
+        .background(palette.accentSurface)
+        .clipShape(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
+    }
+
+    private func learningBlock(
+        _ title: String,
+        _ value: String
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            sectionTitle(title)
+            Text(value)
+                .font(.system(size: 11 * appModel.fontScale))
+                .foregroundStyle(palette.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(9)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(palette.accentSurface)
+        .clipShape(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
+    }
+
+    private func collocationChip(_ value: String) -> some View {
+        Text(value)
+            .font(
+                .system(
+                    size: 10 * appModel.fontScale,
+                    weight: .medium,
+                    design: .serif
+                )
+            )
+            .foregroundStyle(palette.primary)
+            .padding(.horizontal, 9)
+            .frame(height: 26)
+            .background(palette.accentSurface)
+            .clipShape(Capsule())
+    }
+
+    private func sectionTitle(_ value: String) -> some View {
+        Text(value.uppercased())
+            .font(.system(size: 8, weight: .semibold))
+            .tracking(0.7)
+            .foregroundStyle(palette.accent)
     }
 
     private func detail(

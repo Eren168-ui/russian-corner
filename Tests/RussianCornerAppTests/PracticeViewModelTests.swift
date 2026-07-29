@@ -243,6 +243,14 @@ final class PracticeViewModelTests: XCTestCase {
     model.toggleWordAnalysis(tokenIndex: 0)
     XCTAssertEqual(model.selectedWordAnalysis?.tokenIndex, 0)
     XCTAssertTrue(model.isDetailExpanded)
+    XCTAssertEqual(
+      model.selectedWordExamples.first?.russian,
+      card.stressedForm ?? card.practiceRu
+    )
+    XCTAssertEqual(
+      model.selectedWordExamples.first?.translationZh,
+      card.promptZh
+    )
 
     model.toggleWordAnalysis(tokenIndex: 1)
     XCTAssertEqual(model.selectedWordAnalysis?.tokenIndex, 1)

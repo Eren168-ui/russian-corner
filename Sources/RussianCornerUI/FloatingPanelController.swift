@@ -6,6 +6,7 @@ public enum PracticePanelPresentation: Equatable, Sendable {
   case collapsed
   case compact
   case details
+  case wordDetails
 
   public var size: CGSize {
     switch self {
@@ -15,15 +16,21 @@ public enum PracticePanelPresentation: Equatable, Sendable {
       CGSize(width: 360, height: 240)
     case .details:
       CGSize(width: 430, height: 386)
+    case .wordDetails:
+      CGSize(width: 470, height: 510)
     }
   }
 
   public static func resolve(
     isCollapsed: Bool,
     isDetailExpanded: Bool,
+    hasSelectedWord: Bool = false,
     isReflectionPresented: Bool = false
   ) -> Self {
     if isCollapsed { return .collapsed }
+    if isDetailExpanded && hasSelectedWord {
+      return .wordDetails
+    }
     return isDetailExpanded || isReflectionPresented
       ? .details : .compact
   }
@@ -162,6 +169,8 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       isCollapsed: appModel.isCollapsed,
       isDetailExpanded:
         runtime?.practice?.isDetailExpanded == true,
+      hasSelectedWord:
+        runtime?.practice?.selectedWordAnalysis != nil,
       isReflectionPresented:
         runtime?.dailyReflection?.isCompletionOfferPresented == true
     )
