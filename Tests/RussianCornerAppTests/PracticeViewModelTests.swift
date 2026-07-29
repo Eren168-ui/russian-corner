@@ -741,6 +741,62 @@ final class PracticeViewModelTests: XCTestCase {
     XCTAssertNotEqual(first.queue.map(\.identity), nextDay.queue.map(\.identity))
   }
 
+  func testDueBacklogStillReservesFreshSentenceCards() throws {
+    let repository = try makeRepository()
+    let catalog = makeCatalog(lexemeCount: 0, sentenceCount: 12)
+    for sentence in catalog.sentences.prefix(8) {
+      try repository.saveProgress(
+        itemType: .sentence,
+        itemId: sentence.id,
+        state: ReviewState(
+          masteryLevel: 2,
+          dueAt: start.addingTimeInterval(-1)
+        )
+      )
+    }
+
+    let model = try PracticeViewModel(
+      catalog: catalog,
+      repository: repository,
+      targetCount: 7,
+      now: { self.start },
+      calendar: utcCalendar
+    )
+
+    XCTAssertGreaterThanOrEqual(
+      model.queue.filter { $0.origin == .todayNew }.count,
+      2
+    )
+    XCTAssertTrue(model.queue.contains { $0.origin == .dueReview })
+  }
+
+  func testCarryoverEntryIsLabeledYesterdayUnfinished() throws {
+    let repository = try makeRepository()
+    let catalog = makeCatalog(lexemeCount: 0, sentenceCount: 5)
+    let unfinished = PracticeItemIdentity(
+      kind: .sentence,
+      id: catalog.sentences[0].id
+    )
+
+    let model = try PracticeViewModel(
+      catalog: catalog,
+      repository: repository,
+      targetCount: 5,
+      now: { self.start },
+      calendar: utcCalendar,
+      carryoverItemIDs: [unfinished]
+    )
+
+    XCTAssertEqual(
+      model.queue.first { $0.identity == unfinished }?.origin,
+      .yesterdayUnfinished
+    )
+    XCTAssertEqual(
+      model.queue.first { $0.identity == unfinished }?.origin.title,
+      "昨日未完成"
+    )
+  }
+
   func testGradesLexemeAndSentenceWithCorrectTypeAndIdentifier() throws {
     let repository = try makeRepository()
     let model = try PracticeViewModel(
@@ -977,6 +1033,46 @@ final class AppModelTests: XCTestCase {
     let refreshedPractice = try XCTUnwrap(runtime.practice)
     XCTAssertFalse(initialPractice === refreshedPractice)
     XCTAssertNil(runtime.appModel.transientStatus)
+  }
+
+  func testRuntimeCarriesUnfinishedQueueIntoNextDayWithLabel() throws {
+    let repository = ProgressRepository(
+      container: try ProgressRepository.makeInMemoryContainer()
+    )
+    let sentences = (0..<6).map { index in
+      SentenceCard(
+        id: "carry-\(index)",
+        promptZh: "提示 \(index)",
+        cueRu: "Ситуация \(index)?",
+        practiceRu: "Ответ \(index).",
+        speechText: "Ответ \(index).",
+        theme: "carry",
+        lexemeIDs: [],
+        sourcePath: "fixture",
+        sourceText: "fixture",
+        reviewStatus: .reviewed
+      )
+    }
+    let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+    let runtime = AppRuntime(
+      defaults: defaults,
+      catalog: ContentCatalog(lexemes: [], sentences: sentences),
+      repository: repository,
+      enableSystemReminders: false
+    )
+    let initialDay = Calendar.current.startOfDay(for: Date())
+
+    runtime.refreshPracticeForTemporalBoundary(
+      now: initialDay.addingTimeInterval(36 * 60 * 60)
+    )
+
+    XCTAssertTrue(
+      try XCTUnwrap(runtime.practice).queue.contains {
+        $0.origin == .yesterdayUnfinished
+      }
+    )
   }
 
   func testSavedDiagnosticImmediatelyReloadsPracticeStrategy() throws {

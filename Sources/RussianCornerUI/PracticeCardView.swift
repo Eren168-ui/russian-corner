@@ -238,6 +238,18 @@ public struct PracticeCardView: View {
                     )
                     .font(.system(size: 9, weight: .semibold))
                     .foregroundStyle(palette.accent)
+                    if let origin = practice.currentItem?.origin {
+                        Text(origin.title)
+                            .font(.system(size: 8, weight: .semibold))
+                            .foregroundStyle(palette.primary)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(
+                                palette.secondary.opacity(0.16),
+                                in: Capsule()
+                            )
+                            .accessibilityLabel("内容来源：\(origin.title)")
+                    }
                     Spacer()
                     Text("\(practice.remainingRecallSeconds) 秒")
                         .font(.system(size: 9, weight: .medium))

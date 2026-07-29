@@ -299,6 +299,83 @@ public struct LearningProgressSnapshot: Equatable, Sendable {
   }
 }
 
+private struct DailyPracticeQueueSnapshot: Codable {
+  struct Item: Codable {
+    let kind: String
+    let id: String
+  }
+
+  let dayStart: Date
+  let items: [Item]
+}
+
+private struct DailyPracticeQueueStore {
+  private static let key = "practice.dailyQueueSnapshot.v1"
+  let defaults: UserDefaults
+
+  func unfinishedItemIDs(
+    on instant: Date,
+    events: [ReviewEvent],
+    calendar: Calendar
+  ) -> Set<PracticeItemIdentity> {
+    guard
+      let data = defaults.data(forKey: Self.key),
+      let snapshot = try? JSONDecoder().decode(
+        DailyPracticeQueueSnapshot.self,
+        from: data
+      ),
+      let previousDay = calendar.date(
+        byAdding: .day,
+        value: -1,
+        to: calendar.startOfDay(for: instant)
+      ),
+      calendar.isDate(snapshot.dayStart, inSameDayAs: previousDay)
+    else {
+      return []
+    }
+    let completed: Set<PracticeItemIdentity> = Set(
+      events.compactMap { event -> PracticeItemIdentity? in
+        guard
+          event.grade != .again,
+          calendar.isDate(event.createdAt, inSameDayAs: snapshot.dayStart)
+        else {
+          return nil
+        }
+        return PracticeItemIdentity(
+          kind: event.itemType,
+          id: event.itemId
+        )
+      }
+    )
+    return Set(snapshot.items.compactMap { item in
+      guard let kind = PracticeItemKind(rawValue: item.kind) else {
+        return nil
+      }
+      return PracticeItemIdentity(kind: kind, id: item.id)
+    }).subtracting(completed)
+  }
+
+  func save(
+    queue: [PracticeQueueEntry],
+    on instant: Date,
+    calendar: Calendar
+  ) {
+    let snapshot = DailyPracticeQueueSnapshot(
+      dayStart: calendar.startOfDay(for: instant),
+      items: queue.map {
+        DailyPracticeQueueSnapshot.Item(
+          kind: $0.kind.rawValue,
+          id: $0.id
+        )
+      }
+    )
+    guard let data = try? JSONEncoder().encode(snapshot) else {
+      return
+    }
+    defaults.set(data, forKey: Self.key)
+  }
+}
+
 @MainActor
 @Observable
 public final class AppRuntime {
@@ -325,6 +402,7 @@ public final class AppRuntime {
   private var trialSessionCoordinator: TrialSessionCoordinator?
   private let reminderScheduler: (any ReminderSettingsScheduling)?
   private var reminderSettingsCoordinator: ReminderSettingsCoordinator?
+  private let dailyQueueStore: DailyPracticeQueueStore
   private let onlineDictionary: any OnlineDictionaryLookingUp =
     YandexDictionaryService()
 
@@ -343,6 +421,7 @@ public final class AppRuntime {
       CandidateCorpusStore? = nil,
     enableSourceSync: Bool = false
   ) {
+    dailyQueueStore = DailyPracticeQueueStore(defaults: defaults)
     appModel = AppModel(defaults: defaults)
     self.enableSourceSync = enableSourceSync
     if let injectedCandidateCorpusStore {
@@ -446,6 +525,14 @@ public final class AppRuntime {
     now: @escaping () -> Date = Date.init
   ) throws {
     guard let catalog, let repository else { return }
+    let instant = now()
+    let calendar = Calendar.current
+    let events = try repository.reviewEvents()
+    let carryoverItemIDs = dailyQueueStore.unfinishedItemIDs(
+      on: instant,
+      events: events,
+      calendar: calendar
+    )
     let latestValidReport = try repository
       .diagnosticHistory()
       .entries
@@ -464,14 +551,20 @@ public final class AppRuntime {
       repository: repository,
       targetCount: appModel.dailyCardCount,
       mode: appModel.mode,
-      preferredTopicID: appModel.preferredTopic(on: now()),
-      now: now,
+      preferredTopicID: appModel.preferredTopic(on: instant),
+      now: { instant },
       diagnosticFindings: findings,
       trialTracker: trialSessionCoordinator,
-      onlineDictionary: onlineDictionary
+      onlineDictionary: onlineDictionary,
+      carryoverItemIDs: carryoverItemIDs
     )
     practice?.handleDisappear()
     practice = nextPractice
+    dailyQueueStore.save(
+      queue: nextPractice.queue,
+      on: instant,
+      calendar: calendar
+    )
   }
 
   public func refreshPracticeForTemporalBoundary(

@@ -33,6 +33,24 @@ public enum PracticeContent: Equatable, Sendable {
   case sentence(SentenceCard)
 }
 
+public enum PracticeQueueOrigin: Equatable, Sendable {
+  case todayNew
+  case dueReview
+  case yesterdayUnfinished
+  case sameDayRetry
+  case reinforcement
+
+  public var title: String {
+    switch self {
+    case .todayNew: "今日新内容"
+    case .dueReview: "到期复习"
+    case .yesterdayUnfinished: "昨日未完成"
+    case .sameDayRetry: "本日重练"
+    case .reinforcement: "巩固练习"
+    }
+  }
+}
+
 public enum LexemePromptDirection: Equatable, Sendable {
   case recognition
   case production
@@ -62,10 +80,16 @@ public struct MicroDialogueTurn: Identifiable, Equatable, Sendable {
 public struct PracticeQueueEntry: Identifiable, Equatable, Sendable {
   public let content: PracticeContent
   public let isRetry: Bool
+  public let origin: PracticeQueueOrigin
 
-  public init(content: PracticeContent, isRetry: Bool = false) {
+  public init(
+    content: PracticeContent,
+    isRetry: Bool = false,
+    origin: PracticeQueueOrigin = .todayNew
+  ) {
     self.content = content
     self.isRetry = isRetry
+    self.origin = origin
   }
 
   public var kind: PracticeItemKind {
@@ -266,7 +290,8 @@ public final class PracticeViewModel {
     scheduler: ReviewScheduler = ReviewScheduler(),
     speechService: SpeechService = SpeechService(),
     trialTracker: (any PracticeTrialTracking)? = nil,
-    onlineDictionary: (any OnlineDictionaryLookingUp)? = nil
+    onlineDictionary: (any OnlineDictionaryLookingUp)? = nil,
+    carryoverItemIDs: Set<PracticeItemIdentity> = []
   ) throws {
     self.repository = repository
     let sentenceTargetCount = min(max(targetCount, 5), 10)
@@ -494,27 +519,72 @@ public final class PracticeViewModel {
       salt: 17
     )
 
+    let carryover = carryoverItemIDs
+      .subtracting(successfulTodaySet)
+      .subtracting(retryToday)
+    let carryoverLexemes = Self.dailyOrder(
+      servedLexemes.filter {
+        carryover.contains(
+          PracticeItemIdentity(kind: .lexeme, id: $0.id)
+        )
+      },
+      dayIndex: dayIndex,
+      salt: 7
+    )
     var lexemeEntries: [PracticeQueueEntry] = orderedRetryIdentities
       .filter { $0.kind == .lexeme }
       .compactMap { identity in
         servedLexemes.first { $0.id == identity.id }
       }
-      .map { PracticeQueueEntry(content: .lexeme($0), isRetry: true) }
-    if weeklyReviewDay && hasLearnedContent {
-      lexemeEntries += orderedLearnedLexemes
-        .prefix(max(diagnosedNewWordLimit, 1))
-        .map { PracticeQueueEntry(content: .lexeme($0)) }
-    } else {
-      lexemeEntries += orderedDueLexemes.prefix(20).map {
-        PracticeQueueEntry(content: .lexeme($0))
+      .map {
+        PracticeQueueEntry(
+          content: .lexeme($0),
+          isRetry: true,
+          origin: .sameDayRetry
+        )
       }
-      lexemeEntries += orderedFreshLexemes
+    lexemeEntries += carryoverLexemes.prefix(2).map {
+      PracticeQueueEntry(
+        content: .lexeme($0),
+        origin: .yesterdayUnfinished
+      )
+    }
+    let queuedLexemeIDs = Set(lexemeEntries.map(\.id))
+    if weeklyReviewDay && hasLearnedContent {
+      lexemeEntries += orderedLearnedLexemes.filter {
+        !queuedLexemeIDs.contains($0.id)
+      }
+        .prefix(max(diagnosedNewWordLimit, 1))
+        .map {
+          PracticeQueueEntry(
+            content: .lexeme($0),
+            origin: .reinforcement
+          )
+        }
+    } else {
+      lexemeEntries += orderedDueLexemes.filter {
+        !queuedLexemeIDs.contains($0.id)
+      }.prefix(20).map {
+        PracticeQueueEntry(
+          content: .lexeme($0),
+          origin: .dueReview
+        )
+      }
+      let queuedAfterDue = Set(lexemeEntries.map(\.id))
+      lexemeEntries += orderedFreshLexemes.filter {
+        !queuedAfterDue.contains($0.id)
+      }
         .prefix(newWordsRemaining)
-        .map { PracticeQueueEntry(content: .lexeme($0)) }
+        .map {
+          PracticeQueueEntry(
+            content: .lexeme($0),
+            origin: .todayNew
+          )
+        }
     }
 
     let sentenceExcluded = successfulTodaySet.union(retryToday)
-    let freshSentenceCandidates =
+    let topicFreshSentenceCandidates =
       weeklyReviewDay && hasLearnedContent
       ? []
       : Self.dailyOrder(
@@ -530,52 +600,125 @@ public final class PracticeViewModel {
         dayIndex: dayIndex,
         salt: 29
       )
-    let sentenceCandidates =
-      Self.dailyOrder(
-        dueSentences.filter {
+    let otherFreshSentenceCandidates =
+      weeklyReviewDay && hasLearnedContent
+      ? []
+      : Self.dailyOrder(
+        freshSentences.filter {
           !sentenceExcluded.contains(
             PracticeItemIdentity(kind: .sentence, id: $0.id)
           )
+            && !topicFreshSentenceCandidates.contains($0)
         },
         dayIndex: dayIndex,
-        salt: 23
+        salt: 37
       )
-      + freshSentenceCandidates
-      + Self.dailyOrder(
-        learnedSentences.filter {
-          let identity = PracticeItemIdentity(
-            kind: .sentence,
-            id: $0.id
+    let freshSentenceCandidates =
+      topicFreshSentenceCandidates + otherFreshSentenceCandidates
+    let orderedDueSentences = Self.dailyOrder(
+      dueSentences.filter {
+        !sentenceExcluded.contains(
+          PracticeItemIdentity(kind: .sentence, id: $0.id)
+        )
+      },
+      dayIndex: dayIndex,
+      salt: 23
+    )
+    let reinforcementSentences = Self.dailyOrder(
+      learnedSentences.filter {
+        let identity = PracticeItemIdentity(
+          kind: .sentence,
+          id: $0.id
+        )
+        guard let dueAt = restored[identity]?.dueAt else {
+          return false
+        }
+        return dueAt > instant
+          && !sentenceExcluded.contains(identity)
+          && (
+            primaryTopicID == nil
+              || $0.topicID == primaryTopicID
           )
-          guard let dueAt = restored[identity]?.dueAt else {
-            return false
-          }
-          return dueAt > instant
-            && !sentenceExcluded.contains(identity)
-            && (
-              primaryTopicID == nil
-                || $0.topicID == primaryTopicID
-            )
-        },
-        dayIndex: dayIndex,
-        salt: 31
-      )
+      },
+      dayIndex: dayIndex,
+      salt: 31
+    )
     var sentenceEntries: [PracticeQueueEntry] = orderedRetryIdentities
       .filter { $0.kind == .sentence }
       .compactMap { identity in
         servedSentences.first { $0.id == identity.id }
       }
-      .map { PracticeQueueEntry(content: .sentence($0), isRetry: true) }
+      .map {
+        PracticeQueueEntry(
+          content: .sentence($0),
+          isRetry: true,
+          origin: .sameDayRetry
+        )
+      }
     var seenSentenceIDs = Set(sentenceEntries.map(\.id))
-    for sentence in sentenceCandidates
-    where sentenceEntries.count
-      < orderedRetryIdentities.filter({ $0.kind == .sentence }).count
-        + sentenceCardsRemaining
-      && seenSentenceIDs.insert(sentence.id).inserted
-    {
+    let sentenceLimit =
+      orderedRetryIdentities.filter({ $0.kind == .sentence }).count
+      + sentenceCardsRemaining
+    let carryoverSentences = Self.dailyOrder(
+      servedSentences.filter {
+        carryover.contains(
+          PracticeItemIdentity(kind: .sentence, id: $0.id)
+        )
+      },
+      dayIndex: dayIndex,
+      salt: 5
+    )
+    for sentence in carryoverSentences.prefix(2)
+    where sentenceEntries.count < sentenceLimit
+      && seenSentenceIDs.insert(sentence.id).inserted {
       sentenceEntries.append(
-        PracticeQueueEntry(content: .sentence(sentence))
+        PracticeQueueEntry(
+          content: .sentence(sentence),
+          origin: .yesterdayUnfinished
+        )
       )
+    }
+    let availableSlots = max(0, sentenceLimit - sentenceEntries.count)
+    let freshReserve = weeklyReviewDay && hasLearnedContent
+      ? 0
+      : min(
+        freshSentenceCandidates.filter {
+          !seenSentenceIDs.contains($0.id)
+        }.count,
+        min(availableSlots, max(2, sentenceCardsRemaining * 3 / 10))
+      )
+    for sentence in orderedDueSentences
+    where sentenceEntries.count < sentenceLimit - freshReserve
+      && seenSentenceIDs.insert(sentence.id).inserted {
+      sentenceEntries.append(
+        PracticeQueueEntry(
+          content: .sentence(sentence),
+          origin: .dueReview
+        )
+      )
+    }
+    for sentence in freshSentenceCandidates
+    where sentenceEntries.count < sentenceLimit
+      && seenSentenceIDs.insert(sentence.id).inserted {
+      sentenceEntries.append(
+        PracticeQueueEntry(
+          content: .sentence(sentence),
+          origin: .todayNew
+        )
+      )
+    }
+    if sentenceEntries.count < sentenceLimit {
+      for sentence in orderedDueSentences + reinforcementSentences
+      where sentenceEntries.count < sentenceLimit
+        && seenSentenceIDs.insert(sentence.id).inserted {
+        sentenceEntries.append(
+          PracticeQueueEntry(
+            content: .sentence(sentence),
+            origin: orderedDueSentences.contains(sentence)
+              ? .dueReview : .reinforcement
+          )
+        )
+      }
     }
     isWeeklyReviewDay = weeklyReviewDay
     newWordLimit = adaptiveNewWordLimit
