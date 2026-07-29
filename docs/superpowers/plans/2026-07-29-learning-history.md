@@ -1,6 +1,6 @@
 # Russian Corner Learning History Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add a card-level entry and a separate native learning-history window backed entirely by persisted local learning data.
 
@@ -29,7 +29,7 @@
 - Create: `Tests/RussianCornerAppTests/LearningHistoryTests.swift`
 - Create: `Sources/RussianCornerUI/LearningHistory.swift`
 
-- [ ] **Step 1: Write failing tests**
+- [x] **Step 1: Write failing tests**
 
 Add tests that construct events across eight calendar days and assert:
 
@@ -58,7 +58,7 @@ XCTAssertEqual(snapshot.masteredSentenceCount, 1)
 XCTAssertEqual(snapshot.coveredTopics.map(\.id), ["topic-1"])
 ```
 
-- [ ] **Step 2: Verify RED**
+- [x] **Step 2: Verify RED**
 
 Run:
 
@@ -68,7 +68,7 @@ swift test --filter LearningHistoryTests
 
 Expected: compilation fails because `LearningHistoryBuilder`, `LearningHistorySnapshot`, and `DailyLearningRecord` do not exist.
 
-- [ ] **Step 3: Implement the minimal immutable model and builder**
+- [x] **Step 3: Implement the minimal immutable model and builder**
 
 Implement:
 
@@ -100,7 +100,7 @@ public struct LearningHistorySnapshot: Equatable, Sendable {
 
 `LearningHistoryBuilder.build(...)` must normalize all dates with the injected calendar, generate exactly seven ordered dates, count successful unique items, treat `.again` as incorrect, carry streak from yesterday when today is empty, and derive each day’s target from its earliest session.
 
-- [ ] **Step 4: Verify GREEN**
+- [x] **Step 4: Verify GREEN**
 
 Run:
 
@@ -110,7 +110,7 @@ swift test --filter LearningHistoryTests
 
 Expected: all `LearningHistoryTests` pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Sources/RussianCornerUI/LearningHistory.swift Tests/RussianCornerAppTests/LearningHistoryTests.swift
@@ -123,7 +123,7 @@ git commit -m "feat: aggregate seven-day learning history"
 - Modify: `Sources/RussianCornerUI/AppModel.swift`
 - Modify: `Tests/RussianCornerAppTests/PracticeViewModelTests.swift`
 
-- [ ] **Step 1: Write failing runtime tests**
+- [x] **Step 1: Write failing runtime tests**
 
 Use in-memory `ProgressRepository` and a `TrialDataStoring` fixture. Assert:
 
@@ -135,7 +135,7 @@ XCTAssertEqual(runtime.learningHistory.recentDays.count, 7)
 
 Add a throwing trial store and assert the method still returns core summary data while setting a nonfatal history status.
 
-- [ ] **Step 2: Verify RED**
+- [x] **Step 2: Verify RED**
 
 Run:
 
@@ -145,7 +145,7 @@ swift test --filter AppModelTests/testRuntimeLearningHistory
 
 Expected: compilation fails because `learningHistory` and `refreshLearningHistory` do not exist.
 
-- [ ] **Step 3: Integrate the builder**
+- [x] **Step 3: Integrate the builder**
 
 Add:
 
@@ -156,7 +156,7 @@ public private(set) var learningHistoryStatus: String?
 
 Implement `refreshLearningHistory(now:calendar:)` to read core events/mastery, fetch the seven-day trial snapshot when available, fall back to `.empty` on trial failure, and call `LearningHistoryBuilder`. Keep `refreshProgress` as a compatibility wrapper populated from the new snapshot until callers are migrated.
 
-- [ ] **Step 4: Verify GREEN**
+- [x] **Step 4: Verify GREEN**
 
 Run:
 
@@ -166,7 +166,7 @@ swift test --filter AppModelTests
 
 Expected: all `AppModelTests` pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Sources/RussianCornerUI/AppModel.swift Tests/RussianCornerAppTests/PracticeViewModelTests.swift
@@ -181,7 +181,7 @@ git commit -m "feat: expose persisted learning history in runtime"
 - Modify: `Sources/RussianCornerApp/RussianCornerApp.swift`
 - Modify: `Tests/RussianCornerAppTests/FloatingPanelControllerTests.swift`
 
-- [ ] **Step 1: Write the failing entry contract test**
+- [x] **Step 1: Write the failing entry contract test**
 
 Assert the card presentation contract includes a text entry with a comfortable hit target:
 
@@ -190,7 +190,7 @@ XCTAssertEqual(PracticeCardMetrics.historyActionTitle, "记录")
 XCTAssertGreaterThanOrEqual(PracticeCardMetrics.historyActionHitHeight, 28)
 ```
 
-- [ ] **Step 2: Verify RED**
+- [x] **Step 2: Verify RED**
 
 Run:
 
@@ -200,7 +200,7 @@ swift test --filter PracticePanelPresentationTests
 
 Expected: compilation fails because the history action metrics do not exist.
 
-- [ ] **Step 3: Add the callback and window controller**
+- [x] **Step 3: Add the callback and window controller**
 
 Add `onOpenLearningHistory: () -> Void` to `PracticeCardView` and render:
 
@@ -213,7 +213,7 @@ Button(action: onOpenLearningHistory) {
 
 Pass the callback through `FloatingPanelController`. In the app target, create one `LearningHistoryWindowController` using `NSHostingController(rootView: RussianCornerProgressView(runtime: runtime))`. Route both the card and menu action through its `show()` method; refresh data before presenting and call `NSApplication.shared.activate(ignoringOtherApps: true)`.
 
-- [ ] **Step 4: Verify GREEN**
+- [x] **Step 4: Verify GREEN**
 
 Run:
 
@@ -224,7 +224,7 @@ swift build
 
 Expected: tests and compilation pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Sources/RussianCornerUI/PracticeCardView.swift Sources/RussianCornerUI/FloatingPanelController.swift Sources/RussianCornerApp/RussianCornerApp.swift Tests/RussianCornerAppTests/FloatingPanelControllerTests.swift
@@ -236,7 +236,7 @@ git commit -m "feat: open learning history from practice card"
 **Files:**
 - Modify: `Sources/RussianCornerUI/ProgressView.swift`
 
-- [ ] **Step 1: Write a failing formatting test**
+- [x] **Step 1: Write a failing formatting test**
 
 Add pure display helpers to `LearningHistory.swift` and tests for:
 
@@ -246,7 +246,7 @@ XCTAssertEqual(snapshot.todayProgressText, "8 / 10")
 XCTAssertEqual(empty.todayAccuracyText, "—")
 ```
 
-- [ ] **Step 2: Verify RED**
+- [x] **Step 2: Verify RED**
 
 Run:
 
@@ -256,7 +256,7 @@ swift test --filter LearningHistoryTests/testDisplay
 
 Expected: compilation fails because the display helpers do not exist.
 
-- [ ] **Step 3: Build the dashboard**
+- [x] **Step 3: Build the dashboard**
 
 Replace the fixed summary-only view with a scrollable 820 × 720 dashboard containing:
 
@@ -270,7 +270,7 @@ Replace the fixed summary-only view with a scrollable 820 × 720 dashboard conta
 
 Use only SwiftUI primitives and existing palette conventions. All metric values must come from `runtime.learningHistory`.
 
-- [ ] **Step 4: Verify GREEN**
+- [x] **Step 4: Verify GREEN**
 
 Run:
 
@@ -281,7 +281,7 @@ swift build
 
 Expected: tests and build pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Sources/RussianCornerUI/LearningHistory.swift Sources/RussianCornerUI/ProgressView.swift Tests/RussianCornerAppTests/LearningHistoryTests.swift
@@ -293,7 +293,7 @@ git commit -m "feat: render learning history dashboard"
 **Files:**
 - Create: `Verification/2026-07-29-learning-history-acceptance.md`
 
-- [ ] **Step 1: Run the complete test suite**
+- [x] **Step 1: Run the complete test suite**
 
 ```bash
 swift test
@@ -301,7 +301,7 @@ swift test
 
 Expected: zero failures; opt-in live dictionary test may remain skipped.
 
-- [ ] **Step 2: Build the local application**
+- [x] **Step 2: Build the local application**
 
 ```bash
 Scripts/build-app.sh
@@ -309,7 +309,7 @@ Scripts/build-app.sh
 
 Expected: exit 0 and a locally runnable `.app` artifact. Do not deploy or publish.
 
-- [ ] **Step 3: Launch and visually inspect**
+- [x] **Step 3: Launch and visually inspect**
 
 Open the locally built app, click the practice-card “记录” button, and verify:
 
@@ -323,11 +323,11 @@ Open the locally built app, click the practice-card “记录” button, and ver
 
 Save a screenshot under `Verification/`.
 
-- [ ] **Step 4: Record acceptance evidence**
+- [x] **Step 4: Record acceptance evidence**
 
 Write exact test counts, build artifact path, screenshot path, and checklist results to `Verification/2026-07-29-learning-history-acceptance.md`.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Verification/2026-07-29-learning-history-acceptance.md Verification/2026-07-29-learning-history.png
