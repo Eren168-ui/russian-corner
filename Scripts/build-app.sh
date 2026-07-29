@@ -616,7 +616,7 @@ plutil -create xml1 "$STAGED_INFO_PLIST"
   "Add :CFBundlePackageType string APPL" "$STAGED_INFO_PLIST"
 /usr/libexec/PlistBuddy -c \
   "Add :CFBundleIconFile string RussianCorner.icns" "$STAGED_INFO_PLIST"
-/usr/libexec/PlistBuddy -c "Add :LSUIElement bool true" "$STAGED_INFO_PLIST"
+/usr/libexec/PlistBuddy -c "Add :LSUIElement bool false" "$STAGED_INFO_PLIST"
 /usr/libexec/PlistBuddy -c \
   "Add :LSMinimumSystemVersion string 14.0" "$STAGED_INFO_PLIST"
 /usr/libexec/PlistBuddy -c \
