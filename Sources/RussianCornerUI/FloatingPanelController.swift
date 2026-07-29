@@ -43,10 +43,15 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   private var moveDebounceTask: Task<Void, Never>?
   private var isSnapping = false
   private var suppressMoveRecordingUntil = Date.distantPast
+  private let onOpenLearningHistory: () -> Void
 
-  public init(runtime: AppRuntime) {
+  public init(
+    runtime: AppRuntime,
+    onOpenLearningHistory: @escaping () -> Void = {}
+  ) {
     self.runtime = runtime
     appModel = runtime.appModel
+    self.onOpenLearningHistory = onOpenLearningHistory
     panel = PassiveFloatingPanel(
       contentRect: CGRect(
         origin: .zero,
@@ -80,7 +85,8 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
         runtime: runtime,
         onLayoutChanged: { [weak self] in
           self?.refreshLayout()
-        }
+        },
+        onOpenLearningHistory: onOpenLearningHistory
       )
     )
 
@@ -342,6 +348,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
 private struct FloatingPracticeRoot: View {
   @Bindable var runtime: AppRuntime
   let onLayoutChanged: () -> Void
+  let onOpenLearningHistory: () -> Void
 
   var body: some View {
     if let practice = runtime.practice {
@@ -354,7 +361,8 @@ private struct FloatingPracticeRoot: View {
           Task {
             await runtime.performReminderPermissionAction()
           }
-        }
+        },
+        onOpenLearningHistory: onOpenLearningHistory
       )
     } else {
       unavailableCard
