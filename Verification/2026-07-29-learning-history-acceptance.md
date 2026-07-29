@@ -13,6 +13,10 @@
   - 271 tests
   - 0 failures
   - 1 skipped（同一 opt-in 测试）
+- 合并到当前 `main` 后：`swift test`
+  - 272 tests
+  - 0 failures
+  - 1 skipped（同一 opt-in 测试）
 - Release 构建：`Scripts/build-app.sh`
   - exit code 0
   - `resource_probe=PASS`
@@ -23,7 +27,7 @@
 
 ## 构建产物
 
-`/Users/Openclawworkspace/workspace/russian-corner/.worktrees/learning-history/dist/Russian Corner.app`
+`/Users/Openclawworkspace/workspace/russian-corner/dist/Russian Corner.app`
 
 ## 实际界面验收
 
