@@ -183,6 +183,23 @@ final class LearningHistoryTests: XCTestCase {
     XCTAssertNotNil(runtime.learningHistoryStatus)
   }
 
+  func testDisplayFormattingUsesGoalAndHonestEmptyAccuracy() {
+    let populated = LearningHistorySnapshot(
+      todayCompleted: 8,
+      todayTarget: 10,
+      todayCorrectCount: 2,
+      todayAttemptCount: 3
+    )
+    let empty = LearningHistorySnapshot(
+      todayCompleted: 0,
+      todayTarget: 10
+    )
+
+    XCTAssertEqual(populated.todayProgressText, "8 / 10")
+    XCTAssertEqual(populated.todayAccuracyText, "67%")
+    XCTAssertEqual(empty.todayAccuracyText, "—")
+  }
+
   private func event(
     _ grade: ReviewGrade,
     kind: PracticeItemKind = .lexeme,

@@ -82,6 +82,15 @@ public struct LearningHistorySnapshot: Equatable, Sendable {
   public var masteredTotal: Int {
     masteredLexemeCount + masteredSentenceCount
   }
+
+  public var todayProgressText: String {
+    "\(todayCompleted) / \(todayTarget)"
+  }
+
+  public var todayAccuracyText: String {
+    guard let todayAccuracy else { return "—" }
+    return "\(Int((todayAccuracy * 100).rounded()))%"
+  }
 }
 
 public enum LearningHistoryBuilder {
