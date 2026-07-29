@@ -581,7 +581,7 @@ final class PracticeViewModelTests: XCTestCase {
     )
   }
 
-  func testSentenceCardOffersTwoTurnThemeMicroDialogue() throws {
+  func testSentenceDetailExposesSourceAndRelatedExpressions() throws {
     let sentences = (0..<2).map { index in
       SentenceCard(
         id: "dialogue-\(index)",
@@ -591,9 +591,14 @@ final class PracticeViewModelTests: XCTestCase {
         speechText: "Ответ \(index).",
         theme: "共同场景",
         lexemeIDs: [],
-        sourcePath: "fixture.md",
+        sourcePath: "具体场景对话/Тема 23. Мои ребята..md",
         sourceText: "fixture",
-        reviewStatus: .reviewed
+        reviewStatus: .reviewed,
+        provenanceType: .courseMaterial,
+        dialogueAct: index == 0 ? "informationQuestion" : "statement",
+        register: .neutral,
+        speakerRole: "同学或朋友",
+        topicID: "topic-23"
       )
     }
     let model = try PracticeViewModel(
@@ -605,14 +610,57 @@ final class PracticeViewModelTests: XCTestCase {
     )
 
     XCTAssertEqual(model.currentItem?.kind, .sentence)
-    XCTAssertEqual(model.microDialogueTurns.count, 2)
+    XCTAssertEqual(model.currentSentenceSource?.theme, "共同场景")
     XCTAssertEqual(
-      model.microDialogueTurns.map(\.cue),
-      [
-        "Что вы скажете в ситуации 0?",
-        "Что вы скажете в ситуации 1?",
-      ]
+      model.currentSentenceSource?.fileName,
+      "Тема 23. Мои ребята..md"
     )
+    XCTAssertEqual(
+      model.currentSentenceSource?.dialogueActLabel,
+      "询问信息"
+    )
+    XCTAssertEqual(model.relatedSentenceExpressions.count, 1)
+    XCTAssertEqual(
+      model.relatedSentenceExpressions.map(\.text),
+      ["Ответ 1."]
+    )
+  }
+
+  func testRelatedSentenceWordsCanOpenTheirOwnAnalysis() throws {
+    let sentences = (0..<3).map { index in
+      SentenceCard(
+        id: "related-\(index)",
+        promptZh: "意图 \(index)",
+        cueRu: "Что сказать?",
+        practiceRu: "Ответ \(index).",
+        speechText: "Ответ \(index).",
+        theme: "共同场景",
+        lexemeIDs: [],
+        sourcePath: "source.md",
+        sourceText: "fixture",
+        reviewStatus: .reviewed
+      )
+    }
+    let model = try PracticeViewModel(
+      catalog: ContentCatalog(lexemes: [], sentences: sentences),
+      repository: try makeRepository(),
+      targetCount: 5,
+      now: { self.start },
+      calendar: utcCalendar
+    )
+    let related = try XCTUnwrap(model.relatedSentenceExpressions.first)
+    model.reveal()
+
+    model.toggleWordAnalysis(
+      cardID: related.cardID,
+      tokenIndex: 0
+    )
+
+    XCTAssertEqual(
+      model.selectedWordAnalysis?.cardID,
+      related.cardID
+    )
+    XCTAssertTrue(model.isDetailExpanded)
   }
 
   func testAgainAppendsOneRetryAndSuccessfulRetryCompletes() throws {

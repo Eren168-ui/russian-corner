@@ -206,29 +206,74 @@ public struct PracticeDetailSection: View {
 
     @ViewBuilder
     private var dialogueContent: some View {
-        if practice.microDialogueTurns.count >= 2 {
-            ForEach(
-                Array(practice.microDialogueTurns.enumerated()),
-                id: \.element.id
-            ) { index, turn in
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("A\(index + 1) · \(turn.cue)")
-                        .font(.system(size: 10 * appModel.fontScale))
-                        .foregroundStyle(palette.muted)
-                    Text("Вы · \(turn.response)")
-                        .font(
-                            .system(
-                                size: 12 * appModel.fontScale,
-                                design: .serif
-                            )
-                        )
-                        .foregroundStyle(palette.secondary)
+        if let source = practice.currentSentenceSource {
+            HStack(spacing: 5) {
+                sourceTag(source.provenanceLabel)
+                if let act = source.dialogueActLabel {
+                    sourceTag(act)
+                }
+                ForEach(source.usageLabels, id: \.self) {
+                    sourceTag($0)
                 }
             }
-        } else if let card = practice.currentCard {
-            detail("场景", card.theme)
-            detail("俄语提示", card.cueRu)
+            detail(
+                "来源",
+                "\(source.theme) · \(source.fileName)"
+            )
         }
+
+        if !practice.isRevealed {
+            Text("显示答案后，可查看同场景延伸表达；其中每个俄语词都可以点击。")
+                .font(.system(size: 9 * appModel.fontScale))
+                .foregroundStyle(palette.muted)
+        } else if practice.relatedSentenceExpressions.isEmpty {
+            Text("点击上方答案中的任意俄语词，可查看词义、词形和用法。")
+                .font(.system(size: 9 * appModel.fontScale))
+                .foregroundStyle(palette.muted)
+        } else {
+            Text("同场景延伸 · 点击任意俄语词")
+                .font(.system(size: 8, weight: .semibold))
+                .tracking(0.6)
+                .foregroundStyle(palette.accent)
+            ForEach(practice.relatedSentenceExpressions) { expression in
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(expression.promptZh)
+                        .font(.system(size: 9 * appModel.fontScale))
+                        .foregroundStyle(palette.muted)
+                    InteractiveRussianText(
+                        text: expression.text,
+                        analyses: expression.analyses,
+                        selectedTokenIndex:
+                            practice.selectedWordAnalysis?.cardID
+                                == expression.cardID
+                            ? practice.selectedWordAnalysis?.tokenIndex
+                            : nil
+                    ) { tokenIndex in
+                        practice.toggleWordAnalysis(
+                            cardID: expression.cardID,
+                            tokenIndex: tokenIndex
+                        )
+                    }
+                    .font(
+                        .system(
+                            size: 11 * appModel.fontScale,
+                            design: .serif
+                        )
+                    )
+                    .foregroundStyle(palette.secondary)
+                }
+            }
+        }
+    }
+
+    private func sourceTag(_ value: String) -> some View {
+        Text(value)
+            .font(.system(size: 8, weight: .medium))
+            .foregroundStyle(palette.secondary)
+            .padding(.horizontal, 6)
+            .frame(height: 18)
+            .background(palette.accentSurface)
+            .clipShape(Capsule())
     }
 
     private func detail(

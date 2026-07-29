@@ -77,6 +77,27 @@ public struct MicroDialogueTurn: Identifiable, Equatable, Sendable {
   }
 }
 
+public struct SentenceSourceSummary: Equatable, Sendable {
+  public let theme: String
+  public let fileName: String
+  public let provenanceLabel: String
+  public let dialogueActLabel: String?
+  public let usageLabels: [String]
+}
+
+public struct RelatedSentenceExpression:
+  Identifiable,
+  Equatable,
+  Sendable
+{
+  public let cardID: String
+  public let promptZh: String
+  public let text: String
+  public let analyses: [ResolvedWordAnalysis]
+
+  public var id: String { cardID }
+}
+
 public struct PracticeQueueEntry: Identifiable, Equatable, Sendable {
   public let content: PracticeContent
   public let isRetry: Bool
@@ -203,6 +224,54 @@ public final class PracticeViewModel {
         response: $0.practiceRu
       )
     }
+  }
+
+  public var currentSentenceSource: SentenceSourceSummary? {
+    guard let card = currentCard else { return nil }
+    var usageLabels: [String] = []
+    if let role = card.speakerRole, !role.isEmpty {
+      usageLabels.append(role)
+    }
+    if let register = card.register {
+      usageLabels.append(Self.localizedRegister(register))
+    }
+    if let address = card.addressForm,
+      address != .notApplicable
+    {
+      usageLabels.append(address.rawValue)
+    }
+    return SentenceSourceSummary(
+      theme: card.theme,
+      fileName: Self.sourceDisplayName(card.sourcePath),
+      provenanceLabel: Self.localizedProvenance(
+        card.provenanceType
+      ),
+      dialogueActLabel: card.dialogueAct.map(
+        Self.localizedDialogueAct
+      ),
+      usageLabels: usageLabels
+    )
+  }
+
+  public var relatedSentenceExpressions: [RelatedSentenceExpression] {
+    guard let current = currentCard else { return [] }
+    return (sentencesByTheme[current.theme] ?? [])
+      .filter { $0.id != current.id }
+      .prefix(2)
+      .map {
+        RelatedSentenceExpression(
+          cardID: $0.id,
+          promptZh: $0.promptZh,
+          text: $0.stressedForm ?? $0.practiceRu,
+          analyses: wordAnalysesByCardID[$0.id] ?? []
+        )
+      }
+  }
+
+  public func wordAnalyses(
+    forCardID cardID: String
+  ) -> [ResolvedWordAnalysis] {
+    wordAnalysesByCardID[cardID] ?? []
   }
 
   public var lexemeGrammarLabels: [String] {
@@ -772,8 +841,16 @@ public final class PracticeViewModel {
   }
 
   public func toggleWordAnalysis(tokenIndex: Int) {
+    guard let cardID = currentCard?.id else { return }
+    toggleWordAnalysis(cardID: cardID, tokenIndex: tokenIndex)
+  }
+
+  public func toggleWordAnalysis(
+    cardID: String,
+    tokenIndex: Int
+  ) {
     guard isRevealed else { return }
-    guard let analysis = currentSentenceWords.first(where: {
+    guard let analysis = wordAnalyses(forCardID: cardID).first(where: {
       $0.tokenIndex == tokenIndex
     }) else {
       return
@@ -798,6 +875,59 @@ public final class PracticeViewModel {
         occurredAt: now()
       )
     )
+  }
+
+  private static func sourceDisplayName(_ sourcePath: String) -> String {
+    if sourcePath.hasPrefix("curated://") {
+      let name = sourcePath.split(separator: "/").last.map(String.init)
+        ?? sourcePath
+      return "应用内策展语料 · \(name)"
+    }
+    return URL(fileURLWithPath: sourcePath).lastPathComponent
+  }
+
+  private static func localizedProvenance(
+    _ provenance: ProvenanceType?
+  ) -> String {
+    switch provenance {
+    case .courseMaterial: "课程材料"
+    case .userNote: "用户笔记"
+    case .derived: "派生审核语料"
+    case .aiGenerated: "AI 生成候选"
+    case nil: "本地审核语料"
+    }
+  }
+
+  private static func localizedRegister(
+    _ register: DialogueRegister
+  ) -> String {
+    switch register {
+    case .informal: "非正式"
+    case .neutral: "中性表达"
+    case .polite: "礼貌表达"
+    case .formal: "正式表达"
+    case .textbook: "教材表达"
+    case .possiblyDated: "可能较旧"
+    }
+  }
+
+  private static func localizedDialogueAct(_ value: String) -> String {
+    switch value {
+    case "informationQuestion": "询问信息"
+    case "statement": "陈述信息"
+    case "greetingAndPermission": "问候并征求许可"
+    case "smallTalkQuestion": "寒暄提问"
+    case "farewell": "告别"
+    case "apology": "道歉"
+    case "clarification": "澄清"
+    case "requestCallback": "请求回电"
+    case "askLocation": "询问位置"
+    case "askRoute": "问路"
+    case "giveDirections": "指路"
+    case "advice": "建议"
+    case "reportSymptom": "描述症状"
+    default: value
+    }
   }
 
   public func clearWordAnalysis() {
