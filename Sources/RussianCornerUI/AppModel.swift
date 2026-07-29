@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import Observation
 import RussianCornerCore
@@ -41,6 +42,18 @@ public enum FloatingPlacementMode:
     switch self {
     case .free: "自由拖放"
     case .snap: "四角吸附"
+    }
+  }
+}
+
+public enum ReminderPermissionAction: Equatable, Sendable {
+  case requestPermission
+  case openSystemSettings
+
+  public var title: String {
+    switch self {
+    case .requestPermission: "开启通知"
+    case .openSystemSettings: "去开启"
     }
   }
 }
@@ -161,6 +174,7 @@ public final class AppModel {
     }
   }
   public var transientStatus: String?
+  public var reminderPermissionAction: ReminderPermissionAction?
   public private(set) var preferredTopicID: String?
   public private(set) var preferredTopicDay: Date?
 
@@ -403,6 +417,7 @@ public final class AppRuntime {
   private let reminderScheduler: (any ReminderSettingsScheduling)?
   private var reminderSettingsCoordinator: ReminderSettingsCoordinator?
   private let dailyQueueStore: DailyPracticeQueueStore
+  private let notificationSettingsOpener: () -> Bool
   private let onlineDictionary: any OnlineDictionaryLookingUp =
     YandexDictionaryService()
 
@@ -416,12 +431,17 @@ public final class AppRuntime {
       (() throws -> any TrialDataStoring)? = nil,
     reminderScheduler injectedReminderScheduler:
       (any ReminderSettingsScheduling)? = nil,
+    notificationSettingsOpener injectedNotificationSettingsOpener:
+      (() -> Bool)? = nil,
     enableSystemReminders: Bool = true,
     candidateCorpusStore injectedCandidateCorpusStore:
       CandidateCorpusStore? = nil,
     enableSourceSync: Bool = false
   ) {
     dailyQueueStore = DailyPracticeQueueStore(defaults: defaults)
+    notificationSettingsOpener =
+      injectedNotificationSettingsOpener
+      ?? Self.openSystemNotificationSettings
     appModel = AppModel(defaults: defaults)
     self.enableSourceSync = enableSourceSync
     if let injectedCandidateCorpusStore {
@@ -702,21 +722,53 @@ public final class AppRuntime {
     )
     switch result {
     case .scheduled:
+      appModel.reminderPermissionAction = nil
       break
     case .permissionDenied:
       appModel.transientStatus =
         "通知权限未开启；学习功能仍可正常使用"
+      appModel.reminderPermissionAction = .openSystemSettings
     case .permissionUndetermined:
       appModel.transientStatus =
         "尚未取得通知权限；学习功能仍可正常使用"
+      appModel.reminderPermissionAction = .requestPermission
     case .unavailable:
       appModel.transientStatus =
         "当前系统无法提供通知；学习功能仍可正常使用"
+      appModel.reminderPermissionAction = nil
     case .failed(let message):
       appModel.transientStatus =
         "提醒暂时无法同步：\(message)"
+      appModel.reminderPermissionAction = nil
     }
     return result
+  }
+
+  public func performReminderPermissionAction() async {
+    switch appModel.reminderPermissionAction {
+    case .requestPermission:
+      _ = await reconcileRemindersOnLaunch()
+    case .openSystemSettings:
+      if notificationSettingsOpener() {
+        appModel.transientStatus =
+          "已打开系统通知设置；开启 Russian Corner 后返回即可"
+      } else {
+        appModel.transientStatus =
+          "无法打开系统设置，请前往“系统设置 → 通知 → Russian Corner”"
+      }
+    case nil:
+      break
+    }
+  }
+
+  private static func openSystemNotificationSettings() -> Bool {
+    guard let url = URL(
+      string:
+        "x-apple.systempreferences:com.apple.Notifications-Settings.extension?id=com.openclaw.russiancorner"
+    ) else {
+      return false
+    }
+    return NSWorkspace.shared.open(url)
   }
 
   @discardableResult

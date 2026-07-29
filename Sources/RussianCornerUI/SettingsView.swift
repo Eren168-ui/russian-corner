@@ -157,6 +157,20 @@ public struct RussianCornerSettingsView: View {
             }
           }
         }
+        if let action = appModel.reminderPermissionAction {
+          Button(action.title) {
+            Task {
+              await runtime.performReminderPermissionAction()
+            }
+          }
+          Text(
+            action == .openSystemSettings
+              ? "将直接打开“系统设置 → 通知”；请在那里开启 Russian Corner。"
+              : "macOS 将显示系统授权窗口。"
+          )
+          .font(.caption)
+          .foregroundStyle(.secondary)
+        }
       }
 
       if let status = appModel.transientStatus {

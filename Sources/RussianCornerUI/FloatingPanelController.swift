@@ -349,7 +349,12 @@ private struct FloatingPracticeRoot: View {
         appModel: runtime.appModel,
         practice: practice,
         reflectionModel: runtime.dailyReflection,
-        onLayoutChanged: onLayoutChanged
+        onLayoutChanged: onLayoutChanged,
+        onReminderPermissionAction: {
+          Task {
+            await runtime.performReminderPermissionAction()
+          }
+        }
       )
     } else {
       unavailableCard

@@ -1196,6 +1196,46 @@ final class AppModelTests: XCTestCase {
     )
   }
 
+  func testDeniedReminderOffersDirectSystemSettingsAction() async throws {
+    let repository = ProgressRepository(
+      container: try ProgressRepository.makeInMemoryContainer()
+    )
+    let scheduler = RuntimeReminderScheduler(result: .permissionDenied)
+    let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+    var didOpenSettings = false
+    let runtime = AppRuntime(
+      defaults: defaults,
+      catalog: ContentCatalog(lexemes: [], sentences: []),
+      repository: repository,
+      reminderScheduler: scheduler,
+      notificationSettingsOpener: {
+        didOpenSettings = true
+        return true
+      }
+    )
+
+    await runtime.reconcileRemindersOnLaunch()
+
+    XCTAssertEqual(
+      runtime.appModel.reminderPermissionAction,
+      .openSystemSettings
+    )
+    XCTAssertEqual(
+      runtime.appModel.reminderPermissionAction?.title,
+      "去开启"
+    )
+
+    await runtime.performReminderPermissionAction()
+
+    XCTAssertTrue(didOpenSettings)
+    XCTAssertEqual(
+      runtime.appModel.transientStatus,
+      "已打开系统通知设置；开启 Russian Corner 后返回即可"
+    )
+  }
+
   func testLatestListeningFindingDefaultsToSpeakingMode() throws {
     let repository = ProgressRepository(
       container: try ProgressRepository.makeInMemoryContainer()

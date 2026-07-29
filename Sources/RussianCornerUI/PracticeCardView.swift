@@ -9,17 +9,20 @@ public struct PracticeCardView: View {
 
     private let reflectionModel: DailyReflectionViewModel?
     private let onLayoutChanged: () -> Void
+    private let onReminderPermissionAction: () -> Void
 
     public init(
         appModel: AppModel,
         practice: PracticeViewModel,
         reflectionModel: DailyReflectionViewModel? = nil,
-        onLayoutChanged: @escaping () -> Void = {}
+        onLayoutChanged: @escaping () -> Void = {},
+        onReminderPermissionAction: @escaping () -> Void = {}
     ) {
         self.appModel = appModel
         self.practice = practice
         self.reflectionModel = reflectionModel
         self.onLayoutChanged = onLayoutChanged
+        self.onReminderPermissionAction = onReminderPermissionAction
     }
 
     public var body: some View {
@@ -281,11 +284,28 @@ public struct PracticeCardView: View {
             if let status = practice.statusMessage
                 ?? appModel.transientStatus
             {
-                Text(status)
-                    .font(.system(size: 9))
-                    .foregroundStyle(palette.muted)
-                    .lineLimit(1)
-                    .accessibilityLabel(status)
+                HStack(spacing: 8) {
+                    Text(status)
+                        .font(.system(size: 9))
+                        .foregroundStyle(palette.muted)
+                        .lineLimit(1)
+                        .accessibilityLabel(status)
+                    if practice.statusMessage == nil,
+                        let action = appModel.reminderPermissionAction
+                    {
+                        Button(action.title) {
+                            onReminderPermissionAction()
+                        }
+                        .buttonStyle(.plain)
+                        .font(.system(size: 9, weight: .semibold))
+                        .foregroundStyle(palette.accent)
+                        .accessibilityHint(
+                            action == .openSystemSettings
+                                ? "直接打开 macOS 通知设置"
+                                : "请求 macOS 通知权限"
+                        )
+                    }
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
