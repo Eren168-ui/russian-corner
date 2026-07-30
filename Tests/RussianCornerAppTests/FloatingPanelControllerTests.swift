@@ -53,7 +53,7 @@ final class FloatingPanelControllerTests: XCTestCase {
     }
 
     func testDetailResizeKeepsTopEdgeFixed() {
-        let origin = FloatingPanelController.topAnchoredOrigin(
+        let frame = FloatingPanelController.topAnchoredFrame(
             currentFrame: CGRect(
                 x: 400,
                 y: 500,
@@ -63,7 +63,11 @@ final class FloatingPanelControllerTests: XCTestCase {
             newPanelSize: CGSize(width: 360, height: 386)
         )
 
-        XCTAssertEqual(origin, CGPoint(x: 400, y: 354))
+        XCTAssertEqual(
+            frame,
+            CGRect(x: 400, y: 354, width: 360, height: 386)
+        )
+        XCTAssertEqual(frame.maxY, 740)
     }
 
     func testLearningHistoryEntryIsVisibleAndComfortablyClickable() {

@@ -72,10 +72,6 @@ public struct PracticeCardView: View {
         )
         .animation(
             reduceMotion ? nil : .snappy(duration: 0.22),
-            value: practice.isDetailExpanded
-        )
-        .animation(
-            reduceMotion ? nil : .snappy(duration: 0.22),
             value: reflectionModel?.isCompletionOfferPresented ?? false
         )
         .onChange(of: practice.isComplete) { wasComplete, isComplete in

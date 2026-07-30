@@ -166,7 +166,6 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   }
 
   public func refreshLayout() {
-    let currentFrame = panel.frame
     let presentation = PracticePanelPresentation.resolve(
       isCollapsed: appModel.isCollapsed,
       isDetailExpanded:
@@ -178,15 +177,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     )
     panel.isMovableByWindowBackground =
       presentation.allowsWindowBackgroundDragging
-    panel.setContentSize(presentation.size)
-    if appModel.placementMode == .free,
-      currentFrame.size != panel.frame.size
-    {
-      appModel.freeOrigin = Self.topAnchoredOrigin(
-        currentFrame: currentFrame,
-        newPanelSize: panel.frame.size
-      )
-    }
+    resizePanelAtomically(to: presentation.size)
     switch appModel.placementMode {
     case .free:
       placeAtFreeOrigin()
@@ -260,6 +251,19 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     )
   }
 
+  nonisolated public static func topAnchoredFrame(
+    currentFrame: CGRect,
+    newPanelSize: CGSize
+  ) -> CGRect {
+    CGRect(
+      origin: topAnchoredOrigin(
+        currentFrame: currentFrame,
+        newPanelSize: newPanelSize
+      ),
+      size: newPanelSize
+    )
+  }
+
   nonisolated public static func nearestCorner(
     panelFrame: CGRect,
     visibleFrame: CGRect
@@ -295,6 +299,45 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     return pairs.first(where: {
       $0.descriptor.identifier == selected.identifier
     })?.screen
+  }
+
+  private func resizePanelAtomically(to panelSize: CGSize) {
+    let currentFrame = panel.frame
+    guard currentFrame.size != panelSize else { return }
+
+    let targetFrame: CGRect
+    if let screen = targetScreen() {
+      let origin: CGPoint
+      switch appModel.placementMode {
+      case .free:
+        origin = Self.constrainedOrigin(
+          Self.topAnchoredFrame(
+            currentFrame: currentFrame,
+            newPanelSize: panelSize
+          ).origin,
+          panelSize: panelSize,
+          visibleFrame: screen.visibleFrame
+        )
+        appModel.freeOrigin = origin
+      case .snap:
+        origin = Self.origin(
+          for: appModel.corner,
+          panelSize: panelSize,
+          visibleFrame: screen.visibleFrame
+        )
+      }
+      targetFrame = CGRect(origin: origin, size: panelSize)
+    } else {
+      targetFrame = Self.topAnchoredFrame(
+        currentFrame: currentFrame,
+        newPanelSize: panelSize
+      )
+    }
+
+    suppressMoveRecordingUntil = Date().addingTimeInterval(0.6)
+    isSnapping = true
+    panel.setFrame(targetFrame, display: true, animate: false)
+    isSnapping = false
   }
 
   private func placeAtFreeOrigin() {
