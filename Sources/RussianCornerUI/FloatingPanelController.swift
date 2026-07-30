@@ -49,14 +49,17 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   private var isSnapping = false
   private var suppressMoveRecordingUntil = Date.distantPast
   private let onOpenLearningHistory: () -> Void
+  private let utilityActions: PracticeCardUtilityActions
 
   public init(
     runtime: AppRuntime,
-    onOpenLearningHistory: @escaping () -> Void = {}
+    onOpenLearningHistory: @escaping () -> Void = {},
+    utilityActions: PracticeCardUtilityActions = .init()
   ) {
     self.runtime = runtime
     appModel = runtime.appModel
     self.onOpenLearningHistory = onOpenLearningHistory
+    self.utilityActions = utilityActions
     panel = PassiveFloatingPanel(
       contentRect: CGRect(
         origin: .zero,
@@ -94,7 +97,8 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
         onCollapsedCardActivated: { [weak self] in
           self?.expandCollapsedCard()
         },
-        onOpenLearningHistory: onOpenLearningHistory
+        onOpenLearningHistory: onOpenLearningHistory,
+        utilityActions: utilityActions
       )
     )
 
@@ -429,6 +433,7 @@ private struct FloatingPracticeRoot: View {
   let onLayoutChanged: () -> Void
   let onCollapsedCardActivated: () -> Void
   let onOpenLearningHistory: () -> Void
+  let utilityActions: PracticeCardUtilityActions
 
   var body: some View {
     if let practice = runtime.practice {
@@ -443,7 +448,8 @@ private struct FloatingPracticeRoot: View {
             await runtime.performReminderPermissionAction()
           }
         },
-        onOpenLearningHistory: onOpenLearningHistory
+        onOpenLearningHistory: onOpenLearningHistory,
+        utilityActions: utilityActions
       )
     } else {
       unavailableCard

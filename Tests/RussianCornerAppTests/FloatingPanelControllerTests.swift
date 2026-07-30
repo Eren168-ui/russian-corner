@@ -79,6 +79,23 @@ final class FloatingPanelControllerTests: XCTestCase {
         )
     }
 
+    func testCardMoreMenuExposesEveryUtilityAction() {
+        XCTAssertEqual(
+            PracticeCardUtilityAction.allCases.map(\.title),
+            [
+                "设置…",
+                "学习记录…",
+                "今日反馈…",
+                "学习诊断…",
+                "导出近 7 天学习报告…",
+            ]
+        )
+        XCTAssertGreaterThanOrEqual(
+            PracticeCardMetrics.moreActionHitWidth,
+            30
+        )
+    }
+
     func testNearestCornerUsesPanelCenterAndScreenCoordinates() {
         let screen = CGRect(x: 1200, y: -900, width: 1600, height: 900)
         let panelSize = CGSize(width: 360, height: 240)

@@ -22,9 +22,70 @@ public enum CollapsedCardDragGeometry {
 public enum PracticeCardMetrics {
     public static let headerActionHitWidth: CGFloat = 38
     public static let headerActionHitHeight: CGFloat = 34
+    public static let moreActionHitWidth: CGFloat = 32
     public static let historyActionTitle = "记录"
     public static let historyActionHitHeight: CGFloat = 30
     public static let wordCloseActionTitle = "关闭词义"
+}
+
+public enum PracticeCardUtilityAction: CaseIterable, Sendable {
+    case settings
+    case history
+    case reflection
+    case diagnostics
+    case exportReport
+
+    public var title: String {
+        switch self {
+        case .settings: "设置…"
+        case .history: "学习记录…"
+        case .reflection: "今日反馈…"
+        case .diagnostics: "学习诊断…"
+        case .exportReport: "导出近 7 天学习报告…"
+        }
+    }
+
+    public var symbolName: String {
+        switch self {
+        case .settings: "gearshape"
+        case .history: "chart.bar"
+        case .reflection: "square.and.pencil"
+        case .diagnostics: "waveform.badge.magnifyingglass"
+        case .exportReport: "square.and.arrow.up"
+        }
+    }
+}
+
+public struct PracticeCardUtilityActions {
+    public var openSettings: () -> Void
+    public var openHistory: () -> Void
+    public var openReflection: () -> Void
+    public var openDiagnostics: () -> Void
+    public var exportReport: () -> Void
+
+    public init(
+        openSettings: @escaping () -> Void = {},
+        openHistory: @escaping () -> Void = {},
+        openReflection: @escaping () -> Void = {},
+        openDiagnostics: @escaping () -> Void = {},
+        exportReport: @escaping () -> Void = {}
+    ) {
+        self.openSettings = openSettings
+        self.openHistory = openHistory
+        self.openReflection = openReflection
+        self.openDiagnostics = openDiagnostics
+        self.exportReport = exportReport
+    }
+
+    public func perform(_ action: PracticeCardUtilityAction) {
+        switch action {
+        case .settings: openSettings()
+        case .history: openHistory()
+        case .reflection: openReflection()
+        case .diagnostics: openDiagnostics()
+        case .exportReport: exportReport()
+        }
+    }
 }
 
 public struct PracticeCardView: View {
@@ -38,6 +99,7 @@ public struct PracticeCardView: View {
     private let onCollapsedCardActivated: (() -> Void)?
     private let onReminderPermissionAction: () -> Void
     private let onOpenLearningHistory: () -> Void
+    private let utilityActions: PracticeCardUtilityActions
 
     public init(
         appModel: AppModel,
@@ -46,7 +108,8 @@ public struct PracticeCardView: View {
         onLayoutChanged: @escaping () -> Void = {},
         onCollapsedCardActivated: (() -> Void)? = nil,
         onReminderPermissionAction: @escaping () -> Void = {},
-        onOpenLearningHistory: @escaping () -> Void = {}
+        onOpenLearningHistory: @escaping () -> Void = {},
+        utilityActions: PracticeCardUtilityActions = .init()
     ) {
         self.appModel = appModel
         self.practice = practice
@@ -55,6 +118,7 @@ public struct PracticeCardView: View {
         self.onCollapsedCardActivated = onCollapsedCardActivated
         self.onReminderPermissionAction = onReminderPermissionAction
         self.onOpenLearningHistory = onOpenLearningHistory
+        self.utilityActions = utilityActions
     }
 
     public var body: some View {
@@ -217,22 +281,7 @@ public struct PracticeCardView: View {
                 .font(.system(size: 8, weight: .medium))
                 .foregroundStyle(palette.muted)
                 .lineLimit(1)
-            Button(action: onOpenLearningHistory) {
-                Label(
-                    PracticeCardMetrics.historyActionTitle,
-                    systemImage: "chart.bar.xaxis"
-                )
-                .font(.system(size: 8, weight: .semibold))
-                .frame(
-                    minHeight:
-                        PracticeCardMetrics.historyActionHitHeight
-                )
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .foregroundStyle(palette.accent)
-            .help("打开学习记录")
-            .accessibilityLabel("打开学习记录")
+            utilityMenu
             Spacer(minLength: 8)
             Menu {
                 ForEach(FloatingCorner.allCases, id: \.self) { corner in
@@ -294,6 +343,40 @@ public struct PracticeCardView: View {
         }
         .padding(.horizontal, 16)
         .frame(height: 34)
+    }
+
+    private var utilityMenu: some View {
+        Menu {
+            ForEach(
+                PracticeCardUtilityAction.allCases,
+                id: \.self
+            ) { action in
+                Button(
+                    action.title,
+                    systemImage: action.symbolName
+                ) {
+                    if action == .history {
+                        onOpenLearningHistory()
+                    } else {
+                        utilityActions.perform(action)
+                    }
+                }
+            }
+        } label: {
+            Image(systemName: "ellipsis.circle")
+                .font(.system(size: 11, weight: .semibold))
+                .frame(
+                    width: PracticeCardMetrics.moreActionHitWidth,
+                    height: PracticeCardMetrics.headerActionHitHeight
+                )
+                .contentShape(Rectangle())
+        }
+        .menuStyle(.borderlessButton)
+        .menuIndicator(.hidden)
+        .fixedSize()
+        .foregroundStyle(palette.accent)
+        .help("更多功能")
+        .accessibilityLabel("更多功能")
     }
 
     private var mainContent: some View {

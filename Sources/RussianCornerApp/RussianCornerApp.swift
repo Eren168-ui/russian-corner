@@ -67,6 +67,45 @@ private final class LearningHistoryWindowController:
   }
 }
 
+@MainActor
+private final class FeatureWindowController: NSWindowController {
+  init(
+    title: String,
+    size: NSSize,
+    minimumSize: NSSize,
+    content: AnyView
+  ) {
+    let window = NSWindow(
+      contentRect: NSRect(origin: .zero, size: size),
+      styleMask: [
+        .titled,
+        .closable,
+        .miniaturizable,
+        .resizable,
+      ],
+      backing: .buffered,
+      defer: false
+    )
+    window.title = title
+    window.minSize = minimumSize
+    window.isReleasedWhenClosed = false
+    window.contentViewController = NSHostingController(rootView: content)
+    super.init(window: window)
+    window.center()
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  func show() {
+    showWindow(nil)
+    window?.makeKeyAndOrderFront(nil)
+    NSApplication.shared.activate(ignoringOtherApps: true)
+  }
+}
+
 @main
 @MainActor
 struct RussianCornerApp: App {
@@ -80,27 +119,111 @@ struct RussianCornerApp: App {
   private let reportExporter: TrialReportExporter
   private let learningHistoryWindowController:
     LearningHistoryWindowController
+  private let settingsWindowController: FeatureWindowController
+  private let reflectionWindowController: FeatureWindowController
+  private let diagnosticsWindowController: FeatureWindowController
+  private let utilityActions: PracticeCardUtilityActions
 
   init() {
     let runtime = AppRuntime(enableSourceSync: true)
     let learningHistoryWindowController =
       LearningHistoryWindowController(runtime: runtime)
+    let reportExporter = TrialReportExporter(
+      appModel: runtime.appModel
+    )
+    let settingsWindowController = FeatureWindowController(
+      title: "Russian Corner 设置",
+      size: NSSize(width: 560, height: 620),
+      minimumSize: NSSize(width: 520, height: 500),
+      content: AnyView(RussianCornerSettingsView(runtime: runtime))
+    )
+    let reflectionWindowController = FeatureWindowController(
+      title: "今日反馈",
+      size: NSSize(width: 500, height: 470),
+      minimumSize: NSSize(width: 500, height: 470),
+      content: AnyView(
+        Group {
+          if let dailyReflection = runtime.dailyReflection {
+            DailyReflectionView(model: dailyReflection)
+          } else {
+            ContentUnavailableView(
+              "今日反馈暂时不可用",
+              systemImage: "square.and.pencil",
+              description: Text(
+                runtime.trialError ?? "核心学习功能仍可正常使用"
+              )
+            )
+          }
+        }
+      )
+    )
+    let diagnosticsWindowController = FeatureWindowController(
+      title: "Russian Corner 诊断",
+      size: NSSize(width: 620, height: 650),
+      minimumSize: RussianCornerDiagnosticView.minimumSize,
+      content: AnyView(
+        Group {
+          if let diagnostics = runtime.diagnostics {
+            RussianCornerDiagnosticView(model: diagnostics)
+          } else {
+            ContentUnavailableView(
+              "诊断暂时无法载入",
+              systemImage: "exclamationmark.triangle",
+              description: Text(
+                runtime.diagnosticError
+                  ?? runtime.launchError
+                  ?? "请稍后重新打开应用"
+              )
+            )
+          }
+        }
+      )
+    )
+    let utilityActions = PracticeCardUtilityActions(
+      openSettings: {
+        settingsWindowController.show()
+      },
+      openHistory: {
+        learningHistoryWindowController.show()
+      },
+      openReflection: {
+        runtime.dailyReflection?.openForEditing()
+        reflectionWindowController.show()
+      },
+      openDiagnostics: {
+        diagnosticsWindowController.show()
+      },
+      exportReport: {
+        guard let trialRepository = runtime.trialRepository else {
+          runtime.appModel.transientStatus =
+            runtime.trialError ?? "学习报告暂时不可用"
+          return
+        }
+        Task {
+          await reportExporter.exportLastSevenDays(
+            repository: trialRepository
+          )
+        }
+      }
+    )
     let panelController = FloatingPanelController(
       runtime: runtime,
       onOpenLearningHistory: {
         learningHistoryWindowController.show()
-      }
+      },
+      utilityActions: utilityActions
     )
     let hotKeyService = GlobalHotKeyService()
-    let reportExporter = TrialReportExporter(
-      appModel: runtime.appModel
-    )
     self.runtime = runtime
     self.panelController = panelController
     self.hotKeyService = hotKeyService
     self.reportExporter = reportExporter
     self.learningHistoryWindowController =
       learningHistoryWindowController
+    self.settingsWindowController = settingsWindowController
+    self.reflectionWindowController = reflectionWindowController
+    self.diagnosticsWindowController = diagnosticsWindowController
+    self.utilityActions = utilityActions
     applicationDelegate.runtime = runtime
 
     let issues = hotKeyService.registerDefaults(
@@ -170,9 +293,7 @@ struct RussianCornerApp: App {
       MenuBarContent(
         runtime: runtime,
         panelController: panelController,
-        reportExporter: reportExporter,
-        learningHistoryWindowController:
-          learningHistoryWindowController
+        utilityActions: utilityActions
       )
     } label: {
       Label(
@@ -182,55 +303,13 @@ struct RussianCornerApp: App {
       .accessibilityLabel("Russian Corner 俄语练习")
     }
 
-    Window("Russian Corner 设置", id: "settings") {
-      RussianCornerSettingsView(runtime: runtime)
-    }
-    .windowResizability(.contentSize)
-
-    Window("今日反馈", id: "daily-reflection") {
-      if let dailyReflection = runtime.dailyReflection {
-        DailyReflectionView(model: dailyReflection)
-      } else {
-        ContentUnavailableView(
-          "今日反馈暂时不可用",
-          systemImage: "square.and.pencil",
-          description: Text(
-            runtime.trialError ?? "核心学习功能仍可正常使用"
-          )
-        )
-        .frame(width: 420, height: 260)
-      }
-    }
-    .windowResizability(.contentSize)
-
-    Window("Russian Corner 诊断", id: "diagnostics") {
-      if let diagnostics = runtime.diagnostics {
-        RussianCornerDiagnosticView(model: diagnostics)
-      } else {
-        ContentUnavailableView(
-          "诊断暂时无法载入",
-          systemImage: "exclamationmark.triangle",
-          description: Text(
-            runtime.diagnosticError
-              ?? runtime.launchError
-              ?? "请稍后重新打开应用"
-          )
-        )
-        .frame(width: 440, height: 300)
-      }
-    }
-    .windowResizability(.contentMinSize)
   }
 }
 
 private struct MenuBarContent: View {
   @Bindable var runtime: AppRuntime
   let panelController: FloatingPanelController
-  let reportExporter: TrialReportExporter
-  let learningHistoryWindowController:
-    LearningHistoryWindowController
-
-  @Environment(\.openWindow) private var openWindow
+  let utilityActions: PracticeCardUtilityActions
 
   var body: some View {
     Button(
@@ -273,35 +352,22 @@ private struct MenuBarContent: View {
     Divider()
 
     Button("设置…", systemImage: "gearshape") {
-      openWindow(id: "settings")
-      NSApplication.shared.activate(ignoringOtherApps: true)
+      utilityActions.openSettings()
     }
     Button("学习记录…", systemImage: "chart.bar") {
-      learningHistoryWindowController.show()
+      utilityActions.openHistory()
     }
     Button("今日反馈…", systemImage: "square.and.pencil") {
-      runtime.dailyReflection?.openForEditing()
-      openWindow(id: "daily-reflection")
-      NSApplication.shared.activate(ignoringOtherApps: true)
+      utilityActions.openReflection()
     }
     Button("学习诊断…", systemImage: "waveform.badge.magnifyingglass") {
-      openWindow(id: "diagnostics")
-      NSApplication.shared.activate(ignoringOtherApps: true)
+      utilityActions.openDiagnostics()
     }
     Button(
       "导出近 7 天学习报告…",
       systemImage: "square.and.arrow.up"
     ) {
-      guard let trialRepository = runtime.trialRepository else {
-        runtime.appModel.transientStatus =
-          runtime.trialError ?? "学习报告暂时不可用"
-        return
-      }
-      Task {
-        await reportExporter.exportLastSevenDays(
-          repository: trialRepository
-        )
-      }
+      utilityActions.exportReport()
     }
     .disabled(runtime.trialRepository == nil)
 
