@@ -14,7 +14,7 @@ public enum PracticePanelPresentation: Equatable, Sendable {
     case .compact:
       CGSize(width: 360, height: 240)
     case .details:
-      CGSize(width: 430, height: 386)
+      CGSize(width: 360, height: 386)
     }
   }
 
@@ -29,8 +29,7 @@ public enum PracticePanelPresentation: Equatable, Sendable {
     isReflectionPresented: Bool = false
   ) -> Self {
     if isCollapsed { return .collapsed }
-    if hasSelectedWord { return .compact }
-    return isDetailExpanded || isReflectionPresented
+    return hasSelectedWord || isDetailExpanded || isReflectionPresented
       ? .details : .compact
   }
 }
@@ -167,6 +166,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   }
 
   public func refreshLayout() {
+    let currentFrame = panel.frame
     let presentation = PracticePanelPresentation.resolve(
       isCollapsed: appModel.isCollapsed,
       isDetailExpanded:
@@ -179,6 +179,14 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     panel.isMovableByWindowBackground =
       presentation.allowsWindowBackgroundDragging
     panel.setContentSize(presentation.size)
+    if appModel.placementMode == .free,
+      currentFrame.size != panel.frame.size
+    {
+      appModel.freeOrigin = Self.topAnchoredOrigin(
+        currentFrame: currentFrame,
+        newPanelSize: panel.frame.size
+      )
+    }
     switch appModel.placementMode {
     case .free:
       placeAtFreeOrigin()
@@ -239,6 +247,16 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
         max(origin.y, visibleFrame.minY),
         max(visibleFrame.minY, visibleFrame.maxY - panelSize.height)
       )
+    )
+  }
+
+  nonisolated public static func topAnchoredOrigin(
+    currentFrame: CGRect,
+    newPanelSize: CGSize
+  ) -> CGPoint {
+    CGPoint(
+      x: currentFrame.origin.x,
+      y: currentFrame.maxY - newPanelSize.height
     )
   }
 

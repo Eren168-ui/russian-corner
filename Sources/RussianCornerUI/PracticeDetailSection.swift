@@ -149,12 +149,29 @@ public struct PracticeDetailSection: View {
                     .foregroundStyle(palette.muted)
             }
             Spacer()
-            if let url = OnlineDictionary.wiktionaryURL(for: summary.lemma) {
-                Link(destination: url) {
-                    Label("词典", systemImage: "arrow.up.right.square")
-                        .font(.system(size: 9, weight: .medium))
+            VStack(alignment: .trailing, spacing: 7) {
+                if let url = OnlineDictionary.wiktionaryURL(
+                    for: summary.lemma
+                ) {
+                    Link(destination: url) {
+                        Label("词典", systemImage: "arrow.up.right.square")
+                            .font(.system(size: 9, weight: .medium))
+                    }
+                    .foregroundStyle(palette.accent)
                 }
-                .foregroundStyle(palette.accent)
+                Button {
+                    practice.clearWordAnalysis()
+                    onLayoutChanged()
+                } label: {
+                    Label(
+                        PracticeCardMetrics.wordCloseActionTitle,
+                        systemImage: "xmark"
+                    )
+                    .font(.system(size: 9, weight: .semibold))
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(palette.muted)
+                .accessibilityHint("保留原句并收起下方词义")
             }
         }
 

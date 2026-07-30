@@ -581,10 +581,10 @@ final class PracticePanelPresentationTests: XCTestCase {
     )
   }
 
-  func testDetailsPanelIs430By386() {
+  func testDetailsPanelKeepsCompactWidthAndExtendsHeight() {
     XCTAssertEqual(
       PracticePanelPresentation.details.size,
-      CGSize(width: 430, height: 386)
+      CGSize(width: 360, height: 386)
     )
   }
 

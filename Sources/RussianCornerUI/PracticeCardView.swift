@@ -24,6 +24,7 @@ public enum PracticeCardMetrics {
     public static let headerActionHitHeight: CGFloat = 34
     public static let historyActionTitle = "记录"
     public static let historyActionHitHeight: CGFloat = 30
+    public static let wordCloseActionTitle = "关闭词义"
 }
 
 public struct PracticeCardView: View {
@@ -113,7 +114,9 @@ public struct PracticeCardView: View {
         VStack(spacing: 0) {
             header
             Divider().overlay(palette.border)
-            if practice.selectedWordAnalysis != nil {
+            mainContent
+            if practice.isDetailExpanded, !practice.isComplete {
+                Divider().overlay(palette.border)
                 PracticeDetailSection(
                     appModel: appModel,
                     practice: practice,
@@ -122,21 +125,10 @@ public struct PracticeCardView: View {
                 )
                 .padding(.horizontal, 18)
                 .padding(.vertical, 10)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                mainContent
-                if practice.isDetailExpanded, !practice.isComplete {
-                    Divider().overlay(palette.border)
-                    PracticeDetailSection(
-                        appModel: appModel,
-                        practice: practice,
-                        palette: palette,
-                        onLayoutChanged: onLayoutChanged
-                    )
-                    .padding(.horizontal, 18)
-                    .padding(.vertical, 10)
-                    .frame(maxHeight: 136)
-                }
+                .frame(
+                    maxHeight: practice.selectedWordAnalysis == nil
+                        ? 136 : 215
+                )
             }
             Divider().overlay(palette.border)
             bottomControls
@@ -480,7 +472,9 @@ public struct PracticeCardView: View {
         HStack(spacing: 7) {
             if !practice.isComplete {
                 compactButton(
-                    practice.isDetailExpanded ? "收起详情" : "详情",
+                    practice.selectedWordAnalysis != nil
+                        ? PracticeCardMetrics.wordCloseActionTitle
+                        : (practice.isDetailExpanded ? "收起详情" : "详情"),
                     systemImage: practice.isDetailExpanded
                         ? "chevron.up" : "text.alignleft"
                 ) {

@@ -41,19 +41,34 @@ final class FloatingPanelControllerTests: XCTestCase {
         )
     }
 
-    func testSelectedWordKeepsCompactWindowPresentation() {
+    func testSelectedWordExtendsOnlyWindowHeight() {
         let presentation = PracticePanelPresentation.resolve(
             isCollapsed: false,
             isDetailExpanded: true,
             hasSelectedWord: true
         )
 
-        XCTAssertEqual(presentation, .compact)
-        XCTAssertEqual(presentation.size, CGSize(width: 360, height: 240))
+        XCTAssertEqual(presentation, .details)
+        XCTAssertEqual(presentation.size, CGSize(width: 360, height: 386))
+    }
+
+    func testDetailResizeKeepsTopEdgeFixed() {
+        let origin = FloatingPanelController.topAnchoredOrigin(
+            currentFrame: CGRect(
+                x: 400,
+                y: 500,
+                width: 360,
+                height: 240
+            ),
+            newPanelSize: CGSize(width: 360, height: 386)
+        )
+
+        XCTAssertEqual(origin, CGPoint(x: 400, y: 354))
     }
 
     func testLearningHistoryEntryIsVisibleAndComfortablyClickable() {
         XCTAssertEqual(PracticeCardMetrics.historyActionTitle, "记录")
+        XCTAssertEqual(PracticeCardMetrics.wordCloseActionTitle, "关闭词义")
         XCTAssertGreaterThanOrEqual(
             PracticeCardMetrics.historyActionHitHeight,
             28
