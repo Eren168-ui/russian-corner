@@ -86,6 +86,12 @@ public enum ProvenanceType: String, Codable, Equatable, Sendable {
     case derived
 }
 
+public enum CorpusLayer: String, Codable, Equatable, Sendable {
+    case core
+    case dailySupplement
+    case speakingChallenge
+}
+
 public enum ContentQualityFlag: String, Codable, Equatable, Sendable {
     case typo
     case grammarSuspect
@@ -146,6 +152,15 @@ public struct Lexeme: Identifiable, Codable, Equatable, Sendable {
     public let government: String?
     public let principalForms: [String]?
     public let surfaceForms: [String]
+    public let sourcePaths: [String]
+    public let sourceTexts: [String]
+    public let provenanceTypes: [ProvenanceType]
+    public let qualityFlags: [ContentQualityFlag]
+    public let usageNote: String?
+    public let contrastNote: String?
+    public let commonMistakes: [String]
+    public let contrastGroupID: String?
+    public let corpusLayer: CorpusLayer
 
     public init(
         id: String,
@@ -164,7 +179,16 @@ public struct Lexeme: Identifiable, Codable, Equatable, Sendable {
         aspectPairNote: String? = nil,
         government: String? = nil,
         principalForms: [String]? = nil,
-        surfaceForms: [String] = []
+        surfaceForms: [String] = [],
+        sourcePaths: [String] = [],
+        sourceTexts: [String] = [],
+        provenanceTypes: [ProvenanceType] = [],
+        qualityFlags: [ContentQualityFlag] = [],
+        usageNote: String? = nil,
+        contrastNote: String? = nil,
+        commonMistakes: [String] = [],
+        contrastGroupID: String? = nil,
+        corpusLayer: CorpusLayer = .core
     ) {
         self.id = id
         self.lemma = lemma
@@ -183,6 +207,137 @@ public struct Lexeme: Identifiable, Codable, Equatable, Sendable {
         self.government = government
         self.principalForms = principalForms
         self.surfaceForms = surfaceForms
+        self.sourcePaths = sourcePaths
+        self.sourceTexts = sourceTexts
+        self.provenanceTypes = provenanceTypes
+        self.qualityFlags = qualityFlags
+        self.usageNote = usageNote
+        self.contrastNote = contrastNote
+        self.commonMistakes = commonMistakes
+        self.contrastGroupID = contrastGroupID
+        self.corpusLayer = corpusLayer
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case lemma
+        case stressedForm
+        case speechText
+        case partOfSpeech
+        case glossZh
+        case collocations
+        case example
+        case sentenceIDs
+        case reviewStatus
+        case grammaticalGender
+        case aspect
+        case aspectPair
+        case aspectPairNote
+        case government
+        case principalForms
+        case surfaceForms
+        case sourcePaths
+        case sourceTexts
+        case provenanceTypes
+        case qualityFlags
+        case usageNote
+        case contrastNote
+        case commonMistakes
+        case contrastGroupID
+        case corpusLayer
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        lemma = try container.decode(String.self, forKey: .lemma)
+        stressedForm = try container.decode(
+            String.self,
+            forKey: .stressedForm
+        )
+        speechText = try container.decode(String.self, forKey: .speechText)
+        partOfSpeech = try container.decode(
+            String.self,
+            forKey: .partOfSpeech
+        )
+        glossZh = try container.decode(String.self, forKey: .glossZh)
+        collocations = try container.decode(
+            [String].self,
+            forKey: .collocations
+        )
+        example = try container.decode(String.self, forKey: .example)
+        sentenceIDs = try container.decode(
+            [String].self,
+            forKey: .sentenceIDs
+        )
+        reviewStatus = try container.decode(
+            ReviewStatus.self,
+            forKey: .reviewStatus
+        )
+        grammaticalGender = try container.decodeIfPresent(
+            String.self,
+            forKey: .grammaticalGender
+        )
+        aspect = try container.decodeIfPresent(
+            String.self,
+            forKey: .aspect
+        )
+        aspectPair = try container.decodeIfPresent(
+            String.self,
+            forKey: .aspectPair
+        )
+        aspectPairNote = try container.decodeIfPresent(
+            String.self,
+            forKey: .aspectPairNote
+        )
+        government = try container.decodeIfPresent(
+            String.self,
+            forKey: .government
+        )
+        principalForms = try container.decodeIfPresent(
+            [String].self,
+            forKey: .principalForms
+        )
+        surfaceForms = try container.decodeIfPresent(
+            [String].self,
+            forKey: .surfaceForms
+        ) ?? []
+        sourcePaths = try container.decodeIfPresent(
+            [String].self,
+            forKey: .sourcePaths
+        ) ?? []
+        sourceTexts = try container.decodeIfPresent(
+            [String].self,
+            forKey: .sourceTexts
+        ) ?? []
+        provenanceTypes = try container.decodeIfPresent(
+            [ProvenanceType].self,
+            forKey: .provenanceTypes
+        ) ?? []
+        qualityFlags = try container.decodeIfPresent(
+            [ContentQualityFlag].self,
+            forKey: .qualityFlags
+        ) ?? []
+        usageNote = try container.decodeIfPresent(
+            String.self,
+            forKey: .usageNote
+        )
+        contrastNote = try container.decodeIfPresent(
+            String.self,
+            forKey: .contrastNote
+        )
+        commonMistakes = try container.decodeIfPresent(
+            [String].self,
+            forKey: .commonMistakes
+        ) ?? []
+        contrastGroupID = try container.decodeIfPresent(
+            String.self,
+            forKey: .contrastGroupID
+        )
+        corpusLayer = try container.decodeIfPresent(
+            CorpusLayer.self,
+            forKey: .corpusLayer
+        ) ?? .core
     }
 }
 
@@ -208,6 +363,7 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
     public let alternativeReplyIDs: [String]
     public let topicID: String?
     public let sourceHash: String?
+    public let corpusLayer: CorpusLayer
 
     public init(
         id: String,
@@ -230,7 +386,8 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
         expectedReply: String? = nil,
         alternativeReplyIDs: [String] = [],
         topicID: String? = nil,
-        sourceHash: String? = nil
+        sourceHash: String? = nil,
+        corpusLayer: CorpusLayer = .core
     ) {
         self.id = id
         self.promptZh = promptZh
@@ -253,6 +410,7 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
         self.alternativeReplyIDs = alternativeReplyIDs
         self.topicID = topicID
         self.sourceHash = sourceHash
+        self.corpusLayer = corpusLayer
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -277,6 +435,7 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
         case alternativeReplyIDs
         case topicID
         case sourceHash
+        case corpusLayer
     }
 
     public init(from decoder: any Decoder) throws {
@@ -356,6 +515,10 @@ public struct SentenceCard: Identifiable, Codable, Equatable, Sendable {
             String.self,
             forKey: .sourceHash
         )
+        corpusLayer = try container.decodeIfPresent(
+            CorpusLayer.self,
+            forKey: .corpusLayer
+        ) ?? .core
     }
 }
 
