@@ -6,6 +6,26 @@ import XCTest
 @testable import RussianCornerUI
 
 final class InteractiveRussianTextTests: XCTestCase {
+    func testTargetBuilderLinksEveryEnglishWordAndPreservesPunctuation() {
+        let value = InteractiveTargetTextBuilder.make(
+            text: "I'm ready—are you?",
+            language: .english,
+            selectedTokenIndex: 1
+        )
+
+        XCTAssertEqual(String(value.characters), "I'm ready—are you?")
+        let links = value.runs.compactMap(\.link)
+        XCTAssertEqual(links.count, 4)
+        XCTAssertEqual(
+            InteractiveTargetTextBuilder.tokenIndex(from: links[0]),
+            0
+        )
+        XCTAssertEqual(
+            InteractiveTargetTextBuilder.tokenIndex(from: links[3]),
+            3
+        )
+    }
+
     func testDetailTypographyIsReadableButSmallerThanMainAnswer() {
         XCTAssertEqual(PracticeDetailTypography.bodySize, 14)
         XCTAssertEqual(PracticeDetailTypography.relatedRussianSize, 16)
