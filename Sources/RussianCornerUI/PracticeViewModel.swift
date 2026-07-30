@@ -1239,6 +1239,40 @@ public final class PracticeViewModel {
     advance(status: nil)
   }
 
+  public func prioritizeSentenceIDs(_ sentenceIDs: [String]) {
+    let requested = sentenceIDs.reduce(into: [String]()) {
+      guard !$0.contains($1), sentencesByID[$1] != nil else {
+        return
+      }
+      $0.append($1)
+    }
+    guard !requested.isEmpty else { return }
+    let requestedSet = Set(requested)
+    let completedPrefix = Array(queue.prefix(currentIndex))
+    let remaining = queue.dropFirst(currentIndex).filter {
+      !requestedSet.contains($0.id)
+        || $0.kind != .sentence
+    }
+    let prioritized = requested.compactMap { id in
+      sentencesByID[id].map {
+        PracticeQueueEntry(
+          content: .sentence($0),
+          origin: .reinforcement
+        )
+      }
+    }
+    queue = completedPrefix + prioritized + remaining
+    isRevealed = false
+    selectedRecallOutcome = nil
+    currentTransferExercise = nil
+    selectedTransferAnswerID = nil
+    structuredResponseTimeMs = nil
+    clearWordAnalysis()
+    remainingRecallSeconds = 3
+    recallStartedAt = now()
+    statusMessage = "已把场景中选中的表达放到当前复习队列"
+  }
+
   private func advance(status: String?) {
     guard currentItem != nil else { return }
     speechService.stop()

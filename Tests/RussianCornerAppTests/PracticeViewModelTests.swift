@@ -349,6 +349,18 @@ final class PracticeViewModelTests: XCTestCase {
     XCTAssertFalse(fixture.model.isRevealed)
   }
 
+  func testSceneSelectionCanMoveExpressionsToQueueFront() throws {
+    let fixture = try makeFixture(sentenceCount: 4)
+
+    fixture.model.prioritizeSentenceIDs(["sentence-2"])
+
+    XCTAssertEqual(fixture.model.currentItem?.id, "sentence-2")
+    XCTAssertEqual(
+      fixture.model.currentItem?.origin,
+      .reinforcement
+    )
+  }
+
   func testDefaultDayQueuesTenNewLexemesAndConfiguredSentenceCards() throws {
     let repository = try makeRepository()
     let catalog = makeCatalog(lexemeCount: 20, sentenceCount: 12)

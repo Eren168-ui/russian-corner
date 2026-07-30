@@ -105,6 +105,82 @@ private final class FeatureWindowController: NSWindowController {
   }
 }
 
+@MainActor
+private final class SceneTrainingWindowController:
+  NSWindowController
+{
+  private let runtime: LanguageCornerRuntime
+
+  init(runtime: LanguageCornerRuntime) {
+    self.runtime = runtime
+    let window = NSWindow(
+      contentRect: NSRect(x: 0, y: 0, width: 760, height: 680),
+      styleMask: [
+        .titled,
+        .closable,
+        .miniaturizable,
+        .resizable,
+      ],
+      backing: .buffered,
+      defer: false
+    )
+    window.title = "Language Corner · 今日英语场景"
+    window.minSize = NSSize(width: 680, height: 600)
+    window.isReleasedWhenClosed = false
+    super.init(window: window)
+    window.setFrameAutosaveName("LanguageCornerEnglishScene")
+    window.center()
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  func show() {
+    guard let englishRuntime = runtime.languageRuntimes[.english] else {
+      showUnavailable(
+        title: "英语场景暂时不可用",
+        message: "英语学习数据没有成功载入，俄语功能不受影响。"
+      )
+      return
+    }
+    do {
+      guard let model = try englishRuntime.makeTodaySceneTraining() else {
+        showUnavailable(
+          title: "今天还没有英语场景",
+          message: "英语语料仍可在角落卡中正常学习。"
+        )
+        return
+      }
+      window?.contentViewController = NSHostingController(
+        rootView: SceneTrainingView(model: model)
+      )
+      showWindow(nil)
+      window?.makeKeyAndOrderFront(nil)
+      NSApplication.shared.activate(ignoringOtherApps: true)
+    } catch {
+      showUnavailable(
+        title: "英语场景无法打开",
+        message: error.localizedDescription
+      )
+    }
+  }
+
+  private func showUnavailable(title: String, message: String) {
+    window?.contentViewController = NSHostingController(
+      rootView: ContentUnavailableView(
+        title,
+        systemImage: "person.2.wave.2",
+        description: Text(message)
+      )
+    )
+    showWindow(nil)
+    window?.makeKeyAndOrderFront(nil)
+    NSApplication.shared.activate(ignoringOtherApps: true)
+  }
+}
+
 @main
 @MainActor
 struct RussianCornerApp: App {
@@ -121,6 +197,8 @@ struct RussianCornerApp: App {
   private let settingsWindowController: FeatureWindowController
   private let reflectionWindowController: FeatureWindowController
   private let diagnosticsWindowController: FeatureWindowController
+  private let sceneTrainingWindowController:
+    SceneTrainingWindowController
   private let utilityActions: PracticeCardUtilityActions
 
   init() {
@@ -182,7 +260,12 @@ struct RussianCornerApp: App {
         }
       )
     )
+    let sceneTrainingWindowController =
+      SceneTrainingWindowController(runtime: runtime)
     let utilityActions = PracticeCardUtilityActions(
+      openSceneTraining: {
+        sceneTrainingWindowController.show()
+      },
       openSettings: {
         settingsWindowController.show()
       },
@@ -229,6 +312,8 @@ struct RussianCornerApp: App {
     self.settingsWindowController = settingsWindowController
     self.reflectionWindowController = reflectionWindowController
     self.diagnosticsWindowController = diagnosticsWindowController
+    self.sceneTrainingWindowController =
+      sceneTrainingWindowController
     self.utilityActions = utilityActions
     applicationDelegate.runtime = runtime
 
@@ -383,6 +468,11 @@ private struct MenuBarContent: View {
     }
 
     Divider()
+
+    Button("今日英语场景…", systemImage: "person.2.wave.2") {
+      utilityActions.openSceneTraining()
+    }
+    .disabled(runtime.languageRuntimes[.english] == nil)
 
     Button("设置…", systemImage: "gearshape") {
       utilityActions.openSettings()

@@ -514,7 +514,9 @@ public final class AppRuntime {
   public private(set) var sourceSyncResult: SourceSyncResult?
   public private(set) var pendingCandidateCount = 0
   public private(set) var lastSourceSyncAt: Date?
+  public private(set) var sceneLessons: [SceneLesson] = []
 
+  private let defaults: UserDefaults
   private var catalog: ContentCatalog?
   private var studyCatalog: LanguageContentCatalog?
   private var repository: ProgressRepository?
@@ -533,6 +535,9 @@ public final class AppRuntime {
     defaults: UserDefaults = .standard,
     language: StudyLanguage = .russian,
     catalog injectedCatalog: ContentCatalog? = nil,
+    studyCatalog injectedStudyCatalog:
+      LanguageContentCatalog? = nil,
+    sceneLessons injectedSceneLessons: [SceneLesson] = [],
     repository injectedRepository: ProgressRepository? = nil,
     trialRepository injectedTrialRepository:
       (any TrialDataStoring)? = nil,
@@ -547,6 +552,7 @@ public final class AppRuntime {
       CandidateCorpusStore? = nil,
     enableSourceSync: Bool = false
   ) {
+    self.defaults = defaults
     dailyQueueStore = DailyPracticeQueueStore(
       defaults: defaults,
       language: language
@@ -574,22 +580,39 @@ public final class AppRuntime {
       let catalog: ContentCatalog
       if let injectedCatalog {
         catalog = injectedCatalog
-        studyCatalog = injectedCatalog.studyCatalog
+        studyCatalog =
+          injectedStudyCatalog ?? injectedCatalog.studyCatalog
+        sceneLessons = injectedSceneLessons
       } else if language == .english {
-        let resourceDirectory =
+        let currentDirectoryURL = URL(
+          fileURLWithPath:
+            FileManager.default.currentDirectoryPath,
+          isDirectory: true
+        )
+        let preferredResourceDirectory =
           try EnglishContentBundle.defaultResourceDirectory(
             bundleIdentifier: Bundle.main.bundleIdentifier,
             bundleResourceURL: Bundle.main.resourceURL,
-            currentDirectoryURL: URL(
-              fileURLWithPath:
-                FileManager.default.currentDirectoryPath,
-              isDirectory: true
-            )
+            currentDirectoryURL: currentDirectoryURL
           )
-        let englishBundle = try EnglishContentBundle(
-          resourceDirectory: resourceDirectory
-        )
+        let englishBundle: EnglishContentBundle
+        do {
+          englishBundle = try EnglishContentBundle(
+            resourceDirectory: preferredResourceDirectory
+          )
+        } catch {
+          let sourceResourceDirectory =
+            try EnglishContentBundle.defaultResourceDirectory(
+              bundleIdentifier: nil,
+              bundleResourceURL: nil,
+              currentDirectoryURL: currentDirectoryURL
+            )
+          englishBundle = try EnglishContentBundle(
+            resourceDirectory: sourceResourceDirectory
+          )
+        }
         studyCatalog = englishBundle.catalog
+        sceneLessons = englishBundle.lessons
         catalog = englishBundle.legacyCatalog
       } else {
         catalog = try ContentCatalog()
@@ -767,6 +790,54 @@ public final class AppRuntime {
       appModel.transientStatus =
         "话题切换失败：\(error.localizedDescription)"
     }
+  }
+
+  public func makeTodaySceneTraining(
+    now: Date = Date()
+  ) throws -> SceneTrainingViewModel? {
+    guard
+      appModel.language == .english,
+      let studyCatalog,
+      !sceneLessons.isEmpty
+    else {
+      return nil
+    }
+    let preferredTopicID = practice?.selectedTopicID
+    let lesson: SceneLesson
+    if let preferredTopicID,
+      let matching = sceneLessons.first(where: {
+        $0.topicID == preferredTopicID
+      })
+    {
+      lesson = matching
+    } else {
+      let dayIndex = Int(
+        floor(
+          Calendar.current.startOfDay(for: now)
+            .timeIntervalSince1970 / 86_400
+        )
+      )
+      lesson = sceneLessons[
+        abs(dayIndex) % sceneLessons.count
+      ]
+    }
+    return try SceneTrainingViewModel(
+      lesson: lesson,
+      catalog: studyCatalog,
+      defaults: defaults,
+      onlineDictionary: onlineDictionary,
+      onOfferSelectedExpressions: { [weak self] sentenceIDs in
+        guard let self, !sentenceIDs.isEmpty else { return }
+        practice?.prioritizeSentenceIDs(sentenceIDs)
+        if let practice {
+          dailyQueueStore.save(
+            queue: practice.queue,
+            on: Date(),
+            calendar: .current
+          )
+        }
+      }
+    )
   }
 
   public func syncSourceCorpus(now: Date = Date()) {

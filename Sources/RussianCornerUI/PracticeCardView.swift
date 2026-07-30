@@ -35,6 +35,7 @@ public enum PracticeCardMetrics {
 }
 
 public enum PracticeCardUtilityAction: CaseIterable, Sendable {
+    case sceneTraining
     case settings
     case history
     case reflection
@@ -43,6 +44,7 @@ public enum PracticeCardUtilityAction: CaseIterable, Sendable {
 
     public var title: String {
         switch self {
+        case .sceneTraining: "今日英语场景…"
         case .settings: "设置…"
         case .history: "学习记录…"
         case .reflection: "今日反馈…"
@@ -53,6 +55,7 @@ public enum PracticeCardUtilityAction: CaseIterable, Sendable {
 
     public var symbolName: String {
         switch self {
+        case .sceneTraining: "person.2.wave.2"
         case .settings: "gearshape"
         case .history: "chart.bar"
         case .reflection: "square.and.pencil"
@@ -63,6 +66,7 @@ public enum PracticeCardUtilityAction: CaseIterable, Sendable {
 }
 
 public struct PracticeCardUtilityActions {
+    public var openSceneTraining: () -> Void
     public var openSettings: () -> Void
     public var openHistory: () -> Void
     public var openReflection: () -> Void
@@ -70,12 +74,14 @@ public struct PracticeCardUtilityActions {
     public var exportReport: () -> Void
 
     public init(
+        openSceneTraining: @escaping () -> Void = {},
         openSettings: @escaping () -> Void = {},
         openHistory: @escaping () -> Void = {},
         openReflection: @escaping () -> Void = {},
         openDiagnostics: @escaping () -> Void = {},
         exportReport: @escaping () -> Void = {}
     ) {
+        self.openSceneTraining = openSceneTraining
         self.openSettings = openSettings
         self.openHistory = openHistory
         self.openReflection = openReflection
@@ -85,6 +91,7 @@ public struct PracticeCardUtilityActions {
 
     public func perform(_ action: PracticeCardUtilityAction) {
         switch action {
+        case .sceneTraining: openSceneTraining()
         case .settings: openSettings()
         case .history: openHistory()
         case .reflection: openReflection()

@@ -109,6 +109,7 @@ final class FloatingPanelControllerTests: XCTestCase {
         XCTAssertEqual(
             PracticeCardUtilityAction.allCases.map(\.title),
             [
+                "今日英语场景…",
                 "设置…",
                 "学习记录…",
                 "今日反馈…",
