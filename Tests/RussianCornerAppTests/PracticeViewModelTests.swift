@@ -63,6 +63,83 @@ final class PracticeViewModelTests: XCTestCase {
     )
   }
 
+  func testStructuredRecallPersistsTransferEvidence() throws {
+    var now = start
+    let fixture = try makeFixture(
+      sentenceCount: 3,
+      now: { now }
+    )
+    fixture.model.reveal()
+    now = start.addingTimeInterval(2.25)
+
+    try fixture.model.submitRecallOutcome(
+      .fluentWithinThreeSeconds
+    )
+    let exercise = try XCTUnwrap(
+      fixture.model.currentTransferExercise
+    )
+    try fixture.model.submitTransferAnswer(
+      optionID: exercise.correctOptionID
+    )
+
+    let event = try XCTUnwrap(
+      fixture.repository.reviewEvents().first
+    )
+    XCTAssertEqual(event.grade, .easy)
+    XCTAssertEqual(
+      event.recallOutcome,
+      .fluentWithinThreeSeconds
+    )
+    XCTAssertEqual(event.responseTimeMs, 2_250)
+    XCTAssertEqual(event.transferExerciseID, exercise.id)
+    XCTAssertEqual(
+      event.transferAnswerID,
+      exercise.correctOptionID
+    )
+    XCTAssertEqual(event.transferCorrect, true)
+  }
+
+  func testFailedTransferDowngradesFluentRecallToHard() throws {
+    let fixture = try makeFixture(sentenceCount: 3)
+    fixture.model.reveal()
+    try fixture.model.submitRecallOutcome(
+      .fluentWithinThreeSeconds
+    )
+    let exercise = try XCTUnwrap(
+      fixture.model.currentTransferExercise
+    )
+    let wrongOption = try XCTUnwrap(
+      exercise.options.first {
+        $0.id != exercise.correctOptionID
+      }
+    )
+
+    try fixture.model.submitTransferAnswer(
+      optionID: wrongOption.id
+    )
+
+    let event = try XCTUnwrap(
+      fixture.repository.reviewEvents().first
+    )
+    XCTAssertEqual(event.grade, .hard)
+    XCTAssertEqual(event.transferAnswerID, wrongOption.id)
+    XCTAssertEqual(event.transferCorrect, false)
+  }
+
+  func testUnknownRecallImmediatelySchedulesAgain() throws {
+    let fixture = try makeFixture()
+    fixture.model.reveal()
+
+    try fixture.model.submitRecallOutcome(.unknown)
+
+    let event = try XCTUnwrap(
+      fixture.repository.reviewEvents().first
+    )
+    XCTAssertEqual(event.grade, .again)
+    XCTAssertEqual(event.recallOutcome, .unknown)
+    XCTAssertNil(event.transferAnswerID)
+  }
+
   func testPromptSwitchesFromChineseToRussianCueAtMasteryThree() throws {
     let fixture = try makeFixture(
       initialState: ReviewState(masteryLevel: 3, dueAt: start)

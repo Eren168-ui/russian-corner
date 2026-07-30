@@ -89,6 +89,10 @@ public final class ReviewEventRecord {
     public var responseTimeMs: Int
     public var practiceModeRawValue: String
     public var createdAt: Date
+    public var recallOutcomeRawValue: String?
+    public var transferExerciseID: String?
+    public var transferAnswerID: String?
+    public var transferCorrect: Bool?
 
     public init(id: UUID = UUID(), event: ReviewEvent) {
         self.id = id
@@ -98,6 +102,10 @@ public final class ReviewEventRecord {
         responseTimeMs = event.responseTimeMs
         practiceModeRawValue = event.practiceMode.rawValue
         createdAt = event.createdAt
+        recallOutcomeRawValue = event.recallOutcome?.rawValue
+        transferExerciseID = event.transferExerciseID
+        transferAnswerID = event.transferAnswerID
+        transferCorrect = event.transferCorrect
     }
 
     public func decodedEvent() throws -> ReviewEvent {
@@ -131,7 +139,13 @@ public final class ReviewEventRecord {
             grade: grade,
             responseTimeMs: responseTimeMs,
             practiceMode: practiceMode,
-            createdAt: createdAt
+            createdAt: createdAt,
+            recallOutcome: recallOutcomeRawValue.flatMap(
+                RecallOutcome.init(rawValue:)
+            ),
+            transferExerciseID: transferExerciseID,
+            transferAnswerID: transferAnswerID,
+            transferCorrect: transferCorrect
         )
     }
 }

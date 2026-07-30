@@ -26,6 +26,12 @@ public enum PracticeCardMetrics {
     public static let historyActionTitle = "记录"
     public static let historyActionHitHeight: CGFloat = 30
     public static let wordCloseActionTitle = "关闭词义"
+    public static let recallOutcomeTitles = [
+        "3 秒内完整说出",
+        "大意对，用法有卡顿",
+        "看答案才想起",
+        "不会",
+    ]
 }
 
 public enum PracticeCardUtilityAction: CaseIterable, Sendable {
@@ -191,7 +197,15 @@ public struct PracticeCardView: View {
             header
             Divider().overlay(palette.border)
             mainContent
-            if practice.isDetailExpanded, !practice.isComplete {
+            if practice.isStructuredRecallPresented,
+                !practice.isComplete
+            {
+                Divider().overlay(palette.border)
+                structuredRecallSection
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 9)
+                    .frame(maxHeight: 136)
+            } else if practice.isDetailExpanded, !practice.isComplete {
                 Divider().overlay(palette.border)
                 PracticeDetailSection(
                     appModel: appModel,
@@ -238,7 +252,9 @@ public struct PracticeCardView: View {
         PracticePanelPresentation.resolve(
             isCollapsed: false,
             isDetailExpanded: practice.isDetailExpanded,
-            hasSelectedWord: practice.selectedWordAnalysis != nil
+            hasSelectedWord: practice.selectedWordAnalysis != nil,
+            isTransferPresented:
+                practice.isStructuredRecallPresented
         )
     }
 
@@ -529,6 +545,115 @@ public struct PracticeCardView: View {
         .clipShape(Capsule())
     }
 
+    @ViewBuilder
+    private var structuredRecallSection: some View {
+        if let exercise = practice.currentTransferExercise {
+            transferExerciseSection(exercise)
+        } else {
+            recallOutcomeSection
+        }
+    }
+
+    private var recallOutcomeSection: some View {
+        VStack(alignment: .leading, spacing: 7) {
+            HStack {
+                Text("刚才实际说到了哪一步？")
+                    .font(.system(size: 11, weight: .semibold))
+                Spacer()
+                Text("按真实表现选择")
+                    .font(.system(size: 8))
+                    .foregroundStyle(palette.muted)
+            }
+            LazyVGrid(
+                columns: [
+                    GridItem(.flexible(), spacing: 7),
+                    GridItem(.flexible(), spacing: 7),
+                ],
+                spacing: 7
+            ) {
+                recallOutcomeButton(
+                    PracticeCardMetrics.recallOutcomeTitles[0],
+                    outcome: .fluentWithinThreeSeconds
+                )
+                recallOutcomeButton(
+                    PracticeCardMetrics.recallOutcomeTitles[1],
+                    outcome: .coreMeaningWithUsageIssue
+                )
+                recallOutcomeButton(
+                    PracticeCardMetrics.recallOutcomeTitles[2],
+                    outcome: .rememberedAfterReveal
+                )
+                recallOutcomeButton(
+                    PracticeCardMetrics.recallOutcomeTitles[3],
+                    outcome: .unknown
+                )
+            }
+        }
+    }
+
+    private func recallOutcomeButton(
+        _ title: String,
+        outcome: RecallOutcome
+    ) -> some View {
+        Button(title) {
+            do {
+                try practice.submitRecallOutcome(outcome)
+                onLayoutChanged()
+            } catch {
+                practice.showStatus(error.localizedDescription)
+            }
+        }
+        .buttonStyle(.plain)
+        .font(.system(size: 9, weight: .medium))
+        .foregroundStyle(palette.primary)
+        .frame(maxWidth: .infinity, minHeight: 30)
+        .background(palette.accentSurface)
+        .clipShape(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
+        .accessibilityHint("记录回忆表现；必要时继续完成迁移检验")
+    }
+
+    private func transferExerciseSection(
+        _ exercise: TransferExercise
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("再验一次：\(exercise.prompt)")
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundStyle(palette.accent)
+                .lineLimit(2)
+            ForEach(exercise.options) { option in
+                Button {
+                    do {
+                        try practice.submitTransferAnswer(
+                            optionID: option.id
+                        )
+                        onLayoutChanged()
+                    } catch {
+                        practice.showStatus(
+                            error.localizedDescription
+                        )
+                    }
+                } label: {
+                    HStack(spacing: 7) {
+                        Circle()
+                            .stroke(palette.border, lineWidth: 1)
+                            .frame(width: 11, height: 11)
+                        Text(option.text)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.82)
+                        Spacer(minLength: 0)
+                    }
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .font(.system(size: 9.5, weight: .medium))
+                .foregroundStyle(palette.primary)
+                .accessibilityLabel("迁移答案：\(option.text)")
+            }
+        }
+    }
+
     private func revealedAnswer(_ answer: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Group {
@@ -622,9 +747,13 @@ public struct PracticeCardView: View {
             }
             Spacer(minLength: 4)
             if practice.isRevealed, !practice.isComplete {
-                gradeButton("Again", grade: .again)
-                gradeButton("Hard", grade: .hard)
-                gradeButton("Easy", grade: .easy, prominent: true)
+                Text(
+                    practice.currentTransferExercise == nil
+                        ? "选择实际回忆表现"
+                        : "完成上方迁移检验"
+                )
+                .font(.system(size: 8.5, weight: .medium))
+                .foregroundStyle(palette.muted)
             } else if !practice.isComplete {
                 compactButton("下一项", systemImage: "arrow.right") {
                     practice.next()
@@ -654,28 +783,6 @@ public struct PracticeCardView: View {
         .buttonStyle(.plain)
         .foregroundStyle(palette.muted)
         .accessibilityLabel(title)
-    }
-
-    private func gradeButton(
-        _ title: String,
-        grade: ReviewGrade,
-        prominent: Bool = false
-    ) -> some View {
-        Button(title) {
-            do {
-                try practice.grade(grade)
-                onLayoutChanged()
-            } catch {
-                practice.showStatus(error.localizedDescription)
-            }
-        }
-        .buttonStyle(
-            GradeButtonStyle(
-                palette: palette,
-                prominent: prominent
-            )
-        )
-        .accessibilityHint("提交 \(title) 评分并进入下一项")
     }
 
     private var progressText: String {

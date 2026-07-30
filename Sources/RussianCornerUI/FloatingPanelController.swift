@@ -26,10 +26,12 @@ public enum PracticePanelPresentation: Equatable, Sendable {
     isCollapsed: Bool,
     isDetailExpanded: Bool,
     hasSelectedWord: Bool = false,
+    isTransferPresented: Bool = false,
     isReflectionPresented: Bool = false
   ) -> Self {
     if isCollapsed { return .collapsed }
-    return hasSelectedWord || isDetailExpanded || isReflectionPresented
+    return hasSelectedWord || isDetailExpanded
+      || isTransferPresented || isReflectionPresented
       ? .details : .compact
   }
 }
@@ -235,6 +237,9 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
         runtimeSource.activeRuntime?.practice?.isDetailExpanded == true,
       hasSelectedWord:
         runtimeSource.activeRuntime?.practice?.selectedWordAnalysis != nil,
+      isTransferPresented:
+        runtimeSource.activeRuntime?.practice?
+          .isStructuredRecallPresented == true,
       isReflectionPresented:
         runtimeSource.activeRuntime?.dailyReflection?
           .isCompletionOfferPresented == true
@@ -477,6 +482,8 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       _ = activeAppModel.isCollapsed
       _ = activeAppModel.preferredScreenIdentifier
       _ = runtimeSource.activeRuntime?.practice?.isDetailExpanded
+      _ = runtimeSource.activeRuntime?.practice?
+        .isStructuredRecallPresented
       _ = runtimeSource.activeRuntime?.dailyReflection?
         .isCompletionOfferPresented
       if case .bilingual(let runtime) = runtimeSource {

@@ -18,6 +18,10 @@ public struct ReviewEvent: Codable, Equatable, Sendable {
     public let responseTimeMs: Int
     public let practiceMode: PracticeMode
     public let createdAt: Date
+    public let recallOutcome: RecallOutcome?
+    public let transferExerciseID: String?
+    public let transferAnswerID: String?
+    public let transferCorrect: Bool?
 
     public init(
         itemType: PracticeItemKind,
@@ -25,7 +29,11 @@ public struct ReviewEvent: Codable, Equatable, Sendable {
         grade: ReviewGrade,
         responseTimeMs: Int,
         practiceMode: PracticeMode,
-        createdAt: Date
+        createdAt: Date,
+        recallOutcome: RecallOutcome? = nil,
+        transferExerciseID: String? = nil,
+        transferAnswerID: String? = nil,
+        transferCorrect: Bool? = nil
     ) {
         self.itemType = itemType
         self.itemId = itemId
@@ -33,6 +41,10 @@ public struct ReviewEvent: Codable, Equatable, Sendable {
         self.responseTimeMs = responseTimeMs
         self.practiceMode = practiceMode
         self.createdAt = createdAt
+        self.recallOutcome = recallOutcome
+        self.transferExerciseID = transferExerciseID
+        self.transferAnswerID = transferAnswerID
+        self.transferCorrect = transferCorrect
     }
 }
 

@@ -19,6 +19,10 @@ public struct TrialInteractionContext: Equatable, Sendable {
     public let queuePosition: Int
     public let remainingBacklogCount: Int
     public let isNewItem: Bool
+    public let recallOutcome: RecallOutcome?
+    public let transferExerciseID: String?
+    public let transferAnswerID: String?
+    public let transferCorrect: Bool?
 
     public init(
         itemType: PracticeItemKind,
@@ -35,7 +39,11 @@ public struct TrialInteractionContext: Equatable, Sendable {
         queueCountAfterAction: Int,
         queuePosition: Int,
         remainingBacklogCount: Int,
-        isNewItem: Bool
+        isNewItem: Bool,
+        recallOutcome: RecallOutcome? = nil,
+        transferExerciseID: String? = nil,
+        transferAnswerID: String? = nil,
+        transferCorrect: Bool? = nil
     ) {
         self.itemType = itemType
         self.itemID = itemID
@@ -52,6 +60,10 @@ public struct TrialInteractionContext: Equatable, Sendable {
         self.queuePosition = max(0, queuePosition)
         self.remainingBacklogCount = max(0, remainingBacklogCount)
         self.isNewItem = isNewItem
+        self.recallOutcome = recallOutcome
+        self.transferExerciseID = transferExerciseID
+        self.transferAnswerID = transferAnswerID
+        self.transferCorrect = transferCorrect
     }
 }
 
@@ -143,7 +155,11 @@ public final class TrialSessionCoordinator: PracticeTrialTracking {
             usedSpeech: context.usedSpeech,
             openedDetails: context.openedDetails,
             practiceMode: context.practiceMode,
-            createdAt: context.occurredAt
+            createdAt: context.occurredAt,
+            recallOutcome: context.recallOutcome,
+            transferExerciseID: context.transferExerciseID,
+            transferAnswerID: context.transferAnswerID,
+            transferCorrect: context.transferCorrect
         )
         do {
             try repository.save(interaction: interaction)
