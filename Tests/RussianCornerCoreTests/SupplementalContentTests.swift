@@ -205,6 +205,26 @@ final class SupplementalContentTests: XCTestCase {
         XCTAssertTrue(catalog.supplementalSentences.isEmpty)
     }
 
+    func testProductionSupplementUsesItsOwnGateAndKeepsCoreValidationClean()
+        throws
+    {
+        let resources = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("Sources")
+            .appendingPathComponent("RussianCornerCore")
+            .appendingPathComponent("Resources")
+
+        let catalog = try ContentCatalog(resourceDirectory: resources)
+
+        XCTAssertEqual(catalog.supplementalLexemes.count, 80)
+        XCTAssertEqual(catalog.supplementalSentences.count, 60)
+        XCTAssertEqual(catalog.speakingChallenges.count, 24)
+        XCTAssertNil(catalog.supplementalLoadIssue)
+        XCTAssertTrue(catalog.validate().isEmpty)
+    }
+
     private func makeResourceFixture() throws -> URL {
         let source = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()

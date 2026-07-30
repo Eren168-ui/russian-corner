@@ -650,6 +650,26 @@ public struct ContentCatalog: Sendable {
     }
 
     public func validate() -> [CatalogIssue] {
+        if supplementalManifest != nil || supplementalLoadIssue != nil {
+            var issues = ContentCatalog(
+                lexemes: coreLexemes,
+                sentences: sentences,
+                trialSlice: trialSlice,
+                topics: topics,
+                longTermManifest: longTermManifest,
+                surfaceLemmas: surfaceLemmas
+            ).validate()
+            if let supplementalLoadIssue {
+                issues.append(
+                    CatalogIssue(
+                        itemID: "catalog.supplement",
+                        message: supplementalLoadIssue
+                    )
+                )
+            }
+            return issues
+        }
+
         var issues: [CatalogIssue] = []
 
         if lexemes.count < 350 {

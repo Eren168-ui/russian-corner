@@ -1,0 +1,2832 @@
+[
+  {
+    "id": "supplement-lexeme-останавливаться",
+    "lemma": "останавливаться",
+    "stressedForm": "остана́вливаться",
+    "speechText": "останавливаться",
+    "partOfSpeech": "verb",
+    "glossZh": "入住；暂住",
+    "collocations": [
+      "останавливаться в отеле"
+    ],
+    "example": "Я недавно останавливался в хорошем отеле.",
+    "sentenceIDs": [
+      "supplement-sentence-001"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "imperfective",
+    "aspectPair": "остановиться",
+    "government": "в + 第六格（останавливаться в отеле）",
+    "surfaceForms": [
+      "останавливался"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "Я недавно останавливался в хорошем отеле."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：останавливаться в отеле",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-четырёхзвёздочный",
+    "lemma": "четырёхзвёздочный",
+    "stressedForm": "четырёхзвёздочный",
+    "speechText": "четырёхзвёздочный",
+    "partOfSpeech": "adjective",
+    "glossZh": "四星级的",
+    "collocations": [
+      "четырёхзвёздочный отель"
+    ],
+    "example": "Это был уютный четырёхзвёздочный отель.",
+    "sentenceIDs": [
+      "supplement-sentence-002"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "четырёхзвёздочный"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "Отель был четырёхзвёздочный и очень уютный."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“четырёхзвёздочный отель”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-уютный",
+    "lemma": "уютный",
+    "stressedForm": "ую́тный",
+    "speechText": "уютный",
+    "partOfSpeech": "adjective",
+    "glossZh": "舒适温馨的",
+    "collocations": [
+      "уютный номер"
+    ],
+    "example": "Это был уютный четырёхзвёздочный отель.",
+    "sentenceIDs": [
+      "supplement-sentence-002"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "уютный"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "Отель был четырёхзвёздочный и очень уютный."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“уютный номер”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-кондиционер",
+    "lemma": "кондиционер",
+    "stressedForm": "кондиционе́р",
+    "speechText": "кондиционер",
+    "partOfSpeech": "noun",
+    "glossZh": "空调",
+    "collocations": [
+      "номер с кондиционером"
+    ],
+    "example": "В номере были кондиционер и телевизор.",
+    "sentenceIDs": [
+      "supplement-sentence-003"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "masculine",
+    "surfaceForms": [
+      "кондиционером"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "Номер был чистый, с кондиционером и телевизором."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“номер с кондиционером”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-уборка",
+    "lemma": "уборка",
+    "stressedForm": "убо́рка",
+    "speechText": "уборка",
+    "partOfSpeech": "noun",
+    "glossZh": "清洁；打扫",
+    "collocations": [
+      "ежедневная уборка"
+    ],
+    "example": "В номере каждый день делали уборку, а полотенца и халат всегда были чистыми.",
+    "sentenceIDs": [
+      "supplement-sentence-004"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "уборка",
+      "уборку"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "Каждый день была уборка, полотенца и халат всегда чистые."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“ежедневная уборка”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-полотенце",
+    "lemma": "полотенце",
+    "stressedForm": "полоте́нце",
+    "speechText": "полотенце",
+    "partOfSpeech": "noun",
+    "glossZh": "毛巾",
+    "collocations": [
+      "чистое полотенце"
+    ],
+    "example": "В номере каждый день делали уборку, а полотенца и халат всегда были чистыми.",
+    "sentenceIDs": [
+      "supplement-sentence-004"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "neuter",
+    "surfaceForms": [
+      "полотенца"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "Каждый день была уборка, полотенца и халат всегда чистые."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“чистое полотенце”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-халат",
+    "lemma": "халат",
+    "stressedForm": "хала́т",
+    "speechText": "халат",
+    "partOfSpeech": "noun",
+    "glossZh": "浴袍",
+    "collocations": [
+      "чистый халат"
+    ],
+    "example": "В номере каждый день делали уборку, а полотенца и халат всегда были чистыми.",
+    "sentenceIDs": [
+      "supplement-sentence-004"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "masculine",
+    "surfaceForms": [
+      "халат"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "Каждый день была уборка, полотенца и халат всегда чистые."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“чистый халат”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-бассейн",
+    "lemma": "бассейн",
+    "stressedForm": "бассе́йн",
+    "speechText": "бассейн",
+    "partOfSpeech": "noun",
+    "glossZh": "游泳池",
+    "collocations": [
+      "ходить в бассейн"
+    ],
+    "example": "В отеле были бассейн и фитнес-центр — это мне очень понравилось.",
+    "sentenceIDs": [
+      "supplement-sentence-005",
+      "supplement-sentence-041"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "masculine",
+    "surfaceForms": [
+      "бассейн"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "В отеле был бассейн и фитнес-центр — это мне очень понравилось."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“ходить в бассейн”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-фитнес-центр",
+    "lemma": "фитнес-центр",
+    "stressedForm": "фи́тнес-це́нтр",
+    "speechText": "фитнес-центр",
+    "partOfSpeech": "noun",
+    "glossZh": "健身中心",
+    "collocations": [
+      "фитнес-центр в отеле"
+    ],
+    "example": "В отеле были бассейн и фитнес-центр — это мне очень понравилось.",
+    "sentenceIDs": [
+      "supplement-sentence-005"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "masculine",
+    "surfaceForms": [
+      "фитнес-центр"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "В отеле был бассейн и фитнес-центр — это мне очень понравилось."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“фитнес-центр в отеле”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-включённый",
+    "lemma": "включённый",
+    "stressedForm": "включённый",
+    "speechText": "включённый",
+    "partOfSpeech": "adjective",
+    "glossZh": "已包含在内的",
+    "collocations": [
+      "завтрак включён"
+    ],
+    "example": "Завтрак был включён в стоимость, а еда была вкусной.",
+    "sentenceIDs": [
+      "supplement-sentence-006"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "включён"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "Завтрак был включён, еда вкусная."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“завтрак включён”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-шумно",
+    "lemma": "шумно",
+    "stressedForm": "шу́мно",
+    "speechText": "шумно",
+    "partOfSpeech": "adverb",
+    "glossZh": "吵闹地；很吵",
+    "collocations": [
+      "ночью шумно"
+    ],
+    "example": "Но интернет работал плохо, и ночью было немного шумно.",
+    "sentenceIDs": [
+      "supplement-sentence-007"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "шумно"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "Но интернет работал плохо, и ночью было немного шумно."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“ночью шумно”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-несмотря",
+    "lemma": "несмотря",
+    "stressedForm": "несмотря́",
+    "speechText": "несмотря",
+    "partOfSpeech": "preposition",
+    "glossZh": "尽管",
+    "collocations": [
+      "несмотря на это"
+    ],
+    "example": "Несмотря на это, я остался доволен и хочу приехать туда снова.",
+    "sentenceIDs": [
+      "supplement-sentence-008"
+    ],
+    "reviewStatus": "reviewed",
+    "government": "на + 第四格（несмотря на это）",
+    "surfaceForms": [
+      "несмотря"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "Несмотря на это, я остался доволен и хочу приехать туда снова."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：несмотря на это",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-довольный",
+    "lemma": "довольный",
+    "stressedForm": "дово́льный",
+    "speechText": "довольный",
+    "partOfSpeech": "adjective",
+    "glossZh": "满意的",
+    "collocations": [
+      "остаться довольным"
+    ],
+    "example": "Несмотря на это, я остался доволен и хочу приехать туда снова.",
+    "sentenceIDs": [
+      "supplement-sentence-008"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "доволен",
+      "довольным"
+    ],
+    "sourcePaths": [
+      "01-按学期/大二上/基础俄语/酒店主题.md"
+    ],
+    "sourceTexts": [
+      "Несмотря на это, я остался доволен и хочу приехать туда снова."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“остаться довольным”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-связанный",
+    "lemma": "связанный",
+    "stressedForm": "свя́занный",
+    "speechText": "связанный",
+    "partOfSpeech": "adjective",
+    "glossZh": "有联系的；相关的",
+    "collocations": [
+      "быть связанным с человеком"
+    ],
+    "example": "Эта песня связана у меня с важным человеком.",
+    "sentenceIDs": [
+      "supplement-sentence-011"
+    ],
+    "reviewStatus": "reviewed",
+    "government": "с + 第五格（связана с человеком）",
+    "surfaceForms": [
+      "связана",
+      "связанным"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Эта песня связана у меня с важным человеком."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：быть связанным с человеком",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-впервые",
+    "lemma": "впервые",
+    "stressedForm": "впервы́е",
+    "speechText": "впервые",
+    "partOfSpeech": "adverb",
+    "glossZh": "第一次",
+    "collocations": [
+      "впервые услышать"
+    ],
+    "example": "Я впервые услышал её несколько лет назад.",
+    "sentenceIDs": [
+      "supplement-sentence-010"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "впервые"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Я впервые услышал её несколько лет назад."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“впервые услышать”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-вспоминать",
+    "lemma": "вспоминать",
+    "stressedForm": "вспомина́ть",
+    "speechText": "вспоминать",
+    "partOfSpeech": "verb",
+    "glossZh": "回想；想起",
+    "collocations": [
+      "вспоминать время вместе"
+    ],
+    "example": "Когда я слушаю её, я вспоминаю наше общение и время вместе.",
+    "sentenceIDs": [
+      "supplement-sentence-012"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "imperfective",
+    "aspectPair": "вспомнить",
+    "government": "кого/что + 第四格",
+    "surfaceForms": [
+      "вспоминаю"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Когда я слушаю её, я вспоминаю наше общение и время вместе."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：вспоминать время вместе",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-общение",
+    "lemma": "общение",
+    "stressedForm": "обще́ние",
+    "speechText": "общение",
+    "partOfSpeech": "noun",
+    "glossZh": "交流；交往",
+    "collocations": [
+      "вспоминать наше общение"
+    ],
+    "example": "Когда я слушаю её, я вспоминаю наше общение и время вместе.",
+    "sentenceIDs": [
+      "supplement-sentence-012"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "neuter",
+    "surfaceForms": [
+      "общение",
+      "общаемся"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Когда я слушаю её, я вспоминаю наше общение и время вместе."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“вспоминать наше общение”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-трогательный",
+    "lemma": "трогательный",
+    "stressedForm": "тро́гательный",
+    "speechText": "трогательный",
+    "partOfSpeech": "adjective",
+    "glossZh": "感人的；打动人的",
+    "collocations": [
+      "трогательная песня"
+    ],
+    "example": "Для меня эта песня не просто красивая, но и очень трогательная.",
+    "sentenceIDs": [
+      "supplement-sentence-013"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "трогательная"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Для меня эта песня не просто красивая, но и очень трогательная."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“трогательная песня”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-напоминать",
+    "lemma": "напоминать",
+    "stressedForm": "напомина́ть",
+    "speechText": "напоминать",
+    "partOfSpeech": "verb",
+    "glossZh": "使想起；提醒",
+    "collocations": [
+      "напоминать о дружбе"
+    ],
+    "example": "Она напоминает мне о дружбе, расставании и тёплых воспоминаниях.",
+    "sentenceIDs": [
+      "supplement-sentence-014",
+      "supplement-sentence-020"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "imperfective",
+    "aspectPair": "напомнить",
+    "government": "кому о ком/чём；напоминать кому что",
+    "surfaceForms": [
+      "напоминает"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Она напоминает мне о дружбе, расставании и тёплых воспоминаниях."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：напоминать о дружбе",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-расставание",
+    "lemma": "расставание",
+    "stressedForm": "расстава́ние",
+    "speechText": "расставание",
+    "partOfSpeech": "noun",
+    "glossZh": "分别；离别",
+    "collocations": [
+      "вспоминать о расставании"
+    ],
+    "example": "Она напоминает мне о дружбе, расставании и тёплых воспоминаниях.",
+    "sentenceIDs": [
+      "supplement-sentence-014"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "neuter",
+    "surfaceForms": [
+      "расставании"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Она напоминает мне о дружбе, расставании и тёплых воспоминаниях."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“вспоминать о расставании”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-воспоминание",
+    "lemma": "воспоминание",
+    "stressedForm": "воспомина́ние",
+    "speechText": "воспоминание",
+    "partOfSpeech": "noun",
+    "glossZh": "回忆",
+    "collocations": [
+      "тёплые воспоминания"
+    ],
+    "example": "Она напоминает мне о дружбе, расставании и тёплых воспоминаниях.",
+    "sentenceIDs": [
+      "supplement-sentence-014"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "neuter",
+    "surfaceForms": [
+      "воспоминания",
+      "воспоминаниях"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Она напоминает мне о дружбе, расставании и тёплых воспоминаниях."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“тёплые воспоминания”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-одиноко",
+    "lemma": "одиноко",
+    "stressedForm": "одино́ко",
+    "speechText": "одиноко",
+    "partOfSpeech": "adverb",
+    "glossZh": "孤单地；孤独",
+    "collocations": [
+      "мне одиноко"
+    ],
+    "example": "Иногда я слушаю её, когда мне грустно или одиноко.",
+    "sentenceIDs": [
+      "supplement-sentence-015"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "одиноко"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Иногда я слушаю её, когда мне грустно или одиноко."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“мне одиноко”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-спокойнее",
+    "lemma": "спокойнее",
+    "stressedForm": "споко́йнее",
+    "speechText": "спокойнее",
+    "partOfSpeech": "adverb",
+    "glossZh": "更平静",
+    "collocations": [
+      "становится спокойнее"
+    ],
+    "example": "Тогда мне становится спокойнее.",
+    "sentenceIDs": [
+      "supplement-sentence-016"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "спокойнее"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Тогда мне становится спокойнее."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“становится спокойнее”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-мелодия",
+    "lemma": "мелодия",
+    "stressedForm": "мело́дия",
+    "speechText": "мелодия",
+    "partOfSpeech": "noun",
+    "glossZh": "旋律",
+    "collocations": [
+      "мелодия песни"
+    ],
+    "example": "Мне нравится её мелодия и слова.",
+    "sentenceIDs": [
+      "supplement-sentence-017"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "мелодия"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Мне нравится её мелодия и слова."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“мелодия песни”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-история",
+    "lemma": "история",
+    "stressedForm": "исто́рия",
+    "speechText": "история",
+    "partOfSpeech": "noun",
+    "glossZh": "故事；经历",
+    "collocations": [
+      "у песни есть своя история"
+    ],
+    "example": "Я думаю, что у каждой важной песни есть своя история.",
+    "sentenceIDs": [
+      "supplement-sentence-018"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "история"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Я думаю, что у каждой важной песни есть своя история."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“у песни есть своя история”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-особенный",
+    "lemma": "особенный",
+    "stressedForm": "осо́бенный",
+    "speechText": "особенный",
+    "partOfSpeech": "adjective",
+    "glossZh": "特别的",
+    "collocations": [
+      "особенная песня"
+    ],
+    "example": "У меня есть особенная песня, которая для меня очень важна.",
+    "sentenceIDs": [
+      "supplement-sentence-009",
+      "supplement-sentence-019"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "особенная",
+      "особенной"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Моя важная песня — это песня «See You Again»."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“особенная песня”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-чувство",
+    "lemma": "чувство",
+    "stressedForm": "чу́вство",
+    "speechText": "чувство",
+    "partOfSpeech": "noun",
+    "glossZh": "感受；情感",
+    "collocations": [
+      "сильные чувства"
+    ],
+    "example": "Каждый раз, когда я её слышу, у меня появляются сильные чувства.",
+    "sentenceIDs": [
+      "supplement-sentence-021"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "neuter",
+    "surfaceForms": [
+      "чувства"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Каждый раз, когда я её слышу, у меня появляются сильные чувства."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“сильные чувства”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-занимать",
+    "lemma": "занимать",
+    "stressedForm": "занима́ть",
+    "speechText": "занимать",
+    "partOfSpeech": "verb",
+    "glossZh": "占据",
+    "collocations": [
+      "занимать важное место"
+    ],
+    "example": "Поэтому она занимает важное место в моей жизни.",
+    "sentenceIDs": [
+      "supplement-sentence-022"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "imperfective",
+    "aspectPair": "занять",
+    "government": "что + 第四格",
+    "surfaceForms": [
+      "занимает"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/第三周作业.md"
+    ],
+    "sourceTexts": [
+      "Поэтому она занимает важное место в моей жизни."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：занимать важное место",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-плавание",
+    "lemma": "плавание",
+    "stressedForm": "пла́вание",
+    "speechText": "плавание",
+    "partOfSpeech": "noun",
+    "glossZh": "游泳",
+    "collocations": [
+      "заниматься плаванием"
+    ],
+    "example": "Можно показать движения руками, как при плавании.",
+    "sentenceIDs": [
+      "supplement-sentence-025",
+      "supplement-sentence-032",
+      "supplement-sentence-041"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "neuter",
+    "surfaceForms": [
+      "плаванием",
+      "плавании"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "|плавание|Можно показать движения руками, как будто я плыву.|用手臂做游泳动作。|"
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“заниматься плаванием”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-бить",
+    "lemma": "бить",
+    "stressedForm": "би́ть",
+    "speechText": "бить",
+    "partOfSpeech": "verb",
+    "glossZh": "击打；踢",
+    "collocations": [
+      "бить по мячу"
+    ],
+    "example": "Можно показать, как я бью по мячу ногой.",
+    "sentenceIDs": [
+      "supplement-sentence-024"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "imperfective",
+    "aspectPairNote": "没有单一机械体对；表达一次击打常用 ударить",
+    "government": "по + 第三格（бить по мячу）",
+    "surfaceForms": [
+      "бью"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "|футбол|Можно показать, как я бью по мячу ногой.|表演用脚踢球。|"
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：бить по мячу",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-лыжи",
+    "lemma": "лыжи",
+    "stressedForm": "лы́жи",
+    "speechText": "лыжи",
+    "partOfSpeech": "noun",
+    "glossZh": "滑雪板；滑雪",
+    "collocations": [
+      "ехать на лыжах"
+    ],
+    "example": "Можно показать, как я еду на лыжах.",
+    "sentenceIDs": [
+      "supplement-sentence-028"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "plural",
+    "surfaceForms": [
+      "лыжах"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "|лыжи|Можно показать, как я еду на лыжах.|表演滑雪。|"
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“ехать на лыжах”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-борьба",
+    "lemma": "борьба",
+    "stressedForm": "борьба́",
+    "speechText": "борьба",
+    "partOfSpeech": "noun",
+    "glossZh": "搏斗；较量",
+    "collocations": [
+      "психологическая борьба"
+    ],
+    "example": "Линь выбрал каратэ, потому что считает, что каратэ — это не только физическая, но и психологическая борьба.",
+    "sentenceIDs": [
+      "supplement-sentence-030"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "борьба"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "Линь выбрал каратэ, потому что считает, что каратэ — это не только физическая, но и психологическая борьба."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“психологическая борьба”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-бросать",
+    "lemma": "бросать",
+    "stressedForm": "броса́ть",
+    "speechText": "бросать",
+    "partOfSpeech": "verb",
+    "glossZh": "投；扔",
+    "collocations": [
+      "бросать мяч в корзину"
+    ],
+    "example": "Можно показать, как я веду мяч и бросаю его в корзину.",
+    "sentenceIDs": [
+      "supplement-sentence-023"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "imperfective",
+    "aspectPair": "бросить",
+    "government": "что + 第四格；куда",
+    "surfaceForms": [
+      "бросаю"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "|баскетбол|Можно показать, как я веду мяч и бросаю его в корзину.|表演运球和投篮。|"
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：бросать мяч в корзину",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-корзина",
+    "lemma": "корзина",
+    "stressedForm": "корзи́на",
+    "speechText": "корзина",
+    "partOfSpeech": "noun",
+    "glossZh": "篮筐；篮子",
+    "collocations": [
+      "бросить мяч в корзину"
+    ],
+    "example": "Можно показать, как я веду мяч и бросаю его в корзину.",
+    "sentenceIDs": [
+      "supplement-sentence-023"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "корзину"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "|баскетбол|Можно показать, как я веду мяч и бросаю его в корзину.|表演运球和投篮。|"
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“бросить мяч в корзину”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-клюшка",
+    "lemma": "клюшка",
+    "stressedForm": "клю́шка",
+    "speechText": "клюшка",
+    "partOfSpeech": "noun",
+    "glossZh": "球杆",
+    "collocations": [
+      "держать клюшку"
+    ],
+    "example": "Можно показать, как я держу клюшку и бью по шайбе.",
+    "sentenceIDs": [
+      "supplement-sentence-026"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "клюшку"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "|хоккей|Можно показать, как я держу клюшку и бью по шайбе.|表演拿球杆击球。|"
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“держать клюшку”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-шайба",
+    "lemma": "шайба",
+    "stressedForm": "ша́йба",
+    "speechText": "шайба",
+    "partOfSpeech": "noun",
+    "glossZh": "冰球",
+    "collocations": [
+      "бить по шайбе"
+    ],
+    "example": "Можно показать, как я держу клюшку и бью по шайбе.",
+    "sentenceIDs": [
+      "supplement-sentence-026"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "шайбе"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "|хоккей|Можно показать, как я держу клюшку и бью по шайбе.|表演拿球杆击球。|"
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“бить по шайбе”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-шахматный",
+    "lemma": "шахматный",
+    "stressedForm": "ша́хматный",
+    "speechText": "шахматный",
+    "partOfSpeech": "adjective",
+    "glossZh": "国际象棋的",
+    "collocations": [
+      "шахматная фигура"
+    ],
+    "example": "Можно показать, как я думаю и двигаю шахматную фигуру.",
+    "sentenceIDs": [
+      "supplement-sentence-027"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "шахматная",
+      "шахматную"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "|шахматы|Можно показать, как я думаю и двигаю шахматную фигуру.|表演思考和移动棋子。|"
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“шахматная фигура”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-фигура",
+    "lemma": "фигура",
+    "stressedForm": "фигу́ра",
+    "speechText": "фигура",
+    "partOfSpeech": "noun",
+    "glossZh": "棋子；形体",
+    "collocations": [
+      "двигать шахматную фигуру"
+    ],
+    "example": "Можно показать, как я думаю и двигаю шахматную фигуру.",
+    "sentenceIDs": [
+      "supplement-sentence-027"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "фигуру"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "|шахматы|Можно показать, как я думаю и двигаю шахматную фигуру.|表演思考和移动棋子。|"
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“двигать шахматную фигуру”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-занятие",
+    "lemma": "занятие",
+    "stressedForm": "заня́тие",
+    "speechText": "занятие",
+    "partOfSpeech": "noun",
+    "glossZh": "课程；活动",
+    "collocations": [
+      "занятие по спорту"
+    ],
+    "example": "У студентов такие новости: в понедельник у них первое занятие по спорту.",
+    "sentenceIDs": [
+      "supplement-sentence-029",
+      "supplement-sentence-033",
+      "supplement-sentence-053"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "neuter",
+    "surfaceForms": [
+      "занятие",
+      "занятий",
+      "занятия"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "У студентов такие новости: в понедельник у них первое занятие по спорту."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“занятие по спорту”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-психологический",
+    "lemma": "психологический",
+    "stressedForm": "психологи́ческий",
+    "speechText": "психологический",
+    "partOfSpeech": "adjective",
+    "glossZh": "心理的",
+    "collocations": [
+      "психологическая борьба"
+    ],
+    "example": "Линь выбрал каратэ, потому что считает, что каратэ — это не только физическая, но и психологическая борьба.",
+    "sentenceIDs": [
+      "supplement-sentence-030"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "психологическая"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "Линь выбрал каратэ, потому что считает, что каратэ — это не только физическая, но и психологическая борьба."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“психологическая борьба”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-профессионал",
+    "lemma": "профессионал",
+    "stressedForm": "профессиона́л",
+    "speechText": "профессионал",
+    "partOfSpeech": "noun",
+    "glossZh": "专业人士",
+    "collocations": [
+      "работать с профессионалом"
+    ],
+    "example": "Хуахуа и Катя выбрали бадминтон, потому что они раньше уже играли по выходным, а теперь их будет тренировать профессионал.",
+    "sentenceIDs": [
+      "supplement-sentence-031"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "masculine",
+    "surfaceForms": [
+      "профессионал",
+      "профессионалом"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "Хуахуа и Катя выбрали бадминтон, потому что они раньше уже играли по выходным, а теперь их будет тренировать профессионал."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“работать с профессионалом”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-напряжение",
+    "lemma": "напряжение",
+    "stressedForm": "напряже́ние",
+    "speechText": "напряжение",
+    "partOfSpeech": "noun",
+    "glossZh": "压力；紧张",
+    "collocations": [
+      "снять напряжение"
+    ],
+    "example": "В результате он выбрал баскетбол, потому что после занятий ему приятно побегать с друзьями, снять напряжение и получить дофамин.",
+    "sentenceIDs": [
+      "supplement-sentence-033",
+      "supplement-sentence-038"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "neuter",
+    "surfaceForms": [
+      "напряжение"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "Андрей долго выбирал между баскетболом и плаванием. В результате он выбрал баскетбол, потому что после занятий ему приятно побегать с друзьями, снять напряжение и получить дофамин."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“снять напряжение”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-пробежать",
+    "lemma": "пробежать",
+    "stressedForm": "пробежа́ть",
+    "speechText": "пробежать",
+    "partOfSpeech": "verb",
+    "glossZh": "跑完（一段距离）",
+    "collocations": [
+      "пробежать три километра"
+    ],
+    "example": "Им надо пробежать 40 километров, а они уже пробежали 3 километра.",
+    "sentenceIDs": [
+      "supplement-sentence-035"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "perfective",
+    "aspectPair": "пробегать",
+    "government": "сколько + 距离",
+    "surfaceForms": [
+      "пробежать",
+      "пробежали"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "Девочки начали бегать по утрам. Им надо пробежать 40 километров, а они уже пробежали 3 километра."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：пробежать три километра",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-секция",
+    "lemma": "секция",
+    "stressedForm": "се́кция",
+    "speechText": "секция",
+    "partOfSpeech": "noun",
+    "glossZh": "兴趣小组；体育项目",
+    "collocations": [
+      "спортивная секция"
+    ],
+    "example": "Когда я выбирал спортивную секцию в МГУ-ППИ, я сначала думал о баскетболе и плавании.",
+    "sentenceIDs": [
+      "supplement-sentence-036"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "секцию"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "Когда я выбирал спортивную секцию в МГУ-ППИ, я сначала думал о баскетболе и плавании."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“спортивная секция”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-командный",
+    "lemma": "командный",
+    "stressedForm": "кома́ндный",
+    "speechText": "командный",
+    "partOfSpeech": "adjective",
+    "glossZh": "团队的",
+    "collocations": [
+      "командный вид спорта"
+    ],
+    "example": "Мне нравится баскетбол, потому что это командный и активный вид спорта.",
+    "sentenceIDs": [
+      "supplement-sentence-037",
+      "supplement-sentence-039"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "командный"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "Мне нравится баскетбол, потому что это командный и активный вид спорта."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“командный вид спорта”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-активный",
+    "lemma": "активный",
+    "stressedForm": "акти́вный",
+    "speechText": "активный",
+    "partOfSpeech": "adjective",
+    "glossZh": "活跃的；高强度的",
+    "collocations": [
+      "активный вид спорта"
+    ],
+    "example": "Мне нравится баскетбол, потому что это командный и активный вид спорта.",
+    "sentenceIDs": [
+      "supplement-sentence-037"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "активный",
+      "активно"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "Мне нравится баскетбол, потому что это командный и активный вид спорта."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“активный вид спорта”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-усталость",
+    "lemma": "усталость",
+    "stressedForm": "уста́лость",
+    "speechText": "усталость",
+    "partOfSpeech": "noun",
+    "glossZh": "疲劳",
+    "collocations": [
+      "чувствовать усталость"
+    ],
+    "example": "После занятий я часто чувствую усталость и напряжение, а спорт помогает мне расслабиться.",
+    "sentenceIDs": [
+      "supplement-sentence-038"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "усталость"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "После занятий я часто чувствую усталость и напряжение, а спорт помогает мне расслабиться."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“чувствовать усталость”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-расслабиться",
+    "lemma": "расслабиться",
+    "stressedForm": "рассла́биться",
+    "speechText": "расслабиться",
+    "partOfSpeech": "verb",
+    "glossZh": "放松下来",
+    "collocations": [
+      "помогать расслабиться"
+    ],
+    "example": "После занятий я часто чувствую усталость и напряжение, а спорт помогает мне расслабиться.",
+    "sentenceIDs": [
+      "supplement-sentence-038"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "perfective",
+    "aspectPair": "расслабляться",
+    "government": "不及物；常用 помочь кому расслабиться",
+    "surfaceForms": [
+      "расслабиться"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "После занятий я часто чувствую усталость и напряжение, а спорт помогает мне расслабиться."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：помогать расслабиться",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-развивать",
+    "lemma": "развивать",
+    "stressedForm": "развива́ть",
+    "speechText": "развивать",
+    "partOfSpeech": "verb",
+    "glossZh": "培养；发展",
+    "collocations": [
+      "развивать командный дух"
+    ],
+    "example": "Кроме того, во время игры можно общаться с друзьями и развивать командный дух.",
+    "sentenceIDs": [
+      "supplement-sentence-039"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "imperfective",
+    "aspectPair": "развить",
+    "government": "что + 第四格",
+    "surfaceForms": [
+      "развивать"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "Кроме того, во время игры можно общаться с друзьями и развивать командный дух."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：развивать командный дух",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-полезный",
+    "lemma": "полезный",
+    "stressedForm": "поле́зный",
+    "speechText": "полезный",
+    "partOfSpeech": "adjective",
+    "glossZh": "有益的",
+    "collocations": [
+      "полезно для здоровья"
+    ],
+    "example": "Но в будущем я тоже хотел бы иногда ходить в бассейн, потому что плавание очень полезно для здоровья.",
+    "sentenceIDs": [
+      "supplement-sentence-041"
+    ],
+    "reviewStatus": "reviewed",
+    "government": "для + 第二格",
+    "surfaceForms": [
+      "полезно"
+    ],
+    "sourcePaths": [
+      "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md"
+    ],
+    "sourceTexts": [
+      "Но в будущем я тоже хотел бы иногда ходить в бассейн, потому что плавание очень полезно для здоровья."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：полезно для здоровья",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-кроме того",
+    "lemma": "кроме того",
+    "stressedForm": "кро́ме того́",
+    "speechText": "кроме того",
+    "partOfSpeech": "connector",
+    "glossZh": "此外",
+    "collocations": [
+      "кроме того, мне кажется"
+    ],
+    "example": "Кроме того, мне кажется, что русский язык очень красивый, хотя его грамматика довольно сложная.",
+    "sentenceIDs": [
+      "supplement-sentence-042"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "Кроме того"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я изучаю русский язык, потому что я учусь в университете МГУ-ППИ в Шэньчжэне. Кроме того, мне кажется, что русский язык очень красивый, хотя его грамматика довольно сложная."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“кроме того, мне кажется”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-хотя",
+    "lemma": "хотя",
+    "stressedForm": "хотя́",
+    "speechText": "хотя",
+    "partOfSpeech": "conjunction",
+    "glossZh": "虽然；尽管",
+    "collocations": [
+      "хотя это сложно"
+    ],
+    "example": "Кроме того, мне кажется, что русский язык очень красивый, хотя его грамматика довольно сложная.",
+    "sentenceIDs": [
+      "supplement-sentence-042"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "хотя"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я изучаю русский язык, потому что я учусь в университете МГУ-ППИ в Шэньчжэне. Кроме того, мне кажется, что русский язык очень красивый, хотя его грамматика довольно сложная."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“хотя это сложно”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-довольно",
+    "lemma": "довольно",
+    "stressedForm": "дово́льно",
+    "speechText": "довольно",
+    "partOfSpeech": "adverb",
+    "glossZh": "相当；颇为",
+    "collocations": [
+      "довольно сложный"
+    ],
+    "example": "Кроме того, мне кажется, что русский язык очень красивый, хотя его грамматика довольно сложная.",
+    "sentenceIDs": [
+      "supplement-sentence-042"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "довольно"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я изучаю русский язык, потому что я учусь в университете МГУ-ППИ в Шэньчжэне. Кроме того, мне кажется, что русский язык очень красивый, хотя его грамматика довольно сложная."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“довольно сложный”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-грамматика",
+    "lemma": "грамматика",
+    "stressedForm": "грамма́тика",
+    "speechText": "грамматика",
+    "partOfSpeech": "noun",
+    "glossZh": "语法",
+    "collocations": [
+      "грамматика русского языка"
+    ],
+    "example": "Кроме того, мне кажется, что русский язык очень красивый, хотя его грамматика довольно сложная.",
+    "sentenceIDs": [
+      "supplement-sentence-042"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "грамматика"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я изучаю русский язык, потому что я учусь в университете МГУ-ППИ в Шэньчжэне. Кроме того, мне кажется, что русский язык очень красивый, хотя его грамматика довольно сложная."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“грамматика русского языка”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-посидеть",
+    "lemma": "посидеть",
+    "stressedForm": "посиде́ть",
+    "speechText": "посидеть",
+    "partOfSpeech": "verb",
+    "glossZh": "坐一会儿",
+    "collocations": [
+      "посидеть в кафе"
+    ],
+    "example": "Если будет дождь, мы можем пойти в кино или посидеть в кафе и поговорить.",
+    "sentenceIDs": [
+      "supplement-sentence-043"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "perfective",
+    "aspectPair": "сидеть",
+    "government": "где + 第六格",
+    "surfaceForms": [
+      "посидеть"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Если будет дождь, мы можем пойти в кино или посидеть в кафе и поговорить."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：посидеть в кафе",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-поговорить",
+    "lemma": "поговорить",
+    "stressedForm": "поговори́ть",
+    "speechText": "поговорить",
+    "partOfSpeech": "verb",
+    "glossZh": "聊一聊",
+    "collocations": [
+      "поговорить с друзьями"
+    ],
+    "example": "Если будет дождь, мы можем пойти в кино или посидеть в кафе и поговорить.",
+    "sentenceIDs": [
+      "supplement-sentence-043"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "perfective",
+    "aspectPair": "говорить",
+    "government": "с + 第五格；о + 第六格",
+    "surfaceForms": [
+      "поговорить"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Если будет дождь, мы можем пойти в кино или посидеть в кафе и поговорить."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：поговорить с друзьями",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-своими глазами",
+    "lemma": "своими глазами",
+    "stressedForm": "свои́ми глаза́ми",
+    "speechText": "своими глазами",
+    "partOfSpeech": "fixedPhrase",
+    "glossZh": "亲眼",
+    "collocations": [
+      "увидеть своими глазами"
+    ],
+    "example": "Я хочу увидеть их своими глазами.",
+    "sentenceIDs": [
+      "supplement-sentence-045"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "своими глазами"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "На каникулах я хотел бы поехать в Москву. Я знаю, что главная достопримечательность Москвы — это Кремль и Красная площадь, и я хочу увидеть их своими глазами."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“увидеть своими глазами”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-доехать",
+    "lemma": "доехать",
+    "stressedForm": "дое́хать",
+    "speechText": "доехать",
+    "partOfSpeech": "verb",
+    "glossZh": "乘车到达",
+    "collocations": [
+      "доехать до станции"
+    ],
+    "example": "Нужно доехать до станции «Центральная», а там магазин рядом.",
+    "sentenceIDs": [
+      "supplement-sentence-046"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "perfective",
+    "aspectPair": "доезжать",
+    "government": "до + 第二格",
+    "surfaceForms": [
+      "доехать"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я думаю, что лучше поехать на метро, потому что это быстро. Нужно доехать до станции «Центральная», а там магазин рядом."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：доехать до станции",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-станция",
+    "lemma": "станция",
+    "stressedForm": "ста́нция",
+    "speechText": "станция",
+    "partOfSpeech": "noun",
+    "glossZh": "车站",
+    "collocations": [
+      "доехать до станции"
+    ],
+    "example": "Нужно доехать до станции «Центральная», а там магазин рядом.",
+    "sentenceIDs": [
+      "supplement-sentence-046"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "станции"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я думаю, что лучше поехать на метро, потому что это быстро. Нужно доехать до станции «Центральная», а там магазин рядом."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“доехать до станции”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-без выходных",
+    "lemma": "без выходных",
+    "stressedForm": "без выходны́х",
+    "speechText": "без выходных",
+    "partOfSpeech": "fixedPhrase",
+    "glossZh": "全年无休；周末不休",
+    "collocations": [
+      "работать без выходных"
+    ],
+    "example": "Обычно магазины в моём городе работают с десяти утра до десяти вечера, без выходных.",
+    "sentenceIDs": [
+      "supplement-sentence-048"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "без выходных"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Обычно магазины в моём городе работают с десяти утра до десяти вечера, без выходных."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“работать без выходных”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-выбор",
+    "lemma": "выбор",
+    "stressedForm": "вы́бор",
+    "speechText": "выбор",
+    "partOfSpeech": "noun",
+    "glossZh": "选择；可选范围",
+    "collocations": [
+      "большой выбор"
+    ],
+    "example": "Технику я обычно покупаю в больших торговых центрах или заказываю в интернете, потому что там больше выбора.",
+    "sentenceIDs": [
+      "supplement-sentence-049"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "masculine",
+    "surfaceForms": [
+      "выбор",
+      "выбора"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Технику я обычно покупаю в больших торговых центрах или заказываю в интернете, потому что там больше выбор."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“большой выбор”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-заказывать",
+    "lemma": "заказывать",
+    "stressedForm": "зака́зывать",
+    "speechText": "заказывать",
+    "partOfSpeech": "verb",
+    "glossZh": "订购",
+    "collocations": [
+      "заказывать в интернете"
+    ],
+    "example": "Технику я обычно покупаю в больших торговых центрах или заказываю в интернете, потому что там больше выбора.",
+    "sentenceIDs": [
+      "supplement-sentence-049"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "imperfective",
+    "aspectPair": "заказать",
+    "government": "что + 第四格",
+    "surfaceForms": [
+      "заказываю"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Технику я обычно покупаю в больших торговых центрах или заказываю в интернете, потому что там больше выбор."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：заказывать в интернете",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-торговый центр",
+    "lemma": "торговый центр",
+    "stressedForm": "торго́вый це́нтр",
+    "speechText": "торговый центр",
+    "partOfSpeech": "nounPhrase",
+    "glossZh": "购物中心",
+    "collocations": [
+      "покупать в торговом центре"
+    ],
+    "example": "Технику я обычно покупаю в больших торговых центрах или заказываю в интернете, потому что там больше выбора.",
+    "sentenceIDs": [
+      "supplement-sentence-049"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "masculine",
+    "surfaceForms": [
+      "торговом центре",
+      "торговых центрах"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Технику я обычно покупаю в больших торговых центрах или заказываю в интернете, потому что там больше выбор."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“покупать в торговом центре”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-рядом",
+    "lemma": "рядом",
+    "stressedForm": "ря́дом",
+    "speechText": "рядом",
+    "partOfSpeech": "adverb",
+    "glossZh": "在附近",
+    "collocations": [
+      "рядом с университетом"
+    ],
+    "example": "Иногда по выходным я хожу в супермаркет рядом с университетом за фруктами или напитками.",
+    "sentenceIDs": [
+      "supplement-sentence-050"
+    ],
+    "reviewStatus": "reviewed",
+    "government": "с + 第五格",
+    "surfaceForms": [
+      "рядом"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я редко хожу за продуктами, потому что я ем в столовой и общежитии. Иногда по выходным я хожу в супермаркет рядом с университетом за фруктами или напитками."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：рядом с университетом",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-общежитие",
+    "lemma": "общежитие",
+    "stressedForm": "общежи́тие",
+    "speechText": "общежитие",
+    "partOfSpeech": "noun",
+    "glossZh": "宿舍",
+    "collocations": [
+      "жить в общежитии"
+    ],
+    "example": "Нет, сейчас у меня нет домашних животных, потому что я живу в общежитии, и это не разрешено.",
+    "sentenceIDs": [
+      "supplement-sentence-052"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "neuter",
+    "surfaceForms": [
+      "общежитии"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Нет, сейчас у меня нет домашних животных, потому что я живу в общежитии, и это не разрешено. Но в будущем я хотел бы иметь кошку."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“жить в общежитии”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-разрешено",
+    "lemma": "разрешено",
+    "stressedForm": "разрешено́",
+    "speechText": "разрешено",
+    "partOfSpeech": "predicative",
+    "glossZh": "被允许；可以",
+    "collocations": [
+      "это не разрешено"
+    ],
+    "example": "Нет, сейчас у меня нет домашних животных, потому что я живу в общежитии, и это не разрешено.",
+    "sentenceIDs": [
+      "supplement-sentence-052"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "разрешено"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Нет, сейчас у меня нет домашних животных, потому что я живу в общежитии, и это не разрешено. Но в будущем я хотел бы иметь кошку."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“это не разрешено”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-наверное",
+    "lemma": "наверное",
+    "stressedForm": "наве́рное",
+    "speechText": "наверное",
+    "partOfSpeech": "modalWord",
+    "glossZh": "大概；可能",
+    "collocations": [
+      "наверное, были занятия"
+    ],
+    "example": "Извините, наверное, у меня были занятия в университете.",
+    "sentenceIDs": [
+      "supplement-sentence-053"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "наверное"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Извините, наверное, у меня были занятия в университете. Мои занятия часто продолжаются до вечера."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“наверное, были занятия”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-продолжаться",
+    "lemma": "продолжаться",
+    "stressedForm": "продолжа́ться",
+    "speechText": "продолжаться",
+    "partOfSpeech": "verb",
+    "glossZh": "持续",
+    "collocations": [
+      "продолжаться до вечера"
+    ],
+    "example": "Мои занятия часто продолжаются до вечера.",
+    "sentenceIDs": [
+      "supplement-sentence-054"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "imperfective",
+    "aspectPairNote": "通常作为不及物未完成体使用",
+    "government": "до + 第二格",
+    "surfaceForms": [
+      "продолжаются"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Извините, наверное, у меня были занятия в университете. Мои занятия часто продолжаются до вечера."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：продолжаться до вечера",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-главное",
+    "lemma": "главное",
+    "stressedForm": "гла́вное",
+    "speechText": "главное",
+    "partOfSpeech": "predicative",
+    "glossZh": "最重要的是",
+    "collocations": [
+      "главное, чтобы было удобно"
+    ],
+    "example": "Обычно я хожу на учёбу в удобной одежде: в джинсах, футболке и кроссовках. Главное, чтобы было удобно сидеть на лекциях.",
+    "sentenceIDs": [
+      "supplement-sentence-055"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "Главное"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Обычно я хожу на учёбу в удобной одежде: в джинсах, футболке и кроссовках. Главное, чтобы было удобно сидеть на лекциях."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“главное, чтобы было удобно”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-одежда",
+    "lemma": "одежда",
+    "stressedForm": "оде́жда",
+    "speechText": "одежда",
+    "partOfSpeech": "noun",
+    "glossZh": "衣服；穿着",
+    "collocations": [
+      "удобная одежда"
+    ],
+    "example": "Обычно я хожу на учёбу в удобной одежде: в джинсах, футболке и кроссовках. Главное, чтобы было удобно сидеть на лекциях.",
+    "sentenceIDs": [
+      "supplement-sentence-055"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "одежде"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Обычно я хожу на учёбу в удобной одежде: в джинсах, футболке и кроссовках. Главное, чтобы было удобно сидеть на лекциях."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“удобная одежда”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-кроссовки",
+    "lemma": "кроссовки",
+    "stressedForm": "кроссо́вки",
+    "speechText": "кроссовки",
+    "partOfSpeech": "noun",
+    "glossZh": "运动鞋",
+    "collocations": [
+      "ходить в кроссовках"
+    ],
+    "example": "Обычно я хожу на учёбу в удобной одежде: в джинсах, футболке и кроссовках. Главное, чтобы было удобно сидеть на лекциях.",
+    "sentenceIDs": [
+      "supplement-sentence-055"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "plural",
+    "surfaceForms": [
+      "кроссовках"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Обычно я хожу на учёбу в удобной одежде: в джинсах, футболке и кроссовках. Главное, чтобы было удобно сидеть на лекциях."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“ходить в кроссовках”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-современный",
+    "lemma": "современный",
+    "stressedForm": "совреме́нный",
+    "speechText": "современный",
+    "partOfSpeech": "adjective",
+    "glossZh": "当代的；现代的",
+    "collocations": [
+      "современный исполнитель"
+    ],
+    "example": "Мне нравятся современные российские исполнители.",
+    "sentenceIDs": [
+      "supplement-sentence-056"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "современные"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я стараюсь слушать русскую музыку, чтобы лучше учить язык. Мне нравятся современные российские исполнители."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“современный исполнитель”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-исполнитель",
+    "lemma": "исполнитель",
+    "stressedForm": "исполни́тель",
+    "speechText": "исполнитель",
+    "partOfSpeech": "noun",
+    "glossZh": "歌手；表演者",
+    "collocations": [
+      "российский исполнитель"
+    ],
+    "example": "Мне нравятся современные российские исполнители.",
+    "sentenceIDs": [
+      "supplement-sentence-056"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "masculine",
+    "surfaceForms": [
+      "исполнители"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я стараюсь слушать русскую музыку, чтобы лучше учить язык. Мне нравятся современные российские исполнители."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“российский исполнитель”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-избежать",
+    "lemma": "избежать",
+    "stressedForm": "избежа́ть",
+    "speechText": "избежать",
+    "partOfSpeech": "verb",
+    "glossZh": "避免",
+    "collocations": [
+      "избежать пробок"
+    ],
+    "example": "Это очень быстрый и удобный вид транспорта, и можно избежать пробок на дорогах.",
+    "sentenceIDs": [
+      "supplement-sentence-057"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "perfective",
+    "aspectPair": "избегать",
+    "government": "第二格（избежать пробок）",
+    "surfaceForms": [
+      "избежать"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я люблю метро. Это очень быстрый и удобный вид транспорта, и можно избежать пробок на дорогах."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：избежать пробок",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-пробка",
+    "lemma": "пробка",
+    "stressedForm": "про́бка",
+    "speechText": "пробка",
+    "partOfSpeech": "noun",
+    "glossZh": "堵车；交通拥堵",
+    "collocations": [
+      "избежать пробок"
+    ],
+    "example": "Это очень быстрый и удобный вид транспорта, и можно избежать пробок на дорогах.",
+    "sentenceIDs": [
+      "supplement-sentence-057"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "пробок"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я люблю метро. Это очень быстрый и удобный вид транспорта, и можно избежать пробок на дорогах."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“избежать пробок”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-по-разному",
+    "lemma": "по-разному",
+    "stressedForm": "по-ра́зному",
+    "speechText": "по-разному",
+    "partOfSpeech": "adverb",
+    "glossZh": "以不同方式",
+    "collocations": [
+      "по-разному проводить выходные"
+    ],
+    "example": "В моём городе Нанкине люди по-разному проводят выходные.",
+    "sentenceIDs": [
+      "supplement-sentence-058"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "по-разному"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "В моём городе Нанкине люди по-разному проводят выходные. Многие любят гулять в парках, например в Парке озера Сюаньу, ходят по магазинам или встречаются с друзьями в кафе."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“по-разному проводить выходные”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-саморазвитие",
+    "lemma": "саморазвитие",
+    "stressedForm": "саморазви́тие",
+    "speechText": "саморазвитие",
+    "partOfSpeech": "noun",
+    "glossZh": "自我提升",
+    "collocations": [
+      "заниматься саморазвитием"
+    ],
+    "example": "Я собираюсь отдыхать и заниматься саморазвитием.",
+    "sentenceIDs": [
+      "supplement-sentence-059"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "neuter",
+    "government": "заниматься + 第五格",
+    "surfaceForms": [
+      "саморазвитием"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я собираюсь отдыхать и заниматься саморазвитием. Возможно, я поеду в соседние города, чтобы увидеть новые места."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "优先按搭配整体提取：заниматься саморазвитием",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-возможно",
+    "lemma": "возможно",
+    "stressedForm": "возмо́жно",
+    "speechText": "возможно",
+    "partOfSpeech": "modalWord",
+    "glossZh": "也许；可能",
+    "collocations": [
+      "возможно, я поеду"
+    ],
+    "example": "Возможно, я поеду в соседние города, чтобы увидеть новые места.",
+    "sentenceIDs": [
+      "supplement-sentence-060"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "Возможно"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я собираюсь отдыхать и заниматься саморазвитием. Возможно, я поеду в соседние города, чтобы увидеть новые места."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“возможно, я поеду”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-соседний",
+    "lemma": "соседний",
+    "stressedForm": "сосе́дний",
+    "speechText": "соседний",
+    "partOfSpeech": "adjective",
+    "glossZh": "邻近的",
+    "collocations": [
+      "соседний город"
+    ],
+    "example": "Возможно, я поеду в соседние города, чтобы увидеть новые места.",
+    "sentenceIDs": [
+      "supplement-sentence-060"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "соседние"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "Я собираюсь отдыхать и заниматься саморазвитием. Возможно, я поеду в соседние города, чтобы увидеть новые места."
+    ],
+    "provenanceTypes": [
+      "courseMaterial"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“соседний город”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  },
+  {
+    "id": "supplement-lexeme-достопримечательность",
+    "lemma": "достопримечательность",
+    "stressedForm": "достопримеча́тельность",
+    "speechText": "достопримечательность",
+    "partOfSpeech": "noun",
+    "glossZh": "名胜；景点",
+    "collocations": [
+      "увидеть достопримечательности"
+    ],
+    "example": "Я знаю, что главная достопримечательность Москвы — это Кремль и Красная площадь.",
+    "sentenceIDs": [
+      "supplement-sentence-044"
+    ],
+    "reviewStatus": "reviewed",
+    "grammaticalGender": "feminine",
+    "surfaceForms": [
+      "достопримечательность",
+      "достопримечательности"
+    ],
+    "sourcePaths": [
+      "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md"
+    ],
+    "sourceTexts": [
+      "На каникулах я хотел бы поехать в Москву. Я знаю, что главная достопримечательность Москвы — это Кремль и Красная площадь, и я хочу увидеть их своими глазами."
+    ],
+    "provenanceTypes": [
+      "derived"
+    ],
+    "qualityFlags": [],
+    "usageNote": "不要孤立背词，连同“увидеть достопримечательности”一起说。",
+    "contrastNote": null,
+    "commonMistakes": [],
+    "contrastGroupID": null,
+    "corpusLayer": "dailySupplement"
+  }
+]
