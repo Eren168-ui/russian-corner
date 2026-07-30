@@ -41,9 +41,22 @@ private final class PassiveFloatingPanel: NSPanel {
 
 @MainActor
 public final class FloatingPanelController: NSObject, NSWindowDelegate {
+  private enum RuntimeSource {
+    case single(AppRuntime)
+    case bilingual(LanguageCornerRuntime)
+
+    @MainActor
+    var activeRuntime: AppRuntime? {
+      switch self {
+      case .single(let runtime): runtime
+      case .bilingual(let runtime): runtime.activeRuntime
+      }
+    }
+  }
+
   private let panel: PassiveFloatingPanel
   private let appModel: AppModel
-  private weak var runtime: AppRuntime?
+  private let runtimeSource: RuntimeSource
   nonisolated(unsafe) private var screenObserver: NSObjectProtocol?
   private var moveDebounceTask: Task<Void, Never>?
   private var isSnapping = false
@@ -51,13 +64,42 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   private let onOpenLearningHistory: () -> Void
   private let utilityActions: PracticeCardUtilityActions
 
-  public init(
+  private var activeAppModel: AppModel {
+    runtimeSource.activeRuntime?.appModel ?? appModel
+  }
+
+  public convenience init(
     runtime: AppRuntime,
     onOpenLearningHistory: @escaping () -> Void = {},
     utilityActions: PracticeCardUtilityActions = .init()
   ) {
-    self.runtime = runtime
-    appModel = runtime.appModel
+    self.init(
+      runtimeSource: .single(runtime),
+      onOpenLearningHistory: onOpenLearningHistory,
+      utilityActions: utilityActions
+    )
+  }
+
+  public convenience init(
+    runtime: LanguageCornerRuntime,
+    onOpenLearningHistory: @escaping () -> Void = {},
+    utilityActions: PracticeCardUtilityActions = .init()
+  ) {
+    self.init(
+      runtimeSource: .bilingual(runtime),
+      onOpenLearningHistory: onOpenLearningHistory,
+      utilityActions: utilityActions
+    )
+  }
+
+  private init(
+    runtimeSource: RuntimeSource,
+    onOpenLearningHistory: @escaping () -> Void,
+    utilityActions: PracticeCardUtilityActions
+  ) {
+    self.runtimeSource = runtimeSource
+    appModel = runtimeSource.activeRuntime?.appModel
+      ?? AppModel()
     self.onOpenLearningHistory = onOpenLearningHistory
     self.utilityActions = utilityActions
     panel = PassiveFloatingPanel(
@@ -88,19 +130,36 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     panel.isMovableByWindowBackground = true
     panel.delegate = self
 
-    panel.contentView = NSHostingView(
-      rootView: FloatingPracticeRoot(
-        runtime: runtime,
-        onLayoutChanged: { [weak self] in
-          self?.refreshLayout()
-        },
-        onCollapsedCardActivated: { [weak self] in
-          self?.expandCollapsedCard()
-        },
-        onOpenLearningHistory: onOpenLearningHistory,
-        utilityActions: utilityActions
+    switch runtimeSource {
+    case .single(let runtime):
+      panel.contentView = NSHostingView(
+        rootView: FloatingPracticeRoot(
+          runtime: runtime,
+          onLayoutChanged: { [weak self] in
+            self?.refreshLayout()
+          },
+          onCollapsedCardActivated: { [weak self] in
+            self?.expandCollapsedCard()
+          },
+          onOpenLearningHistory: onOpenLearningHistory,
+          utilityActions: utilityActions
+        )
       )
-    )
+    case .bilingual(let runtime):
+      panel.contentView = NSHostingView(
+        rootView: FloatingLanguagePracticeRoot(
+          runtime: runtime,
+          onLayoutChanged: { [weak self] in
+            self?.refreshLayout()
+          },
+          onCollapsedCardActivated: { [weak self] in
+            self?.expandCollapsedCard()
+          },
+          onOpenLearningHistory: onOpenLearningHistory,
+          utilityActions: utilityActions
+        )
+      )
+    }
 
     screenObserver = NotificationCenter.default.addObserver(
       forName: NSApplication.didChangeScreenParametersNotification,
@@ -134,20 +193,20 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   }
 
   public func show() {
-    appModel.isCardVisible = true
+    activeAppModel.isCardVisible = true
     refreshLayout()
     panel.orderFrontRegardless()
   }
 
   public func hide() {
-    runtime?.practice?.handleDisappear()
-    runtime?.closeTrialSession(reason: .hidden)
-    appModel.isCardVisible = false
+    runtimeSource.activeRuntime?.practice?.handleDisappear()
+    runtimeSource.activeRuntime?.closeTrialSession(reason: .hidden)
+    activeAppModel.isCardVisible = false
     panel.orderOut(nil)
   }
 
   public func toggle() {
-    appModel.isCardVisible ? hide() : show()
+    activeAppModel.isCardVisible ? hide() : show()
   }
 
   public var canMoveToAnotherScreen: Bool {
@@ -158,37 +217,38 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     let descriptors = ScreenPlacement.systemScreens()
     guard
       let next = ScreenPlacement.nextScreen(
-        after: appModel.preferredScreenIdentifier,
+        after: activeAppModel.preferredScreenIdentifier,
         screens: descriptors
       ),
-      next.identifier != appModel.preferredScreenIdentifier
+      next.identifier != activeAppModel.preferredScreenIdentifier
     else {
       return
     }
-    appModel.preferredScreenIdentifier = next.identifier
+    activeAppModel.preferredScreenIdentifier = next.identifier
     refreshLayout()
   }
 
   public func refreshLayout() {
     let presentation = PracticePanelPresentation.resolve(
-      isCollapsed: appModel.isCollapsed,
+      isCollapsed: activeAppModel.isCollapsed,
       isDetailExpanded:
-        runtime?.practice?.isDetailExpanded == true,
+        runtimeSource.activeRuntime?.practice?.isDetailExpanded == true,
       hasSelectedWord:
-        runtime?.practice?.selectedWordAnalysis != nil,
+        runtimeSource.activeRuntime?.practice?.selectedWordAnalysis != nil,
       isReflectionPresented:
-        runtime?.dailyReflection?.isCompletionOfferPresented == true
+        runtimeSource.activeRuntime?.dailyReflection?
+          .isCompletionOfferPresented == true
     )
     panel.isMovableByWindowBackground =
       presentation.allowsWindowBackgroundDragging
     resizePanelAtomically(to: presentation.size)
-    switch appModel.placementMode {
+    switch activeAppModel.placementMode {
     case .free:
       placeAtFreeOrigin()
     case .snap:
       snapToCorner()
     }
-    if appModel.isCardVisible {
+    if activeAppModel.isCardVisible {
       panel.orderFrontRegardless()
     }
   }
@@ -196,7 +256,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   public func snapToCorner() {
     guard let screen = targetScreen() else { return }
     let origin = Self.origin(
-      for: appModel.corner,
+      for: activeAppModel.corner,
       panelSize: panel.frame.size,
       visibleFrame: screen.visibleFrame
     )
@@ -291,14 +351,14 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     let descriptors = pairs.map(\.descriptor)
     guard
       let selected = ScreenPlacement.selectedScreen(
-        preferredIdentifier: appModel.preferredScreenIdentifier,
+        preferredIdentifier: activeAppModel.preferredScreenIdentifier,
         screens: descriptors
       )
     else {
       return NSScreen.main ?? NSScreen.screens.first
     }
-    if appModel.preferredScreenIdentifier != selected.identifier {
-      appModel.preferredScreenIdentifier = selected.identifier
+    if activeAppModel.preferredScreenIdentifier != selected.identifier {
+      activeAppModel.preferredScreenIdentifier = selected.identifier
     }
     return pairs.first(where: {
       $0.descriptor.identifier == selected.identifier
@@ -312,7 +372,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     let targetFrame: CGRect
     if let screen = targetScreen() {
       let origin: CGPoint
-      switch appModel.placementMode {
+      switch activeAppModel.placementMode {
       case .free:
         origin = Self.constrainedOrigin(
           Self.topAnchoredFrame(
@@ -322,10 +382,10 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
           panelSize: panelSize,
           visibleFrame: screen.visibleFrame
         )
-        appModel.freeOrigin = origin
+        activeAppModel.freeOrigin = origin
       case .snap:
         origin = Self.origin(
-          for: appModel.corner,
+          for: activeAppModel.corner,
           panelSize: panelSize,
           visibleFrame: screen.visibleFrame
         )
@@ -346,8 +406,8 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
 
   private func placeAtFreeOrigin() {
     guard let screen = targetScreen() else { return }
-    let requestedOrigin = appModel.freeOrigin ?? Self.origin(
-      for: appModel.corner,
+    let requestedOrigin = activeAppModel.freeOrigin ?? Self.origin(
+      for: activeAppModel.corner,
       panelSize: panel.frame.size,
       visibleFrame: screen.visibleFrame
     )
@@ -356,8 +416,8 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       panelSize: panel.frame.size,
       visibleFrame: screen.visibleFrame
     )
-    if appModel.freeOrigin != origin {
-      appModel.freeOrigin = origin
+    if activeAppModel.freeOrigin != origin {
+      activeAppModel.freeOrigin = origin
     }
     suppressMoveRecordingUntil = Date().addingTimeInterval(0.6)
     isSnapping = true
@@ -381,9 +441,9 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       panelSize: panel.frame.size,
       visibleFrame: draggedScreen.visibleFrame
     )
-    appModel.preferredScreenIdentifier = descriptor.identifier
-    appModel.freeOrigin = origin
-    appModel.placementMode = .free
+    activeAppModel.preferredScreenIdentifier = descriptor.identifier
+    activeAppModel.freeOrigin = origin
+    activeAppModel.placementMode = .free
     if panel.frame.origin != origin {
       suppressMoveRecordingUntil = Date().addingTimeInterval(0.6)
       panel.setFrameOrigin(origin)
@@ -391,7 +451,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
   }
 
   private func expandCollapsedCard() {
-    appModel.isCollapsed = false
+    activeAppModel.isCollapsed = false
     refreshLayout()
   }
 
@@ -411,13 +471,17 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
 
   private func observeLayoutPreferences() {
     withObservationTracking {
-      _ = appModel.corner
-      _ = appModel.placementMode
-      _ = appModel.freeOrigin
-      _ = appModel.isCollapsed
-      _ = appModel.preferredScreenIdentifier
-      _ = runtime?.practice?.isDetailExpanded
-      _ = runtime?.dailyReflection?.isCompletionOfferPresented
+      _ = activeAppModel.corner
+      _ = activeAppModel.placementMode
+      _ = activeAppModel.freeOrigin
+      _ = activeAppModel.isCollapsed
+      _ = activeAppModel.preferredScreenIdentifier
+      _ = runtimeSource.activeRuntime?.practice?.isDetailExpanded
+      _ = runtimeSource.activeRuntime?.dailyReflection?
+        .isCompletionOfferPresented
+      if case .bilingual(let runtime) = runtimeSource {
+        _ = runtime.activeLanguage
+      }
     } onChange: { [weak self] in
       Task { @MainActor in
         self?.refreshLayout()
@@ -426,6 +490,60 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     }
   }
 
+}
+
+private struct FloatingLanguagePracticeRoot: View {
+  @Bindable var runtime: LanguageCornerRuntime
+  let onLayoutChanged: () -> Void
+  let onCollapsedCardActivated: () -> Void
+  let onOpenLearningHistory: () -> Void
+  let utilityActions: PracticeCardUtilityActions
+
+  var body: some View {
+    if let activeRuntime = runtime.activeRuntime,
+      let practice = activeRuntime.practice
+    {
+      PracticeCardView(
+        appModel: activeRuntime.appModel,
+        practice: practice,
+        reflectionModel: activeRuntime.dailyReflection,
+        onLayoutChanged: onLayoutChanged,
+        onCollapsedCardActivated: onCollapsedCardActivated,
+        onReminderPermissionAction: {
+          Task {
+            await activeRuntime.performReminderPermissionAction()
+          }
+        },
+        onOpenLearningHistory: onOpenLearningHistory,
+        utilityActions: utilityActions,
+        languageActions: PracticeCardLanguageActions(
+          availableLanguages: runtime.availableLanguages,
+          switchLanguage: { language in
+            runtime.switchLanguage(to: language)
+            onLayoutChanged()
+          }
+        )
+      )
+      .id(runtime.activeLanguage)
+    } else {
+      unavailableCard
+    }
+  }
+
+  private var unavailableCard: some View {
+    VStack(alignment: .leading, spacing: 9) {
+      Text("LANGUAGE CORNER")
+        .font(.system(size: 10, design: .monospaced))
+      Text("学习数据暂时无法载入")
+        .font(.headline)
+      Text("俄语或英语语料不可用，请从菜单栏重启。")
+        .font(.caption)
+        .foregroundStyle(.secondary)
+    }
+    .padding(22)
+    .frame(width: 320, height: 150)
+    .background(.regularMaterial)
+  }
 }
 
 private struct FloatingPracticeRoot: View {
@@ -458,7 +576,7 @@ private struct FloatingPracticeRoot: View {
 
   private var unavailableCard: some View {
     VStack(alignment: .leading, spacing: 9) {
-      Text("РУССКИЙ УГОЛОК")
+      Text("LANGUAGE CORNER")
         .font(.system(size: 10, design: .monospaced))
       Text("学习数据暂时无法载入")
         .font(.headline)

@@ -88,6 +88,19 @@ public struct PracticeCardUtilityActions {
     }
 }
 
+public struct PracticeCardLanguageActions {
+    public let availableLanguages: [StudyLanguage]
+    public let switchLanguage: (StudyLanguage) -> Void
+
+    public init(
+        availableLanguages: [StudyLanguage],
+        switchLanguage: @escaping (StudyLanguage) -> Void
+    ) {
+        self.availableLanguages = availableLanguages
+        self.switchLanguage = switchLanguage
+    }
+}
+
 public struct PracticeCardView: View {
     @Bindable private var appModel: AppModel
     @Bindable private var practice: PracticeViewModel
@@ -100,6 +113,7 @@ public struct PracticeCardView: View {
     private let onReminderPermissionAction: () -> Void
     private let onOpenLearningHistory: () -> Void
     private let utilityActions: PracticeCardUtilityActions
+    private let languageActions: PracticeCardLanguageActions?
 
     public init(
         appModel: AppModel,
@@ -109,7 +123,8 @@ public struct PracticeCardView: View {
         onCollapsedCardActivated: (() -> Void)? = nil,
         onReminderPermissionAction: @escaping () -> Void = {},
         onOpenLearningHistory: @escaping () -> Void = {},
-        utilityActions: PracticeCardUtilityActions = .init()
+        utilityActions: PracticeCardUtilityActions = .init(),
+        languageActions: PracticeCardLanguageActions? = nil
     ) {
         self.appModel = appModel
         self.practice = practice
@@ -119,6 +134,7 @@ public struct PracticeCardView: View {
         self.onReminderPermissionAction = onReminderPermissionAction
         self.onOpenLearningHistory = onOpenLearningHistory
         self.utilityActions = utilityActions
+        self.languageActions = languageActions
     }
 
     public var body: some View {
@@ -233,7 +249,9 @@ public struct PracticeCardView: View {
                 .fill(palette.accentSurface)
                 .frame(width: 42, height: 42)
             VStack(spacing: 0) {
-                Text("Я")
+                Text(
+                    appModel.language == .english ? "EN" : "Я"
+                )
                     .font(.system(size: 23, design: .serif))
                     .foregroundStyle(palette.primary)
                 Text(
@@ -271,9 +289,38 @@ public struct PracticeCardView: View {
 
     private var header: some View {
         HStack(spacing: 7) {
-            Text("РУССКИЙ УГОЛОК")
+            Text("LANGUAGE CORNER")
                 .font(.system(size: 9, weight: .semibold))
                 .tracking(1.1)
+            if let languageActions {
+                Menu {
+                    ForEach(
+                        languageActions.availableLanguages,
+                        id: \.self
+                    ) { language in
+                        Button {
+                            languageActions.switchLanguage(language)
+                        } label: {
+                            if language == appModel.language {
+                                Label(
+                                    language.displayName,
+                                    systemImage: "checkmark"
+                                )
+                            } else {
+                                Text(language.displayName)
+                            }
+                        }
+                    }
+                } label: {
+                    Text(appModel.language.shortLabel)
+                        .font(.system(size: 8, weight: .bold))
+                        .foregroundStyle(palette.accent)
+                }
+                .menuStyle(.borderlessButton)
+                .menuIndicator(.hidden)
+                .fixedSize()
+                .accessibilityLabel("切换学习语言")
+            }
             Circle()
                 .fill(palette.accent)
                 .frame(width: 4, height: 4)
@@ -488,9 +535,9 @@ public struct PracticeCardView: View {
                 if practice.currentCard != nil,
                     !practice.currentSentenceWords.isEmpty
                 {
-                    InteractiveRussianText(
+                    InteractiveTargetText(
                         text: answer,
-                        analyses: practice.currentSentenceWords,
+                        language: appModel.language,
                         selectedTokenIndex:
                             practice.selectedWordAnalysis?.tokenIndex
                     ) { tokenIndex in

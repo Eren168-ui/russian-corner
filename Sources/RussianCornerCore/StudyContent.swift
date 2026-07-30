@@ -353,3 +353,47 @@ public struct LanguageContentCatalog: Sendable {
         return issues
     }
 }
+
+public extension StudyLexeme {
+    var legacyContent: Lexeme {
+        Lexeme(
+            id: id,
+            lemma: lemma,
+            stressedForm: displayForm,
+            speechText: speechText,
+            partOfSpeech: partOfSpeech,
+            glossZh: glossZh,
+            collocations: collocations,
+            example: collocations.first ?? "",
+            sentenceIDs: exampleSentenceIDs,
+            reviewStatus: reviewStatus,
+            principalForms: inflections.isEmpty ? nil : inflections,
+            surfaceForms: [lemma, displayForm]
+        )
+    }
+}
+
+public extension StudySentence {
+    var legacyContent: SentenceCard {
+        SentenceCard(
+            id: id,
+            promptZh: promptZh,
+            cueRu: cueText,
+            practiceRu: targetText,
+            stressedForm: displayText,
+            speechText: speechText,
+            theme: theme,
+            lexemeIDs: lexemeIDs,
+            sourcePath: sourcePath,
+            sourceText: sourceText ?? targetText,
+            reviewStatus: reviewStatus,
+            provenanceType: provenanceType,
+            qualityFlags: qualityFlags,
+            dialogueAct: dialogueAct,
+            register: register,
+            speakerRole: speakerRole,
+            expectedReply: expectedReplies.first,
+            topicID: topicID
+        )
+    }
+}

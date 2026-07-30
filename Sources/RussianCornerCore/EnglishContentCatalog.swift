@@ -68,6 +68,31 @@ public struct EnglishContentBundle: Sendable {
     public let topics: [StudyTopic]
     public let lessons: [SceneLesson]
 
+    public var legacyCatalog: ContentCatalog {
+        let sentences = catalog.sentences.map(\.legacyContent)
+        let topicDefinitions = topics.enumerated().map { index, topic in
+            TopicDefinition(
+                id: topic.id,
+                number: index + 1,
+                titleRu: topic.titleTarget,
+                titleZh: topic.titleZh,
+                sourcePath: "bundled/english/\(topic.id)"
+            )
+        }
+        return ContentCatalog(
+            lexemes: catalog.lexemes.map(\.legacyContent),
+            sentences: sentences,
+            topics: topicDefinitions,
+            longTermManifest: LongTermContentManifest(
+                schemaVersion: 2,
+                sourceRoot: "",
+                sourceCorpusSHA256: "",
+                contentGateClosed: true,
+                sentences: sentences
+            )
+        )
+    }
+
     public init(resourceDirectory: URL) throws {
         let decoder = JSONDecoder()
         let lexemes = try Self.decode(

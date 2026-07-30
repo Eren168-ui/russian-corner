@@ -221,12 +221,22 @@ public struct ContentCatalog: Sendable {
     public func wordAnalyses(
         for sentence: SentenceCard
     ) -> [ResolvedWordAnalysis] {
+        wordAnalyses(for: sentence, language: .russian)
+    }
+
+    public func wordAnalyses(
+        for sentence: SentenceCard,
+        language: StudyLanguage
+    ) -> [ResolvedWordAnalysis] {
         let exactByIndex = Dictionary(
             uniqueKeysWithValues: wordAnalyses(for: sentence.id).map {
                 ($0.tokenIndex, $0)
             }
         )
-        return RussianWordTokenizer.words(in: sentence.practiceRu)
+        return TargetLanguageTokenizer.words(
+            in: sentence.practiceRu,
+            language: language
+        )
             .enumerated()
             .map { index, surface in
                 if let exact = exactByIndex[index] {
@@ -245,7 +255,10 @@ public struct ContentCatalog: Sendable {
                         aspectPair: lexeme.aspectPair,
                         government: lexeme.government,
                         collocations: lexeme.collocations,
-                        usageNote: "通用审核词条；本句词形尚无人工语境解析",
+                        usageNote:
+                            language == .english
+                            ? "本地审核词条；当前句中的具体用法可结合例句学习"
+                            : "通用审核词条；本句词形尚无人工语境解析",
                         lexemeID: lexeme.id,
                         reviewStatus: lexeme.reviewStatus,
                         source: .reviewedLexeme
@@ -261,8 +274,14 @@ public struct ContentCatalog: Sendable {
                     ] ?? Self.normalizedForm(surface),
                     glossZh: "本地暂无审核释义",
                     partOfSpeech: "待查询",
-                    morphology: "当前词形：\(surface)",
-                    usageNote: "可查询在线词典；在线结果不会自动标记为已审核",
+                    morphology:
+                        language == .english
+                        ? "当前形式：\(surface)"
+                        : "当前词形：\(surface)",
+                    usageNote:
+                        language == .english
+                        ? "可查询英中在线词典；网络结果仅作补充"
+                        : "可查询在线词典；在线结果不会自动标记为已审核",
                     reviewStatus: .draft,
                     source: .unavailable
                 )

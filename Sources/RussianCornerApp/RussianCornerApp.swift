@@ -8,14 +8,13 @@ private final class RussianCornerApplicationDelegate:
   NSObject,
   NSApplicationDelegate
 {
-  weak var runtime: AppRuntime?
+  weak var runtime: LanguageCornerRuntime?
 
   func applicationWillTerminate(
     _ notification: Notification
   ) {
-    runtime?.practice?.handleDisappear()
-    runtime?.diagnostics?.handleDisappear()
-    runtime?.closeTrialSession(reason: .quit)
+    runtime?.activeRuntime?.diagnostics?.handleDisappear()
+    runtime?.closeAll(reason: .quit)
   }
 }
 
@@ -38,7 +37,7 @@ private final class LearningHistoryWindowController:
       backing: .buffered,
       defer: false
     )
-    window.title = "Russian Corner 学习记录"
+    window.title = "Language Corner 学习记录"
     window.minSize = NSSize(width: 720, height: 600)
     window.isReleasedWhenClosed = false
     window.contentViewController = NSHostingController(
@@ -113,7 +112,7 @@ struct RussianCornerApp: App {
     RussianCornerApplicationDelegate.self
   ) private var applicationDelegate
 
-  private let runtime: AppRuntime
+  private let runtime: LanguageCornerRuntime
   private let panelController: FloatingPanelController
   private let hotKeyService: GlobalHotKeyService
   private let reportExporter: TrialReportExporter
@@ -125,17 +124,21 @@ struct RussianCornerApp: App {
   private let utilityActions: PracticeCardUtilityActions
 
   init() {
-    let runtime = AppRuntime(enableSourceSync: true)
+    let runtime = LanguageCornerRuntime(
+      enableRussianSourceSync: true
+    )
+    let initialRuntime = runtime.activeRuntime
+      ?? AppRuntime(enableSystemReminders: false)
     let learningHistoryWindowController =
-      LearningHistoryWindowController(runtime: runtime)
+      LearningHistoryWindowController(runtime: initialRuntime)
     let reportExporter = TrialReportExporter(
-      appModel: runtime.appModel
+      appModel: initialRuntime.appModel
     )
     let settingsWindowController = FeatureWindowController(
-      title: "Russian Corner 设置",
+      title: "Language Corner 设置",
       size: NSSize(width: 560, height: 620),
       minimumSize: NSSize(width: 520, height: 500),
-      content: AnyView(RussianCornerSettingsView(runtime: runtime))
+      content: AnyView(RussianCornerSettingsView(runtime: initialRuntime))
     )
     let reflectionWindowController = FeatureWindowController(
       title: "今日反馈",
@@ -143,14 +146,14 @@ struct RussianCornerApp: App {
       minimumSize: NSSize(width: 500, height: 470),
       content: AnyView(
         Group {
-          if let dailyReflection = runtime.dailyReflection {
+          if let dailyReflection = initialRuntime.dailyReflection {
             DailyReflectionView(model: dailyReflection)
           } else {
             ContentUnavailableView(
               "今日反馈暂时不可用",
               systemImage: "square.and.pencil",
               description: Text(
-                runtime.trialError ?? "核心学习功能仍可正常使用"
+                initialRuntime.trialError ?? "核心学习功能仍可正常使用"
               )
             )
           }
@@ -158,20 +161,20 @@ struct RussianCornerApp: App {
       )
     )
     let diagnosticsWindowController = FeatureWindowController(
-      title: "Russian Corner 诊断",
+      title: "Language Corner 诊断",
       size: NSSize(width: 620, height: 650),
       minimumSize: RussianCornerDiagnosticView.minimumSize,
       content: AnyView(
         Group {
-          if let diagnostics = runtime.diagnostics {
+          if let diagnostics = initialRuntime.diagnostics {
             RussianCornerDiagnosticView(model: diagnostics)
           } else {
             ContentUnavailableView(
               "诊断暂时无法载入",
               systemImage: "exclamationmark.triangle",
               description: Text(
-                runtime.diagnosticError
-                  ?? runtime.launchError
+                initialRuntime.diagnosticError
+                  ?? initialRuntime.launchError
                   ?? "请稍后重新打开应用"
               )
             )
@@ -187,16 +190,19 @@ struct RussianCornerApp: App {
         learningHistoryWindowController.show()
       },
       openReflection: {
-        runtime.dailyReflection?.openForEditing()
+        runtime.activeRuntime?.dailyReflection?.openForEditing()
         reflectionWindowController.show()
       },
       openDiagnostics: {
         diagnosticsWindowController.show()
       },
       exportReport: {
-        guard let trialRepository = runtime.trialRepository else {
-          runtime.appModel.transientStatus =
-            runtime.trialError ?? "学习报告暂时不可用"
+        guard
+          let activeRuntime = runtime.activeRuntime,
+          let trialRepository = activeRuntime.trialRepository
+        else {
+          runtime.activeRuntime?.appModel.transientStatus =
+            runtime.activeRuntime?.trialError ?? "学习报告暂时不可用"
           return
         }
         Task {
@@ -232,13 +238,13 @@ struct RussianCornerApp: App {
           panelController?.toggle()
         },
         .nextCard: { [weak runtime] in
-          runtime?.practice?.next()
+          runtime?.activeRuntime?.practice?.next()
         },
         .speak: { [weak runtime] in
-          runtime?.practice?.speak()
+          runtime?.activeRuntime?.practice?.speak()
         },
         .reveal: { [weak runtime] in
-          runtime?.practice?.reveal()
+          runtime?.activeRuntime?.practice?.reveal()
         },
         .gradeAgain: { [weak runtime] in
           Self.grade(.again, runtime: runtime)
@@ -250,13 +256,13 @@ struct RussianCornerApp: App {
           Self.grade(.easy, runtime: runtime)
         },
         .toggleCollapsed: { [weak runtime] in
-          runtime?.appModel.isCollapsed.toggle()
+          runtime?.activeRuntime?.appModel.isCollapsed.toggle()
         },
       ]
     )
     if !issues.isEmpty {
       let names = issues.map(\.action.title).joined(separator: "、")
-      runtime.appModel.transientStatus =
+      runtime.activeRuntime?.appModel.transientStatus =
         "部分全局快捷键被占用：\(names)"
     }
 
@@ -264,7 +270,10 @@ struct RussianCornerApp: App {
       panelController.show()
     }
     Task {
-      await runtime.reconcileRemindersOnLaunch()
+      for languageRuntime in runtime.languageRuntimes.values
+      where languageRuntime.appModel.remindersEnabled {
+        await languageRuntime.reconcileRemindersOnLaunch()
+      }
     }
     Task { [weak runtime] in
       while !Task.isCancelled {
@@ -277,12 +286,12 @@ struct RussianCornerApp: App {
 
   private static func grade(
     _ grade: RussianCornerCore.ReviewGrade,
-    runtime: AppRuntime?
+    runtime: LanguageCornerRuntime?
   ) {
     do {
-      try runtime?.practice?.grade(grade)
+      try runtime?.activeRuntime?.practice?.grade(grade)
     } catch {
-      runtime?.practice?.showStatus(
+      runtime?.activeRuntime?.practice?.showStatus(
         "评分未提交：\(error.localizedDescription)"
       )
     }
@@ -297,34 +306,40 @@ struct RussianCornerApp: App {
       )
     } label: {
       Label(
-        "Russian Corner",
+        "Language Corner",
         systemImage: "character.book.closed.fill"
       )
-      .accessibilityLabel("Russian Corner 俄语练习")
+      .accessibilityLabel("Language Corner 英语与俄语练习")
     }
 
   }
 }
 
 private struct MenuBarContent: View {
-  @Bindable var runtime: AppRuntime
+  @Bindable var runtime: LanguageCornerRuntime
   let panelController: FloatingPanelController
   let utilityActions: PracticeCardUtilityActions
 
+  private var activeRuntime: AppRuntime? {
+    runtime.activeRuntime
+  }
+
   var body: some View {
     Button(
-      runtime.appModel.isCardVisible ? "隐藏练习卡" : "显示练习卡",
-      systemImage: runtime.appModel.isCardVisible ? "eye.slash" : "eye"
+      runtime.activeRuntime?.appModel.isCardVisible == true
+        ? "隐藏练习卡" : "显示练习卡",
+      systemImage: runtime.activeRuntime?.appModel.isCardVisible == true
+        ? "eye.slash" : "eye"
     ) {
       panelController.toggle()
     }
     .keyboardShortcut("r", modifiers: [.control, .option])
 
     Button("下一项", systemImage: "arrow.right") {
-      runtime.practice?.next()
+      runtime.activeRuntime?.practice?.next()
     }
     .keyboardShortcut("n", modifiers: [.control, .option])
-    .disabled(runtime.practice == nil)
+    .disabled(runtime.activeRuntime?.practice == nil)
 
     Button("移到下一块显示器", systemImage: "display.2") {
       panelController.moveToNextScreen()
@@ -334,17 +349,35 @@ private struct MenuBarContent: View {
     Divider()
 
     Menu(
-      runtime.selectedTopic.map {
+      "学习语言：\(runtime.activeLanguage.displayName)",
+      systemImage: "character.bubble"
+    ) {
+      ForEach(runtime.availableLanguages, id: \.self) { language in
+        Button {
+          runtime.switchLanguage(to: language)
+          panelController.refreshLayout()
+        } label: {
+          if language == runtime.activeLanguage {
+            Label(language.displayName, systemImage: "checkmark")
+          } else {
+            Text(language.displayName)
+          }
+        }
+      }
+    }
+
+    Menu(
+      activeRuntime?.selectedTopic.map {
         "今天的话题：\($0.number). \($0.titleZh)"
       } ?? "今天的话题"
     ) {
       Button("自动轮换") {
-        runtime.selectTopicForToday(nil)
+        activeRuntime?.selectTopicForToday(nil)
       }
       Divider()
-      ForEach(runtime.topics) { topic in
+      ForEach(activeRuntime?.topics ?? []) { topic in
         Button("\(topic.number). \(topic.titleZh)") {
-          runtime.selectTopicForToday(topic.id)
+          activeRuntime?.selectTopicForToday(topic.id)
         }
       }
     }
@@ -369,10 +402,10 @@ private struct MenuBarContent: View {
     ) {
       utilityActions.exportReport()
     }
-    .disabled(runtime.trialRepository == nil)
+    .disabled(activeRuntime?.trialRepository == nil)
 
-    if let status = runtime.appModel.transientStatus
-      ?? runtime.launchError
+    if let status = activeRuntime?.appModel.transientStatus
+      ?? activeRuntime?.launchError
     {
       Divider()
       Text(status)
@@ -381,9 +414,8 @@ private struct MenuBarContent: View {
 
     Divider()
 
-    Button("退出 Russian Corner", systemImage: "power") {
-      runtime.practice?.handleDisappear()
-      runtime.closeTrialSession(reason: .quit)
+    Button("退出 Language Corner", systemImage: "power") {
+      runtime.closeAll(reason: .quit)
       NSApplication.shared.terminate(nil)
     }
     .keyboardShortcut("q")

@@ -152,6 +152,7 @@ public final class PracticeViewModel {
   public private(set) var onlineWordLookupState:
     OnlineWordLookupState = .idle
   public let targetCount: Int
+  public let language: StudyLanguage
   public let newWordLimit: Int
   public let remainingNewWordCount: Int
   public let remainingSentenceCardCount: Int
@@ -173,6 +174,7 @@ public final class PracticeViewModel {
   private let sentencesByTheme: [String: [SentenceCard]]
   private let lexemesByID: [String: Lexeme]
   private let wordAnalysesByCardID: [String: [ResolvedWordAnalysis]]
+  private let studyLexemesByID: [String: StudyLexeme]
   private var states: [PracticeItemIdentity: ReviewState]
   private var successfulToday: Set<PracticeItemIdentity>
   private var recallStartedAt: Date
@@ -209,6 +211,11 @@ public final class PracticeViewModel {
       return nil
     }
     return lexeme
+  }
+
+  public var currentStudyLexeme: StudyLexeme? {
+    guard let currentLexeme else { return nil }
+    return studyLexemesByID[currentLexeme.id]
   }
 
   public var selectedWordExamples: [WordLearningExample] {
@@ -387,6 +394,8 @@ public final class PracticeViewModel {
   public init(
     catalog: ContentCatalog,
     repository: any PracticeProgressStoring,
+    language: StudyLanguage = .russian,
+    studyCatalog: LanguageContentCatalog? = nil,
     targetCount: Int = 7,
     mode: PracticeMode = .quiet,
     preferredTopicID: String? = nil,
@@ -401,6 +410,7 @@ public final class PracticeViewModel {
     carryoverItemIDs: Set<PracticeItemIdentity> = []
   ) throws {
     self.repository = repository
+    self.language = language
     let sentenceTargetCount = min(max(targetCount, 5), 10)
     self.targetCount = sentenceTargetCount
     self.mode = mode
@@ -442,8 +452,17 @@ public final class PracticeViewModel {
     )
     wordAnalysesByCardID = Dictionary(
       uniqueKeysWithValues: servedSentences.map {
-        ($0.id, catalog.wordAnalyses(for: $0))
+        (
+          $0.id,
+          catalog.wordAnalyses(for: $0, language: language)
+        )
       }
+    )
+    studyLexemesByID = Dictionary(
+      uniqueKeysWithValues: (
+        studyCatalog?.lexemes
+          ?? servedLexemes.map(\.studyContent)
+      ).map { ($0.id, $0) }
     )
 
     let events = try repository.reviewEvents()
@@ -997,10 +1016,12 @@ public final class PracticeViewModel {
       return
     }
     onlineWordLookupState = .loading(lookupText)
+    let lookupLanguage = language
     onlineLookupTask = Task { [weak self] in
       do {
         let result = try await onlineDictionary.lookup(
-          lemma: lookupText
+          lemma: lookupText,
+          language: lookupLanguage
         )
         guard !Task.isCancelled else { return }
         guard self?.selectedWordAnalysis?.id == selectionID else {
@@ -1160,13 +1181,19 @@ public final class PracticeViewModel {
         occurredAt: now()
       )
     )
-    switch speechService.speak(text) {
-    case .preferredVoice:
-      statusMessage = "正在朗读俄语"
-    case .fallbackVoice(_, let language):
-      statusMessage = "未找到俄语语音，使用 \(language) 朗读"
+    switch speechService.speak(
+      text,
+      language: language,
+      allowUnrelatedFallback: false
+    ) {
+    case .preferredVoice, .fallbackVoice:
+      statusMessage =
+        language == .english ? "正在朗读英语" : "正在朗读俄语"
     case .unavailable:
-      statusMessage = "系统中没有可用语音，练习可继续"
+      statusMessage =
+        language == .english
+        ? "系统中没有英语语音，练习可继续"
+        : "系统中没有俄语语音，练习可继续"
     case .emptyText:
       statusMessage = "本卡没有可朗读内容"
     }

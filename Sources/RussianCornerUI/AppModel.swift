@@ -516,6 +516,7 @@ public final class AppRuntime {
   public private(set) var lastSourceSyncAt: Date?
 
   private var catalog: ContentCatalog?
+  private var studyCatalog: LanguageContentCatalog?
   private var repository: ProgressRepository?
   private var candidateCorpusStore: CandidateCorpusStore?
   private let sourceCorpusScanner = SourceCorpusScanner()
@@ -573,8 +574,26 @@ public final class AppRuntime {
       let catalog: ContentCatalog
       if let injectedCatalog {
         catalog = injectedCatalog
+        studyCatalog = injectedCatalog.studyCatalog
+      } else if language == .english {
+        let resourceDirectory =
+          try EnglishContentBundle.defaultResourceDirectory(
+            bundleIdentifier: Bundle.main.bundleIdentifier,
+            bundleResourceURL: Bundle.main.resourceURL,
+            currentDirectoryURL: URL(
+              fileURLWithPath:
+                FileManager.default.currentDirectoryPath,
+              isDirectory: true
+            )
+          )
+        let englishBundle = try EnglishContentBundle(
+          resourceDirectory: resourceDirectory
+        )
+        studyCatalog = englishBundle.catalog
+        catalog = englishBundle.legacyCatalog
       } else {
         catalog = try ContentCatalog()
+        studyCatalog = catalog.studyCatalog
       }
       let repository: ProgressRepository
       if let injectedRepository {
@@ -684,6 +703,8 @@ public final class AppRuntime {
     let nextPractice = try PracticeViewModel(
       catalog: catalog,
       repository: repository,
+      language: appModel.language,
+      studyCatalog: studyCatalog,
       targetCount: appModel.dailyCardCount,
       mode: appModel.mode,
       preferredTopicID: appModel.preferredTopic(on: instant),
@@ -824,7 +845,10 @@ public final class AppRuntime {
   public func reconcileRemindersOnLaunch() async
     -> ReminderScheduleResult?
   {
-    guard launchError == nil, let reminderScheduler else {
+    guard appModel.remindersEnabled,
+      launchError == nil,
+      let reminderScheduler
+    else {
       return nil
     }
     let settings = RussianCornerSettings(
