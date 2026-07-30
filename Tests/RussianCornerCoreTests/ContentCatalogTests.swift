@@ -17,8 +17,11 @@ final class ContentCatalogTests: XCTestCase {
             resourceDirectory: sourceResourceDirectory
         )
 
-        XCTAssertEqual(catalog.lexemes.count, 360)
+        XCTAssertEqual(catalog.coreLexemes.count, 360)
+        XCTAssertEqual(catalog.supplementalLexemes.count, 80)
+        XCTAssertEqual(catalog.lexemes.count, 440)
         XCTAssertEqual(catalog.sentences.count, 72)
+        XCTAssertEqual(catalog.supplementalSentences.count, 60)
     }
 
     func testBundleTrialSliceMeetsContentSafetyContract() throws {
@@ -41,7 +44,9 @@ final class ContentCatalogTests: XCTestCase {
         )
         XCTAssertEqual(
             Set(catalog.practiceLexemes.map(\.id)),
-            slice.lexemeIDs
+            slice.lexemeIDs.union(
+                catalog.supplementalLexemes.map(\.id)
+            )
         )
     }
 
@@ -336,7 +341,9 @@ final class ContentCatalogTests: XCTestCase {
         let catalog = try ContentCatalog(
             resourceDirectory: sourceResourceDirectory
         )
-        let nouns = catalog.lexemes.filter { $0.partOfSpeech == "noun" }
+        let nouns = catalog.coreLexemes.filter {
+            $0.partOfSpeech == "noun"
+        }
         let allowedGenders: Set<String> = [
             "masculine", "feminine", "neuter", "plural",
         ]
@@ -354,7 +361,9 @@ final class ContentCatalogTests: XCTestCase {
         let catalog = try ContentCatalog(
             resourceDirectory: sourceResourceDirectory
         )
-        let verbs = catalog.lexemes.filter { $0.partOfSpeech == "verb" }
+        let verbs = catalog.coreLexemes.filter {
+            $0.partOfSpeech == "verb"
+        }
         let allowedAspects: Set<String> = [
             "perfective", "imperfective", "biaspectual",
         ]
@@ -377,7 +386,7 @@ final class ContentCatalogTests: XCTestCase {
         let catalog = try ContentCatalog(
             resourceDirectory: sourceResourceDirectory
         )
-        let governedItems = catalog.lexemes.filter {
+        let governedItems = catalog.coreLexemes.filter {
             $0.partOfSpeech == "verb" || $0.partOfSpeech == "preposition"
         }
 
@@ -467,7 +476,9 @@ final class ContentCatalogTests: XCTestCase {
             resourceDirectory: sourceResourceDirectory
         )
         let sentencesByID = Dictionary(
-            uniqueKeysWithValues: catalog.sentences.map { ($0.id, $0) }
+            uniqueKeysWithValues:
+                (catalog.sentences + catalog.supplementalSentences)
+                .map { ($0.id, $0) }
         )
 
         for lexeme in catalog.lexemes {
@@ -611,16 +622,16 @@ final class ContentCatalogTests: XCTestCase {
         let catalog = try ContentCatalog(
             resourceDirectory: sourceResourceDirectory
         )
-        let normalizedExamples = catalog.lexemes.map {
+        let normalizedExamples = catalog.coreLexemes.map {
             normalizedRussianText($0.example)
         }
 
         XCTAssertEqual(
             Set(normalizedExamples).count,
-            catalog.lexemes.count,
-            "every lexeme needs an independent example"
+            catalog.coreLexemes.count,
+            "every core lexeme needs an independent example"
         )
-        for lexeme in catalog.lexemes {
+        for lexeme in catalog.coreLexemes {
             XCTAssertTrue(
                 containsLexeme(lexeme, in: lexeme.example),
                 "\(lexeme.id): \(lexeme.example)"
