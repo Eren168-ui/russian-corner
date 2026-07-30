@@ -62,6 +62,10 @@ let package = Package(
                 "RussianCornerPlatform",
             ]
         ),
+        .executableTarget(
+            name: "RussianCornerEnglishContentBuilder",
+            dependencies: ["RussianCornerCore"]
+        ),
         .testTarget(
             name: "RussianCornerCoreTests",
             dependencies: ["RussianCornerCore"]
