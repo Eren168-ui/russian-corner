@@ -1022,7 +1022,11 @@ private actor RecordingOnlineDictionary: OnlineDictionaryLookingUp {
     queries
   }
 
-  func lookup(lemma: String) async throws -> OnlineDictionaryResult {
+  func lookup(
+    lemma: String,
+    language: StudyLanguage
+  ) async throws -> OnlineDictionaryResult {
+    _ = language
     queries.append(lemma)
     return OnlineDictionaryResult(
       lemma: lemma,

@@ -91,6 +91,18 @@ final class InteractiveRussianTextTests: XCTestCase {
         )
     }
 
+    func testEnglishWiktionaryUsesEnglishHost() throws {
+        let url = try XCTUnwrap(
+            OnlineDictionary.wiktionaryURL(
+                for: "about to",
+                language: .english
+            )
+        )
+
+        XCTAssertEqual(url.scheme, "https")
+        XCTAssertEqual(url.host, "en.wiktionary.org")
+    }
+
     func testEveryBundledTrialSentenceRendersEveryWordAsALink() throws {
         let resourceDirectory = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()

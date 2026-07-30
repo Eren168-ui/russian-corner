@@ -744,11 +744,8 @@ public final class DiagnosticViewModel {
             }
         }
         switch playbackStatus {
-        case .russianVoice:
+        case .preferredVoice, .fallbackVoice:
             break
-        case .fallbackVoice(_, let language):
-            listeningStates[sentence.id] = .unavailable
-            statusMessage = "未找到俄语语音（仅有 \(language)），请跳过本条听句"
         case .unavailable:
             listeningStates[sentence.id] = .unavailable
             statusMessage = "系统语音不可用，请跳过本条听句"

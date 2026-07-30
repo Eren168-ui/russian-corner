@@ -1,5 +1,6 @@
 import AVFoundation
 import Foundation
+import RussianCornerCore
 
 public struct SpeechVoice: Equatable, Sendable {
     public let identifier: String
@@ -37,7 +38,33 @@ public protocol SpeechSynthesizing: AnyObject {
             SpeechSynthesisOutcome
         ) -> Void
     )
+    func speak(
+        _ text: String,
+        voiceIdentifier: String,
+        rate: Float,
+        completion: @escaping @MainActor @Sendable (
+            SpeechSynthesisOutcome
+        ) -> Void
+    )
     func stop()
+}
+
+public extension SpeechSynthesizing {
+    func speak(
+        _ text: String,
+        voiceIdentifier: String,
+        rate: Float,
+        completion: @escaping @MainActor @Sendable (
+            SpeechSynthesisOutcome
+        ) -> Void
+    ) {
+        _ = rate
+        speak(
+            text,
+            voiceIdentifier: voiceIdentifier,
+            completion: completion
+        )
+    }
 }
 
 @MainActor
@@ -65,10 +92,27 @@ public final class SystemSpeechSynthesizer:
             SpeechSynthesisOutcome
         ) -> Void
     ) {
+        speak(
+            text,
+            voiceIdentifier: voiceIdentifier,
+            rate: AVSpeechUtteranceDefaultSpeechRate,
+            completion: completion
+        )
+    }
+
+    public func speak(
+        _ text: String,
+        voiceIdentifier: String,
+        rate: Float,
+        completion: @escaping @MainActor @Sendable (
+            SpeechSynthesisOutcome
+        ) -> Void
+    ) {
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(
             identifier: voiceIdentifier
         )
+        utterance.rate = rate
         completions[ObjectIdentifier(utterance)] = completion
         synthesizer.speak(utterance)
     }
@@ -122,7 +166,7 @@ public enum SpeechVoicePolicy: Equatable, Sendable {
 }
 
 public enum SpeechServiceStatus: Equatable, Sendable {
-    case russianVoice(identifier: String)
+    case preferredVoice(identifier: String, language: String)
     case fallbackVoice(identifier: String, language: String)
     case unavailable
     case emptyText
@@ -143,26 +187,82 @@ public final class SpeechService {
         self.synthesizer = synthesizer
     }
 
-    public func voiceStatus() -> SpeechServiceStatus {
+    public func voiceStatus(
+        language: StudyLanguage,
+        allowUnrelatedFallback: Bool
+    ) -> SpeechServiceStatus {
         let voices = voiceProvider.availableVoices()
-        if let exactRussianVoice = voices.first(where: {
-            $0.language.caseInsensitiveCompare("ru-RU") == .orderedSame
-        }) {
-            return .russianVoice(identifier: exactRussianVoice.identifier)
+        for preferredLanguage in language.preferredVoiceLanguages {
+            if let preferredVoice = voices.first(where: {
+                $0.language.caseInsensitiveCompare(preferredLanguage)
+                    == .orderedSame
+            }) {
+                return .preferredVoice(
+                    identifier: preferredVoice.identifier,
+                    language: preferredVoice.language
+                )
+            }
         }
-        if let otherRussianVoice = voices.first(where: {
-            $0.language.lowercased().hasPrefix("ru-")
-                || $0.language.caseInsensitiveCompare("ru") == .orderedSame
+        let languageCode = language == .english ? "en" : "ru"
+        if let relatedVoice = voices.first(where: {
+            $0.language.lowercased().hasPrefix("\(languageCode)-")
+                || $0.language.caseInsensitiveCompare(languageCode)
+                    == .orderedSame
         }) {
-            return .russianVoice(identifier: otherRussianVoice.identifier)
+            return .fallbackVoice(
+                identifier: relatedVoice.identifier,
+                language: relatedVoice.language
+            )
         }
-        if let fallbackVoice = voices.first {
+        if allowUnrelatedFallback, let fallbackVoice = voices.first {
             return .fallbackVoice(
                 identifier: fallbackVoice.identifier,
                 language: fallbackVoice.language
             )
         }
         return .unavailable
+    }
+
+    public func voiceStatus() -> SpeechServiceStatus {
+        voiceStatus(
+            language: .russian,
+            allowUnrelatedFallback: true
+        )
+    }
+
+    @discardableResult
+    public func speak(
+        _ text: String,
+        language: StudyLanguage,
+        playbackRate: Float = AVSpeechUtteranceDefaultSpeechRate,
+        allowUnrelatedFallback: Bool = false,
+        completion: @escaping @MainActor @Sendable (
+            SpeechSynthesisOutcome
+        ) -> Void = { _ in }
+    ) -> SpeechServiceStatus {
+        stop()
+        guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        else {
+            return .emptyText
+        }
+
+        let status = voiceStatus(
+            language: language,
+            allowUnrelatedFallback: allowUnrelatedFallback
+        )
+        switch status {
+        case let .preferredVoice(identifier, _),
+             let .fallbackVoice(identifier, _):
+            startPlayback(
+                text,
+                voiceIdentifier: identifier,
+                rate: playbackRate,
+                completion: completion
+            )
+        case .unavailable, .emptyText:
+            break
+        }
+        return status
     }
 
     @discardableResult
@@ -179,19 +279,30 @@ public final class SpeechService {
             return .emptyText
         }
 
-        let status = voiceStatus()
+        let status = voiceStatus(
+            language: .russian,
+            allowUnrelatedFallback: true
+        )
         switch status {
-        case let .russianVoice(identifier):
+        case let .preferredVoice(identifier, _):
             startPlayback(
                 text,
                 voiceIdentifier: identifier,
+                rate: AVSpeechUtteranceDefaultSpeechRate,
                 completion: completion
             )
         case let .fallbackVoice(identifier, _):
-            if voicePolicy == .allowFallback {
+            let isRussianVoice: Bool
+            if case let .fallbackVoice(_, language) = status {
+                isRussianVoice = language.lowercased().hasPrefix("ru")
+            } else {
+                isRussianVoice = false
+            }
+            if voicePolicy == .allowFallback || isRussianVoice {
                 startPlayback(
                     text,
                     voiceIdentifier: identifier,
+                    rate: AVSpeechUtteranceDefaultSpeechRate,
                     completion: completion
                 )
             }
@@ -209,6 +320,7 @@ public final class SpeechService {
     private func startPlayback(
         _ text: String,
         voiceIdentifier: String,
+        rate: Float,
         completion: @escaping @MainActor @Sendable (
             SpeechSynthesisOutcome
         ) -> Void
@@ -216,7 +328,8 @@ public final class SpeechService {
         let generation = playbackGeneration
         synthesizer.speak(
             text,
-            voiceIdentifier: voiceIdentifier
+            voiceIdentifier: voiceIdentifier,
+            rate: rate
         ) { [weak self] outcome in
             guard let self, generation == self.playbackGeneration else {
                 return

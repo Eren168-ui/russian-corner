@@ -1161,7 +1161,7 @@ public final class PracticeViewModel {
       )
     )
     switch speechService.speak(text) {
-    case .russianVoice:
+    case .preferredVoice:
       statusMessage = "正在朗读俄语"
     case .fallbackVoice(_, let language):
       statusMessage = "未找到俄语语音，使用 \(language) 朗读"

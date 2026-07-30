@@ -1,4 +1,5 @@
 import Foundation
+import RussianCornerCore
 import XCTest
 
 @testable import RussianCornerPlatform
@@ -109,6 +110,32 @@ final class YandexDictionaryServiceTests: XCTestCase {
         XCTAssertEqual(result.translations, ["hence", "from here"])
         XCTAssertEqual(result.translationLanguage, .english)
     }
+
+    func testLookupUsesLanguageSpecificPrimaryPairsAndCacheKeys() async throws {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [DictionaryLanguageURLProtocol.self]
+        let service = YandexDictionaryService(
+            session: URLSession(configuration: configuration),
+            keyStore: FixedDictionaryKeyStore()
+        )
+        DictionaryRequestRecorder.shared.reset()
+
+        let english = try await service.lookup(
+            lemma: "bank",
+            language: .english
+        )
+        let russian = try await service.lookup(
+            lemma: "bank",
+            language: .russian
+        )
+
+        XCTAssertEqual(english.translations, ["银行"])
+        XCTAssertEqual(russian.translations, ["岸"])
+        XCTAssertEqual(
+            DictionaryRequestRecorder.shared.languagePairs,
+            ["en-zh", "ru-zh"]
+        )
+    }
 }
 
 private struct EmptyDictionaryKeyStore: DictionaryAPIKeyStoring {
@@ -156,6 +183,70 @@ private final class DictionaryFallbackURLProtocol: URLProtocol {
                 ]}]}
                 """
         }
+        let response = HTTPURLResponse(
+            url: request.url!,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: ["Content-Type": "application/json"]
+        )!
+        client?.urlProtocol(
+            self,
+            didReceive: response,
+            cacheStoragePolicy: .notAllowed
+        )
+        client?.urlProtocol(self, didLoad: Data(body.utf8))
+        client?.urlProtocolDidFinishLoading(self)
+    }
+
+    override func stopLoading() {}
+}
+
+private final class DictionaryRequestRecorder: @unchecked Sendable {
+    static let shared = DictionaryRequestRecorder()
+
+    private let lock = NSLock()
+    private var storedPairs: [String] = []
+
+    var languagePairs: [String] {
+        lock.withLock { storedPairs }
+    }
+
+    func append(_ pair: String) {
+        lock.withLock {
+            storedPairs.append(pair)
+        }
+    }
+
+    func reset() {
+        lock.withLock {
+            storedPairs.removeAll()
+        }
+    }
+}
+
+private final class DictionaryLanguageURLProtocol: URLProtocol {
+    override class func canInit(with request: URLRequest) -> Bool { true }
+
+    override class func canonicalRequest(
+        for request: URLRequest
+    ) -> URLRequest {
+        request
+    }
+
+    override func startLoading() {
+        let components = URLComponents(
+            url: request.url!,
+            resolvingAgainstBaseURL: false
+        )
+        let language = components?.queryItems?
+            .first(where: { $0.name == "lang" })?.value ?? ""
+        DictionaryRequestRecorder.shared.append(language)
+        let translation = language == "en-zh" ? "银行" : "岸"
+        let body = """
+            {"def":[{"text":"bank","pos":"noun","tr":[
+              {"text":"\(translation)"}
+            ]}]}
+            """
         let response = HTTPURLResponse(
             url: request.url!,
             statusCode: 200,
