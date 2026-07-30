@@ -13,6 +13,8 @@ public struct RussianCornerDiagnosticView: View {
     public static let pronunciationDisclaimer =
         "本诊断不录音、不保存音频，只估算开口活动。发音准确度需由老师或母语者评估；二期 AI 反馈接入前，本应用不判断发音或母语地道度。"
     public static let minimumSize = CGSize(width: 540, height: 500)
+    public static let startButtonMinimumHeight: CGFloat = 54
+    public static let autoAdvanceDelayMilliseconds: Int64 = 1_200
     public static let collocationAccessibilityLabel = "常用搭配把握度"
     public static let diagnosticSchedulingNotice =
         "下次日队列会应用该诊断；手动练习模式优先。"
@@ -26,8 +28,9 @@ public struct RussianCornerDiagnosticView: View {
     }
 
     @Bindable private var model: DiagnosticViewModel
-    @State private var collocationDraft = 50.0
     @State private var oralSelfRating = 3
+    @AppStorage("diagnosticAutoAdvanceEnabled")
+    private var autoAdvanceEnabled = true
 
     public init(model: DiagnosticViewModel) {
         self.model = model
@@ -102,9 +105,17 @@ public struct RussianCornerDiagnosticView: View {
             }
             Spacer()
             if model.step != .intro && model.step != .summary {
-                Text("\(model.currentPosition) / \(model.currentTotal)")
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(.secondary)
+                VStack(alignment: .trailing, spacing: 6) {
+                    Text("\(model.currentPosition) / \(model.currentTotal)")
+                        .font(.caption.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                    if isChoiceStep {
+                        Toggle("自动下一题", isOn: $autoAdvanceEnabled)
+                            .toggleStyle(.switch)
+                            .controlSize(.small)
+                            .font(.caption)
+                    }
+                }
             }
         }
     }
@@ -141,10 +152,28 @@ public struct RussianCornerDiagnosticView: View {
                     .foregroundStyle(.orange)
             }
             Spacer()
-            Button(model.report == nil ? "开始基线诊断" : "开始本周复测") {
+            Button {
                 model.start()
+            } label: {
+                HStack(spacing: 10) {
+                    Image(systemName: "play.fill")
+                    Text(
+                        model.report == nil
+                            ? "开始基线诊断"
+                            : "开始本周复测"
+                    )
+                    Spacer()
+                    Image(systemName: "arrow.right")
+                }
+                .font(.system(size: 16, weight: .semibold))
+                .padding(.horizontal, 18)
+                .frame(
+                    maxWidth: .infinity,
+                    minHeight: Self.startButtonMinimumHeight
+                )
             }
             .buttonStyle(.borderedProminent)
+            .tint(.orange)
             .disabled(!model.canStart)
         }
     }
@@ -249,7 +278,7 @@ public struct RussianCornerDiagnosticView: View {
                     Text(model.currentListeningSentence?.practiceRu ?? "")
                         .font(.title2)
                         .textSelection(.enabled)
-                    nextChoiceButton
+                    choiceAdvanceControls
                 }
             } else if model.currentListeningState == .playing {
                 Label("正在播放…", systemImage: "waveform")
@@ -538,7 +567,7 @@ public struct RussianCornerDiagnosticView: View {
             choiceOptions(question: question, select: select)
             if model.isRevealed {
                 answerFeedback(question)
-                nextChoiceButton
+                choiceAdvanceControls
             }
             Spacer(minLength: 0)
         }
@@ -609,12 +638,58 @@ public struct RussianCornerDiagnosticView: View {
         )
     }
 
-    private var nextChoiceButton: some View {
-        Button("继续下一题", systemImage: "arrow.right") {
+    private var choiceAdvanceControls: some View {
+        HStack(spacing: 12) {
+            if autoAdvanceEnabled {
+                Label("约 1.2 秒后自动进入下一题", systemImage: "timer")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            } else {
+                Text("自动下一题已关闭")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
+            Button("立即下一题", systemImage: "arrow.right") {
+                model.advanceFromChoice()
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.orange)
+        }
+        .task(id: choiceAdvanceTaskID) {
+            guard
+                autoAdvanceEnabled,
+                model.isRevealed,
+                let selectedOptionID = model.selectedOptionID
+            else {
+                return
+            }
+            try? await Task.sleep(
+                for: .milliseconds(Self.autoAdvanceDelayMilliseconds)
+            )
+            guard
+                !Task.isCancelled,
+                autoAdvanceEnabled,
+                model.isRevealed,
+                model.selectedOptionID == selectedOptionID
+            else {
+                return
+            }
             model.advanceFromChoice()
         }
-        .buttonStyle(.borderedProminent)
-        .tint(.orange)
+    }
+
+    private var isChoiceStep: Bool {
+        switch model.step {
+        case .recognition, .listening, .collocation:
+            true
+        default:
+            false
+        }
+    }
+
+    private var choiceAdvanceTaskID: String {
+        "\(model.selectedOptionID ?? "none")-\(autoAdvanceEnabled)"
     }
 
     private func optionSymbol(

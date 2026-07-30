@@ -35,6 +35,7 @@ final class DiagnosticViewModelTests: XCTestCase {
 
         model.selectRecognitionOption(wrong.id)
 
+        XCTAssertEqual(model.step, .recognition)
         XCTAssertEqual(model.selectedOptionID, wrong.id)
         XCTAssertEqual(model.selectedChoiceWasCorrect, false)
         XCTAssertEqual(
@@ -527,6 +528,14 @@ final class DiagnosticViewModelTests: XCTestCase {
         XCTAssertEqual(
             RussianCornerDiagnosticView.diagnosticSchedulingNotice,
             "下次日队列会应用该诊断；手动练习模式优先。"
+        )
+        XCTAssertGreaterThanOrEqual(
+            RussianCornerDiagnosticView.startButtonMinimumHeight,
+            50
+        )
+        XCTAssertEqual(
+            RussianCornerDiagnosticView.autoAdvanceDelayMilliseconds,
+            1_200
         )
         XCTAssertTrue(
             RussianCornerDiagnosticView.introPurpose.contains("5–8 分钟")
