@@ -532,6 +532,7 @@ public final class AppRuntime {
       diagnostics = try DiagnosticViewModel(
         catalog: catalog,
         repository: repository,
+        reviewStore: repository,
         oralAttemptStore: trialRepository,
         onReportSaved: { [weak self] in
           self?.applyLatestDiagnosticStrategy()

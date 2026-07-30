@@ -10,6 +10,78 @@ import XCTest
 final class DiagnosticViewModelTests: XCTestCase {
     private let start = Date(timeIntervalSince1970: 1_700_000_000)
 
+    func testObjectiveRecognitionScoresSelectedOptionAndQueuesWrongItem()
+        throws
+    {
+        let repository = ProgressRepository(
+            container: try ProgressRepository.makeInMemoryContainer()
+        )
+        let model = try DiagnosticViewModel(
+            catalog: makeMultiCatalog(count: 4),
+            repository: repository,
+            reviewStore: repository,
+            activityMonitor: DiagnosticFakeActivityMonitor(),
+            speechService: makeSpeechService(),
+            seed: 5,
+            vocabularyCount: 1,
+            listeningCount: 1,
+            now: { self.start }
+        )
+        model.start()
+        let question = try XCTUnwrap(model.currentRecognitionQuestion)
+        let wrong = try XCTUnwrap(
+            question.options.first { !$0.id.hasSuffix("-correct") }
+        )
+
+        model.selectRecognitionOption(wrong.id)
+
+        XCTAssertEqual(model.selectedOptionID, wrong.id)
+        XCTAssertEqual(model.selectedChoiceWasCorrect, false)
+        XCTAssertEqual(
+            try repository.reviewEvents().map(\.grade),
+            [.again]
+        )
+        XCTAssertEqual(model.reviewItemsAdded.count, 1)
+
+        model.advanceFromChoice()
+        XCTAssertEqual(model.step, .production)
+    }
+
+    func testProductionOutcomeUsesFourLevelEvidenceAndNormalScheduler()
+        throws
+    {
+        var now = start
+        let repository = ProgressRepository(
+            container: try ProgressRepository.makeInMemoryContainer()
+        )
+        let model = try DiagnosticViewModel(
+            catalog: makeMultiCatalog(count: 4),
+            repository: repository,
+            reviewStore: repository,
+            activityMonitor: DiagnosticFakeActivityMonitor(),
+            speechService: makeSpeechService(),
+            seed: 6,
+            vocabularyCount: 1,
+            listeningCount: 1,
+            now: { now }
+        )
+        model.start()
+        let recognition = try XCTUnwrap(model.currentRecognitionQuestion)
+        model.selectRecognitionOption(recognition.correctOptionID)
+        model.advanceFromChoice()
+        now = start.addingTimeInterval(4.2)
+        model.reveal()
+
+        model.submitProduction(outcome: .partial)
+
+        XCTAssertEqual(model.step, .listening)
+        XCTAssertEqual(model.reportedProductionOutcomes, [.partial])
+        XCTAssertEqual(
+            try repository.reviewEvents().map(\.grade),
+            [.hard]
+        )
+    }
+
     func testWizardProgressesThroughEveryMetricAndPersistsSummary() throws {
         var now = start
         let repository = ProgressRepository(

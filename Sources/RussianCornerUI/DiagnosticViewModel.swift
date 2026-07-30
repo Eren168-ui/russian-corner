@@ -81,6 +81,31 @@ public struct DiagnosticComparisonRow: Equatable, Sendable {
     }
 }
 
+public struct DiagnosticReviewItem:
+    Identifiable,
+    Equatable,
+    Sendable
+{
+    public let id: String
+    public let itemKind: PracticeItemKind
+    public let itemID: String
+    public let label: String
+    public let grade: ReviewGrade
+
+    public init(
+        itemKind: PracticeItemKind,
+        itemID: String,
+        label: String,
+        grade: ReviewGrade
+    ) {
+        id = "\(itemKind.rawValue)-\(itemID)-\(grade.rawValue)"
+        self.itemKind = itemKind
+        self.itemID = itemID
+        self.label = label
+        self.grade = grade
+    }
+}
+
 @MainActor
 @Observable
 public final class DiagnosticViewModel {
@@ -93,6 +118,11 @@ public final class DiagnosticViewModel {
     public private(set) var oralUsesMicrophoneMeter = false
     public private(set) var report: DiagnosticReport?
     public private(set) var statusMessage: String?
+    public private(set) var selectedOptionID: String?
+    public private(set) var selectedChoiceWasCorrect: Bool?
+    public private(set) var reviewItemsAdded: [DiagnosticReviewItem] = []
+    public private(set) var reportedProductionOutcomes:
+        [DiagnosticProductionOutcome] = []
 
     public let sample: DiagnosticSample
     public let seed: UInt64
@@ -100,6 +130,7 @@ public final class DiagnosticViewModel {
     public let historyIssueCount: Int
 
     private let repository: any DiagnosticReportStoring
+    private let reviewStore: (any PracticeProgressStoring)?
     private let comparisonBaselineMetrics: DiagnosticMetrics?
     private let activityMonitor: any SpeechActivityMonitoring
     private let oralAttemptStore: (any TrialDataStoring)?
@@ -107,14 +138,21 @@ public final class DiagnosticViewModel {
     private let sleeper: any DiagnosticSleeping
     private let onReportSaved: (@MainActor () -> Void)?
     private let now: () -> Date
+    private let catalog: ContentCatalog
+    private let questionBuilder: DiagnosticQuestionBuilder
+    private let scheduler = ReviewScheduler()
+    private let calendar = Calendar.current
     private var recognitionIndex = 0
     private var productionIndex = 0
     private var listeningIndex = 0
+    private var collocationIndex = 0
     private var recognitionCorrect = 0
     private var productionCorrect = 0
     private var listeningCorrect = 0
+    private var collocationCorrect = 0
     private var listeningEvidenceCount = 0
     private var listeningStates: [String: ListeningEvidenceState]
+    private var listeningPlayCounts: [String: Int] = [:]
     private var collocationRate = 0.0
     private var responseDurations: [Double] = []
     private var selfMonitoringAnswers: [Bool] = []
@@ -125,6 +163,7 @@ public final class DiagnosticViewModel {
     public init(
         catalog: ContentCatalog,
         repository: any DiagnosticReportStoring,
+        reviewStore: (any PracticeProgressStoring)? = nil,
         activityMonitor: any SpeechActivityMonitoring =
             SpeechActivityMonitor(),
         oralAttemptStore: (any TrialDataStoring)? = nil,
@@ -194,6 +233,9 @@ public final class DiagnosticViewModel {
         self.now = now
         itemStartedAt = now()
         report = history.entries.last?.report
+        self.catalog = levelAdjustedCatalog
+        questionBuilder = DiagnosticQuestionBuilder(seed: resolvedSeed)
+        self.reviewStore = reviewStore
     }
 
     public var canStart: Bool {
@@ -243,6 +285,42 @@ public final class DiagnosticViewModel {
         return sample.listening[safe: listeningIndex]
     }
 
+    public var currentRecognitionQuestion: DiagnosticChoiceQuestion? {
+        guard let lexeme = currentLexeme, step == .recognition else {
+            return nil
+        }
+        return questionBuilder.recognitionQuestion(
+            for: lexeme,
+            pool: catalog.practiceLexemes
+        )
+    }
+
+    public var currentListeningQuestion: DiagnosticChoiceQuestion? {
+        guard let sentence = currentListeningSentence else { return nil }
+        return questionBuilder.listeningQuestion(
+            for: sentence,
+            pool: catalog.practiceSentences
+        )
+    }
+
+    public var collocationLexemes: [Lexeme] {
+        sample.recognition.filter {
+            !$0.collocations.isEmpty || !$0.example.isEmpty
+        }
+    }
+
+    public var currentCollocationQuestion: DiagnosticChoiceQuestion? {
+        guard step == .collocation,
+            let lexeme = collocationLexemes[safe: collocationIndex]
+        else {
+            return nil
+        }
+        return questionBuilder.collocationQuestion(
+            for: lexeme,
+            pool: catalog.practiceLexemes
+        )
+    }
+
     public var currentListeningState: ListeningEvidenceState {
         guard let id = currentListeningSentence?.id else {
             return .notPlayed
@@ -255,6 +333,7 @@ public final class DiagnosticViewModel {
         case .recognition: recognitionIndex + 1
         case .production: productionIndex + 1
         case .listening: listeningIndex + 1
+        case .collocation: collocationIndex + 1
         default: 1
         }
     }
@@ -264,6 +343,7 @@ public final class DiagnosticViewModel {
         case .recognition: sample.recognition.count
         case .production: sample.production.count
         case .listening: sample.listening.count
+        case .collocation: max(1, collocationLexemes.count)
         default: 1
         }
     }
@@ -390,6 +470,114 @@ public final class DiagnosticViewModel {
         isRevealed = true
     }
 
+    public func selectRecognitionOption(_ optionID: String) {
+        guard step == .recognition,
+            !isRevealed,
+            let question = currentRecognitionQuestion,
+            question.options.contains(where: { $0.id == optionID })
+        else {
+            return
+        }
+        selectedOptionID = optionID
+        let correct = question.isCorrect(optionID)
+        selectedChoiceWasCorrect = correct
+        isRevealed = true
+        if correct {
+            recognitionCorrect += 1
+        } else {
+            recordReview(
+                itemKind: .lexeme,
+                itemID: question.itemID,
+                label: question.prompt,
+                grade: .again,
+                responseTimeMs: currentResponseTimeMs
+            )
+        }
+    }
+
+    public func selectListeningOption(_ optionID: String) {
+        guard step == .listening,
+            currentListeningState == .played,
+            !isRevealed,
+            let question = currentListeningQuestion,
+            question.options.contains(where: { $0.id == optionID })
+        else {
+            return
+        }
+        selectedOptionID = optionID
+        let correct = question.isCorrect(optionID)
+        selectedChoiceWasCorrect = correct
+        isRevealed = true
+        listeningEvidenceCount += 1
+        if correct {
+            listeningCorrect += 1
+        }
+        let playCount = listeningPlayCounts[question.itemID, default: 0]
+        if !correct || playCount > 1 {
+            recordReview(
+                itemKind: .sentence,
+                itemID: question.itemID,
+                label: currentListeningSentence?.practiceRu
+                    ?? question.correctOption.text,
+                grade: correct ? .hard : .again,
+                responseTimeMs: currentResponseTimeMs
+            )
+        }
+    }
+
+    public func selectCollocationOption(_ optionID: String) {
+        guard step == .collocation,
+            !isRevealed,
+            let question = currentCollocationQuestion,
+            question.options.contains(where: { $0.id == optionID })
+        else {
+            return
+        }
+        selectedOptionID = optionID
+        let correct = question.isCorrect(optionID)
+        selectedChoiceWasCorrect = correct
+        isRevealed = true
+        if correct {
+            collocationCorrect += 1
+        } else {
+            recordReview(
+                itemKind: .lexeme,
+                itemID: question.itemID,
+                label: question.correctOption.text,
+                grade: .again,
+                responseTimeMs: currentResponseTimeMs
+            )
+        }
+    }
+
+    public func advanceFromChoice() {
+        guard isRevealed, selectedOptionID != nil else { return }
+        switch step {
+        case .recognition:
+            recognitionIndex += 1
+            if recognitionIndex >= sample.recognition.count {
+                move(to: .production)
+            } else {
+                beginItem()
+            }
+        case .listening:
+            advanceListening()
+        case .collocation:
+            collocationIndex += 1
+            if collocationIndex >= collocationLexemes.count {
+                collocationRate = Self.rate(
+                    correct: collocationCorrect,
+                    total: collocationLexemes.count
+                )
+                move(to: .oralIntroduction)
+            } else {
+                beginItem()
+            }
+        default:
+            break
+        }
+    }
+
     public func submitRecognition(correct: Bool) {
         guard step == .recognition else { return }
         if correct {
@@ -419,9 +607,42 @@ public final class DiagnosticViewModel {
         }
     }
 
+    public func submitProduction(
+        outcome: DiagnosticProductionOutcome
+    ) {
+        guard step == .production, isRevealed,
+            let lexeme = currentLexeme
+        else {
+            return
+        }
+        reportedProductionOutcomes.append(outcome)
+        if outcome.isSuccessful {
+            productionCorrect += 1
+        }
+        responseDurations.append(
+            max(0, now().timeIntervalSince(itemStartedAt))
+        )
+        if outcome.reviewGrade != .easy {
+            recordReview(
+                itemKind: .lexeme,
+                itemID: lexeme.id,
+                label: lexeme.stressedForm,
+                grade: outcome.reviewGrade,
+                responseTimeMs: currentResponseTimeMs
+            )
+        }
+        productionIndex += 1
+        if productionIndex >= sample.production.count {
+            move(to: .listening)
+        } else {
+            beginItem()
+        }
+    }
+
     public func speakListeningSentence() {
         guard let sentence = currentListeningSentence else { return }
         let sentenceID = sentence.id
+        listeningPlayCounts[sentence.id, default: 0] += 1
         listeningStates[sentence.id] = .playing
         statusMessage = "正在播放第 \(currentPosition) 条听句"
         let playbackStatus = speechService.speak(
@@ -486,7 +707,12 @@ public final class DiagnosticViewModel {
         speechService.stop()
         listeningIndex += 1
         if listeningIndex >= sample.listening.count {
-            move(to: .collocation)
+            if collocationLexemes.isEmpty {
+                collocationRate = 0
+                move(to: .oralIntroduction)
+            } else {
+                move(to: .collocation)
+            }
         } else {
             beginItem()
         }
@@ -698,18 +924,25 @@ public final class DiagnosticViewModel {
         recognitionIndex = 0
         productionIndex = 0
         listeningIndex = 0
+        collocationIndex = 0
         recognitionCorrect = 0
         productionCorrect = 0
         listeningCorrect = 0
+        collocationCorrect = 0
         listeningEvidenceCount = 0
         listeningStates = Dictionary(
             uniqueKeysWithValues: sample.listening.map {
                 ($0.id, ListeningEvidenceState.notPlayed)
             }
         )
+        listeningPlayCounts = [:]
         collocationRate = 0
         responseDurations = []
         selfMonitoringAnswers = []
+        reportedProductionOutcomes = []
+        reviewItemsAdded = []
+        selectedOptionID = nil
+        selectedChoiceWasCorrect = nil
         oralStartedAt = nil
         preparationRemainingSeconds = 3
         oralRemainingSeconds = 60
@@ -779,7 +1012,75 @@ public final class DiagnosticViewModel {
     private func beginItem() {
         itemStartedAt = now()
         isRevealed = false
+        selectedOptionID = nil
+        selectedChoiceWasCorrect = nil
         statusMessage = nil
+    }
+
+    private var currentResponseTimeMs: Int {
+        Int(
+            (
+                max(0, now().timeIntervalSince(itemStartedAt))
+                    * 1_000
+            ).rounded()
+        )
+    }
+
+    private func recordReview(
+        itemKind: PracticeItemKind,
+        itemID: String,
+        label: String,
+        grade: ReviewGrade,
+        responseTimeMs: Int
+    ) {
+        guard let reviewStore else { return }
+        let instant = now()
+        do {
+            let oldState =
+                try reviewStore.progress(
+                    itemType: itemKind,
+                    itemId: itemID
+                )
+                ?? ReviewState(masteryLevel: 0, dueAt: instant)
+            let newState = scheduler.next(
+                state: oldState,
+                grade: grade,
+                now: instant
+            )
+            let completed =
+                try reviewStore.dailyCompletedCount(
+                    on: instant,
+                    calendar: calendar
+                )
+                ?? 0
+            try reviewStore.commitReview(
+                event: ReviewEvent(
+                    itemType: itemKind,
+                    itemId: itemID,
+                    grade: grade,
+                    responseTimeMs: responseTimeMs,
+                    practiceMode: .speaking,
+                    createdAt: instant
+                ),
+                state: newState,
+                dailyCompletedCount: completed,
+                calendar: calendar
+            )
+            let item = DiagnosticReviewItem(
+                itemKind: itemKind,
+                itemID: itemID,
+                label: label,
+                grade: grade
+            )
+            if !reviewItemsAdded.contains(where: {
+                $0.itemKind == itemKind && $0.itemID == itemID
+            }) {
+                reviewItemsAdded.append(item)
+            }
+        } catch {
+            statusMessage =
+                "诊断结果已记录，但错题暂时无法加入复习：\(error.localizedDescription)"
+        }
     }
 
     private static func rate(correct: Int, total: Int) -> Double {
