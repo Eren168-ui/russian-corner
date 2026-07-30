@@ -15,11 +15,41 @@ swift build \
   -c release \
   --product RussianCornerResourceProbe
 
-cp "$SOURCE_RESOURCES/lexemes.json" "$TEMP_DIR/lexemes.json"
-cp "$SOURCE_RESOURCES/sentences.json" "$TEMP_DIR/sentences.json"
-cp "$SOURCE_RESOURCES/trial-slice.json" "$TEMP_DIR/trial-slice.json"
+for resource in \
+  lexemes.json \
+  sentences.json \
+  trial-slice.json \
+  topics.json \
+  long-term-sentences.json \
+  supplemental-manifest.json \
+  supplemental-lexemes.json \
+  supplemental-sentences.json \
+  speaking-challenges.json
+do
+  cp "$SOURCE_RESOURCES/$resource" "$TEMP_DIR/$resource"
+done
 
-"$PROBE" "$TEMP_DIR" >/dev/null
+PROBE_OUTPUT="$("$PROBE" "$TEMP_DIR")"
+if [[ "$PROBE_OUTPUT" != *"supplemental_lexemes=80"* ]] ||
+  [[ "$PROBE_OUTPUT" != *"supplemental_sentences=60"* ]] ||
+  [[ "$PROBE_OUTPUT" != *"speaking_challenges=24"* ]]; then
+  echo "resource probe did not report supplemental counts: $PROBE_OUTPUT" >&2
+  exit 1
+fi
+
+mv "$TEMP_DIR/supplemental-sentences.json" \
+  "$TEMP_DIR/supplemental-sentences.missing"
+set +e
+PARTIAL_OUTPUT="$("$PROBE" "$TEMP_DIR" 2>&1)"
+PARTIAL_STATUS=$?
+set -e
+mv "$TEMP_DIR/supplemental-sentences.missing" \
+  "$TEMP_DIR/supplemental-sentences.json"
+if [[ "$PARTIAL_STATUS" -eq 0 ]] ||
+  [[ "$PARTIAL_OUTPUT" != *"补充语料资源不完整"* ]]; then
+  echo "resource probe accepted partial supplemental resources: $PARTIAL_OUTPUT" >&2
+  exit 1
+fi
 
 /usr/bin/perl -0pi -e \
   's/"lexeme-emergencies-помочь"/"lexeme-does-not-exist"/' \

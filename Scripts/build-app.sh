@@ -20,6 +20,12 @@ STATE_FILE="$REPO_ROOT/.build-app-transaction"
 SOURCE_RESOURCES_DIR="$REPO_ROOT/Sources/RussianCornerCore/Resources"
 APP_ICON_PATH="$REPO_ROOT/Assets/AppIcon/RussianCorner.icns"
 CODESIGN_BIN=${CODESIGN_BIN:-/usr/bin/codesign}
+SUPPLEMENTAL_RESOURCE_NAMES="
+supplemental-manifest.json
+supplemental-lexemes.json
+supplemental-sentences.json
+speaking-challenges.json
+"
 
 STAGING_ROOT=""
 NEW_DIST=""
@@ -55,6 +61,20 @@ LOCK_HELD=1
 
 entry_exists() {
   [ -e "$1" ] || [ -L "$1" ]
+}
+
+write_supplemental_inventory() {
+  inventory_directory=$1
+  inventory_output=$2
+  : >"$inventory_output"
+  for resource_name in $SUPPLEMENTAL_RESOURCE_NAMES; do
+    resource_hash=$(
+      shasum -a 256 "$inventory_directory/$resource_name" |
+        awk '{print $1}'
+    )
+    printf '%s  %s\n' "$resource_hash" "$resource_name" \
+      >>"$inventory_output"
+  done
 }
 
 is_trusted_root_entry() {
@@ -275,6 +295,11 @@ final_dist_is_valid() {
   recovery_app="$DIST_DIR/$APP_NAME"
   recovery_executable="$recovery_app/Contents/MacOS/$EXECUTABLE_NAME"
   recovery_resources="$recovery_app/Contents/Resources"
+  for resource_name in $SUPPLEMENTAL_RESOURCE_NAMES; do
+    [ -f "$recovery_resources/$resource_name" ] &&
+      [ ! -L "$recovery_resources/$resource_name" ] ||
+      return 1
+  done
   [ -d "$recovery_app" ] &&
     [ ! -L "$recovery_app" ] &&
     [ -x "$recovery_executable" ] &&
@@ -478,6 +503,14 @@ if [ ! -x "$BUILT_RESOURCE_PROBE" ]; then
   printf 'error: resource probe not found: %s\n' "$BUILT_RESOURCE_PROBE" >&2
   exit 1
 fi
+for resource_name in $SUPPLEMENTAL_RESOURCE_NAMES; do
+  if [ ! -f "$SOURCE_RESOURCES_DIR/$resource_name" ] ||
+    [ -L "$SOURCE_RESOURCES_DIR/$resource_name" ]; then
+    printf 'error: supplemental resource is missing or unsafe: %s\n' \
+      "$resource_name" >&2
+    exit 1
+  fi
+done
 if [ ! -f "$SOURCE_RESOURCES_DIR/lexemes.json" ] ||
   [ ! -f "$SOURCE_RESOURCES_DIR/sentences.json" ] ||
   [ ! -f "$SOURCE_RESOURCES_DIR/trial-slice.json" ] ||
@@ -486,6 +519,7 @@ if [ ! -f "$SOURCE_RESOURCES_DIR/lexemes.json" ] ||
   printf 'error: source JSON resources are incomplete\n' >&2
   exit 1
 fi
+"$REPO_ROOT/Scripts/verify-supplemental-content.sh"
 if [ ! -f "$APP_ICON_PATH" ]; then
   printf 'error: app icon is missing: %s\n' "$APP_ICON_PATH" >&2
   exit 1
@@ -517,6 +551,10 @@ SOURCE_TOPICS_SHA_BEFORE=$(
 SOURCE_LONG_TERM_SHA_BEFORE=$(
   shasum -a 256 "$SOURCE_RESOURCES_DIR/long-term-sentences.json" | awk '{print $1}'
 )
+SUPPLEMENTAL_SOURCE_INVENTORY_BEFORE="$STAGING_ROOT/supplemental-source-before.sha256"
+write_supplemental_inventory \
+  "$SOURCE_RESOURCES_DIR" \
+  "$SUPPLEMENTAL_SOURCE_INVENTORY_BEFORE"
 
 mkdir -p "$STAGED_MACOS" "$STAGED_RESOURCES"
 chmod 0755 \
@@ -541,6 +579,11 @@ install -m 0644 \
 install -m 0644 \
   "$SOURCE_RESOURCES_DIR/long-term-sentences.json" \
   "$STAGED_RESOURCES/long-term-sentences.json"
+for resource_name in $SUPPLEMENTAL_RESOURCE_NAMES; do
+  install -m 0644 \
+    "$SOURCE_RESOURCES_DIR/$resource_name" \
+    "$STAGED_RESOURCES/$resource_name"
+done
 install -m 0644 \
   "$APP_ICON_PATH" \
   "$STAGED_RESOURCES/RussianCorner.icns"
@@ -575,6 +618,14 @@ STAGED_TOPICS_SHA=$(
 STAGED_LONG_TERM_SHA=$(
   shasum -a 256 "$STAGED_RESOURCES/long-term-sentences.json" | awk '{print $1}'
 )
+SUPPLEMENTAL_SOURCE_INVENTORY_AFTER="$STAGING_ROOT/supplemental-source-after.sha256"
+SUPPLEMENTAL_STAGED_INVENTORY="$STAGING_ROOT/supplemental-staged.sha256"
+write_supplemental_inventory \
+  "$SOURCE_RESOURCES_DIR" \
+  "$SUPPLEMENTAL_SOURCE_INVENTORY_AFTER"
+write_supplemental_inventory \
+  "$STAGED_RESOURCES" \
+  "$SUPPLEMENTAL_STAGED_INVENTORY"
 if [ "$SOURCE_LEXEMES_SHA_BEFORE" != "$SOURCE_LEXEMES_SHA_AFTER" ] ||
   [ "$SOURCE_SENTENCES_SHA_BEFORE" != "$SOURCE_SENTENCES_SHA_AFTER" ] ||
   [ "$SOURCE_TRIAL_SLICE_SHA_BEFORE" != "$SOURCE_TRIAL_SLICE_SHA_AFTER" ] ||
@@ -584,7 +635,13 @@ if [ "$SOURCE_LEXEMES_SHA_BEFORE" != "$SOURCE_LEXEMES_SHA_AFTER" ] ||
   [ "$SOURCE_SENTENCES_SHA_AFTER" != "$STAGED_SENTENCES_SHA" ] ||
   [ "$SOURCE_TRIAL_SLICE_SHA_AFTER" != "$STAGED_TRIAL_SLICE_SHA" ] ||
   [ "$SOURCE_TOPICS_SHA_AFTER" != "$STAGED_TOPICS_SHA" ] ||
-  [ "$SOURCE_LONG_TERM_SHA_AFTER" != "$STAGED_LONG_TERM_SHA" ]; then
+  [ "$SOURCE_LONG_TERM_SHA_AFTER" != "$STAGED_LONG_TERM_SHA" ] ||
+  ! cmp -s \
+    "$SUPPLEMENTAL_SOURCE_INVENTORY_BEFORE" \
+    "$SUPPLEMENTAL_SOURCE_INVENTORY_AFTER" ||
+  ! cmp -s \
+    "$SUPPLEMENTAL_SOURCE_INVENTORY_AFTER" \
+    "$SUPPLEMENTAL_STAGED_INVENTORY"; then
   printf 'error: JSON resources changed or differed during staging\n' >&2
   exit 1
 fi
@@ -645,6 +702,13 @@ printf 'missing_resource_probe=PASS\n'
 "$CODESIGN_BIN" --sign - --force --deep "$STAGED_APP"
 "$CODESIGN_BIN" --verify --deep --strict --verbose=2 "$STAGED_APP"
 
+for resource_name in $SUPPLEMENTAL_RESOURCE_NAMES; do
+  if [ "$(stat -f '%Lp' "$STAGED_RESOURCES/$resource_name")" != "644" ]; then
+    printf 'error: staged supplemental resource permission is incorrect: %s\n' \
+      "$resource_name" >&2
+    exit 1
+  fi
+done
 if [ "$(stat -f '%Lp' "$STAGED_RESOURCES")" != "755" ] ||
   [ "$(stat -f '%Lp' "$STAGED_EXECUTABLE")" != "755" ] ||
   [ "$(stat -f '%Lp' "$STAGED_RESOURCES/lexemes.json")" != "644" ] ||
@@ -756,6 +820,14 @@ CURRENT_SOURCE_TOPICS_SHA=$(
 CURRENT_SOURCE_LONG_TERM_SHA=$(
   shasum -a 256 "$SOURCE_RESOURCES_DIR/long-term-sentences.json" | awk '{print $1}'
 )
+SUPPLEMENTAL_CURRENT_SOURCE_INVENTORY="$STAGING_ROOT/supplemental-current-source.sha256"
+SUPPLEMENTAL_FINAL_INVENTORY="$STAGING_ROOT/supplemental-final.sha256"
+write_supplemental_inventory \
+  "$SOURCE_RESOURCES_DIR" \
+  "$SUPPLEMENTAL_CURRENT_SOURCE_INVENTORY"
+write_supplemental_inventory \
+  "$FINAL_RESOURCES" \
+  "$SUPPLEMENTAL_FINAL_INVENTORY"
 if [ "$CURRENT_SOURCE_LEXEMES_SHA" != "$STAGED_LEXEMES_SHA" ] ||
   [ "$CURRENT_SOURCE_SENTENCES_SHA" != "$STAGED_SENTENCES_SHA" ] ||
   [ "$CURRENT_SOURCE_TRIAL_SLICE_SHA" != "$STAGED_TRIAL_SLICE_SHA" ] ||
@@ -765,13 +837,26 @@ if [ "$CURRENT_SOURCE_LEXEMES_SHA" != "$STAGED_LEXEMES_SHA" ] ||
   [ "$FINAL_SENTENCES_SHA" != "$STAGED_SENTENCES_SHA" ] ||
   [ "$FINAL_TRIAL_SLICE_SHA" != "$STAGED_TRIAL_SLICE_SHA" ] ||
   [ "$FINAL_TOPICS_SHA" != "$STAGED_TOPICS_SHA" ] ||
-  [ "$FINAL_LONG_TERM_SHA" != "$STAGED_LONG_TERM_SHA" ]; then
+  [ "$FINAL_LONG_TERM_SHA" != "$STAGED_LONG_TERM_SHA" ] ||
+  ! cmp -s \
+    "$SUPPLEMENTAL_CURRENT_SOURCE_INVENTORY" \
+    "$SUPPLEMENTAL_STAGED_INVENTORY" ||
+  ! cmp -s \
+    "$SUPPLEMENTAL_FINAL_INVENTORY" \
+    "$SUPPLEMENTAL_STAGED_INVENTORY"; then
   printf 'error: final JSON resources differ from source or staging\n' >&2
   exit 1
 fi
 
 plutil -lint "$FINAL_APP/Contents/Info.plist"
 "$CODESIGN_BIN" --verify --deep --strict --verbose=2 "$FINAL_APP"
+for resource_name in $SUPPLEMENTAL_RESOURCE_NAMES; do
+  if [ "$(stat -f '%Lp' "$FINAL_RESOURCES/$resource_name")" != "644" ]; then
+    printf 'error: published supplemental resource permission is incorrect: %s\n' \
+      "$resource_name" >&2
+    exit 1
+  fi
+done
 if [ "$(stat -f '%Lp' "$FINAL_RESOURCES")" != "755" ] ||
   [ "$(stat -f '%Lp' "$FINAL_EXECUTABLE")" != "755" ] ||
   [ "$(stat -f '%Lp' "$FINAL_RESOURCES/lexemes.json")" != "644" ] ||
@@ -797,7 +882,7 @@ STAGING_ROOT=""
 remove_owned_transaction_state
 
 printf \
-  'resource_sha256=PASS lexemes=%s sentences=%s trial_slice=%s topics=%s long_term=%s\n' \
+  'resource_sha256=PASS lexemes=%s sentences=%s trial_slice=%s topics=%s long_term=%s supplemental=PASS\n' \
   "$FINAL_LEXEMES_SHA" \
   "$FINAL_SENTENCES_SHA" \
   "$FINAL_TRIAL_SLICE_SHA" \

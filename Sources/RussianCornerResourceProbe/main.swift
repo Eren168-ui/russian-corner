@@ -25,11 +25,15 @@ struct RussianCornerResourceProbe {
                     }.joined(separator: "; ")
                 )
             }
-            guard catalog.lexemes.count == 360,
+            guard catalog.lexemes.count == 440,
                 catalog.sentences.count == 72,
                 catalog.trialSlice?.cardCount == 50,
                 catalog.topics.count == 32,
-                catalog.longTermSentences.count == 214
+                catalog.longTermSentences.count == 274,
+                catalog.supplementalLexemes.count == 80,
+                catalog.supplementalSentences.count == 60,
+                catalog.speakingChallenges.count == 24,
+                catalog.supplementalLoadIssue == nil
             else {
                 throw ProbeError(
                     message:
@@ -41,8 +45,10 @@ struct RussianCornerResourceProbe {
                 )
             }
             print(
-                "resource_probe=PASS lexemes=360 sentences=72 trial=50 " +
-                    "topics=32 long_term_sentences=214 " +
+                "resource_probe=PASS lexemes=440 sentences=72 trial=50 " +
+                    "topics=32 long_term_sentences=274 " +
+                    "supplemental_lexemes=80 " +
+                    "supplemental_sentences=60 speaking_challenges=24 " +
                     "directory=\(resourceDirectory.path)"
             )
         } catch {

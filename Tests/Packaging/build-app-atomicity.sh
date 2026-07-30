@@ -72,6 +72,7 @@ prepare_case() {
   mkdir -p \
     "$SANDBOX_REPO/Scripts" \
     "$SANDBOX_REPO/Sources/RussianCornerCore/Resources" \
+    "$SANDBOX_REPO/Verification" \
     "$SANDBOX_REPO/Assets/AppIcon" \
     "$FAKE_BIN" \
     "$FAKE_BUILD"
@@ -82,6 +83,10 @@ prepare_case() {
       --git-path russian-corner-build.lock
   )
   cp "$SOURCE_SCRIPT" "$SANDBOX_REPO/Scripts/build-app.sh"
+  cp Scripts/verify-supplemental-content.sh \
+    "$SANDBOX_REPO/Scripts/verify-supplemental-content.sh"
+  cp Verification/supplemental-corpus-audit.md \
+    "$SANDBOX_REPO/Verification/supplemental-corpus-audit.md"
   cp Sources/RussianCornerCore/Resources/lexemes.json \
     "$SANDBOX_REPO/Sources/RussianCornerCore/Resources/lexemes.json"
   cp Sources/RussianCornerCore/Resources/sentences.json \
@@ -92,6 +97,15 @@ prepare_case() {
     "$SANDBOX_REPO/Sources/RussianCornerCore/Resources/topics.json"
   cp Sources/RussianCornerCore/Resources/long-term-sentences.json \
     "$SANDBOX_REPO/Sources/RussianCornerCore/Resources/long-term-sentences.json"
+  for resource in \
+    supplemental-manifest.json \
+    supplemental-lexemes.json \
+    supplemental-sentences.json \
+    speaking-challenges.json
+  do
+    cp "Sources/RussianCornerCore/Resources/$resource" \
+      "$SANDBOX_REPO/Sources/RussianCornerCore/Resources/$resource"
+  done
   cp Assets/AppIcon/RussianCorner.icns \
     "$SANDBOX_REPO/Assets/AppIcon/RussianCorner.icns"
 
@@ -123,8 +137,12 @@ if [ -f "$resource_directory/lexemes.json" ] &&
   [ -f "$resource_directory/sentences.json" ] &&
   [ -f "$resource_directory/trial-slice.json" ] &&
   [ -f "$resource_directory/topics.json" ] &&
-  [ -f "$resource_directory/long-term-sentences.json" ]; then
-  printf 'resource_probe=PASS lexemes=360 sentences=72 trial=50 topics=32 long_term_sentences=214 directory=%s\n' \
+  [ -f "$resource_directory/long-term-sentences.json" ] &&
+  [ -f "$resource_directory/supplemental-manifest.json" ] &&
+  [ -f "$resource_directory/supplemental-lexemes.json" ] &&
+  [ -f "$resource_directory/supplemental-sentences.json" ] &&
+  [ -f "$resource_directory/speaking-challenges.json" ]; then
+  printf 'resource_probe=PASS lexemes=440 sentences=72 trial=50 topics=32 long_term_sentences=274 supplemental_lexemes=80 supplemental_sentences=60 speaking_challenges=24 directory=%s\n' \
     "$resource_directory"
   exit 0
 fi
