@@ -4,6 +4,9 @@ import XCTest
 @testable import RussianCornerCore
 
 final class SupplementalContentTests: XCTestCase {
+    private let allowedRoot =
+        "01-按学期/大二上/基础俄语"
+
     func testLegacyLexemeDecodesWithoutSupplementalFields() throws {
         let data = Data(
             """
@@ -119,5 +122,215 @@ final class SupplementalContentTests: XCTestCase {
         XCTAssertFalse(String(decoding: encoded, as: UTF8.self).contains(
             "audio"
         ))
+    }
+
+    func testClosedSupplementMergesReviewedItemsWithoutChangingCore()
+        throws
+    {
+        let fixture = try makeResourceFixture()
+        defer { try? FileManager.default.removeItem(at: fixture) }
+        try writeSupplement(to: fixture)
+
+        let catalog = try ContentCatalog(resourceDirectory: fixture)
+
+        XCTAssertNil(catalog.supplementalLoadIssue)
+        XCTAssertEqual(catalog.supplementalSentences.count, 1)
+        XCTAssertEqual(catalog.supplementalLexemes.count, 1)
+        XCTAssertEqual(catalog.speakingChallenges.count, 1)
+        XCTAssertTrue(
+            catalog.practiceSentences.contains {
+                $0.id == "supplement-sentence-believe"
+            }
+        )
+        XCTAssertTrue(
+            catalog.practiceLexemes.contains {
+                $0.id == "supplement-lexeme-believe"
+            }
+        )
+        XCTAssertEqual(
+            catalog.coreSentences.count,
+            catalog.longTermManifest.sentences.count
+        )
+    }
+
+    func testInvalidSupplementFailsClosedToCore() throws {
+        let fixture = try makeResourceFixture()
+        defer { try? FileManager.default.removeItem(at: fixture) }
+        try writeSupplement(to: fixture, gateClosed: false)
+
+        let catalog = try ContentCatalog(resourceDirectory: fixture)
+
+        XCTAssertNotNil(catalog.supplementalLoadIssue)
+        XCTAssertTrue(catalog.supplementalSentences.isEmpty)
+        XCTAssertTrue(catalog.supplementalLexemes.isEmpty)
+        XCTAssertTrue(catalog.speakingChallenges.isEmpty)
+        XCTAssertEqual(
+            catalog.practiceSentences.map(\.id),
+            catalog.coreSentences.map(\.id)
+        )
+    }
+
+    func testProfessionalSourceNeverMerges() throws {
+        let fixture = try makeResourceFixture()
+        defer { try? FileManager.default.removeItem(at: fixture) }
+        try writeSupplement(
+            to: fixture,
+            sourcePath: "01-按学期/大二上/专业俄语/实验室.md"
+        )
+
+        let catalog = try ContentCatalog(resourceDirectory: fixture)
+
+        XCTAssertNotNil(catalog.supplementalLoadIssue)
+        XCTAssertTrue(catalog.supplementalSentences.isEmpty)
+        XCTAssertFalse(
+            catalog.practiceSentences.contains {
+                $0.id == "supplement-sentence-believe"
+            }
+        )
+    }
+
+    func testPartialSupplementFailsClosedToCore() throws {
+        let fixture = try makeResourceFixture()
+        defer { try? FileManager.default.removeItem(at: fixture) }
+        try writeSupplement(to: fixture)
+        try FileManager.default.removeItem(
+            at: fixture.appendingPathComponent(
+                "speaking-challenges.json"
+            )
+        )
+
+        let catalog = try ContentCatalog(resourceDirectory: fixture)
+
+        XCTAssertNotNil(catalog.supplementalLoadIssue)
+        XCTAssertTrue(catalog.supplementalSentences.isEmpty)
+    }
+
+    private func makeResourceFixture() throws -> URL {
+        let source = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("Sources")
+            .appendingPathComponent("RussianCornerCore")
+            .appendingPathComponent("Resources")
+        let destination = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(
+            at: destination,
+            withIntermediateDirectories: true
+        )
+        for name in [
+            "lexemes.json",
+            "sentences.json",
+            "trial-slice.json",
+            "topics.json",
+            "long-term-sentences.json",
+        ] {
+            try FileManager.default.copyItem(
+                at: source.appendingPathComponent(name),
+                to: destination.appendingPathComponent(name)
+            )
+        }
+        return destination
+    }
+
+    private func writeSupplement(
+        to directory: URL,
+        gateClosed: Bool = true,
+        sourcePath: String? = nil
+    ) throws {
+        let path = sourcePath
+            ?? "\(allowedRoot)/верить в + Acc.md"
+        let hash = "fixture-source-hash"
+        let manifest = SupplementalContentManifest(
+            schemaVersion: 1,
+            contentGateClosed: gateClosed,
+            allowedSourceRoots: [allowedRoot],
+            sourceHashes: [path: hash],
+            candidateCount: 1,
+            reviewedSentenceCount: 1,
+            reviewedLexemeCount: 1,
+            excludedCount: 0
+        )
+        let lexeme = Lexeme(
+            id: "supplement-lexeme-believe",
+            lemma: "уверенность",
+            stressedForm: "уве́ренность",
+            speechText: "уверенность",
+            partOfSpeech: "noun",
+            glossZh: "信心；确信",
+            collocations: ["уверенность в себе"],
+            example: "Уверенность в себе приходит с практикой.",
+            sentenceIDs: ["supplement-sentence-believe"],
+            reviewStatus: .reviewed,
+            grammaticalGender: "feminine",
+            sourcePaths: [path],
+            sourceTexts: ["верить в себя"],
+            provenanceTypes: [.userNote],
+            qualityFlags: [],
+            usageNote: "常与 в + 第四格/前置格结构搭配。",
+            corpusLayer: .dailySupplement
+        )
+        let sentence = SentenceCard(
+            id: "supplement-sentence-believe",
+            promptZh: "说明练习能带来自信。",
+            cueRu: "Что даёт регулярная практика?",
+            practiceRu: "Уверенность в себе приходит с практикой.",
+            stressedForm:
+                "Уве́ренность в себе́ прихо́дит с пра́ктикой.",
+            speechText:
+                "Уверенность в себе приходит с практикой.",
+            theme: "language-learning",
+            lexemeIDs: [lexeme.id],
+            sourcePath: path,
+            sourceText: "верить в себя",
+            reviewStatus: .reviewed,
+            provenanceType: .derived,
+            qualityFlags: [],
+            dialogueAct: "explanation",
+            register: .neutral,
+            speakerRole: "学生",
+            addressForm: .notApplicable,
+            expectedReply: "Согласен, главное — не бояться ошибок.",
+            topicID: "topic-06",
+            sourceHash: hash,
+            corpusLayer: .dailySupplement
+        )
+        let challenge = SpeakingChallenge(
+            id: "supplement-challenge-believe",
+            promptRu: "Почему важно верить в себя?",
+            promptZh: "为什么相信自己很重要？",
+            structureHintsZh: ["说明原因", "举一个例子"],
+            replacementSlots: ["个人经历"],
+            lexemeIDs: [lexeme.id],
+            sourcePath: path,
+            sourceText: "верить в себя",
+            sourceHash: hash,
+            reviewStatus: .reviewed,
+            provenanceType: .derived,
+            qualityFlags: []
+        )
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        try encoder.encode(manifest).write(
+            to: directory.appendingPathComponent(
+                "supplemental-manifest.json"
+            )
+        )
+        try encoder.encode([lexeme]).write(
+            to: directory.appendingPathComponent(
+                "supplemental-lexemes.json"
+            )
+        )
+        try encoder.encode([sentence]).write(
+            to: directory.appendingPathComponent(
+                "supplemental-sentences.json"
+            )
+        )
+        try encoder.encode([challenge]).write(
+            to: directory.appendingPathComponent(
+                "speaking-challenges.json"
+            )
+        )
     }
 }

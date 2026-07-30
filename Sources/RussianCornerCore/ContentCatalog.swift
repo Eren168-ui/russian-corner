@@ -33,6 +33,13 @@ public struct ContentCatalog: Sendable {
     public let trialSlice: TrialContentSlice?
     public let topics: [TopicDefinition]
     public let longTermManifest: LongTermContentManifest
+    public let coreLexemes: [Lexeme]
+    public let coreSentences: [SentenceCard]
+    public let supplementalManifest: SupplementalContentManifest?
+    public let supplementalLexemes: [Lexeme]
+    public let supplementalSentences: [SentenceCard]
+    public let speakingChallenges: [SpeakingChallenge]
+    public let supplementalLoadIssue: String?
     public let longTermSentences: [SentenceCard]
     public let surfaceLemmas: [String: String]
 
@@ -82,7 +89,7 @@ public struct ContentCatalog: Sendable {
             resourceDirectory: resourceDirectory,
             decoder: decoder
         )
-        let catalog = ContentCatalog(
+        let coreCatalog = ContentCatalog(
             lexemes: lexemes,
             sentences: sentences,
             trialSlice: trialSlice,
@@ -90,11 +97,50 @@ public struct ContentCatalog: Sendable {
             longTermManifest: longTermManifest,
             surfaceLemmas: longTermManifest.surfaceLemmas ?? [:]
         )
-        let issues = catalog.validate()
+        let issues = coreCatalog.validate()
         guard issues.isEmpty else {
             throw ContentCatalogError.validationFailed(issues)
         }
-        self = catalog
+        do {
+            guard let supplement = try Self.loadSupplementalContent(
+                resourceDirectory: resourceDirectory,
+                decoder: decoder
+            ) else {
+                self = coreCatalog
+                return
+            }
+            let supplementIssues = Self.validate(
+                supplement: supplement,
+                coreCatalog: coreCatalog
+            )
+            guard supplementIssues.isEmpty else {
+                throw SupplementalContentError.validationFailed(
+                    supplementIssues
+                )
+            }
+            self = ContentCatalog(
+                lexemes: lexemes,
+                sentences: sentences,
+                trialSlice: trialSlice,
+                topics: topics,
+                longTermManifest: longTermManifest,
+                surfaceLemmas: longTermManifest.surfaceLemmas ?? [:],
+                supplementalManifest: supplement.manifest,
+                supplementalLexemes: supplement.lexemes,
+                supplementalSentences: supplement.sentences,
+                speakingChallenges: supplement.speakingChallenges
+            )
+        } catch {
+            self = ContentCatalog(
+                lexemes: lexemes,
+                sentences: sentences,
+                trialSlice: trialSlice,
+                topics: topics,
+                longTermManifest: longTermManifest,
+                surfaceLemmas: longTermManifest.surfaceLemmas ?? [:],
+                supplementalLoadIssue: error.localizedDescription
+            )
+        }
     }
 
     static func defaultResourceDirectory(
@@ -130,12 +176,26 @@ public struct ContentCatalog: Sendable {
         trialSlice: TrialContentSlice? = nil,
         topics: [TopicDefinition] = [],
         longTermManifest: LongTermContentManifest? = nil,
-        surfaceLemmas: [String: String] = [:]
+        surfaceLemmas: [String: String] = [:],
+        supplementalManifest: SupplementalContentManifest? = nil,
+        supplementalLexemes: [Lexeme] = [],
+        supplementalSentences: [SentenceCard] = [],
+        speakingChallenges: [SpeakingChallenge] = [],
+        supplementalLoadIssue: String? = nil
     ) {
         let allowedStatuses: Set<ReviewStatus> = [.reviewed, .verified]
-        self.lexemes = lexemes.filter {
+        let reviewedCoreLexemes = lexemes.filter {
             allowedStatuses.contains($0.reviewStatus)
         }
+        let reviewedSupplementalLexemes = supplementalLexemes.filter {
+            allowedStatuses.contains($0.reviewStatus)
+        }
+        coreLexemes = reviewedCoreLexemes
+        self.supplementalLexemes = reviewedSupplementalLexemes
+        self.lexemes = Self.mergeLexemes(
+            core: reviewedCoreLexemes,
+            supplemental: reviewedSupplementalLexemes
+        )
         self.sentences = sentences.filter {
             allowedStatuses.contains($0.reviewStatus)
         }
@@ -149,11 +209,20 @@ public struct ContentCatalog: Sendable {
             sentences: self.sentences
         )
         self.longTermManifest = longTermManifest ?? fallbackManifest
-        self.longTermSentences = (
+        coreSentences = (
             longTermManifest?.sentences ?? self.sentences
         ).filter {
             allowedStatuses.contains($0.reviewStatus)
         }
+        self.supplementalManifest = supplementalManifest
+        self.supplementalSentences = supplementalSentences.filter {
+            allowedStatuses.contains($0.reviewStatus)
+        }
+        self.speakingChallenges = speakingChallenges.filter {
+            allowedStatuses.contains($0.reviewStatus)
+        }
+        self.supplementalLoadIssue = supplementalLoadIssue
+        longTermSentences = coreSentences + self.supplementalSentences
         self.surfaceLemmas = Dictionary(
             uniqueKeysWithValues: surfaceLemmas.map {
                 (Self.normalizedForm($0.key), Self.normalizedForm($0.value))
@@ -165,8 +234,10 @@ public struct ContentCatalog: Sendable {
         guard let trialSlice else {
             return lexemes
         }
+        let supplementalIDs = Set(supplementalLexemes.map(\.id))
         return lexemes.filter {
             trialSlice.lexemeIDs.contains($0.id)
+                || supplementalIDs.contains($0.id)
         }
     }
 
@@ -269,6 +340,313 @@ public struct ContentCatalog: Sendable {
                 Self.normalizedForm($0) == normalized
             }
         }
+    }
+
+    private static func loadSupplementalContent(
+        resourceDirectory: URL,
+        decoder: JSONDecoder
+    ) throws -> SupplementalContentBundle? {
+        let names = [
+            "supplemental-manifest",
+            "supplemental-lexemes",
+            "supplemental-sentences",
+            "speaking-challenges",
+        ]
+        let urls = names.map {
+            resourceDirectory.appendingPathComponent("\($0).json")
+        }
+        let existence = urls.map {
+            FileManager.default.fileExists(atPath: $0.path)
+        }
+        if existence.allSatisfy({ !$0 }) {
+            return nil
+        }
+        guard existence.allSatisfy({ $0 }) else {
+            throw SupplementalContentError.partialResources
+        }
+        return try SupplementalContentBundle(
+            manifest: decoder.decode(
+                SupplementalContentManifest.self,
+                from: Data(contentsOf: urls[0])
+            ),
+            lexemes: decoder.decode(
+                [Lexeme].self,
+                from: Data(contentsOf: urls[1])
+            ),
+            sentences: decoder.decode(
+                [SentenceCard].self,
+                from: Data(contentsOf: urls[2])
+            ),
+            speakingChallenges: decoder.decode(
+                [SpeakingChallenge].self,
+                from: Data(contentsOf: urls[3])
+            )
+        )
+    }
+
+    private static func validate(
+        supplement: SupplementalContentBundle,
+        coreCatalog: ContentCatalog
+    ) -> [String] {
+        var issues: [String] = []
+        let manifest = supplement.manifest
+        let allowedStatuses: Set<ReviewStatus> = [.reviewed, .verified]
+        let excludedFragments = [
+            "专业俄语", "俄语转录", "conflict", "双链", "ai生成",
+            "化学", "生物", "物理", "组织学", "遗传", "数学", "统计",
+            "professional",
+        ]
+        let allowedRoots = manifest.allowedSourceRoots
+
+        if manifest.schemaVersion != 1 {
+            issues.append("unsupported_schema")
+        }
+        if !manifest.contentGateClosed {
+            issues.append("content_gate_open")
+        }
+        if allowedRoots.isEmpty
+            || Set(allowedRoots).count != allowedRoots.count
+        {
+            issues.append("invalid_allowlist")
+        }
+        if manifest.reviewedSentenceCount != supplement.sentences.count {
+            issues.append("sentence_count_mismatch")
+        }
+        if manifest.reviewedLexemeCount != supplement.lexemes.count {
+            issues.append("lexeme_count_mismatch")
+        }
+
+        func pathIsAllowed(_ value: String) -> Bool {
+            let normalized = value.lowercased()
+            guard
+                !value.isEmpty,
+                allowedRoots.contains(where: {
+                    value == $0 || value.hasPrefix("\($0)/")
+                }),
+                !excludedFragments.contains(where: {
+                    normalized.contains($0.lowercased())
+                })
+            else {
+                return false
+            }
+            return true
+        }
+
+        func sourceIsValid(
+            path: String,
+            hash: String?
+        ) -> Bool {
+            pathIsAllowed(path)
+                && !(hash ?? "").isEmpty
+                && manifest.sourceHashes[path] == hash
+        }
+
+        let lexemeIDs = supplement.lexemes.map(\.id)
+        let sentenceIDs = supplement.sentences.map(\.id)
+        let challengeIDs = supplement.speakingChallenges.map(\.id)
+        if Set(lexemeIDs).count != lexemeIDs.count {
+            issues.append("duplicate_lexeme_id")
+        }
+        if Set(sentenceIDs).count != sentenceIDs.count {
+            issues.append("duplicate_sentence_id")
+        }
+        if Set(challengeIDs).count != challengeIDs.count {
+            issues.append("duplicate_challenge_id")
+        }
+
+        let coreLexemesByID = Dictionary(
+            uniqueKeysWithValues: coreCatalog.lexemes.map {
+                ($0.id, $0)
+            }
+        )
+        var knownLexemeIDs = Set(coreCatalog.lexemes.map(\.id))
+        knownLexemeIDs.formUnion(lexemeIDs)
+        let knownSentenceIDs = Set(
+            coreCatalog.coreSentences.map(\.id) + sentenceIDs
+        )
+        let coreLemmas = Dictionary(
+            uniqueKeysWithValues: coreCatalog.lexemes.map {
+                (normalizedForm($0.lemma), $0.id)
+            }
+        )
+
+        for lexeme in supplement.lexemes {
+            if !allowedStatuses.contains(lexeme.reviewStatus) {
+                issues.append("unreviewed_lexeme:\(lexeme.id)")
+            }
+            if lexeme.corpusLayer != .dailySupplement {
+                issues.append("wrong_lexeme_layer:\(lexeme.id)")
+            }
+            if lexeme.sourcePaths.isEmpty
+                || lexeme.sourceTexts.count != lexeme.sourcePaths.count
+                || lexeme.provenanceTypes.isEmpty
+                || !lexeme.qualityFlags.isEmpty
+            {
+                issues.append("missing_lexeme_trace:\(lexeme.id)")
+            }
+            for path in lexeme.sourcePaths {
+                if !pathIsAllowed(path)
+                    || manifest.sourceHashes[path] == nil
+                {
+                    issues.append("unsafe_lexeme_source:\(lexeme.id)")
+                }
+            }
+            if lexeme.collocations.isEmpty
+                || lexeme.example.isEmpty
+                || lexeme.sentenceIDs.isEmpty
+            {
+                issues.append("incomplete_lexeme:\(lexeme.id)")
+            }
+            if !lexeme.sentenceIDs.allSatisfy(
+                knownSentenceIDs.contains
+            ) {
+                issues.append("missing_lexeme_sentence:\(lexeme.id)")
+            }
+            let normalizedLemma = normalizedForm(lexeme.lemma)
+            if let coreID = coreLemmas[normalizedLemma],
+                coreID != lexeme.id
+            {
+                issues.append("duplicate_core_lemma:\(lexeme.id)")
+            }
+            if let core = coreLexemesByID[lexeme.id],
+                normalizedForm(core.lemma) != normalizedLemma
+            {
+                issues.append("changed_core_lemma:\(lexeme.id)")
+            }
+        }
+
+        for sentence in supplement.sentences {
+            if !allowedStatuses.contains(sentence.reviewStatus) {
+                issues.append("unreviewed_sentence:\(sentence.id)")
+            }
+            if sentence.corpusLayer != .dailySupplement {
+                issues.append("wrong_sentence_layer:\(sentence.id)")
+            }
+            if sentence.provenanceType == .aiGenerated
+                || !sentence.qualityFlags.isEmpty
+            {
+                issues.append("unsafe_sentence_quality:\(sentence.id)")
+            }
+            if !sourceIsValid(
+                path: sentence.sourcePath,
+                hash: sentence.sourceHash
+            ) {
+                issues.append("unsafe_sentence_source:\(sentence.id)")
+            }
+            if sentence.practiceRu.isEmpty
+                || sentence.speechText.isEmpty
+                || sentence.stressedForm?.isEmpty != false
+                || sentence.promptZh.isEmpty
+                || sentence.cueRu.isEmpty
+                || sentence.dialogueAct?.isEmpty != false
+                || sentence.speakerRole?.isEmpty != false
+                || sentence.register == nil
+                || sentence.addressForm == nil
+                || sentence.expectedReply?.isEmpty != false
+                || sentence.lexemeIDs.isEmpty
+            {
+                issues.append("incomplete_sentence:\(sentence.id)")
+            }
+            if !sentence.lexemeIDs.allSatisfy(
+                knownLexemeIDs.contains
+            ) {
+                issues.append("missing_sentence_lexeme:\(sentence.id)")
+            }
+        }
+
+        for challenge in supplement.speakingChallenges {
+            if !allowedStatuses.contains(challenge.reviewStatus)
+                || challenge.provenanceType == .aiGenerated
+                || !challenge.qualityFlags.isEmpty
+            {
+                issues.append("unsafe_challenge_quality:\(challenge.id)")
+            }
+            if !sourceIsValid(
+                path: challenge.sourcePath,
+                hash: challenge.sourceHash
+            ) {
+                issues.append("unsafe_challenge_source:\(challenge.id)")
+            }
+            if challenge.promptRu.isEmpty
+                || challenge.promptZh.isEmpty
+                || challenge.structureHintsZh.isEmpty
+                || !challenge.lexemeIDs.allSatisfy(
+                    knownLexemeIDs.contains
+                )
+            {
+                issues.append("incomplete_challenge:\(challenge.id)")
+            }
+        }
+        return issues
+    }
+
+    private static func mergeLexemes(
+        core: [Lexeme],
+        supplemental: [Lexeme]
+    ) -> [Lexeme] {
+        var mergedByID = Dictionary(
+            uniqueKeysWithValues: core.map { ($0.id, $0) }
+        )
+        var order = core.map(\.id)
+        for supplement in supplemental {
+            if let existing = mergedByID[supplement.id] {
+                mergedByID[supplement.id] = Lexeme(
+                    id: existing.id,
+                    lemma: existing.lemma,
+                    stressedForm: supplement.stressedForm,
+                    speechText: supplement.speechText,
+                    partOfSpeech: supplement.partOfSpeech,
+                    glossZh: supplement.glossZh,
+                    collocations: Array(
+                        Set(
+                            existing.collocations
+                                + supplement.collocations
+                        )
+                    ).sorted(),
+                    example: supplement.example,
+                    sentenceIDs: Array(
+                        Set(
+                            existing.sentenceIDs
+                                + supplement.sentenceIDs
+                        )
+                    ).sorted(),
+                    reviewStatus: supplement.reviewStatus,
+                    grammaticalGender:
+                        supplement.grammaticalGender
+                        ?? existing.grammaticalGender,
+                    aspect: supplement.aspect ?? existing.aspect,
+                    aspectPair:
+                        supplement.aspectPair ?? existing.aspectPair,
+                    aspectPairNote:
+                        supplement.aspectPairNote
+                        ?? existing.aspectPairNote,
+                    government:
+                        supplement.government ?? existing.government,
+                    principalForms:
+                        supplement.principalForms
+                        ?? existing.principalForms,
+                    surfaceForms: Array(
+                        Set(
+                            existing.surfaceForms
+                                + supplement.surfaceForms
+                        )
+                    ).sorted(),
+                    sourcePaths: supplement.sourcePaths,
+                    sourceTexts: supplement.sourceTexts,
+                    provenanceTypes: supplement.provenanceTypes,
+                    qualityFlags: supplement.qualityFlags,
+                    usageNote: supplement.usageNote,
+                    contrastNote: supplement.contrastNote,
+                    commonMistakes: supplement.commonMistakes,
+                    contrastGroupID: supplement.contrastGroupID,
+                    corpusLayer: existing.corpusLayer
+                )
+            } else {
+                mergedByID[supplement.id] = supplement
+                order.append(supplement.id)
+            }
+        }
+        return order.compactMap { mergedByID[$0] }
     }
 
     public func validate() -> [CatalogIssue] {

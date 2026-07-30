@@ -82,3 +82,36 @@ public struct SpeakingChallenge:
         self.qualityFlags = qualityFlags
     }
 }
+
+public struct SupplementalContentBundle: Equatable, Sendable {
+    public let manifest: SupplementalContentManifest
+    public let lexemes: [Lexeme]
+    public let sentences: [SentenceCard]
+    public let speakingChallenges: [SpeakingChallenge]
+
+    public init(
+        manifest: SupplementalContentManifest,
+        lexemes: [Lexeme],
+        sentences: [SentenceCard],
+        speakingChallenges: [SpeakingChallenge]
+    ) {
+        self.manifest = manifest
+        self.lexemes = lexemes
+        self.sentences = sentences
+        self.speakingChallenges = speakingChallenges
+    }
+}
+
+public enum SupplementalContentError: LocalizedError, Equatable {
+    case partialResources
+    case validationFailed([String])
+
+    public var errorDescription: String? {
+        switch self {
+        case .partialResources:
+            "补充语料资源不完整，已仅加载核心语料"
+        case .validationFailed(let issues):
+            "补充语料未通过安全检查：\(issues.joined(separator: "；"))"
+        }
+    }
+}
