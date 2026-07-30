@@ -6,6 +6,16 @@ import XCTest
 @testable import RussianCornerUI
 
 final class InteractiveRussianTextTests: XCTestCase {
+    func testDetailTypographyIsReadableButSmallerThanMainAnswer() {
+        XCTAssertEqual(PracticeDetailTypography.bodySize, 12)
+        XCTAssertEqual(PracticeDetailTypography.relatedRussianSize, 14)
+        XCTAssertGreaterThan(PracticeDetailTypography.labelSize, 8)
+        XCTAssertLessThan(
+            PracticeDetailTypography.relatedRussianSize,
+            20
+        )
+    }
+
     func testBuilderLinksEveryWordAndPreservesPunctuation() throws {
         let analyses = [
             analysis(index: 0, surface: "Как"),

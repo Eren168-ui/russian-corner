@@ -2,6 +2,15 @@ import RussianCornerCore
 import RussianCornerPlatform
 import SwiftUI
 
+public enum PracticeDetailTypography {
+    public static let labelSize: CGFloat = 9
+    public static let tagSize: CGFloat = 9
+    public static let supportingSize: CGFloat = 11
+    public static let bodySize: CGFloat = 12
+    public static let relatedRussianSize: CGFloat = 14
+    public static let wordHeadingSize: CGFloat = 18
+}
+
 public struct WordDetailSummary: Equatable, Sendable {
     public let qualityLabel: String
     public let glossZh: String
@@ -125,7 +134,8 @@ public struct PracticeDetailSection: View {
                 Text(word.stressedForm)
                     .font(
                         .system(
-                            size: 22 * appModel.fontScale,
+                            size: PracticeDetailTypography.wordHeadingSize
+                                * appModel.fontScale,
                             weight: .semibold,
                             design: .serif
                         )
@@ -142,7 +152,8 @@ public struct PracticeDetailSection: View {
                 Text(summary.qualityLabel)
                     .font(
                         .system(
-                            size: 8 * appModel.fontScale,
+                            size: PracticeDetailTypography.labelSize
+                                * appModel.fontScale,
                             weight: .medium
                         )
                     )
@@ -155,7 +166,12 @@ public struct PracticeDetailSection: View {
                 ) {
                     Link(destination: url) {
                         Label("词典", systemImage: "arrow.up.right.square")
-                            .font(.system(size: 9, weight: .medium))
+                            .font(
+                                .system(
+                                    size: PracticeDetailTypography.labelSize,
+                                    weight: .medium
+                                )
+                            )
                     }
                     .foregroundStyle(palette.accent)
                 }
@@ -167,7 +183,12 @@ public struct PracticeDetailSection: View {
                         PracticeCardMetrics.wordCloseActionTitle,
                         systemImage: "xmark"
                     )
-                    .font(.system(size: 9, weight: .semibold))
+                    .font(
+                        .system(
+                            size: PracticeDetailTypography.labelSize,
+                            weight: .semibold
+                        )
+                    )
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(palette.muted)
@@ -240,7 +261,8 @@ public struct PracticeDetailSection: View {
                         Text(example.russian)
                             .font(
                                 .system(
-                                    size: 12 * appModel.fontScale,
+                                    size: PracticeDetailTypography.bodySize
+                                        * appModel.fontScale,
                                     weight: .medium,
                                     design: .serif
                                 )
@@ -250,7 +272,8 @@ public struct PracticeDetailSection: View {
                             Text(translation)
                                 .font(
                                     .system(
-                                        size: 9 * appModel.fontScale
+                                        size: PracticeDetailTypography.supportingSize
+                                            * appModel.fontScale
                                     )
                                 )
                                 .foregroundStyle(palette.muted)
@@ -281,7 +304,12 @@ public struct PracticeDetailSection: View {
                 ProgressView()
                     .controlSize(.mini)
                 Text("正在补充在线词典释义…")
-                    .font(.system(size: 9 * appModel.fontScale))
+                    .font(
+                        .system(
+                            size: PracticeDetailTypography.supportingSize
+                                * appModel.fontScale
+                        )
+                    )
                     .foregroundStyle(palette.muted)
             }
         case .result(let result):
@@ -314,7 +342,12 @@ public struct PracticeDetailSection: View {
             }
         case .unavailable(let message):
             Text(message)
-                .font(.system(size: 9 * appModel.fontScale))
+                .font(
+                    .system(
+                        size: PracticeDetailTypography.supportingSize
+                            * appModel.fontScale
+                    )
+                )
                 .foregroundStyle(palette.muted)
         }
     }
@@ -365,21 +398,41 @@ public struct PracticeDetailSection: View {
 
         if !practice.isRevealed {
             Text("显示答案后，可查看同场景延伸表达；其中每个俄语词都可以点击。")
-                .font(.system(size: 9 * appModel.fontScale))
+                .font(
+                    .system(
+                        size: PracticeDetailTypography.supportingSize
+                            * appModel.fontScale
+                    )
+                )
                 .foregroundStyle(palette.muted)
         } else if practice.relatedSentenceExpressions.isEmpty {
             Text("点击上方答案中的任意俄语词，可查看词义、词形和用法。")
-                .font(.system(size: 9 * appModel.fontScale))
+                .font(
+                    .system(
+                        size: PracticeDetailTypography.supportingSize
+                            * appModel.fontScale
+                    )
+                )
                 .foregroundStyle(palette.muted)
         } else {
             Text("同场景延伸 · 点击任意俄语词")
-                .font(.system(size: 8, weight: .semibold))
+                .font(
+                    .system(
+                        size: PracticeDetailTypography.labelSize,
+                        weight: .semibold
+                    )
+                )
                 .tracking(0.6)
                 .foregroundStyle(palette.accent)
             ForEach(practice.relatedSentenceExpressions) { expression in
                 VStack(alignment: .leading, spacing: 2) {
                     Text(expression.promptZh)
-                        .font(.system(size: 9 * appModel.fontScale))
+                        .font(
+                            .system(
+                                size: PracticeDetailTypography.supportingSize
+                                    * appModel.fontScale
+                            )
+                        )
                         .foregroundStyle(palette.muted)
                     InteractiveRussianText(
                         text: expression.text,
@@ -398,7 +451,8 @@ public struct PracticeDetailSection: View {
                     }
                     .font(
                         .system(
-                            size: 11 * appModel.fontScale,
+                            size: PracticeDetailTypography.relatedRussianSize
+                                * appModel.fontScale,
                             design: .serif
                         )
                     )
@@ -410,10 +464,15 @@ public struct PracticeDetailSection: View {
 
     private func sourceTag(_ value: String) -> some View {
         Text(value)
-            .font(.system(size: 8, weight: .medium))
+            .font(
+                .system(
+                    size: PracticeDetailTypography.tagSize,
+                    weight: .medium
+                )
+            )
             .foregroundStyle(palette.secondary)
             .padding(.horizontal, 6)
-            .frame(height: 18)
+            .frame(height: 20)
             .background(palette.accentSurface)
             .clipShape(Capsule())
     }
@@ -427,7 +486,8 @@ public struct PracticeDetailSection: View {
             Text(value)
                 .font(
                     .system(
-                        size: 11 * appModel.fontScale,
+                        size: PracticeDetailTypography.bodySize
+                            * appModel.fontScale,
                         weight: .medium
                     )
                 )
@@ -449,7 +509,12 @@ public struct PracticeDetailSection: View {
         VStack(alignment: .leading, spacing: 4) {
             sectionTitle(title)
             Text(value)
-                .font(.system(size: 11 * appModel.fontScale))
+                .font(
+                    .system(
+                        size: PracticeDetailTypography.bodySize
+                            * appModel.fontScale
+                    )
+                )
                 .foregroundStyle(palette.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -465,7 +530,8 @@ public struct PracticeDetailSection: View {
         Text(value)
             .font(
                 .system(
-                    size: 10 * appModel.fontScale,
+                    size: PracticeDetailTypography.bodySize
+                        * appModel.fontScale,
                     weight: .medium,
                     design: .serif
                 )
@@ -479,7 +545,12 @@ public struct PracticeDetailSection: View {
 
     private func sectionTitle(_ value: String) -> some View {
         Text(value.uppercased())
-            .font(.system(size: 8, weight: .semibold))
+            .font(
+                .system(
+                    size: PracticeDetailTypography.labelSize,
+                    weight: .semibold
+                )
+            )
             .tracking(0.7)
             .foregroundStyle(palette.accent)
     }
@@ -490,11 +561,21 @@ public struct PracticeDetailSection: View {
     ) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title.uppercased())
-                .font(.system(size: 8, weight: .semibold))
+                .font(
+                    .system(
+                        size: PracticeDetailTypography.labelSize,
+                        weight: .semibold
+                    )
+                )
                 .tracking(0.8)
                 .foregroundStyle(palette.accent)
             Text(value)
-                .font(.system(size: 11 * appModel.fontScale))
+                .font(
+                    .system(
+                        size: PracticeDetailTypography.bodySize
+                            * appModel.fontScale
+                    )
+                )
                 .foregroundStyle(palette.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
