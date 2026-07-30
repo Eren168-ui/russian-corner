@@ -110,6 +110,7 @@ final class FloatingPanelControllerTests: XCTestCase {
             PracticeCardUtilityAction.allCases.map(\.title),
             [
                 "今日英语场景…",
+                "收集英语表达…",
                 "设置…",
                 "学习记录…",
                 "今日反馈…",

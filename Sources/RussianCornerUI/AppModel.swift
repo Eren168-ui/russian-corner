@@ -521,6 +521,8 @@ public final class AppRuntime {
   private var studyCatalog: LanguageContentCatalog?
   private var repository: ProgressRepository?
   private var candidateCorpusStore: CandidateCorpusStore?
+  private var expressionCaptureStore: ExpressionCaptureStore?
+  private var baseEnglishContent: EnglishContentBundle?
   private let sourceCorpusScanner = SourceCorpusScanner()
   private let enableSourceSync: Bool
   private var trialSessionCoordinator: TrialSessionCoordinator?
@@ -611,9 +613,24 @@ public final class AppRuntime {
             resourceDirectory: sourceResourceDirectory
           )
         }
-        studyCatalog = englishBundle.catalog
-        sceneLessons = englishBundle.lessons
-        catalog = englishBundle.legacyCatalog
+        baseEnglishContent = englishBundle
+        if let fileURL = try? ExpressionCaptureStore.defaultFileURL() {
+          let captureStore = ExpressionCaptureStore(fileURL: fileURL)
+          expressionCaptureStore = captureStore
+          let imported =
+            (try? captureStore.practiceEligibleExpressions()) ?? []
+          let merged = Self.merging(
+            englishBundle: englishBundle,
+            imported: imported
+          )
+          studyCatalog = merged.catalog
+          sceneLessons = merged.lessons
+          catalog = merged.legacyCatalog
+        } else {
+          studyCatalog = englishBundle.catalog
+          sceneLessons = englishBundle.lessons
+          catalog = englishBundle.legacyCatalog
+        }
       } else {
         catalog = try ContentCatalog()
         studyCatalog = catalog.studyCatalog
@@ -837,6 +854,55 @@ public final class AppRuntime {
           )
         }
       }
+    )
+  }
+
+  public func reloadEnglishImportedExpressions() {
+    guard
+      appModel.language == .english,
+      let baseEnglishContent,
+      let expressionCaptureStore
+    else {
+      return
+    }
+    do {
+      let imported = try expressionCaptureStore
+        .practiceEligibleExpressions()
+      let merged = Self.merging(
+        englishBundle: baseEnglishContent,
+        imported: imported
+      )
+      studyCatalog = merged.catalog
+      catalog = merged.legacyCatalog
+      sceneLessons = merged.lessons
+      try reloadPractice()
+      appModel.transientStatus =
+        "已把审核后的英语表达加入可用语料"
+    } catch {
+      appModel.transientStatus =
+        "英语表达刷新失败：\(error.localizedDescription)"
+    }
+  }
+
+  private static func merging(
+    englishBundle: EnglishContentBundle,
+    imported: [ImportedExpression]
+  ) -> EnglishContentBundle {
+    let existingIDs = Set(
+      englishBundle.catalog.sentences.map(\.id)
+    )
+    let importedSentences = imported
+      .map(\.studySentence)
+      .filter { !existingIDs.contains($0.id) }
+    let catalog = LanguageContentCatalog(
+      lexemes: englishBundle.catalog.lexemes,
+      sentences:
+        englishBundle.catalog.sentences + importedSentences
+    )
+    return EnglishContentBundle(
+      catalog: catalog,
+      topics: englishBundle.topics,
+      lessons: englishBundle.lessons
     )
   }
 

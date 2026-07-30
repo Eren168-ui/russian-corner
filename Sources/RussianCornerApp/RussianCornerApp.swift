@@ -199,6 +199,8 @@ struct RussianCornerApp: App {
   private let diagnosticsWindowController: FeatureWindowController
   private let sceneTrainingWindowController:
     SceneTrainingWindowController
+  private let expressionCaptureWindowController:
+    FeatureWindowController
   private let utilityActions: PracticeCardUtilityActions
 
   init() {
@@ -262,9 +264,40 @@ struct RussianCornerApp: App {
     )
     let sceneTrainingWindowController =
       SceneTrainingWindowController(runtime: runtime)
+    let expressionCaptureWindowController: FeatureWindowController
+    do {
+      let captureModel = try ExpressionCaptureViewModel(
+        onReviewed: { _ in
+          runtime.languageRuntimes[.english]?
+            .reloadEnglishImportedExpressions()
+        }
+      )
+      expressionCaptureWindowController = FeatureWindowController(
+        title: "Language Corner · 收集英语表达",
+        size: NSSize(width: 900, height: 680),
+        minimumSize: NSSize(width: 780, height: 600),
+        content: AnyView(ExpressionCaptureView(model: captureModel))
+      )
+    } catch {
+      expressionCaptureWindowController = FeatureWindowController(
+        title: "Language Corner · 收集英语表达",
+        size: NSSize(width: 620, height: 420),
+        minimumSize: NSSize(width: 520, height: 360),
+        content: AnyView(
+          ContentUnavailableView(
+            "表达收集暂时不可用",
+            systemImage: "text.badge.xmark",
+            description: Text(error.localizedDescription)
+          )
+        )
+      )
+    }
     let utilityActions = PracticeCardUtilityActions(
       openSceneTraining: {
         sceneTrainingWindowController.show()
+      },
+      openExpressionCapture: {
+        expressionCaptureWindowController.show()
       },
       openSettings: {
         settingsWindowController.show()
@@ -314,6 +347,8 @@ struct RussianCornerApp: App {
     self.diagnosticsWindowController = diagnosticsWindowController
     self.sceneTrainingWindowController =
       sceneTrainingWindowController
+    self.expressionCaptureWindowController =
+      expressionCaptureWindowController
     self.utilityActions = utilityActions
     applicationDelegate.runtime = runtime
 
@@ -473,6 +508,9 @@ private struct MenuBarContent: View {
       utilityActions.openSceneTraining()
     }
     .disabled(runtime.languageRuntimes[.english] == nil)
+    Button("收集英语表达…", systemImage: "text.badge.plus") {
+      utilityActions.openExpressionCapture()
+    }
 
     Button("设置…", systemImage: "gearshape") {
       utilityActions.openSettings()
