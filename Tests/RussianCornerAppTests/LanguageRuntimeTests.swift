@@ -6,6 +6,34 @@ import XCTest
 
 @MainActor
 final class LanguageRuntimeTests: XCTestCase {
+    func testBundledEnglishRuntimeStartsWithinFiveSeconds() throws {
+        let startedAt = Date()
+        let runtime = AppRuntime(
+            defaults: isolatedDefaults(),
+            language: .english,
+            repository: ProgressRepository(
+                container: try ProgressRepository.makeContainer(
+                    inMemory: true,
+                    language: .english
+                )
+            ),
+            trialRepository: TrialRepository(
+                container: try TrialRepository.makeContainer(
+                    inMemory: true,
+                    language: .english
+                )
+            ),
+            enableSystemReminders: false
+        )
+
+        XCTAssertNotNil(runtime.practice)
+        XCTAssertNil(runtime.launchError)
+        XCTAssertLessThan(
+            Date().timeIntervalSince(startedAt),
+            5
+        )
+    }
+
     func testSwitchingLanguagesPreservesIndependentPracticeIndexes() throws {
         let defaults = isolatedDefaults()
         let russian = try makeRuntime(

@@ -35,6 +35,7 @@ public struct ContentCatalog: Sendable {
     public let longTermManifest: LongTermContentManifest
     public let longTermSentences: [SentenceCard]
     public let surfaceLemmas: [String: String]
+    private let lexemesByNormalizedForm: [String: Lexeme]
 
     public var studyCatalog: LanguageContentCatalog {
         LanguageContentCatalog(
@@ -166,6 +167,16 @@ public struct ContentCatalog: Sendable {
                 (Self.normalizedForm($0.key), Self.normalizedForm($0.value))
             }
         )
+        var lexemeIndex: [String: Lexeme] = [:]
+        for lexeme in self.lexemes {
+            for form in [lexeme.lemma] + lexeme.surfaceForms {
+                let normalized = Self.normalizedForm(form)
+                if !normalized.isEmpty, lexemeIndex[normalized] == nil {
+                    lexemeIndex[normalized] = lexeme
+                }
+            }
+        }
+        lexemesByNormalizedForm = lexemeIndex
     }
 
     public var practiceLexemes: [Lexeme] {
@@ -289,12 +300,7 @@ public struct ContentCatalog: Sendable {
     }
 
     private func matchingLexeme(for surface: String) -> Lexeme? {
-        let normalized = Self.normalizedForm(surface)
-        return lexemes.first { lexeme in
-            ([lexeme.lemma] + lexeme.surfaceForms).contains {
-                Self.normalizedForm($0) == normalized
-            }
-        }
+        lexemesByNormalizedForm[Self.normalizedForm(surface)]
     }
 
     public func validate() -> [CatalogIssue] {
