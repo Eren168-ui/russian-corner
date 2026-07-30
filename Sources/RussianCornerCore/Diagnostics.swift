@@ -587,18 +587,22 @@ public struct DiagnosticSampler: Sendable {
         vocabularyCount: Int = 10,
         listeningCount: Int = 10,
         preferredLexemeIDs: [String] = [],
-        preferredListeningSentenceIDs: [String] = []
+        preferredListeningSentenceIDs: [String] = [],
+        anchorRatio: Double = 1,
+        challengeSeedOffset: UInt64 = 0
     ) -> DiagnosticSample {
-        var generator = SeededDiagnosticGenerator(seed: seed)
+        var generator = SeededDiagnosticGenerator(
+            seed: seed ^ challengeSeedOffset
+        )
         let fallbackListening = themeRoundRobin(
             catalog.sentences,
-            count: listeningCount,
+            count: catalog.sentences.count,
             generator: &generator
         )
         let fallbackLexemes = themeRoundRobin(
             catalog.lexemes,
             sentences: catalog.sentences,
-            count: min(catalog.lexemes.count, vocabularyCount),
+            count: catalog.lexemes.count,
             generator: &generator
         )
         let lexemesByID = Dictionary(
@@ -611,13 +615,15 @@ public struct DiagnosticSampler: Sendable {
             preferredIDs: preferredLexemeIDs,
             itemsByID: lexemesByID,
             fallback: fallbackLexemes,
-            count: vocabularyCount
+            count: vocabularyCount,
+            anchorRatio: anchorRatio
         )
         let listening = resolve(
             preferredIDs: preferredListeningSentenceIDs,
             itemsByID: sentencesByID,
             fallback: fallbackListening,
-            count: listeningCount
+            count: listeningCount,
+            anchorRatio: anchorRatio
         )
         return DiagnosticSample(
             recognition: recognition,
@@ -630,12 +636,21 @@ public struct DiagnosticSampler: Sendable {
         preferredIDs: [String],
         itemsByID: [String: Element],
         fallback: [Element],
-        count: Int
+        count: Int,
+        anchorRatio: Double
     ) -> [Element] where Element.ID == String {
         guard count > 0 else { return [] }
+        let boundedRatio = min(max(anchorRatio, 0), 1)
+        let anchorLimit =
+            preferredIDs.isEmpty
+            ? 0
+            : min(
+                count,
+                Int((Double(count) * boundedRatio).rounded(.up))
+            )
         var seen: Set<String> = []
         var result: [Element] = []
-        for id in preferredIDs {
+        for id in preferredIDs.prefix(anchorLimit) {
             guard let item = itemsByID[id], seen.insert(id).inserted else {
                 continue
             }
@@ -644,10 +659,20 @@ public struct DiagnosticSampler: Sendable {
                 return result
             }
         }
+        let preferredSet = Set(preferredIDs)
+        for item in fallback
+        where !preferredSet.contains(item.id)
+            && seen.insert(item.id).inserted
+        {
+            result.append(item)
+            if result.count == count {
+                return result
+            }
+        }
         for item in fallback where seen.insert(item.id).inserted {
             result.append(item)
             if result.count == count {
-                break
+                return result
             }
         }
         return result

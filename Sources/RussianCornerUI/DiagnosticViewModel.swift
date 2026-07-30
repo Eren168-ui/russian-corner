@@ -197,13 +197,31 @@ public final class DiagnosticViewModel {
             },
             sentences: catalog.practiceSentences
         )
+        let anchorRatio = baseline == nil ? 1.0 : 0.7
+        let challengeSeedOffset = UInt64(
+            history.entries.filter { $0.report.current.isValid }.count
+        )
         let selectedSample = DiagnosticSampler().sample(
             from: levelAdjustedCatalog,
             seed: resolvedSeed,
             vocabularyCount: resolvedVocabularyCount,
             listeningCount: resolvedListeningCount,
             preferredLexemeIDs: baselineLexemeIDs,
-            preferredListeningSentenceIDs: baselineListeningIDs
+            preferredListeningSentenceIDs: baselineListeningIDs,
+            anchorRatio: anchorRatio,
+            challengeSeedOffset: challengeSeedOffset
+        )
+        let requiredLexemeAnchorCount = Int(
+            (Double(resolvedVocabularyCount) * anchorRatio).rounded(.up)
+        )
+        let requiredListeningAnchorCount = Int(
+            (Double(resolvedListeningCount) * anchorRatio).rounded(.up)
+        )
+        let requiredLexemeAnchors = Array(
+            baselineLexemeIDs.prefix(requiredLexemeAnchorCount)
+        )
+        let requiredListeningAnchors = Array(
+            baselineListeningIDs.prefix(requiredListeningAnchorCount)
         )
         sample = selectedSample
         seed = resolvedSeed
@@ -212,10 +230,16 @@ public final class DiagnosticViewModel {
             && (
                 baselineLexemeIDs.isEmpty
                     || baselineListeningIDs.isEmpty
-                    || selectedSample.recognition.map(\.id)
-                        != baselineLexemeIDs
-                    || selectedSample.listening.map(\.id)
-                        != baselineListeningIDs
+                    || Array(
+                        selectedSample.recognition
+                            .prefix(requiredLexemeAnchorCount)
+                            .map(\.id)
+                    ) != requiredLexemeAnchors
+                    || Array(
+                        selectedSample.listening
+                            .prefix(requiredListeningAnchorCount)
+                            .map(\.id)
+                    ) != requiredListeningAnchors
             )
         historyIssueCount = history.issueCount
         comparisonBaselineMetrics = baseline?.current

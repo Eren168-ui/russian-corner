@@ -239,6 +239,44 @@ final class DiagnosticsTests: XCTestCase {
         )
     }
 
+    func testWeeklySamplerKeepsSeventyPercentAnchorsAndRotatesChallenges() {
+        let catalog = makeCatalog(count: 15)
+        let preferredLexemes = Array(
+            catalog.lexemes.prefix(10).map(\.id)
+        )
+        let preferredListening = Array(
+            catalog.sentences.prefix(10).map(\.id)
+        )
+
+        let sample = DiagnosticSampler().sample(
+            from: catalog,
+            seed: 42,
+            vocabularyCount: 10,
+            listeningCount: 10,
+            preferredLexemeIDs: preferredLexemes,
+            preferredListeningSentenceIDs: preferredListening,
+            anchorRatio: 0.7,
+            challengeSeedOffset: 2
+        )
+
+        XCTAssertEqual(
+            Array(sample.recognition.prefix(7).map(\.id)),
+            Array(preferredLexemes.prefix(7))
+        )
+        XCTAssertTrue(
+            Set(sample.recognition.suffix(3).map(\.id))
+                .isDisjoint(with: preferredLexemes)
+        )
+        XCTAssertEqual(
+            Array(sample.listening.prefix(7).map(\.id)),
+            Array(preferredListening.prefix(7))
+        )
+        XCTAssertTrue(
+            Set(sample.listening.suffix(3).map(\.id))
+                .isDisjoint(with: preferredListening)
+        )
+    }
+
     func testMetricsExposeInvalidFieldsAndSuppressFindingsAndDeltas() throws {
         let invalid = DiagnosticMetrics(
             recognitionRate: .nan,
@@ -335,8 +373,9 @@ final class DiagnosticsTests: XCTestCase {
         )
     }
 
-    private func makeCatalog() -> ContentCatalog {
-        let themes = ["日常", "学习", "出行", "饮食"]
+    private func makeCatalog(count: Int = 4) -> ContentCatalog {
+        let baseThemes = ["日常", "学习", "出行", "饮食"]
+        let themes = (0..<count).map { baseThemes[$0 % baseThemes.count] }
         let sentences = themes.enumerated().map { index, theme in
             SentenceCard(
                 id: "sentence-\(index)",
