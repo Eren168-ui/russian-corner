@@ -61,6 +61,21 @@ private enum ReflectionFixtureError: Error {
 final class DailyReflectionViewModelTests: XCTestCase {
     private let start = Date(timeIntervalSince1970: 1_700_000_000)
 
+    func testReflectionPresentationKeepsThreeFocusedClosingQuestions() {
+        XCTAssertEqual(
+            DailyReflectionView.sectionTitles,
+            [
+                "今天卡在哪里",
+                "有没有一句真正脱口而出",
+                "今天为什么结束",
+            ]
+        )
+        XCTAssertEqual(
+            DailyReflectionView.primaryActionTitle,
+            "保存今日反馈"
+        )
+    }
+
     func testCompletedDayOffersReflectionOnlyOnce() {
         let store = ReflectionStoreSpy()
         let model = makeModel(store: store)
