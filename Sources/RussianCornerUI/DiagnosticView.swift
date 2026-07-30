@@ -2,6 +2,14 @@ import RussianCornerCore
 import SwiftUI
 
 public struct RussianCornerDiagnosticView: View {
+    public static let introPurpose =
+        "用 5–8 分钟找出：哪些词只是眼熟、哪些词说不出来、哪些搭配和听句还没有自动化。结果会直接调整接下来一周的练习。"
+    public static let productionOutcomeTitles = [
+        "3 秒内完整说出",
+        "核心说出，词形或搭配不准",
+        "揭晓后才想起来",
+        "完全不会",
+    ]
     public static let pronunciationDisclaimer =
         "本诊断不录音、不保存音频，只估算开口活动。发音准确度需由老师或母语者评估；二期 AI 反馈接入前，本应用不判断发音或母语地道度。"
     public static let minimumSize = CGSize(width: 540, height: 500)
@@ -102,13 +110,31 @@ public struct RussianCornerDiagnosticView: View {
     }
 
     private var intro: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            Text("用同一组指标建立基线，并在每周复测时比较变化。")
-                .font(.title3)
-            Text(
-                "流程包含认词、中文到俄语、10 条听句、搭配自评，以及两段最多 60 秒的表达提示。麦克风可随时跳过，不会阻塞诊断。"
+        VStack(alignment: .leading, spacing: 20) {
+            Text("不是考试，是一次训练校准")
+                .font(.system(size: 25, weight: .semibold, design: .serif))
+            Text(Self.introPurpose)
+                .font(.system(size: 15))
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+
+            HStack(spacing: 8) {
+                introStep("01", "认词")
+                introStep("02", "主动提取")
+                introStep("03", "听句")
+                introStep("04", "搭配")
+                introStep("05", "连续表达")
+            }
+
+            Label(
+                "选择题由系统判分；只有口述体验需要你补充一次自评。",
+                systemImage: "checkmark.seal"
             )
-            .foregroundStyle(.secondary)
+            .font(.subheadline.weight(.medium))
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.orange.opacity(0.09))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
             notice
             if let reason = model.startBlockReason {
                 Label(reason, systemImage: "exclamationmark.triangle")
@@ -124,87 +150,127 @@ public struct RussianCornerDiagnosticView: View {
     }
 
     private var recognition: some View {
-        taskCard(
-            eyebrow: "看到俄语词，先判断是否认识",
-            prompt: model.currentLexeme?.stressedForm ?? "没有可用词条",
-            answer: model.currentLexeme?.glossZh
-        ) {
-            scoreButtons(
-                negative: "不认识",
-                positive: "认识"
-            ) { correct in
-                model.submitRecognition(correct: correct)
+        Group {
+            if let question = model.currentRecognitionQuestion {
+                choiceTask(
+                    eyebrow: "俄语 → 中文 · 系统判分",
+                    question: question,
+                    supportingText: "选择最接近的核心含义",
+                    select: model.selectRecognitionOption
+                )
+            } else {
+                unavailableTask
             }
         }
     }
 
     private var production: some View {
-        taskCard(
-            eyebrow: "看到中文，尝试说出俄语",
-            prompt: model.currentLexeme?.glossZh ?? "没有可用词条",
-            answer: model.currentLexeme?.stressedForm
-        ) {
-            scoreButtons(
-                negative: "没想起",
-                positive: "想起来了"
-            ) { correct in
-                model.submitProduction(correct: correct)
+        VStack(alignment: .leading, spacing: 18) {
+            Text("中文 → 俄语 · 主动提取")
+                .font(.caption.weight(.semibold))
+                .tracking(0.8)
+                .foregroundStyle(.orange)
+            Text(model.currentLexeme?.glossZh ?? "没有可用词条")
+                .font(.system(size: 38, weight: .medium, design: .serif))
+            Text("先完整说出来，再查看参考答案。系统正在记录反应时间。")
+                .foregroundStyle(.secondary)
+            if model.isRevealed {
+                Divider()
+                Text(model.currentLexeme?.stressedForm ?? "")
+                    .font(.system(size: 28, weight: .semibold, design: .serif))
+                Text("按刚才真实表现选择。中间两档也会进入复习。")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                VStack(spacing: 8) {
+                    productionButton(
+                        .completeFast,
+                        title: Self.productionOutcomeTitles[0],
+                        detail: "核心词、搭配和必要词形都正确"
+                    )
+                    productionButton(
+                        .partial,
+                        title: Self.productionOutcomeTitles[1],
+                        detail: "方向正确，但还不能算稳定掌握"
+                    )
+                    productionButton(
+                        .recalledAfterReveal,
+                        title: Self.productionOutcomeTitles[2],
+                        detail: "属于认识，但主动提取失败"
+                    )
+                    productionButton(
+                        .unknown,
+                        title: Self.productionOutcomeTitles[3],
+                        detail: "词汇或表达尚未建立"
+                    )
+                }
+            } else {
+                Button("查看参考表达", systemImage: "eye") {
+                    model.reveal()
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.orange)
             }
+            Spacer(minLength: 0)
         }
     }
 
     private var listening: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Text("先听句子，再判断自己是否理解。")
-                .foregroundStyle(.secondary)
+            Text("听力连接 · 系统判分")
+                .font(.caption.weight(.semibold))
+                .tracking(0.8)
+                .foregroundStyle(.orange)
+            Text("不看文本，先听俄语，再选择最接近的中文意图。")
+                .font(.title3)
             HStack {
-                Button("播放俄语听句", systemImage: "speaker.wave.2") {
+                Button(
+                    model.currentListeningState == .played
+                        ? "再听一次" : "播放俄语",
+                    systemImage: "speaker.wave.2"
+                ) {
                     model.speakListeningSentence()
                 }
                 .buttonStyle(.borderedProminent)
-                Button(model.isRevealed ? "已揭晓" : "揭晓文本") {
-                    model.reveal()
-                }
-                .disabled(model.isRevealed)
+                .tint(.orange)
                 Button("跳过本条") {
                     model.skipListening()
                 }
             }
-            if model.isRevealed {
-                Text(model.currentListeningSentence?.practiceRu ?? "")
-                    .font(.title2)
-                    .textSelection(.enabled)
-                Text(model.currentListeningSentence?.promptZh ?? "")
+            if let question = model.currentListeningQuestion,
+                model.currentListeningState == .played
+                    || model.isRevealed
+            {
+                choiceOptions(
+                    question: question,
+                    select: model.selectListeningOption
+                )
+                if model.isRevealed {
+                    answerFeedback(question)
+                    Text(model.currentListeningSentence?.practiceRu ?? "")
+                        .font(.title2)
+                        .textSelection(.enabled)
+                    nextChoiceButton
+                }
+            } else if model.currentListeningState == .playing {
+                Label("正在播放…", systemImage: "waveform")
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            scoreButtons(
-                negative: "未理解",
-                positive: "理解"
-            ) { understood in
-                model.submitListening(understood: understood)
-            }
-            .disabled(model.currentListeningState != .played)
         }
     }
 
     private var collocation: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            Text("搭配运用自评")
-                .font(.title2)
-            Text("看到熟悉单词时，你有多大把握能说出一个常用搭配？")
-                .foregroundStyle(.secondary)
-            Slider(value: $collocationDraft, in: 0...100, step: 10)
-                .accessibilityLabel(Self.collocationAccessibilityLabel)
-                .accessibilityValue("\(Int(collocationDraft))%")
-            Text("\(Int(collocationDraft))%")
-                .font(.title)
-                .monospacedDigit()
-            Spacer()
-            Button("提交搭配自评") {
-                model.submitCollocation(rate: collocationDraft)
+        Group {
+            if let question = model.currentCollocationQuestion {
+                choiceTask(
+                    eyebrow: "固定搭配 · 系统判分",
+                    question: question,
+                    supportingText: "选择真正自然、可直接说出口的搭配",
+                    select: model.selectCollocationOption
+                )
+            } else {
+                unavailableTask
             }
-            .buttonStyle(.borderedProminent)
         }
     }
 
@@ -298,74 +364,106 @@ public struct RussianCornerDiagnosticView: View {
     private var summary: some View {
         VStack(alignment: .leading, spacing: 16) {
             if let report = model.report {
-                metrics(report.current)
-                if let notice = model.comparisonNotice {
-                    Text(notice)
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(.secondary)
+                Text("本次结论")
+                    .font(.caption.weight(.semibold))
+                    .tracking(0.8)
+                    .foregroundStyle(.orange)
+                Text(model.diagnosticHeadline)
+                    .font(
+                        .system(
+                            size: 24,
+                            weight: .semibold,
+                            design: .serif
+                        )
+                    )
+                    .fixedSize(horizontal: false, vertical: true)
+                HStack(spacing: 10) {
+                    abilityCard(
+                        "认词",
+                        report.current.recognitionRate,
+                        symbol: "eye"
+                    )
+                    abilityCard(
+                        "主动提取",
+                        report.current.productionRate,
+                        symbol: "bubble.left.and.bubble.right"
+                    )
+                    abilityCard(
+                        "听句",
+                        report.current.listeningRate,
+                        symbol: "ear"
+                    )
+                    abilityCard(
+                        "搭配",
+                        report.current.collocationRate,
+                        symbol: "link"
+                    )
                 }
-                if !model.comparisonRows.isEmpty {
-                    Text("相对基线")
+
+                if !model.reviewItemsAdded.isEmpty {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Label(
+                            "已加入正常复习",
+                            systemImage: "arrow.uturn.backward.circle"
+                        )
                         .font(.headline)
-                        .padding(.top, 4)
-                    Grid(
-                        alignment: .leading,
-                        horizontalSpacing: 24,
-                        verticalSpacing: 6
-                    ) {
+                        ForEach(model.reviewItemsAdded) { item in
+                            HStack {
+                                Text(item.label)
+                                    .font(.system(.body, design: .serif))
+                                Spacer()
+                                Text(item.grade == .hard ? "短间隔" : "尽快再练")
+                                    .font(.caption.weight(.semibold))
+                                    .foregroundStyle(.orange)
+                            }
+                        }
+                    }
+                    .padding(14)
+                    .background(.orange.opacity(0.08))
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("接下来 7 天")
+                        .font(.headline)
+                    ForEach(model.sevenDayAdjustments, id: \.self) { item in
+                        Label(item, systemImage: "arrow.right")
+                            .font(.subheadline)
+                    }
+                }
+                .padding(14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(.primary.opacity(0.045))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+
+                DisclosureGroup("查看指标与基线对比") {
+                    VStack(alignment: .leading, spacing: 12) {
+                        metrics(report.current)
+                        if let notice = model.comparisonNotice {
+                            Text(notice)
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundStyle(.secondary)
+                        }
                         ForEach(model.comparisonRows, id: \.label) { row in
-                            GridRow {
+                            HStack {
                                 Text(row.label)
-                                    .foregroundStyle(.secondary)
-                                Text(row.value)
-                                    .monospacedDigit()
+                                Spacer()
+                                Text(row.value).monospacedDigit()
                                 Text(Self.trendLabel(row.trend))
                                     .font(.caption.weight(.semibold))
                             }
                         }
                     }
+                    .padding(.top, 10)
                 }
-                Divider()
-                Text("提示与建议")
-                    .font(.headline)
-                if report.comparisonStatus == .invalidMetrics {
-                    Text("本次指标无效，已停止生成诊断提示、趋势与训练建议。")
-                        .foregroundStyle(.secondary)
-                } else if report.findings.isEmpty {
-                    Text("本次没有指标触发关注阈值，继续每周复测。")
-                        .foregroundStyle(.secondary)
-                } else {
-                    ForEach(report.findings, id: \.type) { finding in
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(findingTitle(finding.type))
-                                .font(.headline)
-                            Text(finding.evidence)
-                            Text(finding.explanation)
-                                .foregroundStyle(.secondary)
-                        }
-                        .padding(12)
-                        .background(.primary.opacity(0.04))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
-                }
-                if report.comparisonStatus != .invalidMetrics {
-                    Text("训练建议")
-                        .font(.headline)
-                    ForEach(model.trainingSuggestions, id: \.self) {
-                        Text("• \($0)")
-                    }
-                    Text("建议的新词上限：每天 \(model.recommendedNewWordUpperLimit) 个")
-                        .font(.subheadline.weight(.semibold))
-                    Text(Self.diagnosticSchedulingNotice)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
+                .font(.subheadline)
             }
             notice
             Button("重新测试") {
                 model.retest()
             }
             .buttonStyle(.borderedProminent)
+            .tint(.orange)
         }
     }
 
@@ -379,6 +477,226 @@ public struct RussianCornerDiagnosticView: View {
         .padding(12)
         .background(.blue.opacity(0.06))
         .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+
+    private func introStep(_ number: String, _ title: String) -> some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(number)
+                .font(.caption2.monospacedDigit().weight(.bold))
+                .foregroundStyle(.orange)
+            Text(title)
+                .font(.caption.weight(.semibold))
+                .lineLimit(1)
+        }
+        .padding(.horizontal, 10)
+        .frame(maxWidth: .infinity, minHeight: 58, alignment: .leading)
+        .background(.primary.opacity(0.045))
+        .clipShape(RoundedRectangle(cornerRadius: 11))
+    }
+
+    private func abilityCard(
+        _ title: String,
+        _ value: Double,
+        symbol: String
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 7) {
+            Image(systemName: symbol)
+                .foregroundStyle(.orange)
+            Text(title)
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            Text(
+                value.formatted(
+                    .number.precision(.fractionLength(0))
+                ) + "%"
+            )
+            .font(.title3.monospacedDigit().weight(.semibold))
+        }
+        .padding(11)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.primary.opacity(0.045))
+        .clipShape(RoundedRectangle(cornerRadius: 11))
+    }
+
+    private func choiceTask(
+        eyebrow: String,
+        question: DiagnosticChoiceQuestion,
+        supportingText: String,
+        select: @escaping (String) -> Void
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text(eyebrow)
+                .font(.caption.weight(.semibold))
+                .tracking(0.8)
+                .foregroundStyle(.orange)
+            Text(question.prompt)
+                .font(.system(size: 36, weight: .medium, design: .serif))
+                .textSelection(.enabled)
+            Text(supportingText)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            choiceOptions(question: question, select: select)
+            if model.isRevealed {
+                answerFeedback(question)
+                nextChoiceButton
+            }
+            Spacer(minLength: 0)
+        }
+    }
+
+    private func choiceOptions(
+        question: DiagnosticChoiceQuestion,
+        select: @escaping (String) -> Void
+    ) -> some View {
+        VStack(spacing: 8) {
+            ForEach(question.options) { option in
+                Button {
+                    select(option.id)
+                } label: {
+                    HStack(spacing: 10) {
+                        Image(
+                            systemName: optionSymbol(
+                                optionID: option.id,
+                                question: question
+                            )
+                        )
+                        .frame(width: 18)
+                        Text(option.text)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .multilineTextAlignment(.leading)
+                    }
+                    .font(.system(size: 15, weight: .medium))
+                    .padding(.horizontal, 14)
+                    .frame(minHeight: 44)
+                    .background(
+                        optionBackground(
+                            optionID: option.id,
+                            question: question
+                        )
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 11))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 11)
+                            .stroke(
+                                optionBorder(
+                                    optionID: option.id,
+                                    question: question
+                                ),
+                                lineWidth: 1
+                            )
+                    }
+                }
+                .buttonStyle(.plain)
+                .disabled(model.isRevealed)
+            }
+        }
+    }
+
+    private func answerFeedback(
+        _ question: DiagnosticChoiceQuestion
+    ) -> some View {
+        Label(
+            model.selectedChoiceWasCorrect == true
+                ? "正确，已记录本次反应"
+                : "正确答案：\(question.correctOption.text)；本条已加入复习",
+            systemImage: model.selectedChoiceWasCorrect == true
+                ? "checkmark.circle.fill"
+                : "arrow.uturn.backward.circle.fill"
+        )
+        .font(.subheadline.weight(.semibold))
+        .foregroundStyle(
+            model.selectedChoiceWasCorrect == true ? .green : .orange
+        )
+    }
+
+    private var nextChoiceButton: some View {
+        Button("继续下一题", systemImage: "arrow.right") {
+            model.advanceFromChoice()
+        }
+        .buttonStyle(.borderedProminent)
+        .tint(.orange)
+    }
+
+    private func optionSymbol(
+        optionID: String,
+        question: DiagnosticChoiceQuestion
+    ) -> String {
+        guard model.isRevealed else { return "circle" }
+        if question.isCorrect(optionID) {
+            return "checkmark.circle.fill"
+        }
+        if model.selectedOptionID == optionID {
+            return "xmark.circle.fill"
+        }
+        return "circle"
+    }
+
+    private func optionBackground(
+        optionID: String,
+        question: DiagnosticChoiceQuestion
+    ) -> Color {
+        guard model.isRevealed else {
+            return Color.primary.opacity(0.045)
+        }
+        if question.isCorrect(optionID) {
+            return .green.opacity(0.12)
+        }
+        if model.selectedOptionID == optionID {
+            return .orange.opacity(0.12)
+        }
+        return Color.primary.opacity(0.03)
+    }
+
+    private func optionBorder(
+        optionID: String,
+        question: DiagnosticChoiceQuestion
+    ) -> Color {
+        guard model.isRevealed else {
+            return Color.primary.opacity(0.08)
+        }
+        if question.isCorrect(optionID) {
+            return .green.opacity(0.5)
+        }
+        if model.selectedOptionID == optionID {
+            return .orange.opacity(0.5)
+        }
+        return Color.clear
+    }
+
+    private func productionButton(
+        _ outcome: DiagnosticProductionOutcome,
+        title: String,
+        detail: String
+    ) -> some View {
+        Button {
+            model.submitProduction(outcome: outcome)
+        } label: {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title)
+                        .font(.system(size: 14, weight: .semibold))
+                    Text(detail)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Image(systemName: "arrow.right")
+                    .foregroundStyle(.orange)
+            }
+            .padding(.horizontal, 14)
+            .frame(minHeight: 52)
+            .background(.primary.opacity(0.045))
+            .clipShape(RoundedRectangle(cornerRadius: 11))
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var unavailableTask: some View {
+        ContentUnavailableView(
+            "本环节暂无可用题目",
+            systemImage: "tray",
+            description: Text("未审核内容不会被拿来凑题。")
+        )
     }
 
     @ViewBuilder

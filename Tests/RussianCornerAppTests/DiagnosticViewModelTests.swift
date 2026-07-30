@@ -364,6 +364,12 @@ final class DiagnosticViewModelTests: XCTestCase {
             }
         )
         XCTAssertEqual(model.recommendedNewWordUpperLimit, 6)
+        XCTAssertTrue(model.diagnosticHeadline.contains("主动提取"))
+        XCTAssertTrue(
+            model.sevenDayAdjustments.contains {
+                $0.contains("每天最多 6 个新词")
+            }
+        )
         XCTAssertEqual(
             try repository.diagnosticHistory().entries.map(\.kind),
             [.baseline, .weekly]
@@ -521,6 +527,18 @@ final class DiagnosticViewModelTests: XCTestCase {
         XCTAssertEqual(
             RussianCornerDiagnosticView.diagnosticSchedulingNotice,
             "下次日队列会应用该诊断；手动练习模式优先。"
+        )
+        XCTAssertTrue(
+            RussianCornerDiagnosticView.introPurpose.contains("5–8 分钟")
+        )
+        XCTAssertEqual(
+            RussianCornerDiagnosticView.productionOutcomeTitles,
+            [
+                "3 秒内完整说出",
+                "核心说出，词形或搭配不准",
+                "揭晓后才想起来",
+                "完全不会",
+            ]
         )
     }
 

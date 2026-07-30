@@ -406,6 +406,60 @@ public final class DiagnosticViewModel {
         return suggestions
     }
 
+    public var diagnosticHeadline: String {
+        guard let findings = report?.findings.map(\.type),
+            report?.comparisonStatus != .invalidMetrics
+        else {
+            return "完成本次校准后，这里会显示最需要解决的问题。"
+        }
+        if findings.contains(.activeRetrieval) {
+            return "多数内容可能眼熟，但主动提取明显跟不上识别。"
+        }
+        if findings.contains(.vocabularyBreadth) {
+            return "当前主要限制是日常词汇覆盖，需要先补齐高频表达。"
+        }
+        if findings.contains(.slowRetrieval) {
+            return "答案能想起来，但提取速度还没有达到自然交流要求。"
+        }
+        if findings.contains(.listeningGap) {
+            return "阅读词汇没有稳定连接到听觉，听到时反应偏慢。"
+        }
+        if findings.contains(.collocationGap) {
+            return "单词本身认识，但固定搭配和支配还不够自动化。"
+        }
+        if findings.contains(.selfMonitoring) {
+            return "表达时停顿或自我检查较多，需要先完整说完再纠错。"
+        }
+        return "本次没有明显短板，可以维持节奏并逐步提高难度。"
+    }
+
+    public var sevenDayAdjustments: [String] {
+        var adjustments = [
+            "每天最多 \(recommendedNewWordUpperLimit) 个新词",
+        ]
+        let findings = report?.findings.map(\.type) ?? []
+        if findings.contains(.activeRetrieval)
+            || findings.contains(.slowRetrieval)
+        {
+            adjustments.append("增加中文或场景 → 俄语的 3 秒提取题")
+        }
+        if findings.contains(.listeningGap) {
+            adjustments.append("提高听句比例，并保留首次听懂证据")
+        }
+        if findings.contains(.collocationGap) {
+            adjustments.append("优先复习固定搭配和场景句，不堆孤立单词")
+        }
+        if !reviewItemsAdded.isEmpty {
+            adjustments.append(
+                "\(reviewItemsAdded.count) 个失败项目已加入正常复习"
+            )
+        }
+        if adjustments.count == 1 {
+            adjustments.append("维持当前练习节奏，下一周继续加入挑战题")
+        }
+        return adjustments
+    }
+
     public var comparisonRows: [DiagnosticComparisonRow] {
         guard let report,
             report.baseline.completedAt != report.current.completedAt,
