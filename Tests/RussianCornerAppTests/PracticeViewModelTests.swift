@@ -289,6 +289,128 @@ final class PracticeViewModelTests: XCTestCase {
     XCTAssertEqual(model.queue.filter { $0.kind == .sentence }.count, 7)
   }
 
+  func testFreshSentenceQueueCapsSupplementAtTwentyPercent() throws {
+    let catalog = makeLayeredCatalog(
+      coreSentenceCount: 20,
+      supplementalSentenceCount: 20
+    )
+    let model = try PracticeViewModel(
+      catalog: catalog,
+      repository: try makeRepository(),
+      targetCount: 10,
+      now: { self.start },
+      calendar: utcCalendar
+    )
+    let freshSentences = model.queue.compactMap { entry in
+      guard
+        entry.origin == .todayNew,
+        case .sentence(let sentence) = entry.content
+      else {
+        return nil as SentenceCard?
+      }
+      return sentence
+    }
+
+    XCTAssertEqual(freshSentences.count, 10)
+    XCTAssertLessThanOrEqual(
+      freshSentences.filter {
+        $0.corpusLayer == .dailySupplement
+      }.count,
+      2
+    )
+  }
+
+  func testDueSupplementSentenceIsNeverDroppedByFreshCap() throws {
+    let repository = try makeRepository()
+    let catalog = makeLayeredCatalog(
+      coreSentenceCount: 20,
+      supplementalSentenceCount: 20
+    )
+    try repository.saveProgress(
+      itemType: .sentence,
+      itemId: "supplement-sentence-0",
+      state: ReviewState(
+        masteryLevel: 1,
+        dueAt: start.addingTimeInterval(-60)
+      )
+    )
+
+    let model = try PracticeViewModel(
+      catalog: catalog,
+      repository: repository,
+      targetCount: 5,
+      now: { self.start },
+      calendar: utcCalendar
+    )
+
+    XCTAssertTrue(
+      model.queue.contains {
+        $0.id == "supplement-sentence-0"
+          && $0.origin == .dueReview
+      }
+    )
+  }
+
+  func testFreshLexemeQueueAddsAtMostOneSupplement() throws {
+    let catalog = makeLayeredCatalog(
+      coreLexemeCount: 20,
+      supplementalLexemeCount: 20
+    )
+    let model = try PracticeViewModel(
+      catalog: catalog,
+      repository: try makeRepository(),
+      now: { self.start },
+      calendar: utcCalendar
+    )
+    let freshLexemes = model.queue.compactMap { entry in
+      guard
+        entry.origin == .todayNew,
+        case .lexeme(let lexeme) = entry.content
+      else {
+        return nil as Lexeme?
+      }
+      return lexeme
+    }
+
+    XCTAssertEqual(freshLexemes.count, 10)
+    XCTAssertLessThanOrEqual(
+      freshLexemes.filter {
+        $0.corpusLayer == .dailySupplement
+      }.count,
+      1
+    )
+  }
+
+  func testDueSupplementLexemeIsNeverDroppedByFreshCap() throws {
+    let repository = try makeRepository()
+    let catalog = makeLayeredCatalog(
+      coreLexemeCount: 20,
+      supplementalLexemeCount: 20
+    )
+    try repository.saveProgress(
+      itemType: .lexeme,
+      itemId: "supplement-lexeme-0",
+      state: ReviewState(
+        masteryLevel: 1,
+        dueAt: start.addingTimeInterval(-60)
+      )
+    )
+
+    let model = try PracticeViewModel(
+      catalog: catalog,
+      repository: repository,
+      now: { self.start },
+      calendar: utcCalendar
+    )
+
+    XCTAssertTrue(
+      model.queue.contains {
+        $0.id == "supplement-lexeme-0"
+          && $0.origin == .dueReview
+      }
+    )
+  }
+
   func testA2ToB1ProfileKeepsBasicWordsOutOfStandaloneQueue() throws {
     let repository = try makeRepository()
     let basic = Lexeme(
@@ -987,6 +1109,80 @@ final class PracticeViewModelTests: XCTestCase {
       )
     }
     return ContentCatalog(lexemes: lexemes, sentences: sentences)
+  }
+
+  private func makeLayeredCatalog(
+    coreLexemeCount: Int = 0,
+    supplementalLexemeCount: Int = 0,
+    coreSentenceCount: Int = 0,
+    supplementalSentenceCount: Int = 0
+  ) -> ContentCatalog {
+    func lexeme(
+      prefix: String,
+      index: Int,
+      layer: CorpusLayer
+    ) -> Lexeme {
+      Lexeme(
+        id: "\(prefix)-lexeme-\(index)",
+        lemma: "\(prefix)термин\(index)",
+        stressedForm: "\(prefix)те́рмин\(index)",
+        speechText: "\(prefix)термин\(index)",
+        partOfSpeech: "noun",
+        glossZh: "\(prefix)词义\(index)",
+        collocations: ["изучать \(prefix)термин\(index)"],
+        example: "Это \(prefix)термин\(index).",
+        sentenceIDs: [],
+        reviewStatus: .reviewed,
+        grammaticalGender: "masculine",
+        corpusLayer: layer
+      )
+    }
+    func sentence(
+      prefix: String,
+      index: Int,
+      layer: CorpusLayer
+    ) -> SentenceCard {
+      SentenceCard(
+        id: "\(prefix)-sentence-\(index)",
+        promptZh: "\(prefix)场景\(index)",
+        cueRu: "Что вы скажете?",
+        practiceRu: "Это \(prefix)ответ \(index).",
+        speechText: "Это \(prefix)ответ \(index).",
+        theme: "\(prefix)主题",
+        lexemeIDs: [],
+        sourcePath: "fixture.md",
+        sourceText: "fixture",
+        reviewStatus: .reviewed,
+        corpusLayer: layer
+      )
+    }
+
+    let coreLexemes = (0..<coreLexemeCount).map {
+      lexeme(prefix: "core", index: $0, layer: .core)
+    }
+    let supplementalLexemes = (0..<supplementalLexemeCount).map {
+      lexeme(
+        prefix: "supplement",
+        index: $0,
+        layer: .dailySupplement
+      )
+    }
+    let coreSentences = (0..<coreSentenceCount).map {
+      sentence(prefix: "core", index: $0, layer: .core)
+    }
+    let supplementalSentences = (0..<supplementalSentenceCount).map {
+      sentence(
+        prefix: "supplement",
+        index: $0,
+        layer: .dailySupplement
+      )
+    }
+    return ContentCatalog(
+      lexemes: coreLexemes,
+      sentences: coreSentences,
+      supplementalLexemes: supplementalLexemes,
+      supplementalSentences: supplementalSentences
+    )
   }
 
   private func addEvents(

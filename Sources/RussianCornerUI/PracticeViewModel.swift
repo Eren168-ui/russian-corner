@@ -619,14 +619,17 @@ public final class PracticeViewModel {
       dayIndex: dayIndex,
       salt: 13
     )
-    let orderedFreshLexemes = Self.dailyOrder(
-      freshLexemes.filter {
-        !excluded.contains(
-          PracticeItemIdentity(kind: .lexeme, id: $0.id)
-        )
-      },
-      dayIndex: dayIndex,
-      salt: 17
+    let orderedFreshLexemes = Self.cappedFreshLexemes(
+      Self.dailyOrder(
+        freshLexemes.filter {
+          !excluded.contains(
+            PracticeItemIdentity(kind: .lexeme, id: $0.id)
+          )
+        },
+        dayIndex: dayIndex,
+        salt: 17
+      ),
+      slotCount: newWordsRemaining
     )
 
     let carryover = carryoverItemIDs
@@ -723,8 +726,10 @@ public final class PracticeViewModel {
         dayIndex: dayIndex,
         salt: 37
       )
-    let freshSentenceCandidates =
-      topicFreshSentenceCandidates + otherFreshSentenceCandidates
+    let freshSentenceCandidates = Self.cappedFreshSentences(
+      topicFreshSentenceCandidates + otherFreshSentenceCandidates,
+      slotCount: sentenceCardsRemaining
+    )
     let orderedDueSentences = Self.dailyOrder(
       dueSentences.filter {
         !sentenceExcluded.contains(
@@ -1263,6 +1268,43 @@ public final class PracticeViewModel {
       cursor = previous
     }
     return count
+  }
+
+  private static func cappedFreshLexemes(
+    _ candidates: [Lexeme],
+    slotCount: Int
+  ) -> [Lexeme] {
+    guard slotCount > 0 else { return [] }
+    let core = candidates.filter {
+      $0.corpusLayer != .dailySupplement
+    }
+    let supplement = candidates.filter {
+      $0.corpusLayer == .dailySupplement
+    }
+    let supplementLimit = min(1, supplement.count, slotCount)
+    let coreLimit = max(0, slotCount - supplementLimit)
+    return Array(core.prefix(coreLimit))
+      + Array(supplement.prefix(supplementLimit))
+  }
+
+  private static func cappedFreshSentences(
+    _ candidates: [SentenceCard],
+    slotCount: Int
+  ) -> [SentenceCard] {
+    guard slotCount > 0 else { return [] }
+    let core = candidates.filter {
+      $0.corpusLayer != .dailySupplement
+    }
+    let supplement = candidates.filter {
+      $0.corpusLayer == .dailySupplement
+    }
+    let supplementLimit = min(
+      supplement.count,
+      max(1, slotCount / 5)
+    )
+    let coreLimit = max(0, slotCount - supplementLimit)
+    return Array(core.prefix(coreLimit))
+      + Array(supplement.prefix(supplementLimit))
   }
 
   private static func dailyOrder<Item: Identifiable>(
