@@ -18,14 +18,18 @@ public enum PracticePanelPresentation: Equatable, Sendable {
     }
   }
 
+  public var allowsWindowBackgroundDragging: Bool {
+    self != .collapsed
+  }
+
   public static func resolve(
     isCollapsed: Bool,
     isDetailExpanded: Bool,
     hasSelectedWord: Bool = false,
     isReflectionPresented: Bool = false
   ) -> Self {
-    _ = hasSelectedWord
     if isCollapsed { return .collapsed }
+    if hasSelectedWord { return .compact }
     return isDetailExpanded || isReflectionPresented
       ? .details : .compact
   }
@@ -87,6 +91,9 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
         runtime: runtime,
         onLayoutChanged: { [weak self] in
           self?.refreshLayout()
+        },
+        onCollapsedCardActivated: { [weak self] in
+          self?.expandCollapsedCard()
         },
         onOpenLearningHistory: onOpenLearningHistory
       )
@@ -169,6 +176,8 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
       isReflectionPresented:
         runtime?.dailyReflection?.isCompletionOfferPresented == true
     )
+    panel.isMovableByWindowBackground =
+      presentation.allowsWindowBackgroundDragging
     panel.setContentSize(presentation.size)
     switch appModel.placementMode {
     case .free:
@@ -316,6 +325,11 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
     }
   }
 
+  private func expandCollapsedCard() {
+    appModel.isCollapsed = false
+    refreshLayout()
+  }
+
   private func systemScreenPairs() -> [(screen: NSScreen, descriptor: ScreenDescriptor)] {
     NSScreen.screens.compactMap { screen in
       guard
@@ -352,6 +366,7 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
 private struct FloatingPracticeRoot: View {
   @Bindable var runtime: AppRuntime
   let onLayoutChanged: () -> Void
+  let onCollapsedCardActivated: () -> Void
   let onOpenLearningHistory: () -> Void
 
   var body: some View {
@@ -361,6 +376,7 @@ private struct FloatingPracticeRoot: View {
         practice: practice,
         reflectionModel: runtime.dailyReflection,
         onLayoutChanged: onLayoutChanged,
+        onCollapsedCardActivated: onCollapsedCardActivated,
         onReminderPermissionAction: {
           Task {
             await runtime.performReminderPermissionAction()

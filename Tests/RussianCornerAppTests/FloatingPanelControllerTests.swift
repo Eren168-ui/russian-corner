@@ -4,15 +4,52 @@ import XCTest
 @testable import RussianCornerUI
 
 final class FloatingPanelControllerTests: XCTestCase {
-    func testSelectedWordKeepsStableDetailPresentation() {
+    func testCollapsedPresentationUsesDedicatedDragSurface() {
+        XCTAssertFalse(
+            PracticePanelPresentation.collapsed
+                .allowsWindowBackgroundDragging
+        )
+        XCTAssertTrue(
+            PracticePanelPresentation.compact
+                .allowsWindowBackgroundDragging
+        )
+        XCTAssertTrue(
+            PracticePanelPresentation.details
+                .allowsWindowBackgroundDragging
+        )
+    }
+
+    func testCollapsedCardDragTranslatesWindowFromGestureStart() {
+        XCTAssertEqual(
+            CollapsedCardDragGeometry.windowOrigin(
+                initialMouseLocation: CGPoint(x: 100, y: 200),
+                currentMouseLocation: CGPoint(x: 160, y: 175),
+                initialWindowOrigin: CGPoint(x: 400, y: 500)
+            ),
+            CGPoint(x: 460, y: 475)
+        )
+    }
+
+    func testCollapsedCardDragGeometryHasNoOffsetAtGestureStart() {
+        XCTAssertEqual(
+            CollapsedCardDragGeometry.windowOrigin(
+                initialMouseLocation: CGPoint(x: 100, y: 200),
+                currentMouseLocation: CGPoint(x: 100, y: 200),
+                initialWindowOrigin: CGPoint(x: 400, y: 500)
+            ),
+            CGPoint(x: 400, y: 500)
+        )
+    }
+
+    func testSelectedWordKeepsCompactWindowPresentation() {
         let presentation = PracticePanelPresentation.resolve(
             isCollapsed: false,
             isDetailExpanded: true,
             hasSelectedWord: true
         )
 
-        XCTAssertEqual(presentation, .details)
-        XCTAssertEqual(presentation.size, CGSize(width: 430, height: 386))
+        XCTAssertEqual(presentation, .compact)
+        XCTAssertEqual(presentation.size, CGSize(width: 360, height: 240))
     }
 
     func testLearningHistoryEntryIsVisibleAndComfortablyClickable() {

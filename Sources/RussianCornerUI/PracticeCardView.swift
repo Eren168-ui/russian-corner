@@ -1,5 +1,23 @@
+import AppKit
 import RussianCornerCore
 import SwiftUI
+
+public enum CollapsedCardDragGeometry {
+    nonisolated public static func windowOrigin(
+        initialMouseLocation: CGPoint,
+        currentMouseLocation: CGPoint,
+        initialWindowOrigin: CGPoint
+    ) -> CGPoint {
+        CGPoint(
+            x: initialWindowOrigin.x
+                + currentMouseLocation.x
+                - initialMouseLocation.x,
+            y: initialWindowOrigin.y
+                + currentMouseLocation.y
+                - initialMouseLocation.y
+        )
+    }
+}
 
 public enum PracticeCardMetrics {
     public static let headerActionHitWidth: CGFloat = 38
@@ -16,6 +34,7 @@ public struct PracticeCardView: View {
 
     private let reflectionModel: DailyReflectionViewModel?
     private let onLayoutChanged: () -> Void
+    private let onCollapsedCardActivated: (() -> Void)?
     private let onReminderPermissionAction: () -> Void
     private let onOpenLearningHistory: () -> Void
 
@@ -24,6 +43,7 @@ public struct PracticeCardView: View {
         practice: PracticeViewModel,
         reflectionModel: DailyReflectionViewModel? = nil,
         onLayoutChanged: @escaping () -> Void = {},
+        onCollapsedCardActivated: (() -> Void)? = nil,
         onReminderPermissionAction: @escaping () -> Void = {},
         onOpenLearningHistory: @escaping () -> Void = {}
     ) {
@@ -31,6 +51,7 @@ public struct PracticeCardView: View {
         self.practice = practice
         self.reflectionModel = reflectionModel
         self.onLayoutChanged = onLayoutChanged
+        self.onCollapsedCardActivated = onCollapsedCardActivated
         self.onReminderPermissionAction = onReminderPermissionAction
         self.onOpenLearningHistory = onOpenLearningHistory
     }
@@ -92,9 +113,7 @@ public struct PracticeCardView: View {
         VStack(spacing: 0) {
             header
             Divider().overlay(palette.border)
-            mainContent
-            if practice.isDetailExpanded, !practice.isComplete {
-                Divider().overlay(palette.border)
+            if practice.selectedWordAnalysis != nil {
                 PracticeDetailSection(
                     appModel: appModel,
                     practice: practice,
@@ -103,10 +122,21 @@ public struct PracticeCardView: View {
                 )
                 .padding(.horizontal, 18)
                 .padding(.vertical, 10)
-                .frame(
-                    maxHeight: practice.selectedWordAnalysis == nil
-                        ? 136 : 215
-                )
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                mainContent
+                if practice.isDetailExpanded, !practice.isComplete {
+                    Divider().overlay(palette.border)
+                    PracticeDetailSection(
+                        appModel: appModel,
+                        practice: practice,
+                        palette: palette,
+                        onLayoutChanged: onLayoutChanged
+                    )
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 10)
+                    .frame(maxHeight: 136)
+                }
             }
             Divider().overlay(palette.border)
             bottomControls
@@ -122,8 +152,8 @@ public struct PracticeCardView: View {
         }
         .shadow(color: .black.opacity(0.16), radius: 16, y: 7)
         .frame(
-            width: practice.isDetailExpanded ? 430 : 360,
-            height: practice.isDetailExpanded ? 386 : 240
+            width: standardCardPresentation.size.width,
+            height: standardCardPresentation.size.height
         )
         .task(id: practice.currentIndex) {
             while !Task.isCancelled
@@ -136,40 +166,55 @@ public struct PracticeCardView: View {
         }
     }
 
+    private var standardCardPresentation: PracticePanelPresentation {
+        PracticePanelPresentation.resolve(
+            isCollapsed: false,
+            isDetailExpanded: practice.isDetailExpanded,
+            hasSelectedWord: practice.selectedWordAnalysis != nil
+        )
+    }
+
     private var collapsedCard: some View {
-        Button {
-            appModel.isCollapsed = false
-            onLayoutChanged()
-        } label: {
-            ZStack {
-                palette.background
-                Circle()
-                    .fill(palette.accentSurface)
-                    .frame(width: 42, height: 42)
-                VStack(spacing: 0) {
-                    Text("Я")
-                        .font(.system(size: 23, design: .serif))
-                        .foregroundStyle(palette.primary)
-                    Text(
-                        practice.isComplete
-                            ? "✓" : "\(practice.currentIndex + 1)"
-                    )
-                    .font(.system(size: 8, weight: .semibold))
-                    .foregroundStyle(palette.accent)
-                }
-            }
-            .overlay {
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .stroke(palette.border, lineWidth: 1)
+        ZStack {
+            palette.background
+            Circle()
+                .fill(palette.accentSurface)
+                .frame(width: 42, height: 42)
+            VStack(spacing: 0) {
+                Text("Я")
+                    .font(.system(size: 23, design: .serif))
+                    .foregroundStyle(palette.primary)
+                Text(
+                    practice.isComplete
+                        ? "✓" : "\(practice.currentIndex + 1)"
+                )
+                .font(.system(size: 8, weight: .semibold))
+                .foregroundStyle(palette.accent)
             }
         }
-        .buttonStyle(.plain)
+        .overlay {
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .stroke(palette.border, lineWidth: 1)
+        }
+        .overlay {
+            CollapsedCardInteractionSurface(
+                onActivate: activateCollapsedCard
+            )
+        }
         .frame(width: 58, height: 58)
         .clipShape(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
         )
         .shadow(color: .black.opacity(0.15), radius: 10, y: 5)
-        .accessibilityLabel("展开俄语练习卡")
+    }
+
+    private func activateCollapsedCard() {
+        if let onCollapsedCardActivated {
+            onCollapsedCardActivated()
+        } else {
+            appModel.isCollapsed = false
+            onLayoutChanged()
+        }
     }
 
     private var header: some View {
@@ -516,6 +561,121 @@ public struct PracticeCardView: View {
     private var progressText: String {
         guard !practice.isComplete else { return "完成" }
         return "\(practice.currentIndex + 1) / \(max(practice.totalCount, 1))"
+    }
+}
+
+private struct CollapsedCardInteractionSurface: NSViewRepresentable {
+    let onActivate: () -> Void
+
+    func makeNSView(context: Context) -> CollapsedCardInteractionNSView {
+        CollapsedCardInteractionNSView(onActivate: onActivate)
+    }
+
+    func updateNSView(
+        _ nsView: CollapsedCardInteractionNSView,
+        context: Context
+    ) {
+        nsView.onActivate = onActivate
+    }
+}
+
+private final class CollapsedCardInteractionNSView: NSView {
+    var onActivate: () -> Void
+    private var initialMouseLocation: CGPoint?
+    private var initialWindowOrigin: CGPoint?
+
+    init(onActivate: @escaping () -> Void) {
+        self.onActivate = onActivate
+        super.init(frame: .zero)
+        let panGesture = NSPanGestureRecognizer(
+            target: self,
+            action: #selector(handlePanGesture(_:))
+        )
+        let clickGesture = CollapsedCardClickGestureRecognizer(
+            target: self,
+            action: #selector(handleClickGesture(_:))
+        )
+        clickGesture.requiredDragGesture = panGesture
+        addGestureRecognizer(panGesture)
+        addGestureRecognizer(clickGesture)
+        setAccessibilityElement(true)
+        setAccessibilityRole(.button)
+        setAccessibilityLabel("展开俄语练习卡")
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        nil
+    }
+
+    override var mouseDownCanMoveWindow: Bool {
+        false
+    }
+
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        true
+    }
+
+    @objc
+    private func handleClickGesture(
+        _ gesture: NSClickGestureRecognizer
+    ) {
+        guard gesture.state == .ended else { return }
+        onActivate()
+    }
+
+    @objc
+    private func handlePanGesture(
+        _ gesture: NSPanGestureRecognizer
+    ) {
+        switch gesture.state {
+        case .began:
+            guard let window else { return }
+            initialMouseLocation = NSEvent.mouseLocation
+            initialWindowOrigin = window.frame.origin
+        case .changed:
+            guard
+                let window,
+                let initialMouseLocation,
+                let initialWindowOrigin
+            else {
+                return
+            }
+            window.setFrameOrigin(
+                CollapsedCardDragGeometry.windowOrigin(
+                    initialMouseLocation: initialMouseLocation,
+                    currentMouseLocation: NSEvent.mouseLocation,
+                    initialWindowOrigin: initialWindowOrigin
+                )
+            )
+        case .ended, .cancelled, .failed:
+            initialMouseLocation = nil
+            initialWindowOrigin = nil
+        default:
+            break
+        }
+    }
+
+    override func accessibilityPerformPress() -> Bool {
+        if initialMouseLocation == nil {
+            onActivate()
+        }
+        return true
+    }
+}
+
+private final class CollapsedCardClickGestureRecognizer:
+    NSClickGestureRecognizer
+{
+    weak var requiredDragGesture: NSGestureRecognizer?
+
+    override func shouldRequireFailure(
+        of otherGestureRecognizer: NSGestureRecognizer
+    ) -> Bool {
+        otherGestureRecognizer === requiredDragGesture
+            || super.shouldRequireFailure(
+                of: otherGestureRecognizer
+            )
     }
 }
 
