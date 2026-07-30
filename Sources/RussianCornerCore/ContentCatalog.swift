@@ -36,6 +36,13 @@ public struct ContentCatalog: Sendable {
     public let longTermSentences: [SentenceCard]
     public let surfaceLemmas: [String: String]
 
+    public var studyCatalog: LanguageContentCatalog {
+        LanguageContentCatalog(
+            lexemes: lexemes.map(\.studyContent),
+            sentences: practiceSentences.map(\.studyContent)
+        )
+    }
+
     public init() throws {
         try self.init(
             resourceDirectory: Self.defaultResourceDirectory(
