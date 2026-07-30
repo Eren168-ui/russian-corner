@@ -48,8 +48,11 @@ public final class TrialReportExporter {
             let panel = NSSavePanel()
             panel.title = "导出近 7 天学习报告"
             panel.prompt = "导出"
+            let productName =
+                appModel.language == .english
+                ? "英语角落卡" : "俄语角落卡"
             panel.nameFieldStringValue =
-                "俄语角落卡-近7天学习报告-\(date(end, calendar: calendar)).md"
+                "\(productName)-近7天学习报告-\(date(end, calendar: calendar)).md"
             panel.allowedContentTypes = [
                 UTType(filenameExtension: "md") ?? .plainText,
             ]

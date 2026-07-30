@@ -69,9 +69,10 @@ public struct DailyReflectionView: View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 3) {
                 Text(
-                    Date.now.formatted(
-                        .dateTime.month().day().weekday(.wide)
-                    )
+                    "\(model.languageLabel) · "
+                        + Date.now.formatted(
+                            .dateTime.month().day().weekday(.wide)
+                        )
                 )
                 .font(.system(size: 9, weight: .semibold))
                 .tracking(0.8)

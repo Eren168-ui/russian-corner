@@ -306,7 +306,7 @@ public struct DiagnosticReport: Codable, Equatable, Sendable {
     public let deltas: DiagnosticDeltas?
 
     public init(
-        diagnosticVersion: Int = 2,
+        diagnosticVersion: Int = 3,
         seed: UInt64 = 0,
         sampleLexemeIDs: [String] = [],
         listeningSentenceIDs: [String] = [],
@@ -431,8 +431,8 @@ public struct DiagnosticEngine: Sendable {
                 DiagnosticFinding(
                     type: .activeRetrieval,
                     severity: .focus,
-                    evidence: "认词率与中文到俄语产出率相差至少 20 个百分点。",
-                    explanation: "这可能提示主动提取弱于被动识别，建议优先练中文到俄语。"
+                    evidence: "认词率与中文到目标语产出率相差至少 20 个百分点。",
+                    explanation: "这可能提示主动提取弱于被动识别，建议优先练中文到目标语。"
                 )
             )
         }
@@ -548,7 +548,7 @@ public struct DiagnosticEngine: Sendable {
         }
 
         return DiagnosticReport(
-            diagnosticVersion: 2,
+            diagnosticVersion: 3,
             seed: seed,
             sampleLexemeIDs: sampleLexemeIDs,
             listeningSentenceIDs: listeningSentenceIDs,

@@ -34,9 +34,9 @@ public enum DiagnosticStep:
         switch self {
         case .intro: "说明"
         case .recognition: "认词"
-        case .production: "中文 → 俄语"
+        case .production: "主动提取"
         case .listening: "听句"
-        case .collocation: "搭配自评"
+        case .collocation: "搭配"
         case .oralIntroduction: "60 秒自我介绍"
         case .oralDailyLife: "60 秒日常生活口述"
         case .summary: "诊断总结"
@@ -123,11 +123,14 @@ public final class DiagnosticViewModel {
     public private(set) var reviewItemsAdded: [DiagnosticReviewItem] = []
     public private(set) var reportedProductionOutcomes:
         [DiagnosticProductionOutcome] = []
+    public private(set) var currentProductionTransferExercise:
+        TransferExercise?
 
     public let sample: DiagnosticSample
     public let seed: UInt64
     public let sampleWasRepaired: Bool
     public let historyIssueCount: Int
+    public let language: StudyLanguage
 
     private let repository: any DiagnosticReportStoring
     private let reviewStore: (any PracticeProgressStoring)?
@@ -159,6 +162,8 @@ public final class DiagnosticViewModel {
     private var itemStartedAt: Date
     private var oralStartedAt: Date?
     private var oralTimerTask: Task<Void, Never>?
+    private var pendingProductionOutcome: DiagnosticProductionOutcome?
+    private var pendingProductionResponseTimeMs: Int?
 
     public init(
         catalog: ContentCatalog,
@@ -168,6 +173,7 @@ public final class DiagnosticViewModel {
             SpeechActivityMonitor(),
         oralAttemptStore: (any TrialDataStoring)? = nil,
         speechService: SpeechService = SpeechService(),
+        language: StudyLanguage = .russian,
         seed requestedSeed: UInt64? = nil,
         vocabularyCount: Int = 10,
         listeningCount: Int = 10,
@@ -252,6 +258,7 @@ public final class DiagnosticViewModel {
         self.activityMonitor = activityMonitor
         self.oralAttemptStore = oralAttemptStore
         self.speechService = speechService
+        self.language = language
         self.sleeper = sleeper
         self.onReportSaved = onReportSaved
         self.now = now
@@ -260,6 +267,30 @@ public final class DiagnosticViewModel {
         self.catalog = levelAdjustedCatalog
         questionBuilder = DiagnosticQuestionBuilder(seed: resolvedSeed)
         self.reviewStore = reviewStore
+    }
+
+    public var targetLanguageNameZh: String {
+        language == .english ? "英语" : "俄语"
+    }
+
+    public var targetLanguageLabel: String {
+        language == .english ? "ENGLISH" : "РУССКИЙ"
+    }
+
+    public var diagnosticTitle: String {
+        "\(targetLanguageNameZh)学习诊断"
+    }
+
+    public var recognitionDirectionTitle: String {
+        "\(targetLanguageNameZh) → 中文"
+    }
+
+    public var productionDirectionTitle: String {
+        "中文 → \(targetLanguageNameZh)"
+    }
+
+    public var currentStepTitle: String {
+        step == .production ? productionDirectionTitle : step.title
     }
 
     public var canStart: Bool {
@@ -291,6 +322,11 @@ public final class DiagnosticViewModel {
         default:
             nil
         }
+    }
+
+    public var isLegacySelfRatedReport: Bool {
+        guard let report else { return false }
+        return report.diagnosticVersion < 3
     }
 
     public var currentLexeme: Lexeme? {
@@ -389,7 +425,9 @@ public final class DiagnosticViewModel {
             case .vocabularyBreadth:
                 suggestions.append("先巩固高频词，再逐步增加新词。")
             case .activeRetrieval:
-                suggestions.append("优先安排中文到俄语的主动提取练习。")
+                suggestions.append(
+                    "优先安排中文到\(targetLanguageNameZh)的主动提取练习。"
+                )
             case .slowRetrieval:
                 suggestions.append("使用 3 秒短时限回忆，练习快速提取。")
             case .listeningGap:
@@ -441,7 +479,9 @@ public final class DiagnosticViewModel {
         if findings.contains(.activeRetrieval)
             || findings.contains(.slowRetrieval)
         {
-            adjustments.append("增加中文或场景 → 俄语的 3 秒提取题")
+            adjustments.append(
+                "增加中文或场景 → \(targetLanguageNameZh)的 3 秒提取题"
+            )
         }
         if findings.contains(.listeningGap) {
             adjustments.append("提高听句比例，并保留首次听懂证据")
@@ -476,7 +516,7 @@ public final class DiagnosticViewModel {
                 trend: Self.trend(deltas.recognitionPoints)
             ),
             DiagnosticComparisonRow(
-                label: "中文 → 俄语",
+                label: productionDirectionTitle,
                 value: Self.signed(deltas.productionPoints)
                     + " 个百分点",
                 trend: Self.trend(deltas.productionPoints)
@@ -689,26 +729,70 @@ public final class DiagnosticViewModel {
         outcome: DiagnosticProductionOutcome
     ) {
         guard step == .production, isRevealed,
-            let lexeme = currentLexeme
+            let lexeme = currentLexeme,
+            pendingProductionOutcome == nil
         else {
             return
         }
+        let responseTimeMs = currentResponseTimeMs
         reportedProductionOutcomes.append(outcome)
-        if outcome.isSuccessful {
-            productionCorrect += 1
-        }
         responseDurations.append(
-            max(0, now().timeIntervalSince(itemStartedAt))
+            Double(responseTimeMs) / 1_000
         )
+        if outcome == .completeFast {
+            pendingProductionOutcome = outcome
+            pendingProductionResponseTimeMs = responseTimeMs
+            currentProductionTransferExercise =
+                makeProductionTransferExercise(for: lexeme)
+            statusMessage = "再完成一道迁移题，系统才会判定是否真正掌握"
+            return
+        }
         if outcome.reviewGrade != .easy {
             recordReview(
                 itemKind: .lexeme,
                 itemID: lexeme.id,
                 label: lexeme.stressedForm,
                 grade: outcome.reviewGrade,
-                responseTimeMs: currentResponseTimeMs
+                responseTimeMs: responseTimeMs
             )
         }
+        advanceProduction()
+    }
+
+    public func submitProductionTransfer(optionID: String) {
+        guard step == .production,
+            let lexeme = currentLexeme,
+            let outcome = pendingProductionOutcome,
+            let responseTimeMs = pendingProductionResponseTimeMs,
+            let exercise = currentProductionTransferExercise,
+            exercise.options.contains(where: { $0.id == optionID })
+        else {
+            return
+        }
+        let transferCorrect = exercise.isCorrect(optionID: optionID)
+        let recallOutcome: RecallOutcome =
+            outcome == .completeFast
+            ? .fluentWithinThreeSeconds
+            : .coreMeaningWithUsageIssue
+        let grade = recallOutcome.reviewGrade(
+            responseTimeMs: responseTimeMs,
+            transferCorrect: transferCorrect
+        )
+        if grade == .easy {
+            productionCorrect += 1
+        } else {
+            recordReview(
+                itemKind: .lexeme,
+                itemID: lexeme.id,
+                label: lexeme.stressedForm,
+                grade: grade,
+                responseTimeMs: responseTimeMs
+            )
+        }
+        advanceProduction()
+    }
+
+    private func advanceProduction() {
         productionIndex += 1
         if productionIndex >= sample.production.count {
             move(to: .listening)
@@ -725,7 +809,8 @@ public final class DiagnosticViewModel {
         statusMessage = "正在播放第 \(currentPosition) 条听句"
         let playbackStatus = speechService.speak(
             sentence.speechText,
-            voicePolicy: .russianOnly
+            language: language,
+            allowUnrelatedFallback: false
         ) { [weak self] outcome in
             guard let self,
                 self.step == .listening,
@@ -748,7 +833,10 @@ public final class DiagnosticViewModel {
             break
         case .unavailable:
             listeningStates[sentence.id] = .unavailable
-            statusMessage = "系统语音不可用，请跳过本条听句"
+            statusMessage =
+                language == .english
+                ? "英语系统声音不可用（不会使用 ru-RU 代替），请跳过本条"
+                : "俄语系统声音不可用（不会使用 en-US 代替），请跳过本条"
         case .emptyText:
             listeningStates[sentence.id] = .unavailable
             statusMessage = "当前听句没有可播放文本，请跳过"
@@ -1015,6 +1103,9 @@ public final class DiagnosticViewModel {
         responseDurations = []
         selfMonitoringAnswers = []
         reportedProductionOutcomes = []
+        currentProductionTransferExercise = nil
+        pendingProductionOutcome = nil
+        pendingProductionResponseTimeMs = nil
         reviewItemsAdded = []
         selectedOptionID = nil
         selectedChoiceWasCorrect = nil
@@ -1087,9 +1178,63 @@ public final class DiagnosticViewModel {
     private func beginItem() {
         itemStartedAt = now()
         isRevealed = false
+        currentProductionTransferExercise = nil
+        pendingProductionOutcome = nil
+        pendingProductionResponseTimeMs = nil
         selectedOptionID = nil
         selectedChoiceWasCorrect = nil
         statusMessage = nil
+    }
+
+    private func makeProductionTransferExercise(
+        for lexeme: Lexeme
+    ) -> TransferExercise {
+        let exerciseID = "diagnostic-transfer.\(lexeme.id)"
+        let correctText =
+            lexeme.collocations.first
+            ?? (lexeme.example.isEmpty
+                ? lexeme.stressedForm : lexeme.example)
+        let fallback =
+            language == .english
+            ? ["Could you say that again?", "I need a moment to think."]
+            : ["Повтори́те, пожа́луйста.", "Мне ну́жна мину́та."]
+        let distractors = (
+            catalog.practiceLexemes.flatMap(\.collocations) + fallback
+        )
+        .filter {
+            $0.caseInsensitiveCompare(correctText) != .orderedSame
+        }
+        .reduce(into: [String]()) { result, candidate in
+            guard !result.contains(where: {
+                $0.caseInsensitiveCompare(candidate) == .orderedSame
+            }) else {
+                return
+            }
+            result.append(candidate)
+        }
+        var options = [
+            TransferOption(
+                id: "\(exerciseID).correct",
+                text: correctText
+            )
+        ]
+        options += distractors.prefix(2).enumerated().map {
+            TransferOption(
+                id: "\(exerciseID).distractor.\($0.offset)",
+                text: $0.element
+            )
+        }
+        let rotation = exerciseID.unicodeScalars.reduce(0) {
+            $0 + Int($1.value)
+        } % options.count
+        options = Array(options[rotation...] + options[..<rotation])
+        return try! TransferExercise(
+            id: exerciseID,
+            kind: .collocationCompletion,
+            prompt: "哪个搭配最自然、最适合直接用于口语？",
+            options: options,
+            correctOptionID: "\(exerciseID).correct"
+        )
     }
 
     private var currentResponseTimeMs: Int {

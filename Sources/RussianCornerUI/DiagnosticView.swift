@@ -88,7 +88,7 @@ public struct RussianCornerDiagnosticView: View {
     private var header: some View {
         HStack(alignment: .firstTextBaseline) {
             VStack(alignment: .leading, spacing: 4) {
-                Text("俄语学习诊断")
+                Text(model.diagnosticTitle)
                     .font(
                         .system(
                             .largeTitle,
@@ -96,7 +96,7 @@ public struct RussianCornerDiagnosticView: View {
                             weight: .semibold
                         )
                     )
-                Text(model.step.title)
+                Text(model.currentStepTitle)
                     .font(.caption.monospaced())
                     .foregroundStyle(.secondary)
             }
@@ -153,7 +153,8 @@ public struct RussianCornerDiagnosticView: View {
         Group {
             if let question = model.currentRecognitionQuestion {
                 choiceTask(
-                    eyebrow: "俄语 → 中文 · 系统判分",
+                    eyebrow:
+                        "\(model.recognitionDirectionTitle) · 系统判分",
                     question: question,
                     supportingText: "选择最接近的核心含义",
                     select: model.selectRecognitionOption
@@ -166,7 +167,7 @@ public struct RussianCornerDiagnosticView: View {
 
     private var production: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Text("中文 → 俄语 · 主动提取")
+            Text("\(model.productionDirectionTitle) · 主动提取")
                 .font(.caption.weight(.semibold))
                 .tracking(0.8)
                 .foregroundStyle(.orange)
@@ -178,30 +179,36 @@ public struct RussianCornerDiagnosticView: View {
                 Divider()
                 Text(model.currentLexeme?.stressedForm ?? "")
                     .font(.system(size: 28, weight: .semibold, design: .serif))
-                Text("按刚才真实表现选择。中间两档也会进入复习。")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                VStack(spacing: 8) {
-                    productionButton(
-                        .completeFast,
-                        title: Self.productionOutcomeTitles[0],
-                        detail: "核心词、搭配和必要词形都正确"
-                    )
-                    productionButton(
-                        .partial,
-                        title: Self.productionOutcomeTitles[1],
-                        detail: "方向正确，但还不能算稳定掌握"
-                    )
-                    productionButton(
-                        .recalledAfterReveal,
-                        title: Self.productionOutcomeTitles[2],
-                        detail: "属于认识，但主动提取失败"
-                    )
-                    productionButton(
-                        .unknown,
-                        title: Self.productionOutcomeTitles[3],
-                        detail: "词汇或表达尚未建立"
-                    )
+                if let exercise =
+                    model.currentProductionTransferExercise
+                {
+                    productionTransfer(exercise)
+                } else {
+                    Text("按刚才真实表现选择；“3 秒内说出”还要通过一道迁移题。")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    VStack(spacing: 8) {
+                        productionButton(
+                            .completeFast,
+                            title: Self.productionOutcomeTitles[0],
+                            detail: "继续完成迁移题，由系统最终判分"
+                        )
+                        productionButton(
+                            .partial,
+                            title: Self.productionOutcomeTitles[1],
+                            detail: "方向正确，但还不能算稳定掌握"
+                        )
+                        productionButton(
+                            .recalledAfterReveal,
+                            title: Self.productionOutcomeTitles[2],
+                            detail: "属于认识，但主动提取失败"
+                        )
+                        productionButton(
+                            .unknown,
+                            title: Self.productionOutcomeTitles[3],
+                            detail: "词汇或表达尚未建立"
+                        )
+                    }
                 }
             } else {
                 Button("查看参考表达", systemImage: "eye") {
@@ -220,12 +227,14 @@ public struct RussianCornerDiagnosticView: View {
                 .font(.caption.weight(.semibold))
                 .tracking(0.8)
                 .foregroundStyle(.orange)
-            Text("不看文本，先听俄语，再选择最接近的中文意图。")
+            Text(
+                "不看文本，先听\(model.targetLanguageNameZh)，再选择最接近的中文意图。"
+            )
                 .font(.title3)
             HStack {
                 Button(
                     model.currentListeningState == .played
-                        ? "再听一次" : "播放俄语",
+                        ? "再听一次" : "播放\(model.targetLanguageNameZh)",
                     systemImage: "speaker.wave.2"
                 ) {
                     model.speakListeningSentence()
@@ -278,8 +287,8 @@ public struct RussianCornerDiagnosticView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text(
                 model.step == .oralIntroduction
-                    ? "请用俄语做自我介绍"
-                    : "请用俄语描述你的日常生活"
+                    ? "请用\(model.targetLanguageNameZh)做自我介绍"
+                    : "请用\(model.targetLanguageNameZh)描述你的日常生活"
             )
             .font(.title2)
             Text("尽量连续表达。应用只读取实时音量活动，不录音、不保存，也不判断发音是否准确。")
@@ -364,7 +373,10 @@ public struct RussianCornerDiagnosticView: View {
     private var summary: some View {
         VStack(alignment: .leading, spacing: 16) {
             if let report = model.report {
-                Text("本次结论")
+                Text(
+                    model.isLegacySelfRatedReport
+                        ? "旧版自评诊断" : "本次结论"
+                )
                     .font(.caption.weight(.semibold))
                     .tracking(0.8)
                     .foregroundStyle(.orange)
@@ -691,6 +703,41 @@ public struct RussianCornerDiagnosticView: View {
         .buttonStyle(.plain)
     }
 
+    private func productionTransfer(
+        _ exercise: TransferExercise
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 9) {
+            Label("迁移检验 · 系统判分", systemImage: "checkmark.seal")
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(.orange)
+            Text(exercise.prompt)
+                .font(.headline)
+            ForEach(exercise.options) { option in
+                Button {
+                    model.submitProductionTransfer(optionID: option.id)
+                } label: {
+                    HStack {
+                        Text(option.text)
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .leading
+                            )
+                        Image(systemName: "arrow.right")
+                            .foregroundStyle(.orange)
+                    }
+                    .padding(.horizontal, 14)
+                    .frame(minHeight: 44)
+                    .background(.primary.opacity(0.045))
+                    .clipShape(RoundedRectangle(cornerRadius: 11))
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(12)
+        .background(.orange.opacity(0.07))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
     private var unavailableTask: some View {
         ContentUnavailableView(
             "本环节暂无可用题目",
@@ -750,7 +797,11 @@ public struct RussianCornerDiagnosticView: View {
     private func metrics(_ metrics: DiagnosticMetrics) -> some View {
         Grid(alignment: .leading, horizontalSpacing: 24, verticalSpacing: 8) {
             metricRow("认词", metrics.recognitionRate, suffix: "%")
-            metricRow("中文 → 俄语", metrics.productionRate, suffix: "%")
+            metricRow(
+                model.productionDirectionTitle,
+                metrics.productionRate,
+                suffix: "%"
+            )
             metricRow(
                 "回答中位数",
                 metrics.medianResponseSeconds,

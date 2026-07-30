@@ -678,7 +678,8 @@ public final class AppRuntime {
           }
         )
         let reflection = DailyReflectionViewModel(
-          repository: trialRepository
+          repository: trialRepository,
+          language: language
         )
         _ = reflection.loadToday()
         dailyReflection = reflection
@@ -705,6 +706,7 @@ public final class AppRuntime {
         repository: repository,
         reviewStore: repository,
         oralAttemptStore: trialRepository,
+        language: language,
         onReportSaved: { [weak self] in
           self?.applyLatestDiagnosticStrategy()
         }

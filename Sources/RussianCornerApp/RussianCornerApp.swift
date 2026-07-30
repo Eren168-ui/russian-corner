@@ -22,9 +22,9 @@ private final class RussianCornerApplicationDelegate:
 private final class LearningHistoryWindowController:
   NSWindowController
 {
-  private let runtime: AppRuntime
+  private let runtime: LanguageCornerRuntime
 
-  init(runtime: AppRuntime) {
+  init(runtime: LanguageCornerRuntime) {
     self.runtime = runtime
     let window = NSWindow(
       contentRect: NSRect(x: 0, y: 0, width: 820, height: 720),
@@ -40,9 +40,6 @@ private final class LearningHistoryWindowController:
     window.title = "Language Corner 学习记录"
     window.minSize = NSSize(width: 720, height: 600)
     window.isReleasedWhenClosed = false
-    window.contentViewController = NSHostingController(
-      rootView: RussianCornerProgressView(runtime: runtime)
-    )
     super.init(window: window)
     window.setFrameAutosaveName("RussianCornerLearningHistory")
     window.center()
@@ -54,12 +51,72 @@ private final class LearningHistoryWindowController:
   }
 
   func show() {
+    guard let activeRuntime = runtime.activeRuntime else { return }
     do {
-      try runtime.refreshProgress()
+      try activeRuntime.refreshProgress()
     } catch {
-      runtime.appModel.transientStatus =
+      activeRuntime.appModel.transientStatus =
         "学习记录刷新失败：\(error.localizedDescription)"
     }
+    window?.contentViewController = NSHostingController(
+      rootView: RussianCornerProgressView(runtime: activeRuntime)
+    )
+    window?.title =
+      "Language Corner · \(runtime.activeLanguage.displayName) 学习记录"
+    showWindow(nil)
+    window?.makeKeyAndOrderFront(nil)
+    NSApplication.shared.activate(ignoringOtherApps: true)
+  }
+}
+
+@MainActor
+private final class ActiveRuntimeFeatureWindowController:
+  NSWindowController
+{
+  private let runtime: LanguageCornerRuntime
+  private let baseTitle: String
+  private let content: (AppRuntime) -> AnyView
+
+  init(
+    runtime: LanguageCornerRuntime,
+    title: String,
+    size: NSSize,
+    minimumSize: NSSize,
+    content: @escaping (AppRuntime) -> AnyView
+  ) {
+    self.runtime = runtime
+    baseTitle = title
+    self.content = content
+    let window = NSWindow(
+      contentRect: NSRect(origin: .zero, size: size),
+      styleMask: [
+        .titled,
+        .closable,
+        .miniaturizable,
+        .resizable,
+      ],
+      backing: .buffered,
+      defer: false
+    )
+    window.title = title
+    window.minSize = minimumSize
+    window.isReleasedWhenClosed = false
+    super.init(window: window)
+    window.center()
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  func show() {
+    guard let activeRuntime = runtime.activeRuntime else { return }
+    window?.title =
+      "\(baseTitle) · \(runtime.activeLanguage.displayName)"
+    window?.contentViewController = NSHostingController(
+      rootView: content(activeRuntime)
+    )
     showWindow(nil)
     window?.makeKeyAndOrderFront(nil)
     NSApplication.shared.activate(ignoringOtherApps: true)
@@ -191,12 +248,14 @@ struct RussianCornerApp: App {
   private let runtime: LanguageCornerRuntime
   private let panelController: FloatingPanelController
   private let hotKeyService: GlobalHotKeyService
-  private let reportExporter: TrialReportExporter
   private let learningHistoryWindowController:
     LearningHistoryWindowController
-  private let settingsWindowController: FeatureWindowController
-  private let reflectionWindowController: FeatureWindowController
-  private let diagnosticsWindowController: FeatureWindowController
+  private let settingsWindowController:
+    ActiveRuntimeFeatureWindowController
+  private let reflectionWindowController:
+    ActiveRuntimeFeatureWindowController
+  private let diagnosticsWindowController:
+    ActiveRuntimeFeatureWindowController
   private let sceneTrainingWindowController:
     SceneTrainingWindowController
   private let expressionCaptureWindowController:
@@ -207,60 +266,60 @@ struct RussianCornerApp: App {
     let runtime = LanguageCornerRuntime(
       enableRussianSourceSync: true
     )
-    let initialRuntime = runtime.activeRuntime
-      ?? AppRuntime(enableSystemReminders: false)
     let learningHistoryWindowController =
-      LearningHistoryWindowController(runtime: initialRuntime)
-    let reportExporter = TrialReportExporter(
-      appModel: initialRuntime.appModel
-    )
-    let settingsWindowController = FeatureWindowController(
+      LearningHistoryWindowController(runtime: runtime)
+    let settingsWindowController = ActiveRuntimeFeatureWindowController(
+      runtime: runtime,
       title: "Language Corner 设置",
       size: NSSize(width: 560, height: 620),
       minimumSize: NSSize(width: 520, height: 500),
-      content: AnyView(RussianCornerSettingsView(runtime: initialRuntime))
+      content: { activeRuntime in
+        AnyView(RussianCornerSettingsView(runtime: activeRuntime))
+      }
     )
-    let reflectionWindowController = FeatureWindowController(
+    let reflectionWindowController = ActiveRuntimeFeatureWindowController(
+      runtime: runtime,
       title: "今日反馈",
       size: NSSize(width: 500, height: 470),
       minimumSize: NSSize(width: 500, height: 470),
-      content: AnyView(
+      content: { activeRuntime in AnyView(
         Group {
-          if let dailyReflection = initialRuntime.dailyReflection {
+          if let dailyReflection = activeRuntime.dailyReflection {
             DailyReflectionView(model: dailyReflection)
           } else {
             ContentUnavailableView(
               "今日反馈暂时不可用",
               systemImage: "square.and.pencil",
               description: Text(
-                initialRuntime.trialError ?? "核心学习功能仍可正常使用"
+                activeRuntime.trialError ?? "核心学习功能仍可正常使用"
               )
             )
           }
         }
-      )
+      ) }
     )
-    let diagnosticsWindowController = FeatureWindowController(
+    let diagnosticsWindowController = ActiveRuntimeFeatureWindowController(
+      runtime: runtime,
       title: "Language Corner 诊断",
       size: NSSize(width: 620, height: 650),
       minimumSize: RussianCornerDiagnosticView.minimumSize,
-      content: AnyView(
+      content: { activeRuntime in AnyView(
         Group {
-          if let diagnostics = initialRuntime.diagnostics {
+          if let diagnostics = activeRuntime.diagnostics {
             RussianCornerDiagnosticView(model: diagnostics)
           } else {
             ContentUnavailableView(
               "诊断暂时无法载入",
               systemImage: "exclamationmark.triangle",
               description: Text(
-                initialRuntime.diagnosticError
-                  ?? initialRuntime.launchError
+                activeRuntime.diagnosticError
+                  ?? activeRuntime.launchError
                   ?? "请稍后重新打开应用"
               )
             )
           }
         }
-      )
+      ) }
     )
     let sceneTrainingWindowController =
       SceneTrainingWindowController(runtime: runtime)
@@ -322,7 +381,10 @@ struct RussianCornerApp: App {
           return
         }
         Task {
-          await reportExporter.exportLastSevenDays(
+          let exporter = TrialReportExporter(
+            appModel: activeRuntime.appModel
+          )
+          await exporter.exportLastSevenDays(
             repository: trialRepository
           )
         }
@@ -339,7 +401,6 @@ struct RussianCornerApp: App {
     self.runtime = runtime
     self.panelController = panelController
     self.hotKeyService = hotKeyService
-    self.reportExporter = reportExporter
     self.learningHistoryWindowController =
       learningHistoryWindowController
     self.settingsWindowController = settingsWindowController
@@ -367,13 +428,19 @@ struct RussianCornerApp: App {
           runtime?.activeRuntime?.practice?.reveal()
         },
         .gradeAgain: { [weak runtime] in
-          Self.grade(.again, runtime: runtime)
+          Self.submitRecall(.unknown, runtime: runtime)
         },
         .gradeHard: { [weak runtime] in
-          Self.grade(.hard, runtime: runtime)
+          Self.submitRecall(
+            .coreMeaningWithUsageIssue,
+            runtime: runtime
+          )
         },
         .gradeEasy: { [weak runtime] in
-          Self.grade(.easy, runtime: runtime)
+          Self.submitRecall(
+            .fluentWithinThreeSeconds,
+            runtime: runtime
+          )
         },
         .toggleCollapsed: { [weak runtime] in
           runtime?.activeRuntime?.appModel.isCollapsed.toggle()
@@ -404,15 +471,17 @@ struct RussianCornerApp: App {
     }
   }
 
-  private static func grade(
-    _ grade: RussianCornerCore.ReviewGrade,
+  private static func submitRecall(
+    _ outcome: RecallOutcome,
     runtime: LanguageCornerRuntime?
   ) {
     do {
-      try runtime?.activeRuntime?.practice?.grade(grade)
+      try runtime?.activeRuntime?.practice?.submitRecallOutcome(
+        outcome
+      )
     } catch {
       runtime?.activeRuntime?.practice?.showStatus(
-        "评分未提交：\(error.localizedDescription)"
+        "主动回忆结果未提交：\(error.localizedDescription)"
       )
     }
   }

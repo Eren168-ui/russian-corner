@@ -82,6 +82,81 @@ final class DiagnosticViewModelTests: XCTestCase {
         )
     }
 
+    func testFastProductionNeedsObjectiveTransferAndFailedCheckIsHard()
+        throws
+    {
+        let repository = ProgressRepository(
+            container: try ProgressRepository.makeInMemoryContainer()
+        )
+        let model = try DiagnosticViewModel(
+            catalog: makeMultiCatalog(count: 4),
+            repository: repository,
+            reviewStore: repository,
+            activityMonitor: DiagnosticFakeActivityMonitor(),
+            speechService: makeSpeechService(),
+            seed: 61,
+            vocabularyCount: 1,
+            listeningCount: 1,
+            now: { self.start }
+        )
+        model.start()
+        let recognition = try XCTUnwrap(model.currentRecognitionQuestion)
+        model.selectRecognitionOption(recognition.correctOptionID)
+        model.advanceFromChoice()
+        model.reveal()
+
+        model.submitProduction(outcome: .completeFast)
+
+        XCTAssertEqual(model.step, .production)
+        let exercise = try XCTUnwrap(
+            model.currentProductionTransferExercise
+        )
+        let wrong = try XCTUnwrap(
+            exercise.options.first {
+                $0.id != exercise.correctOptionID
+            }
+        )
+        model.submitProductionTransfer(optionID: wrong.id)
+
+        XCTAssertEqual(model.step, .listening)
+        XCTAssertEqual(
+            try repository.reviewEvents().map(\.grade),
+            [.hard]
+        )
+    }
+
+    func testEnglishDiagnosticUsesEnglishLabelsAndVoice() throws {
+        let synthesizer = DiagnosticSpeechSynthesizer()
+        let model = try DiagnosticViewModel(
+            catalog: makeCatalog(),
+            repository: ProgressRepository(
+                container: try ProgressRepository.makeInMemoryContainer()
+            ),
+            activityMonitor: DiagnosticFakeActivityMonitor(),
+            speechService: SpeechService(
+                voiceProvider: DiagnosticVoiceProvider(
+                    hasVoice: true,
+                    language: "en-US"
+                ),
+                synthesizer: synthesizer
+            ),
+            language: .english,
+            seed: 62,
+            vocabularyCount: 1,
+            listeningCount: 1,
+            now: { self.start }
+        )
+
+        XCTAssertEqual(model.language, .english)
+        XCTAssertEqual(model.targetLanguageNameZh, "英语")
+        XCTAssertEqual(model.productionDirectionTitle, "中文 → 英语")
+        advanceToListening(model)
+        model.speakListeningSentence()
+
+        XCTAssertEqual(model.currentListeningState, .played)
+        XCTAssertEqual(synthesizer.requests.count, 1)
+    }
+
     func testWizardProgressesThroughEveryMetricAndPersistsSummary() throws {
         var now = start
         let repository = ProgressRepository(
