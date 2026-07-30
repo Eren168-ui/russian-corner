@@ -1531,6 +1531,44 @@ final class AppModelTests: XCTestCase {
     XCTAssertEqual(model.mode, .speaking)
   }
 
+  func testLanguageSettingsKeepEnglishSeparateAndRussianCompatible() {
+    let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defer { defaults.removePersistentDomain(forName: suiteName) }
+    defaults.set(8, forKey: "practice.dailyCardCount")
+
+    let russian = AppModel(
+      defaults: defaults,
+      language: .russian
+    )
+    let english = AppModel(
+      defaults: defaults,
+      language: .english
+    )
+
+    XCTAssertEqual(russian.dailyCardCount, 8)
+    XCTAssertEqual(english.dailyCardCount, 7)
+    XCTAssertTrue(russian.remindersEnabled)
+    XCTAssertFalse(english.remindersEnabled)
+
+    english.dailyCardCount = 10
+    english.mode = .speaking
+
+    XCTAssertEqual(
+      defaults.integer(forKey: "english.practice.dailyCardCount"),
+      10
+    )
+    XCTAssertEqual(defaults.integer(forKey: "practice.dailyCardCount"), 8)
+    XCTAssertEqual(
+      LanguageStudySettings.dailyQueueKey(for: .english),
+      "english.practice.dailyQueueSnapshot.v1"
+    )
+    XCTAssertEqual(
+      LanguageStudySettings.dailyQueueKey(for: .russian),
+      "practice.dailyQueueSnapshot.v1"
+    )
+  }
+
   func testDailyCardCountAndVisualValuesAreClamped() {
     let suiteName = "RussianCornerAppTests.\(UUID().uuidString)"
     let defaults = UserDefaults(suiteName: suiteName)!

@@ -316,6 +316,7 @@ public final class TrialRepository: TrialDataStoring {
 
     public static func makeContainer(
         inMemory: Bool = false,
+        language: StudyLanguage = .russian,
         applicationSupportDirectory: URL? = nil,
         fileManager: FileManager = .default
     ) throws -> ModelContainer {
@@ -348,12 +349,15 @@ public final class TrialRepository: TrialDataStoring {
                 at: appDirectory,
                 withIntermediateDirectories: true
             )
+            let storeName =
+                language == .russian
+                ? "RussianCornerTrial" : "EnglishCornerTrial"
             let storeURL = appDirectory.appendingPathComponent(
-                "RussianCornerTrial.store",
+                "\(storeName).store",
                 isDirectory: false
             )
             configuration = ModelConfiguration(
-                "RussianCornerTrial",
+                storeName,
                 schema: schema,
                 url: storeURL,
                 cloudKitDatabase: .none

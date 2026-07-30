@@ -279,6 +279,7 @@ public final class ProgressRepository {
 
     public static func makeContainer(
         inMemory: Bool = false,
+        language: StudyLanguage = .russian,
         applicationSupportDirectory: URL? = nil,
         fileManager: FileManager = .default
     ) throws -> ModelContainer {
@@ -312,12 +313,15 @@ public final class ProgressRepository {
                 at: appDirectory,
                 withIntermediateDirectories: true
             )
+            let storeName =
+                language == .russian
+                ? "RussianCorner" : "EnglishCorner"
             let storeURL = appDirectory.appendingPathComponent(
-                "RussianCorner.store",
+                "\(storeName).store",
                 isDirectory: false
             )
             configuration = ModelConfiguration(
-                "RussianCorner",
+                storeName,
                 schema: schema,
                 url: storeURL,
                 cloudKitDatabase: .none

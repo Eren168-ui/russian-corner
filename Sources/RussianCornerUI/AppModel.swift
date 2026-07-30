@@ -77,11 +77,14 @@ public final class AppModel {
     static let morningMinute = "reminder.morning.minute"
     static let eveningHour = "reminder.evening.hour"
     static let eveningMinute = "reminder.evening.minute"
+    static let remindersEnabled = "reminder.enabled"
+    static let preferredVoiceLanguage = "speech.preferredVoiceLanguage"
     static let preferredTopicID = "practice.preferredTopicID"
     static let preferredTopicDay = "practice.preferredTopicDay"
   }
 
   private let defaults: UserDefaults
+  public let language: StudyLanguage
   private var isLoading = true
   public private(set) var hasExplicitModePreference = false
 
@@ -151,26 +154,57 @@ public final class AppModel {
         dailyCardCount = clamped
         return
       }
-      persist(dailyCardCount, forKey: Key.dailyCardCount)
+      persist(
+        dailyCardCount,
+        forKey: languageKey(Key.dailyCardCount)
+      )
     }
   }
   public var mode: PracticeMode {
     didSet {
       guard !isLoading else { return }
       hasExplicitModePreference = true
-      persist(mode.rawValue, forKey: Key.mode)
+      persist(mode.rawValue, forKey: languageKey(Key.mode))
     }
   }
   public var morningReminder: ReminderTime {
     didSet {
-      persist(morningReminder.hour, forKey: Key.morningHour)
-      persist(morningReminder.minute, forKey: Key.morningMinute)
+      persist(
+        morningReminder.hour,
+        forKey: languageKey(Key.morningHour)
+      )
+      persist(
+        morningReminder.minute,
+        forKey: languageKey(Key.morningMinute)
+      )
     }
   }
   public var eveningReminder: ReminderTime {
     didSet {
-      persist(eveningReminder.hour, forKey: Key.eveningHour)
-      persist(eveningReminder.minute, forKey: Key.eveningMinute)
+      persist(
+        eveningReminder.hour,
+        forKey: languageKey(Key.eveningHour)
+      )
+      persist(
+        eveningReminder.minute,
+        forKey: languageKey(Key.eveningMinute)
+      )
+    }
+  }
+  public var remindersEnabled: Bool {
+    didSet {
+      persist(
+        remindersEnabled,
+        forKey: languageKey(Key.remindersEnabled)
+      )
+    }
+  }
+  public var preferredVoiceLanguage: String {
+    didSet {
+      persist(
+        preferredVoiceLanguage,
+        forKey: languageKey(Key.preferredVoiceLanguage)
+      )
     }
   }
   public var transientStatus: String?
@@ -178,10 +212,18 @@ public final class AppModel {
   public private(set) var preferredTopicID: String?
   public private(set) var preferredTopicDay: Date?
 
-  public init(defaults: UserDefaults = .standard) {
+  public init(
+    defaults: UserDefaults = .standard,
+    language: StudyLanguage = .russian
+  ) {
     self.defaults = defaults
+    self.language = language
+    let modeKey = LanguageStudySettings.storageKey(
+      Key.mode,
+      for: language
+    )
     hasExplicitModePreference =
-      defaults.object(forKey: Key.mode) != nil
+      defaults.object(forKey: modeKey) != nil
     corner =
       FloatingCorner(
         rawValue: defaults.string(forKey: Key.corner) ?? ""
@@ -209,30 +251,75 @@ public final class AppModel {
     fontScale =
       defaults.object(forKey: Key.fontScale) == nil
       ? 1 : defaults.double(forKey: Key.fontScale)
-    let storedCount = defaults.integer(forKey: Key.dailyCardCount)
+    let dailyCardCountKey = LanguageStudySettings.storageKey(
+      Key.dailyCardCount,
+      for: language
+    )
+    let storedCount = defaults.integer(forKey: dailyCardCountKey)
     dailyCardCount =
       storedCount == 0
       ? 7 : min(max(storedCount, 5), 10)
     mode =
       PracticeMode(
-        rawValue: defaults.string(forKey: Key.mode) ?? ""
+        rawValue: defaults.string(forKey: modeKey) ?? ""
       ) ?? .quiet
+    let morningHourKey = LanguageStudySettings.storageKey(
+      Key.morningHour,
+      for: language
+    )
+    let morningMinuteKey = LanguageStudySettings.storageKey(
+      Key.morningMinute,
+      for: language
+    )
     morningReminder = ReminderTime(
-      hour: defaults.object(forKey: Key.morningHour) == nil
-        ? 11 : defaults.integer(forKey: Key.morningHour),
-      minute: defaults.object(forKey: Key.morningMinute) == nil
-        ? 30 : defaults.integer(forKey: Key.morningMinute)
+      hour: defaults.object(forKey: morningHourKey) == nil
+        ? 11 : defaults.integer(forKey: morningHourKey),
+      minute: defaults.object(forKey: morningMinuteKey) == nil
+        ? 30 : defaults.integer(forKey: morningMinuteKey)
+    )
+    let eveningHourKey = LanguageStudySettings.storageKey(
+      Key.eveningHour,
+      for: language
+    )
+    let eveningMinuteKey = LanguageStudySettings.storageKey(
+      Key.eveningMinute,
+      for: language
     )
     eveningReminder = ReminderTime(
-      hour: defaults.object(forKey: Key.eveningHour) == nil
-        ? 17 : defaults.integer(forKey: Key.eveningHour),
-      minute: defaults.object(forKey: Key.eveningMinute) == nil
-        ? 30 : defaults.integer(forKey: Key.eveningMinute)
+      hour: defaults.object(forKey: eveningHourKey) == nil
+        ? 17 : defaults.integer(forKey: eveningHourKey),
+      minute: defaults.object(forKey: eveningMinuteKey) == nil
+        ? 30 : defaults.integer(forKey: eveningMinuteKey)
     )
+    let remindersEnabledKey = LanguageStudySettings.storageKey(
+      Key.remindersEnabled,
+      for: language
+    )
+    remindersEnabled =
+      defaults.object(forKey: remindersEnabledKey) == nil
+      ? LanguageStudySettings.remindersEnabledByDefault(for: language)
+      : defaults.bool(forKey: remindersEnabledKey)
+    let voiceLanguageKey = LanguageStudySettings.storageKey(
+      Key.preferredVoiceLanguage,
+      for: language
+    )
+    preferredVoiceLanguage =
+      defaults.string(forKey: voiceLanguageKey)
+      ?? LanguageStudySettings.preferredVoiceLanguageByDefault(
+        for: language
+      )
     isCollapsed = defaults.bool(forKey: Key.collapsed)
-    preferredTopicID = defaults.string(forKey: Key.preferredTopicID)
+    preferredTopicID = defaults.string(
+      forKey: LanguageStudySettings.storageKey(
+        Key.preferredTopicID,
+        for: language
+      )
+    )
     preferredTopicDay = defaults.object(
-      forKey: Key.preferredTopicDay
+      forKey: LanguageStudySettings.storageKey(
+        Key.preferredTopicDay,
+        for: language
+      )
     ) as? Date
     opacity = min(max(opacity, 0.55), 1)
     fontScale = min(max(fontScale, 0.85), 1.35)
@@ -274,12 +361,26 @@ public final class AppModel {
     preferredTopicID = topicID
     preferredTopicDay = topicID == nil ? nil : date
     if let topicID {
-      defaults.set(topicID, forKey: Key.preferredTopicID)
-      defaults.set(date, forKey: Key.preferredTopicDay)
+      defaults.set(
+        topicID,
+        forKey: languageKey(Key.preferredTopicID)
+      )
+      defaults.set(
+        date,
+        forKey: languageKey(Key.preferredTopicDay)
+      )
     } else {
-      defaults.removeObject(forKey: Key.preferredTopicID)
-      defaults.removeObject(forKey: Key.preferredTopicDay)
+      defaults.removeObject(
+        forKey: languageKey(Key.preferredTopicID)
+      )
+      defaults.removeObject(
+        forKey: languageKey(Key.preferredTopicDay)
+      )
     }
+  }
+
+  private func languageKey(_ baseKey: String) -> String {
+    LanguageStudySettings.storageKey(baseKey, for: language)
   }
 
   private func persist(_ value: Any, forKey key: String) {
@@ -324,8 +425,12 @@ private struct DailyPracticeQueueSnapshot: Codable {
 }
 
 private struct DailyPracticeQueueStore {
-  private static let key = "practice.dailyQueueSnapshot.v1"
   let defaults: UserDefaults
+  let language: StudyLanguage
+
+  private var key: String {
+    LanguageStudySettings.dailyQueueKey(for: language)
+  }
 
   func unfinishedItemIDs(
     on instant: Date,
@@ -333,7 +438,7 @@ private struct DailyPracticeQueueStore {
     calendar: Calendar
   ) -> Set<PracticeItemIdentity> {
     guard
-      let data = defaults.data(forKey: Self.key),
+      let data = defaults.data(forKey: key),
       let snapshot = try? JSONDecoder().decode(
         DailyPracticeQueueSnapshot.self,
         from: data
@@ -386,7 +491,7 @@ private struct DailyPracticeQueueStore {
     guard let data = try? JSONEncoder().encode(snapshot) else {
       return
     }
-    defaults.set(data, forKey: Self.key)
+    defaults.set(data, forKey: key)
   }
 }
 
@@ -425,6 +530,7 @@ public final class AppRuntime {
 
   public init(
     defaults: UserDefaults = .standard,
+    language: StudyLanguage = .russian,
     catalog injectedCatalog: ContentCatalog? = nil,
     repository injectedRepository: ProgressRepository? = nil,
     trialRepository injectedTrialRepository:
@@ -440,11 +546,14 @@ public final class AppRuntime {
       CandidateCorpusStore? = nil,
     enableSourceSync: Bool = false
   ) {
-    dailyQueueStore = DailyPracticeQueueStore(defaults: defaults)
+    dailyQueueStore = DailyPracticeQueueStore(
+      defaults: defaults,
+      language: language
+    )
     notificationSettingsOpener =
       injectedNotificationSettingsOpener
       ?? Self.openSystemNotificationSettings
-    appModel = AppModel(defaults: defaults)
+    appModel = AppModel(defaults: defaults, language: language)
     self.enableSourceSync = enableSourceSync
     if let injectedCandidateCorpusStore {
       candidateCorpusStore = injectedCandidateCorpusStore
@@ -472,7 +581,9 @@ public final class AppRuntime {
         repository = injectedRepository
       } else {
         repository = ProgressRepository(
-          container: try ProgressRepository.makeContainer()
+          container: try ProgressRepository.makeContainer(
+            language: language
+          )
         )
       }
       self.catalog = catalog
@@ -494,7 +605,8 @@ public final class AppRuntime {
         } else {
           trialRepository = TrialRepository(
             container: try TrialRepository.makeContainer(
-              inMemory: injectedRepository != nil
+              inMemory: injectedRepository != nil,
+              language: language
             )
           )
         }
