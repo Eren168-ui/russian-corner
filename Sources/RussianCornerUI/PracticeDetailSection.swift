@@ -3,11 +3,11 @@ import RussianCornerPlatform
 import SwiftUI
 
 public enum PracticeDetailTypography {
-    public static let labelSize: CGFloat = 9
-    public static let tagSize: CGFloat = 9
-    public static let supportingSize: CGFloat = 11
-    public static let bodySize: CGFloat = 12
-    public static let relatedRussianSize: CGFloat = 14
+    public static let labelSize: CGFloat = 10
+    public static let tagSize: CGFloat = 10
+    public static let supportingSize: CGFloat = 12
+    public static let bodySize: CGFloat = 14
+    public static let relatedRussianSize: CGFloat = 16
     public static let wordHeadingSize: CGFloat = 18
 }
 

@@ -7,9 +7,10 @@ import XCTest
 
 final class InteractiveRussianTextTests: XCTestCase {
     func testDetailTypographyIsReadableButSmallerThanMainAnswer() {
-        XCTAssertEqual(PracticeDetailTypography.bodySize, 12)
-        XCTAssertEqual(PracticeDetailTypography.relatedRussianSize, 14)
-        XCTAssertGreaterThan(PracticeDetailTypography.labelSize, 8)
+        XCTAssertEqual(PracticeDetailTypography.bodySize, 14)
+        XCTAssertEqual(PracticeDetailTypography.relatedRussianSize, 16)
+        XCTAssertEqual(PracticeDetailTypography.supportingSize, 12)
+        XCTAssertEqual(PracticeDetailTypography.labelSize, 10)
         XCTAssertLessThan(
             PracticeDetailTypography.relatedRussianSize,
             20
