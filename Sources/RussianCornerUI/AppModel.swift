@@ -58,6 +58,59 @@ public enum ReminderPermissionAction: Equatable, Sendable {
   }
 }
 
+public enum AppAppearanceMode: String, CaseIterable, Codable, Sendable {
+  case system
+  case dark
+  case light
+
+  public var title: String {
+    switch self {
+    case .system: "跟随系统"
+    case .dark: "深色模式"
+    case .light: "浅色模式"
+    }
+  }
+
+  public var nsAppearance: NSAppearance? {
+    switch self {
+    case .system: nil
+    case .dark: NSAppearance(named: .darkAqua)
+    case .light: NSAppearance(named: .aqua)
+    }
+  }
+
+  @MainActor
+  public var effectiveMode: Self {
+    switch self {
+    case .system:
+      let match = NSApplication.shared.effectiveAppearance.bestMatch(
+        from: [.darkAqua, .aqua]
+      )
+      return match == .darkAqua ? .dark : .light
+    case .dark, .light:
+      return self
+    }
+  }
+
+  @MainActor
+  public var toggleSymbolName: String {
+    effectiveMode == .dark ? "sun.max" : "moon"
+  }
+
+  @MainActor
+  public var toggleTitle: String {
+    effectiveMode == .dark ? "切换浅色" : "切换深色"
+  }
+
+  @MainActor
+  public static func apply(
+    _ mode: Self,
+    to application: NSApplication = .shared
+  ) {
+    application.appearance = mode.nsAppearance
+  }
+}
+
 @MainActor
 @Observable
 public final class AppModel {
@@ -81,6 +134,7 @@ public final class AppModel {
     static let preferredVoiceLanguage = "speech.preferredVoiceLanguage"
     static let preferredTopicID = "practice.preferredTopicID"
     static let preferredTopicDay = "practice.preferredTopicDay"
+    static let appearanceMode = "appearance.mode"
   }
 
   private let defaults: UserDefaults
@@ -89,6 +143,13 @@ public final class AppModel {
   public private(set) var hasExplicitModePreference = false
 
   public var isCardVisible = true
+  public var appearanceMode: AppAppearanceMode {
+    didSet {
+      guard !isLoading else { return }
+      persist(appearanceMode.rawValue, forKey: Key.appearanceMode)
+      AppAppearanceMode.apply(appearanceMode)
+    }
+  }
   public var isCollapsed: Bool {
     didSet { persist(isCollapsed, forKey: Key.collapsed) }
   }
@@ -218,6 +279,9 @@ public final class AppModel {
   ) {
     self.defaults = defaults
     self.language = language
+    appearanceMode = AppAppearanceMode(
+      rawValue: defaults.string(forKey: Key.appearanceMode) ?? ""
+    ) ?? .system
     let modeKey = LanguageStudySettings.storageKey(
       Key.mode,
       for: language
@@ -324,10 +388,16 @@ public final class AppModel {
     opacity = min(max(opacity, 0.55), 1)
     fontScale = min(max(fontScale, 0.85), 1.35)
     isLoading = false
+    AppAppearanceMode.apply(appearanceMode)
   }
 
   public func toggleCard() {
     isCardVisible.toggle()
+  }
+
+  public func toggleAppearance() {
+    appearanceMode = appearanceMode.effectiveMode == .dark
+      ? .light : .dark
   }
 
   public func snap(to corner: FloatingCorner) {

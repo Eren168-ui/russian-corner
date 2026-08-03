@@ -360,6 +360,24 @@ public struct PracticeCardView: View {
                 .foregroundStyle(palette.muted)
                 .lineLimit(1)
             utilityMenu
+            Button {
+                appModel.toggleAppearance()
+            } label: {
+                Image(systemName: appModel.appearanceMode.toggleSymbolName)
+                    .font(.system(size: 10, weight: .semibold))
+                    .frame(
+                        width: PracticeCardMetrics.headerActionHitWidth,
+                        height: PracticeCardMetrics.headerActionHitHeight
+                    )
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(palette.muted)
+            .help("切换外观：\(appModel.appearanceMode.toggleTitle)")
+            .accessibilityLabel("切换外观")
+            .accessibilityHint(
+                "当前\(appModel.appearanceMode.title)，点击切换深色或浅色"
+            )
             Spacer(minLength: 8)
             Menu {
                 ForEach(FloatingCorner.allCases, id: \.self) { corner in

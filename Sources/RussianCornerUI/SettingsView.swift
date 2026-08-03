@@ -27,6 +27,18 @@ public struct RussianCornerSettingsView: View {
 
   public var body: some View {
     Form {
+      Section("外观") {
+        Picker("主题", selection: $appModel.appearanceMode) {
+          ForEach(AppAppearanceMode.allCases, id: \.self) { mode in
+            Text(mode.title).tag(mode)
+          }
+        }
+        .pickerStyle(.segmented)
+        Text("只影响 Russian Corner，不会修改 macOS 的系统外观。")
+          .font(.caption)
+          .foregroundStyle(.secondary)
+      }
+
       Section("悬浮卡") {
         if availableScreens.isEmpty {
           LabeledContent("显示器", value: "当前不可用")

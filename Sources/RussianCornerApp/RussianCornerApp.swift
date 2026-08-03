@@ -524,6 +524,16 @@ private struct MenuBarContent: View {
     }
     .keyboardShortcut("r", modifiers: [.control, .option])
 
+    Button(
+      activeRuntime?.appModel.appearanceMode.toggleTitle ?? "切换外观",
+      systemImage:
+        activeRuntime?.appModel.appearanceMode.toggleSymbolName
+          ?? "circle.lefthalf.filled"
+    ) {
+      activeRuntime?.appModel.toggleAppearance()
+    }
+    .disabled(activeRuntime == nil)
+
     Button("下一项", systemImage: "arrow.right") {
       runtime.activeRuntime?.practice?.next()
     }
