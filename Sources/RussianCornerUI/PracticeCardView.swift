@@ -322,8 +322,21 @@ public struct PracticeCardView: View {
     private var header: some View {
         HStack(spacing: 7) {
             Text("LANGUAGE CORNER")
-                .font(.system(size: 9, weight: .semibold))
-                .tracking(1.1)
+                .font(
+                    .system(
+                        size: 8.5,
+                        weight: .bold,
+                        design: .rounded
+                    )
+                )
+                .tracking(0.65)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+                .allowsTightening(true)
+                .layoutPriority(1)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+                .layoutPriority(2)
             if let languageActions {
                 Menu {
                     ForEach(
@@ -425,12 +438,21 @@ public struct PracticeCardView: View {
                     Text(progressText)
                         .font(.system(size: 9, weight: .medium))
                 }
-                .frame(minWidth: 44, minHeight: 28)
+                .padding(.horizontal, 7)
+                .frame(minHeight: 26)
+                .background(palette.accentSurface)
+                .clipShape(Capsule())
+                .overlay {
+                    Capsule()
+                        .stroke(palette.border, lineWidth: 1)
+                }
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .fixedSize()
             .foregroundStyle(palette.muted)
             .help("打开今日答题卡")
+            .accessibilityElement(children: .ignore)
             .accessibilityLabel("打开今日答题卡，当前\(progressText)")
             .popover(isPresented: $isAnswerSheetPresented) {
                 PracticeAnswerSheetView(
