@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { loadCatalog } from './content/loadCatalog'
 import { createDailyQueue, localDateKey } from './domain/dailyQueue'
-import type { ContentCatalog, PracticeLexeme, PracticeSentence, StudyLanguage } from './domain/models'
-import { recordAttempt, saveProgress, type RecallOutcome, type StudyProgress } from './domain/progress'
+import type { ContentCatalog, PracticeCard, StudyLanguage } from './domain/models'
+import { buildPracticeCards } from './domain/practiceCards'
+import { loadProgress, recordAttempt, requiresTransfer, saveProgress, type RecallOutcome, type StudyProgress } from './domain/progress'
+import { hasCompletedFirstSession, markFirstSessionCompleted, sessionCardCount } from './domain/session'
+import { resolveWord, type WordResolution } from './domain/wordResolution'
 
 type CatalogLoader = (language: StudyLanguage) => Promise<ContentCatalog>
 type Stage = 'prompt' | 'hint' | 'revealed' | 'rated'
@@ -16,7 +19,7 @@ const outcomes: { value: RecallOutcome; label: string; short: string }[] = [
 
 const languageLabel = (language: StudyLanguage) => language === 'english' ? '英语' : '俄语'
 const locale = (language: StudyLanguage) => language === 'english' ? 'en-US' : 'ru-RU'
-const normalizeWord = (value: string) => value.normalize('NFD').replace(/\p{M}/gu, '').toLocaleLowerCase()
+const cardTypeLabel = { sentence: '场景句', lexeme: '词汇 / 句块', challenge: '开口挑战' } as const
 
 function useVoice(language: StudyLanguage) {
   const [voice, setVoice] = useState<SpeechSynthesisVoice | null>(null)
@@ -35,12 +38,13 @@ function useVoice(language: StudyLanguage) {
   return voice
 }
 
-function WordDetail({ word, lexeme, sentence, onClose }: {
+function WordDetail({ word, resolution, sentence, onClose }: {
   word: string
-  lexeme?: PracticeLexeme
-  sentence: PracticeSentence
+  resolution: WordResolution
+  sentence: PracticeCard
   onClose: () => void
 }) {
+  const lexeme = resolution.atomic
   return (
     <aside className="word-sheet" role="region" aria-label="词义详情">
       <div className="word-sheet__handle" aria-hidden="true" />
@@ -52,31 +56,36 @@ function WordDetail({ word, lexeme, sentence, onClose }: {
         <button className="icon-button" onClick={onClose} aria-label="关闭词义详情">×</button>
       </div>
       <dl className="word-grid">
-        <div><dt>中文义</dt><dd>{lexeme?.glossZh || '本地内容暂未提供单独释义'}</dd></div>
+        <div><dt>中文义</dt><dd>{lexeme?.glossZh || '本地暂无这个单词的单独释义'}</dd></div>
         <div><dt>原形 / 当前形式</dt><dd>{lexeme ? `${lexeme.lemma} / ${lexeme.currentForm}` : `${word} / ${word}`}</dd></div>
         <div><dt>语法</dt><dd>{[lexeme?.partOfSpeech, ...(lexeme?.grammar ?? [])].filter(Boolean).join('；') || '本地内容暂无语法说明'}</dd></div>
         <div><dt>搭配</dt><dd>{lexeme?.collocations.join('；') || '本地内容暂无搭配'}</dd></div>
         <div><dt>例句</dt><dd>{lexeme?.example || sentence.targetText}</dd></div>
         <div><dt>来源</dt><dd>{lexeme?.source || sentence.source}</dd></div>
       </dl>
+      {resolution.phrases.length > 0 && (
+        <section className="phrase-evidence" aria-label="本句已审核句块">
+          <h4>本句已审核句块</h4>
+          {resolution.phrases.map((phrase) => (
+            <p key={phrase.id}><strong>{phrase.currentForm}</strong><span>{phrase.glossZh || '本地内容暂无中文释义'}</span></p>
+          ))}
+        </section>
+      )}
     </aside>
   )
 }
 
 function TargetWords({ sentence, catalog, onSelect }: {
-  sentence: PracticeSentence
+  sentence: PracticeCard
   catalog: ContentCatalog
-  onSelect: (word: string, lexeme?: PracticeLexeme) => void
+  onSelect: (word: string, resolution: WordResolution) => void
 }) {
-  const linked = sentence.lexemeIDs.map((id) => catalog.lexemes.find((lexeme) => lexeme.id === id)).filter(Boolean) as PracticeLexeme[]
   const tokens = sentence.targetText.match(/[\p{L}\p{M}]+(?:['’’-][\p{L}\p{M}]+)*|[^\p{L}\p{M}]+/gu) ?? [sentence.targetText]
   return (
     <p className="target-words" data-testid="target-answer">
       {tokens.map((token, index) => {
         if (!/[\p{L}\p{M}]/u.test(token)) return <span key={`${token}-${index}`}>{token}</span>
-        const normalized = normalizeWord(token)
-        const lexeme = linked.find((entry) => normalizeWord(`${entry.lemma} ${entry.currentForm}`).includes(normalized))
-        return <button key={`${token}-${index}`} onClick={() => onSelect(token, lexeme)}>{token}</button>
+        return <button key={`${token}-${index}`} onClick={() => onSelect(token, resolveWord(token, sentence, catalog))}>{token}</button>
       })}
     </p>
   )
@@ -86,11 +95,11 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
   const [language, setLanguage] = useState<StudyLanguage>('english')
   const [dailyMinutes, setDailyMinutes] = useState(5)
   const [catalog, setCatalog] = useState<ContentCatalog | null>(null)
-  const [queue, setQueue] = useState<PracticeSentence[]>([])
+  const [queue, setQueue] = useState<PracticeCard[]>([])
   const [cardIndex, setCardIndex] = useState(0)
   const [stage, setStage] = useState<Stage>('prompt')
   const [hintReady, setHintReady] = useState(false)
-  const [selectedWord, setSelectedWord] = useState<{ word: string; lexeme?: PracticeLexeme } | null>(null)
+  const [selectedWord, setSelectedWord] = useState<{ word: string; resolution: WordResolution } | null>(null)
   const [transferEvidence, setTransferEvidence] = useState('')
   const [transferError, setTransferError] = useState(false)
   const [chosenOutcome, setChosenOutcome] = useState<RecallOutcome | null>(null)
@@ -123,11 +132,44 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
         throw new Error('内容语言校验失败')
       }
       const date = localDateKey()
-      const daily = createDailyQueue(loaded.sentences, language, date, 5).slice(0, 3)
+      const cards = buildPracticeCards(loaded)
+      const restored = loadProgress(language, date)
+      if (restored) {
+        const byID = new Map(cards.map((card) => [card.id, card]))
+        const restoredQueue = restored.queueIDs
+          .map((id) => byID.get(id))
+          .filter((card): card is PracticeCard => Boolean(card))
+        if (restoredQueue.length === restored.queueIDs.length && restoredQueue.length > 0) {
+          setCatalog(loaded)
+          setQueue(restoredQueue)
+          setDailyMinutes(restored.dailyMinutes)
+          setProgress(restored)
+          if (restored.currentIndex >= restoredQueue.length) {
+            markFirstSessionCompleted(language)
+            setCardIndex(Math.max(0, restoredQueue.length - 1))
+            setFinished(true)
+          } else {
+            setCardIndex(restored.currentIndex)
+            setStage('prompt')
+          }
+          return
+        }
+      }
+      const count = sessionCardCount(dailyMinutes, hasCompletedFirstSession(language))
+      const daily = createDailyQueue(cards, language, date, count)
       if (!daily.length) throw new Error('本地审核内容为空')
+      const initial: StudyProgress = {
+        language,
+        date,
+        currentIndex: 0,
+        queueIDs: daily.map((card) => card.id),
+        dailyMinutes,
+        attempts: [],
+      }
       setCatalog(loaded)
       setQueue(daily)
-      setProgress({ language, date, currentIndex: 0, attempts: [] })
+      setProgress(initial)
+      saveProgress(initial)
       setCardIndex(0)
       setStage('prompt')
     } catch (error) {
@@ -139,10 +181,21 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
 
   function chooseTopic(topicID: string) {
     if (!catalog) return
-    const source = topicID === 'all' ? catalog.sentences : catalog.sentences.filter((sentence) => sentence.topicID === topicID)
-    const next = createDailyQueue(source, language, localDateKey(), 5).slice(0, 3)
+    const cards = buildPracticeCards(catalog)
+    const source = topicID === 'all' ? cards : cards.filter((card) => card.topicID === topicID)
+    const next = createDailyQueue(source, language, localDateKey(), progress?.queueIDs.length ?? 3)
+    const reset: StudyProgress = {
+      language,
+      date: localDateKey(),
+      currentIndex: 0,
+      queueIDs: next.map((card) => card.id),
+      dailyMinutes,
+      attempts: [],
+    }
     setSelectedTopic(topicID)
     setQueue(next)
+    setProgress(reset)
+    saveProgress(reset)
     setCardIndex(0)
     setStage('prompt')
     setSelectedWord(null)
@@ -158,7 +211,7 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
 
   function chooseOutcome(outcome: RecallOutcome) {
     if (!current || !progress) return
-    if (!transferEvidence.trim()) {
+    if (requiresTransfer(outcome) && !transferEvidence.trim()) {
       setTransferError(true)
       return
     }
@@ -177,6 +230,7 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
 
   function nextCard() {
     if (cardIndex >= queue.length - 1) {
+      markFirstSessionCompleted(language)
       setFinished(true)
       return
     }
@@ -235,7 +289,7 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
         <section className="finish-card paper-card">
           <p className="kicker">TODAY · COMPLETE</p>
           <div className="finish-seal" aria-hidden="true">✓</div>
-          <h1>今天这三句，<br />已经开口了。</h1>
+          <h1>今天这组练习，<br />已经开口了。</h1>
           <p>迁移答案已保存在这台设备。明天的顺序会换一换。</p>
           <button className="primary-button" onClick={() => { setCatalog(null); setFinished(false) }}>返回语言选择</button>
         </section>
@@ -273,6 +327,7 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
 
         <article className="practice-card paper-card">
           <div className="card-meta">
+            <span>{cardTypeLabel[current.cardType]}</span>
             <span>{topic?.titleZh || current.topicID || '今日练习'}</span>
             <span>{stage === 'prompt' ? '先自己想' : stage === 'hint' ? '目标语提示' : stage === 'revealed' ? '核对并迁移' : '已记录'}</span>
           </div>
@@ -298,11 +353,11 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
           {(stage === 'revealed' || stage === 'rated') && (
             <div className="answer-block">
               <div className="answer-heading"><span>点每个词查看词义</span>{voice && <button className="listen-button" onClick={speak}>朗读</button>}</div>
-              <TargetWords sentence={current} catalog={catalog} onSelect={(word, lexeme) => setSelectedWord({ word, lexeme })} />
+              <TargetWords sentence={current} catalog={catalog} onSelect={(word, resolution) => setSelectedWord({ word, resolution })} />
 
               <div className="transfer-box">
                 <label htmlFor="transfer-answer">迁移任务</label>
-                <p>换一个人物或场景说一句。{current.expectedReply ? `也可以回应：${current.expectedReply}` : '尽量沿用刚才的搭配。'}</p>
+                <p>换一个人物或场景说一句。{current.transferHint ? `提示：${current.transferHint}` : current.expectedReply ? `也可以回应：${current.expectedReply}` : '尽量沿用刚才的搭配。'}</p>
                 <textarea
                   id="transfer-answer"
                   aria-label="迁移回答"
@@ -334,7 +389,7 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
           )}
         </article>
       </section>
-      {selectedWord && <WordDetail word={selectedWord.word} lexeme={selectedWord.lexeme} sentence={current} onClose={() => setSelectedWord(null)} />}
+      {selectedWord && <WordDetail word={selectedWord.word} resolution={selectedWord.resolution} sentence={current} onClose={() => setSelectedWord(null)} />}
     </main>
   )
 }

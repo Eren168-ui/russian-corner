@@ -15,14 +15,14 @@ export async function loadCatalog(language: StudyLanguage): Promise<ContentCatal
     return decodeEnglishContent(sentences as unknown[], lexemes as unknown[], topics as unknown[])
   }
 
-  const [longTerm, supplementalSentences, lexemes, supplementalLexemes, topics] = await Promise.all([
+  const [longTerm, supplementalSentences, lexemes, supplementalLexemes, topics, challenges] = await Promise.all([
     json('long-term-sentences.json'), json('supplemental-sentences.json'), json('lexemes.json'),
-    json('supplemental-lexemes.json'), json('topics.json'),
+    json('supplemental-lexemes.json'), json('topics.json'), json('speaking-challenges.json'),
   ])
   const baseSentences = (longTerm as { sentences?: unknown[] }).sentences ?? []
   return decodeRussianContent(
     [...baseSentences, ...(supplementalSentences as unknown[])],
     [...(lexemes as unknown[]), ...(supplementalLexemes as unknown[])],
-    topics as unknown[],
+    topics as unknown[], challenges as unknown[],
   )
 }

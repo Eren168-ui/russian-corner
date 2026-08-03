@@ -72,7 +72,9 @@ describe('isolated progress and recall evidence', () => {
   it.each([
     'fluentUnder3s', 'meaningButUsageIssue', 'afterReveal', 'unknown',
   ] as const)('records %s with response time and transfer evidence', (outcome) => {
-    const initial: StudyProgress = { language: 'english', date: '2026-08-03', currentIndex: 0, attempts: [] }
+    const initial: StudyProgress = {
+      language: 'english', date: '2026-08-03', currentIndex: 0, queueIDs: ['en-1'], dailyMinutes: 5, attempts: [],
+    }
     const next = recordAttempt(initial, {
       sentenceID: 'en-1', responseTimeMs: 2450, outcome, transferEvidence: 'text my friend', completedAt: '2026-08-03T08:00:00Z',
     })

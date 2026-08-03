@@ -128,7 +128,8 @@ legend, .control-label, .study-controls label { display: block; margin-bottom: 1
 .environment-list button { padding: 7px 10px; text-align: left; }
 
 .practice-card { min-width: 0; min-height: 620px; padding: 22px 22px 28px 28px; border-radius: 4px 16px 4px 4px; overflow: hidden; }
-.card-meta { display: flex; justify-content: space-between; gap: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line); color: var(--muted); font: 700 .72rem/1.3 ui-monospace, monospace; text-transform: uppercase; letter-spacing: .05em; }
+.card-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line); color: var(--muted); font: 700 .72rem/1.3 ui-monospace, monospace; text-transform: uppercase; letter-spacing: .05em; }
+.card-meta span:first-child { color: var(--accent); }
 .intent-label { margin: 28px 0 9px; color: var(--accent); font-weight: 800; font-size: .82rem; }
 .prompt-text { max-width: 850px; margin: 0; font-size: clamp(1.75rem, 7.8vw, 3.9rem); line-height: 1.16; letter-spacing: -.03em; overflow-wrap: anywhere; }
 .action-zone { margin-top: 42px; }
@@ -179,6 +180,10 @@ legend, .control-label, .study-controls label { display: block; margin-bottom: 1
 .word-grid div { min-width: 0; padding-top: 8px; border-top: 1px solid var(--line); }
 .word-grid dt { color: var(--muted); font-size: .75rem; font-weight: 800; }
 .word-grid dd { margin: 4px 0 0; line-height: 1.45; overflow-wrap: anywhere; }
+.phrase-evidence { max-width: 900px; margin: 14px auto 0; padding-top: 10px; border-top: 2px solid var(--accent); }
+.phrase-evidence h4 { margin: 0 0 8px; font-size: .82rem; color: var(--accent); }
+.phrase-evidence p { display: grid; gap: 3px; margin: 0; padding: 8px 0; border-top: 1px solid var(--line); }
+.phrase-evidence span { color: var(--muted); }
 
 .finish-card { text-align: center; }
 .finish-seal { display: grid; place-items: center; width: 72px; height: 72px; margin: 28px auto 18px; border: 3px double var(--accent); border-radius: 50%; color: var(--accent); font-size: 2rem; transform: rotate(-5deg); }

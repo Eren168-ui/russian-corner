@@ -2,6 +2,8 @@ import type { StudyLanguage } from './models'
 
 export type RecallOutcome = 'fluentUnder3s' | 'meaningButUsageIssue' | 'afterReveal' | 'unknown'
 
+export const requiresTransfer = (outcome: RecallOutcome) => outcome === 'fluentUnder3s' || outcome === 'meaningButUsageIssue'
+
 export interface StudyAttempt {
   sentenceID: string
   responseTimeMs: number
@@ -14,6 +16,8 @@ export interface StudyProgress {
   language: StudyLanguage
   date: string
   currentIndex: number
+  queueIDs: string[]
+  dailyMinutes: number
   attempts: StudyAttempt[]
 }
 
@@ -25,4 +29,25 @@ export function recordAttempt(progress: StudyProgress, attempt: StudyAttempt): S
 
 export function saveProgress(progress: StudyProgress, storage: Pick<Storage, 'setItem'> = localStorage) {
   storage.setItem(progressKey(progress.language), JSON.stringify(progress))
+}
+
+export function loadProgress(
+  language: StudyLanguage,
+  date: string,
+  storage: Pick<Storage, 'getItem'> = localStorage,
+): StudyProgress | null {
+  const raw = storage.getItem(progressKey(language))
+  if (!raw) return null
+  try {
+    const value = JSON.parse(raw) as Partial<StudyProgress>
+    if (
+      value.language !== language || value.date !== date ||
+      !Number.isInteger(value.currentIndex) || (value.currentIndex ?? -1) < 0 ||
+      !Array.isArray(value.queueIDs) || !value.queueIDs.every((id) => typeof id === 'string') ||
+      !Array.isArray(value.attempts) || typeof value.dailyMinutes !== 'number'
+    ) return null
+    return value as StudyProgress
+  } catch {
+    return null
+  }
 }

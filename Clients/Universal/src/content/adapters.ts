@@ -1,4 +1,4 @@
-import type { ContentCatalog, PracticeLexeme, PracticeSentence, PracticeTopic } from '../domain/models'
+import type { ContentCatalog, PracticeChallenge, PracticeLexeme, PracticeSentence, PracticeTopic } from '../domain/models'
 
 type JsonObject = Record<string, unknown>
 
@@ -36,6 +36,7 @@ export function decodeEnglishContent(
         partOfSpeech: text(item.partOfSpeech) || undefined,
         grammar: [...strings(item.morphologyNotes), ...strings(item.inflections)], collocations: strings(item.collocations),
         example: sentenceByID.get(exampleID)?.targetText, source: text(item.sourcePath, '本地审核内容'),
+        sentenceIDs: strings(item.exampleSentenceIDs), surfaceForms: strings(item.inflections),
       }
     })
 
@@ -43,13 +44,20 @@ export function decodeEnglishContent(
     .filter((item): item is JsonObject => Boolean(item) && typeof item === 'object')
     .map((item) => ({ id: text(item.id), language: 'english', titleZh: text(item.titleZh), titleTarget: text(item.titleTarget) }))
 
-  return { language: 'english', sentences, lexemes, topics }
+  const challenges: PracticeChallenge[] = sentences.map((sentence) => ({
+    id: `en.challenge.${sentence.id}`, language: 'english', promptZh: sentence.promptZh,
+    promptTarget: sentence.targetText, suggestedAnswer: sentence.expectedReply, topicID: sentence.topicID,
+    lexemeIDs: sentence.lexemeIDs, structureHintsZh: [], replacementSlots: [], source: sentence.source,
+  }))
+
+  return { language: 'english', sentences, lexemes, topics, challenges }
 }
 
 export function decodeRussianContent(
   sentenceSource: unknown[],
   lexemeSource: unknown[],
   topicSource: unknown[] = [],
+  challengeSource: unknown[] = [],
 ): ContentCatalog {
   const sentences: PracticeSentence[] = sentenceSource
     .filter((item): item is JsonObject => Boolean(item) && typeof item === 'object')
@@ -71,11 +79,22 @@ export function decodeRussianContent(
       grammar: [text(item.aspect), text(item.aspectPair), text(item.government), text(item.usageNote)].filter(Boolean),
       collocations: strings(item.collocations), example: text(item.example) || undefined,
       source: strings(item.sourcePaths)[0] ?? text(item.sourcePath, '本地审核内容'),
+      sentenceIDs: strings(item.sentenceIDs), surfaceForms: strings(item.surfaceForms),
     }))
 
   const topics: PracticeTopic[] = topicSource
     .filter((item): item is JsonObject => Boolean(item) && typeof item === 'object')
     .map((item) => ({ id: text(item.id), language: 'russian', titleZh: text(item.titleZh), titleTarget: text(item.titleRu) }))
 
-  return { language: 'russian', sentences, lexemes, topics }
+  const challenges: PracticeChallenge[] = challengeSource
+    .filter((item): item is JsonObject => Boolean(item) && typeof item === 'object')
+    .filter(reviewed)
+    .map((item) => ({
+      id: text(item.id), language: 'russian', promptZh: text(item.promptZh), promptTarget: text(item.promptRu),
+      topicID: text(item.topicID, 'speaking'), lexemeIDs: strings(item.lexemeIDs),
+      structureHintsZh: strings(item.structureHintsZh), replacementSlots: strings(item.replacementSlots),
+      source: text(item.sourcePath, '本地审核内容'),
+    }))
+
+  return { language: 'russian', sentences, lexemes, topics, challenges }
 }

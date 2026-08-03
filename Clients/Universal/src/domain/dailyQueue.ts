@@ -1,4 +1,10 @@
-import type { PracticeSentence, StudyLanguage } from './models'
+import type { PracticeCardType, StudyLanguage } from './models'
+
+interface QueueItem {
+  id: string
+  language: StudyLanguage
+  cardType?: PracticeCardType
+}
 
 function hashSeed(value: string) {
   let hash = 2166136261
@@ -20,19 +26,48 @@ function random(seed: number) {
   }
 }
 
-export function createDailyQueue<T extends PracticeSentence>(
+function shuffled<T>(items: T[], seed: number) {
+  const nextRandom = random(seed)
+  const result = [...items]
+  for (let index = result.length - 1; index > 0; index -= 1) {
+    const other = Math.floor(nextRandom() * (index + 1))
+    ;[result[index], result[other]] = [result[other], result[index]]
+  }
+  return result
+}
+
+export function createDailyQueue<T extends QueueItem>(
   sentences: T[], language: StudyLanguage, localDate: string, count = 5,
 ): T[] {
   if (sentences.some((sentence) => sentence.language !== language)) {
     throw new Error('Daily queue language isolation violation')
   }
-  const nextRandom = random(hashSeed(`${language}:${localDate}`))
-  const shuffled = [...sentences]
-  for (let index = shuffled.length - 1; index > 0; index -= 1) {
-    const other = Math.floor(nextRandom() * (index + 1))
-    ;[shuffled[index], shuffled[other]] = [shuffled[other], shuffled[index]]
+  const typed = sentences.filter((sentence) => sentence.cardType)
+  const types: PracticeCardType[] = ['sentence', 'lexeme', 'challenge']
+  if (typed.length === sentences.length && types.every((type) => typed.some((item) => item.cardType === type))) {
+    const typeOrder = shuffled(types, hashSeed(`${language}:${localDate}:types`))
+    const groups = new Map(typeOrder.map((type) => [
+      type,
+      shuffled(sentences.filter((item) => item.cardType === type), hashSeed(`${language}:${localDate}:${type}`)),
+    ]))
+    const mixed: T[] = []
+    let round = 0
+    while (mixed.length < Math.min(count, sentences.length)) {
+      let added = false
+      for (const type of typeOrder) {
+        const item = groups.get(type)?.[round]
+        if (item) {
+          mixed.push(item)
+          added = true
+          if (mixed.length === Math.min(count, sentences.length)) return mixed
+        }
+      }
+      if (!added) break
+      round += 1
+    }
+    return mixed
   }
-  return shuffled.slice(0, Math.min(count, shuffled.length))
+  return shuffled(sentences, hashSeed(`${language}:${localDate}`)).slice(0, Math.min(count, sentences.length))
 }
 
 export function localDateKey(date = new Date()) {

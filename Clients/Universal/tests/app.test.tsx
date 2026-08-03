@@ -2,7 +2,9 @@ import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it } from 'vitest'
 import App from '../src/App'
-import type { ContentCatalog } from '../src/domain/models'
+import type { ContentCatalog, StudyLanguage } from '../src/domain/models'
+import { firstSessionKey } from '../src/domain/session'
+import { progressKey, type StudyProgress } from '../src/domain/progress'
 
 const makeCatalog = (language: 'english' | 'russian'): ContentCatalog => ({
   language,
@@ -25,9 +27,29 @@ const makeCatalog = (language: 'english' | 'russian'): ContentCatalog => ({
     grammar: language === 'english' ? ['动词'] : ['未完成体'],
     collocations: [language === 'english' ? 'text someone' : 'останавливаться в отеле'],
     example: language === 'english' ? 'Text me later.' : 'Я останавливался в отеле.',
-    source: `bundled/${language}`,
+    source: `bundled/${language}`, sentenceIDs: [`${language}-sentence-0`], surfaceForms: language === 'english' ? ['texts', 'texted'] : ['останавливался'],
+  }],
+  challenges: [{
+    id: `${language}-challenge`, language,
+    promptZh: language === 'english' ? '及时回应对方。' : '谈谈你的酒店经历。',
+    promptTarget: language === 'english' ? 'I was just about to text you.' : 'Как вы расскажете об отеле?',
+    suggestedAnswer: language === 'english' ? 'Perfect timing.' : undefined,
+    topicID: `${language}-topic`, lexemeIDs: [`${language}-lex`], structureHintsZh: ['先回应，再补充细节'],
+    replacementSlots: ['人物'], source: `bundled/${language}`,
   }],
 })
+
+function seedProgress(language: StudyLanguage, queueIDs: string[], currentIndex = 0, dailyMinutes = 5) {
+  const value: StudyProgress = {
+    language, date: '2026-08-03', currentIndex, queueIDs, dailyMinutes,
+    attempts: currentIndex > 0 ? [{
+      sentenceID: queueIDs[0], responseTimeMs: 2200, outcome: 'fluentUnder3s',
+      transferEvidence: 'saved transfer', completedAt: '2026-08-03T08:00:00Z',
+    }] : [],
+  }
+  localStorage.setItem(progressKey(language), JSON.stringify(value))
+  return value
+}
 
 describe('Language Corner app', () => {
   beforeEach(() => {
@@ -46,6 +68,9 @@ describe('Language Corner app', () => {
 
   it('moves from prompt to reveal, word detail, transfer, outcome, and the next real card', async () => {
     const user = userEvent.setup()
+    seedProgress('english', [
+      'sentence:english-sentence-0', 'sentence:english-sentence-1', 'sentence:english-sentence-2',
+    ])
     render(<App catalogLoader={async (language) => makeCatalog(language)} />)
     await user.click(screen.getByRole('button', { name: '每天 5 分钟' }))
     await user.click(screen.getByRole('button', { name: '开始今天练习' }))
@@ -79,5 +104,67 @@ describe('Language Corner app', () => {
     expect(screen.getByRole('button', { name: '戴耳机听和跟读' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '现在可以开口' })).toBeInTheDocument()
     expect(document.body).not.toHaveTextContent(/登录|麦克风|通知/)
+  })
+
+  it('restores the saved queue, current index, and attempts for the same language and date', async () => {
+    const user = userEvent.setup()
+    const saved = seedProgress('english', [
+      'sentence:english-sentence-4', 'lexeme:english-lex', 'challenge:english-challenge',
+    ], 1, 10)
+    render(<App catalogLoader={async (language) => makeCatalog(language)} />)
+    await user.click(screen.getByRole('button', { name: '开始今天练习' }))
+    expect(await screen.findByText('2 / 3')).toBeInTheDocument()
+    expect(screen.getByText('词汇 / 句块')).toBeInTheDocument()
+    expect(JSON.parse(localStorage.getItem(progressKey('english'))!)).toEqual(saved)
+  })
+
+  it('keeps the first experience at three cards, then lets 15 minutes produce eight', async () => {
+    const user = userEvent.setup()
+    const { unmount } = render(<App catalogLoader={async (language) => makeCatalog(language)} />)
+    await user.click(screen.getByRole('button', { name: '每天 15 分钟' }))
+    await user.click(screen.getByRole('button', { name: '开始今天练习' }))
+    expect(await screen.findByText('1 / 3')).toBeInTheDocument()
+    unmount()
+
+    localStorage.removeItem(progressKey('english'))
+    localStorage.setItem(firstSessionKey('english'), 'true')
+    render(<App catalogLoader={async (language) => makeCatalog(language)} />)
+    await user.click(screen.getByRole('button', { name: '每天 15 分钟' }))
+    await user.click(screen.getByRole('button', { name: '开始今天练习' }))
+    expect(await screen.findByText('1 / 8')).toBeInTheDocument()
+  })
+
+  it.each([
+    [0, '场景句'], [1, '词汇 / 句块'], [2, '开口挑战'],
+  ] as const)('renders restored card type at index %i as %s', async (currentIndex, label) => {
+    const user = userEvent.setup()
+    seedProgress('english', [
+      'sentence:english-sentence-0', 'lexeme:english-lex', 'challenge:english-challenge',
+    ], currentIndex)
+    render(<App catalogLoader={async (language) => makeCatalog(language)} />)
+    await user.click(screen.getByRole('button', { name: '开始今天练习' }))
+    expect(await screen.findByText(label)).toBeInTheDocument()
+  })
+
+  it('shows linked phrase meaning separately and lets afterReveal continue without transfer', async () => {
+    const user = userEvent.setup()
+    const phraseCatalog = makeCatalog('english')
+    phraseCatalog.lexemes = [{
+      ...phraseCatalog.lexemes[0], id: 'phrase-only', lemma: 'be just about to text you',
+      currentForm: 'be just about to text you', glossZh: '正要给你发消息', surfaceForms: [],
+    }]
+    phraseCatalog.sentences[0].lexemeIDs = ['phrase-only']
+    seedProgress('english', ['sentence:english-sentence-0'])
+    render(<App catalogLoader={async () => phraseCatalog} />)
+    await user.click(screen.getByRole('button', { name: '开始今天练习' }))
+    await waitFor(() => expect(screen.getByRole('button', { name: '查看提示' })).toBeEnabled(), { timeout: 4000 })
+    await user.click(screen.getByRole('button', { name: '查看提示' }))
+    await user.click(screen.getByRole('button', { name: '揭晓答案' }))
+    await user.click(within(screen.getByTestId('target-answer')).getByRole('button', { name: 'text' }))
+    expect(screen.getByRole('region', { name: '词义详情' })).toHaveTextContent('本地暂无这个单词的单独释义')
+    expect(screen.getByRole('region', { name: '词义详情' })).toHaveTextContent('本句已审核句块')
+    expect(screen.getByRole('region', { name: '词义详情' })).toHaveTextContent('正要给你发消息')
+    await user.click(screen.getByRole('button', { name: '揭晓后想起' }))
+    expect(screen.getByRole('button', { name: '完成今天练习' })).toBeInTheDocument()
   })
 })
