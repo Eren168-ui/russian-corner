@@ -818,7 +818,10 @@ public struct PracticeCardView: View {
                     practice.toggleDetails()
                     onLayoutChanged()
                 }
-                compactButton("朗读", systemImage: "speaker.wave.2") {
+                compactButton(
+                    practice.currentLexeme == nil ? "朗读整句" : "朗读词条",
+                    systemImage: "speaker.wave.2"
+                ) {
                     practice.speak()
                 }
                 if practice.currentLexeme != nil {

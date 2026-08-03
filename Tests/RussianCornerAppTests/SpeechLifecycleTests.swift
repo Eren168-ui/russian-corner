@@ -30,6 +30,24 @@ final class PracticeSpeechLifecycleTests: XCTestCase {
     XCTAssertEqual(synthesizer.stopCallCount, 4)
   }
 
+  func testWordReadUsesSelectedWordInsteadOfWholeSentence() throws {
+    let synthesizer = PracticeSpeechSynthesizer()
+    let model = try makeModel(
+      sentenceText: "Это дом.",
+      speechService: SpeechService(
+        voiceProvider: PracticeVoiceProvider(),
+        synthesizer: synthesizer
+      )
+    )
+
+    model.reveal()
+    model.toggleWordAnalysis(tokenIndex: 1)
+    model.speakWord()
+
+    XCTAssertEqual(synthesizer.requests.last?.text, "дом")
+    XCTAssertNotEqual(synthesizer.requests.last?.text, "Это дом.")
+  }
+
   func testCompletingFinalCardStopsSpeech() throws {
     let synthesizer = PracticeSpeechSynthesizer()
     let model = try makeModel(
@@ -49,6 +67,7 @@ final class PracticeSpeechLifecycleTests: XCTestCase {
 
   private func makeModel(
     sentenceCount: Int = 1,
+    sentenceText: String = "Я говорю.",
     speechService: SpeechService = SpeechService()
   ) throws -> PracticeViewModel {
     let sentences = (0..<sentenceCount).map { index in
@@ -56,8 +75,8 @@ final class PracticeSpeechLifecycleTests: XCTestCase {
         id: "speech-sentence-\(index)",
         promptZh: "提示 \(index)",
         cueRu: "Что вы скажете?",
-        practiceRu: "Я говорю.",
-        speechText: "Я говорю.",
+        practiceRu: sentenceText,
+        speechText: sentenceText,
         theme: "日常",
         lexemeIDs: [],
         sourcePath: "fixture.md",

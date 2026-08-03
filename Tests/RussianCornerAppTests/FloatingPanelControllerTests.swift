@@ -19,6 +19,31 @@ final class FloatingPanelControllerTests: XCTestCase {
     XCTAssertTrue(source.contains(".minimumScaleFactor(0.75)"))
   }
 
+  func testSpeechControlsNameSentenceAndWordReadingSeparately() throws {
+    let projectRoot = URL(fileURLWithPath: #filePath)
+      .deletingLastPathComponent()
+      .deletingLastPathComponent()
+      .deletingLastPathComponent()
+    let cardSource = try String(
+      contentsOf: projectRoot
+        .appendingPathComponent(
+          "Sources/RussianCornerUI/PracticeCardView.swift"
+        ),
+      encoding: .utf8
+    )
+    let detailSource = try String(
+      contentsOf: projectRoot
+        .appendingPathComponent(
+          "Sources/RussianCornerUI/PracticeDetailSection.swift"
+        ),
+      encoding: .utf8
+    )
+
+    XCTAssertTrue(cardSource.contains("朗读整句"))
+    XCTAssertTrue(detailSource.contains("朗读单词"))
+    XCTAssertTrue(detailSource.contains("practice.speakWord()"))
+  }
+
     func testCollapsedPresentationUsesDedicatedDragSurface() {
         XCTAssertFalse(
             PracticePanelPresentation.collapsed

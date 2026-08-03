@@ -131,16 +131,39 @@ public struct PracticeDetailSection: View {
         )
         HStack(alignment: .top, spacing: 10) {
             VStack(alignment: .leading, spacing: 5) {
-                Text(word.stressedForm)
-                    .font(
-                        .system(
-                            size: PracticeDetailTypography.wordHeadingSize
-                                * appModel.fontScale,
-                            weight: .semibold,
-                            design: .serif
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(word.stressedForm)
+                        .font(
+                            .system(
+                                size: PracticeDetailTypography.wordHeadingSize
+                                    * appModel.fontScale,
+                                weight: .semibold,
+                                design: .serif
+                            )
                         )
-                    )
-                    .foregroundStyle(palette.primary)
+                        .foregroundStyle(palette.primary)
+                    Button {
+                        practice.speakWord()
+                    } label: {
+                        Label("朗读单词", systemImage: "speaker.wave.2.fill")
+                            .font(
+                                .system(
+                                    size: PracticeDetailTypography.labelSize
+                                        * appModel.fontScale,
+                                    weight: .semibold
+                                )
+                            )
+                            .foregroundStyle(palette.accent)
+                            .padding(.horizontal, 7)
+                            .padding(.vertical, 4)
+                            .background(palette.accentSurface)
+                            .clipShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    .help("朗读当前词形")
+                    .accessibilityLabel("朗读单词")
+                    .accessibilityHint("只朗读当前选中的词，不朗读整句")
+                }
                 Text(summary.glossZh)
                     .font(
                         .system(

@@ -1465,6 +1465,39 @@ public final class PracticeViewModel {
     }
   }
 
+  /// 朗读当前选中的词形；与底部的整句朗读保持独立。
+  public func speakWord() {
+    guard let word = selectedWordAnalysis else { return }
+    let text = word.surfaceText.trimmingCharacters(
+      in: .whitespacesAndNewlines
+    )
+    guard !text.isEmpty else { return }
+    usedSpeechOnCurrentItem = true
+    trialTracker?.record(
+      kind: .speak,
+      context: trialContext(
+        kind: .speak,
+        occurredAt: now()
+      )
+    )
+    switch speechService.speak(
+      text,
+      language: language,
+      allowUnrelatedFallback: false
+    ) {
+    case .preferredVoice, .fallbackVoice:
+      statusMessage =
+        language == .english ? "正在朗读英语单词" : "正在朗读俄语单词"
+    case .unavailable:
+      statusMessage =
+        language == .english
+        ? "系统中没有英语语音，词义仍可正常查看"
+        : "系统中没有俄语语音，词义仍可正常查看"
+    case .emptyText:
+      statusMessage = "这个词没有可朗读内容"
+    }
+  }
+
   private func trialContext(
     kind: TrialInteractionKind,
     grade: ReviewGrade? = nil,
