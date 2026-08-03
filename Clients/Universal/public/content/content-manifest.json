@@ -19,20 +19,20 @@
   },
   "files": {
     "english-lessons.json": {
-      "sha256": "9c5d649b3292661ecea22a1d8b02177f154680d3b504998e5d6c7c522a8dece9",
-      "bytes": 19517
+      "sha256": "6f1fdd961509e5f9f831662d1b3894551dc67f283dd2e420747455791dd27751",
+      "bytes": 19745
     },
     "english-lexemes.json": {
-      "sha256": "16e45f51f2240865a831c65e20b95096c03aae2d259916a20b2d4eaa100c497d",
-      "bytes": 411533
+      "sha256": "92b4e43ee2d596233f337c146eb50e44148fe9014ce13cf9ec392492f730cad4",
+      "bytes": 314379
     },
     "english-sentences.json": {
-      "sha256": "e8dbf2a49e5b5ce0f492703633fb6abd34803f12b38796010ef1e6296cdbc389",
-      "bytes": 256306
+      "sha256": "802d328f8d06f2fb6d27066b2ff0e1422992d094a9c77457b898587f91d985d0",
+      "bytes": 185205
     },
     "english-topics.json": {
-      "sha256": "b6457b3fcf0677c51b64bb83b1484ded7476eb928a53c769ef13d1b49d5ff305",
-      "bytes": 12199
+      "sha256": "9eb25e33ae25fe342506c6cbb78d33b4e576abeec92770a81fb0f5b676a62c44",
+      "bytes": 12548
     },
     "lexemes.json": {
       "sha256": "be6751854fe6660b4d5a4cbb02c3b9c79672aab03b033ecb8b74268d69ac7b46",

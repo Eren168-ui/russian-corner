@@ -1,4 +1,4 @@
-const CACHE = 'language-corner-core-v1'
+const CACHE = 'language-corner-core-v2'
 const CORE = [
   '/',
   '/index.html',
@@ -21,7 +21,8 @@ const CORE = [
 ]
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(CORE)).then(() => self.skipWaiting()))
+  const freshRequests = CORE.map((url) => new Request(url, { cache: 'reload' }))
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(freshRequests)).then(() => self.skipWaiting()))
 })
 
 self.addEventListener('activate', (event) => {
@@ -35,7 +36,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET' || new URL(event.request.url).origin !== self.location.origin) return
   event.respondWith(
-    caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => {
+    caches.match(event.request, { ignoreVary: true }).then((cached) => cached || fetch(event.request).then((response) => {
       if (response.ok) caches.open(CACHE).then((cache) => cache.put(event.request, response.clone()))
       return response
     })),

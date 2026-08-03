@@ -17,6 +17,8 @@ describe('offline and install checklist', () => {
     expect(worker).toContain('/assets/app.js')
     expect(worker).toContain('/content/english-sentences.json')
     expect(worker).toContain('/content/supplemental-sentences.json')
+    expect(worker).toContain("new Request(url, { cache: 'reload' })")
+    expect(worker).toContain("caches.match(event.request, { ignoreVary: true })")
     expect(worker).not.toMatch(/api[_-]?key|secret|token/i)
   })
 
