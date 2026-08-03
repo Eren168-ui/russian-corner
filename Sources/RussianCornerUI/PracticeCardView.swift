@@ -124,6 +124,7 @@ public struct PracticeCardLanguageActions {
 public struct PracticeCardView: View {
     @Bindable private var appModel: AppModel
     @Bindable private var practice: PracticeViewModel
+    @State private var isAnswerSheetPresented = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
 
@@ -415,9 +416,31 @@ public struct PracticeCardView: View {
                     ? "卡片当前为自由拖放"
                     : "移动卡片位置，当前\(appModel.corner.title)"
             )
-            Text(progressText)
-                .font(.system(size: 9, weight: .medium))
-                .foregroundStyle(palette.muted)
+            Button {
+                isAnswerSheetPresented.toggle()
+            } label: {
+                HStack(spacing: 4) {
+                    Image(systemName: "square.grid.3x3")
+                        .font(.system(size: 9, weight: .semibold))
+                    Text(progressText)
+                        .font(.system(size: 9, weight: .medium))
+                }
+                .frame(minWidth: 44, minHeight: 28)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(palette.muted)
+            .help("打开今日答题卡")
+            .accessibilityLabel("打开今日答题卡，当前\(progressText)")
+            .popover(isPresented: $isAnswerSheetPresented) {
+                PracticeAnswerSheetView(
+                    items: practice.answerSheetItems
+                ) { index in
+                    practice.jumpToQuestion(at: index)
+                    isAnswerSheetPresented = false
+                    onLayoutChanged()
+                }
+            }
             Button {
                 practice.clearWordAnalysis()
                 appModel.isCollapsed = true

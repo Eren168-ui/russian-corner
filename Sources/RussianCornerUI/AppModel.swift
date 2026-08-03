@@ -599,6 +599,7 @@ public final class AppRuntime {
   private let reminderScheduler: (any ReminderSettingsScheduling)?
   private var reminderSettingsCoordinator: ReminderSettingsCoordinator?
   private let dailyQueueStore: DailyPracticeQueueStore
+  private let navigationStore: PracticeNavigationSnapshotStore
   private let notificationSettingsOpener: () -> Bool
   private let onlineDictionary: any OnlineDictionaryLookingUp =
     YandexDictionaryService()
@@ -628,6 +629,9 @@ public final class AppRuntime {
     dailyQueueStore = DailyPracticeQueueStore(
       defaults: defaults,
       language: language
+    )
+    navigationStore = PracticeNavigationSnapshotStore(
+      defaults: defaults
     )
     notificationSettingsOpener =
       injectedNotificationSettingsOpener
@@ -824,6 +828,7 @@ public final class AppRuntime {
       diagnosticFindings: findings,
       trialTracker: trialSessionCoordinator,
       onlineDictionary: onlineDictionary,
+      navigationStore: navigationStore,
       carryoverItemIDs: carryoverItemIDs
     )
     practice?.handleDisappear()

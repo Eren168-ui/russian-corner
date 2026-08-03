@@ -9,6 +9,7 @@ public enum PracticeViewModelError:
   Sendable
 {
   case answerNotRevealed
+  case assessmentAlreadyRecorded
   case transferCheckUnavailable
   case invalidTransferAnswer
 
@@ -16,6 +17,8 @@ public enum PracticeViewModelError:
     switch self {
     case .answerNotRevealed:
       return "请先显示答案，再提交评分"
+    case .assessmentAlreadyRecorded:
+      return "本题已经完成评估，可继续查看内容或前往下一题"
     case .transferCheckUnavailable:
       return "当前没有待完成的迁移检验"
     case .invalidTransferAnswer:
@@ -161,6 +164,7 @@ public final class PracticeViewModel {
   public private(set) var currentTransferExercise: TransferExercise?
   public private(set) var selectedTransferAnswerID: String?
   public private(set) var isAssessmentComplete = false
+  public private(set) var sessionNavigator: PracticeSessionNavigator
   public let targetCount: Int
   public let language: StudyLanguage
   public let newWordLimit: Int
@@ -176,6 +180,7 @@ public final class PracticeViewModel {
   private let speechService: SpeechService
   private let trialTracker: (any PracticeTrialTracking)?
   private let onlineDictionary: (any OnlineDictionaryLookingUp)?
+  private let navigationStore: PracticeNavigationSnapshotStore?
   private let now: () -> Date
   private let calendar: Calendar
   private let sessionDayStart: Date
@@ -198,6 +203,18 @@ public final class PracticeViewModel {
 
   public var currentItem: PracticeQueueEntry? {
     queue.indices.contains(currentIndex) ? queue[currentIndex] : nil
+  }
+
+  public var answerSheetItems: [PracticeAnswerSheetItem] {
+    queue.indices.map { index in
+      PracticeAnswerSheetItem(
+        index: index,
+        number: index + 1,
+        status: sessionNavigator.status(at: index),
+        isCurrent: index == currentIndex,
+        isRetry: queue[index].isRetry
+      )
+    }
   }
 
   public var currentContent: PracticeContent? {
@@ -428,6 +445,7 @@ public final class PracticeViewModel {
     speechService: SpeechService = SpeechService(),
     trialTracker: (any PracticeTrialTracking)? = nil,
     onlineDictionary: (any OnlineDictionaryLookingUp)? = nil,
+    navigationStore: PracticeNavigationSnapshotStore? = nil,
     carryoverItemIDs: Set<PracticeItemIdentity> = []
   ) throws {
     self.repository = repository
@@ -441,6 +459,7 @@ public final class PracticeViewModel {
     self.speechService = speechService
     self.trialTracker = trialTracker
     self.onlineDictionary = onlineDictionary
+    self.navigationStore = navigationStore
     let instant = now()
     sessionDayStart = calendar.startOfDay(for: instant)
     let dayIndex = Int(
@@ -887,9 +906,30 @@ public final class PracticeViewModel {
     remainingSentenceCardCount = sentenceCardsRemaining
     successfulToday = successfulTodaySet
     completedToday = successfulTodaySet.count
-    queue = catalog.topics.isEmpty
+    let generatedQueue = catalog.topics.isEmpty
       ? lexemeEntries + sentenceEntries
       : sentenceEntries + lexemeEntries
+    if let snapshot = navigationStore?.loadSnapshot(
+      language: language,
+      dayStart: sessionDayStart,
+      calendar: calendar
+    ),
+      let restoredQueue = Self.restoreQueue(
+        keys: snapshot.navigator.keys,
+        generatedQueue: generatedQueue,
+        lexemesByID: lexemesByID,
+        sentencesByID: sentencesByID
+      )
+    {
+      queue = restoredQueue
+      sessionNavigator = snapshot.navigator
+      currentIndex = snapshot.currentIndex
+      restorePresentationForCurrentStatus()
+    } else {
+      queue = generatedQueue
+      sessionNavigator = PracticeSessionNavigator(queue: generatedQueue)
+      persistNavigation()
+    }
   }
 
   public func needsTemporalReload(at instant: Date) -> Bool {
@@ -905,6 +945,8 @@ public final class PracticeViewModel {
   public func reveal() {
     guard currentItem != nil else { return }
     isRevealed = true
+    sessionNavigator.markOpened(at: currentIndex)
+    persistNavigation()
     refreshRecallTimer()
     trialTracker?.record(
       kind: .reveal,
@@ -1170,6 +1212,9 @@ public final class PracticeViewModel {
       throw PracticeViewModelError.answerNotRevealed
     }
     guard let item = currentItem else { return }
+    guard sessionNavigator.isPending(at: currentIndex) else {
+      throw PracticeViewModelError.assessmentAlreadyRecorded
+    }
     let instant = now()
     let elapsed = max(0, instant.timeIntervalSince(recallStartedAt))
     let wasNewItem = states[item.identity] == nil && !item.isRetry
@@ -1225,6 +1270,12 @@ public final class PracticeViewModel {
         )
       }
     }
+    sessionNavigator.markAssessed(
+      at: currentIndex,
+      needsRetry: grade == .again
+    )
+    sessionNavigator.synchronize(with: queue)
+    persistNavigation()
     trialTracker?.record(
       kind: .grade,
       context: trialContext(
@@ -1258,7 +1309,14 @@ public final class PracticeViewModel {
         )
       )
     }
-    advance(status: nil)
+    advanceToNextPending()
+  }
+
+  public func jumpToQuestion(at index: Int) {
+    guard queue.indices.contains(index), index != currentIndex else {
+      return
+    }
+    move(to: index, status: nil)
   }
 
   public func prioritizeSentenceIDs(_ sentenceIDs: [String]) {
@@ -1284,6 +1342,7 @@ public final class PracticeViewModel {
       }
     }
     queue = completedPrefix + prioritized + remaining
+    sessionNavigator.synchronize(with: queue)
     isRevealed = false
     selectedRecallOutcome = nil
     currentTransferExercise = nil
@@ -1294,12 +1353,32 @@ public final class PracticeViewModel {
     remainingRecallSeconds = 3
     recallStartedAt = now()
     statusMessage = "已把场景中选中的表达放到当前复习队列"
+    persistNavigation()
   }
 
   private func advance(status: String?) {
+    advanceToNextPending(status: status)
+  }
+
+  private func advanceToNextPending(status: String? = nil) {
     guard currentItem != nil else { return }
+    guard let nextIndex = sessionNavigator.nextPendingIndex(
+      after: currentIndex
+    ) else {
+      move(to: queue.count, status: status)
+      return
+    }
+    guard nextIndex != currentIndex else {
+      statusMessage = "这道题还没有完成评估"
+      persistNavigation()
+      return
+    }
+    move(to: nextIndex, status: status)
+  }
+
+  private func move(to index: Int, status: String?) {
     speechService.stop()
-    currentIndex += 1
+    currentIndex = index
     isRevealed = false
     selectedRecallOutcome = nil
     currentTransferExercise = nil
@@ -1312,9 +1391,33 @@ public final class PracticeViewModel {
     remainingRecallSeconds = 3
     recallStartedAt = now()
     statusMessage = status
+    restorePresentationForCurrentStatus()
+    persistNavigation()
     if isComplete {
       trialTracker?.close(reason: .completed)
     }
+  }
+
+  private func restorePresentationForCurrentStatus() {
+    guard queue.indices.contains(currentIndex) else { return }
+    switch sessionNavigator.status(at: currentIndex) {
+    case .assessed, .needsRetry:
+      isRevealed = true
+      isAssessmentComplete = true
+      statusMessage = "本题已评估；当前为只读复习"
+    case .unseen, .openedUnassessed:
+      break
+    }
+  }
+
+  private func persistNavigation() {
+    navigationStore?.save(
+      navigator: sessionNavigator,
+      currentIndex: currentIndex,
+      language: language,
+      dayStart: sessionDayStart,
+      queue: queue
+    )
   }
 
   public func showStatus(_ message: String) {
@@ -1577,6 +1680,47 @@ public final class PracticeViewModel {
     let coreLimit = max(0, slotCount - supplementLimit)
     return Array(core.prefix(coreLimit))
       + Array(supplement.prefix(supplementLimit))
+  }
+
+  private static func restoreQueue(
+    keys: [PracticeSessionEntryKey],
+    generatedQueue: [PracticeQueueEntry],
+    lexemesByID: [String: Lexeme],
+    sentencesByID: [String: SentenceCard]
+  ) -> [PracticeQueueEntry]? {
+    let generatedKeys = PracticeSessionNavigator(
+      queue: generatedQueue
+    ).keys
+    let generatedByKey = Dictionary(
+      uniqueKeysWithValues: zip(generatedKeys, generatedQueue)
+    )
+    var restored: [PracticeQueueEntry] = []
+    restored.reserveCapacity(keys.count)
+    for key in keys {
+      if let entry = generatedByKey[key] {
+        restored.append(entry)
+        continue
+      }
+      let content: PracticeContent
+      switch key.kind {
+      case .lexeme:
+        guard let lexeme = lexemesByID[key.itemID] else { return nil }
+        content = .lexeme(lexeme)
+      case .sentence:
+        guard let sentence = sentencesByID[key.itemID] else {
+          return nil
+        }
+        content = .sentence(sentence)
+      }
+      restored.append(
+        PracticeQueueEntry(
+          content: content,
+          isRetry: key.occurrence > 0,
+          origin: key.occurrence > 0 ? .sameDayRetry : .todayNew
+        )
+      )
+    }
+    return restored
   }
 
   private static func dailyOrder<Item: Identifiable>(

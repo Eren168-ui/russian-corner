@@ -200,6 +200,126 @@ final class PracticeViewModelTests: XCTestCase {
     XCTAssertNil(fixture.model.selectedWordAnalysis)
   }
 
+  func testJumpToQuestionLeavesSkippedCardsPending() throws {
+    let fixture = try makeFixture(sentenceCount: 6)
+
+    fixture.model.jumpToQuestion(at: 4)
+
+    XCTAssertEqual(fixture.model.currentIndex, 4)
+    XCTAssertEqual(
+      fixture.model.sessionNavigator.status(at: 0),
+      .unseen
+    )
+    XCTAssertTrue(fixture.model.sessionNavigator.isPending(at: 0))
+    XCTAssertTrue(try fixture.repository.reviewEvents().isEmpty)
+  }
+
+  func testNextFromLastQuestionWrapsToEarlierPendingQuestion() throws {
+    let fixture = try makeFixture(sentenceCount: 6)
+    fixture.model.jumpToQuestion(at: 5)
+
+    fixture.model.next()
+
+    XCTAssertEqual(fixture.model.currentIndex, 0)
+  }
+
+  func testRevealedQuestionRemainsOpenedUnassessedAfterJump() throws {
+    let fixture = try makeFixture(sentenceCount: 3)
+    fixture.model.reveal()
+
+    fixture.model.jumpToQuestion(at: 2)
+    fixture.model.jumpToQuestion(at: 0)
+
+    XCTAssertEqual(
+      fixture.model.sessionNavigator.status(at: 0),
+      .openedUnassessed
+    )
+    XCTAssertFalse(fixture.model.isRevealed)
+    XCTAssertFalse(fixture.model.isAssessmentComplete)
+  }
+
+  func testAssessedQuestionReopensReadOnlyWithoutDuplicateEvent() throws {
+    let fixture = try makeFixture(sentenceCount: 3)
+    fixture.model.reveal()
+    try fixture.model.submitRecallOutcome(.coreMeaningWithUsageIssue)
+    let exercise = try XCTUnwrap(
+      fixture.model.currentTransferExercise
+    )
+    try fixture.model.submitTransferAnswer(
+      optionID: exercise.correctOptionID
+    )
+    fixture.model.jumpToQuestion(at: 1)
+
+    fixture.model.jumpToQuestion(at: 0)
+
+    XCTAssertTrue(fixture.model.isRevealed)
+    XCTAssertTrue(fixture.model.isAssessmentComplete)
+    XCTAssertEqual(
+      fixture.model.statusMessage,
+      "本题已评估；当前为只读复习"
+    )
+    XCTAssertEqual(try fixture.repository.reviewEvents().count, 1)
+    XCTAssertThrowsError(try fixture.model.grade(.easy)) { error in
+      XCTAssertEqual(
+        error as? PracticeViewModelError,
+        .assessmentAlreadyRecorded
+      )
+    }
+  }
+
+  func testAgainAppendsVisibleRetryQuestion() throws {
+    let fixture = try makeFixture(sentenceCount: 3)
+    let originalCount = fixture.model.totalCount
+    fixture.model.reveal()
+
+    try fixture.model.submitRecallOutcome(.unknown)
+
+    XCTAssertEqual(fixture.model.totalCount, originalCount + 1)
+    XCTAssertEqual(
+      fixture.model.answerSheetItems.first?.status,
+      .needsRetry
+    )
+    XCTAssertEqual(fixture.model.answerSheetItems.last?.isRetry, true)
+    XCTAssertEqual(
+      fixture.model.answerSheetItems.last?.status,
+      .unseen
+    )
+  }
+
+  func testSameDayNavigationSnapshotRestoresCurrentQuestion() throws {
+    let suiteName = "PracticeViewModelNavigation.\(UUID())"
+    let defaults = UserDefaults(suiteName: suiteName)!
+    defaults.removePersistentDomain(forName: suiteName)
+    let navigationStore = PracticeNavigationSnapshotStore(
+      defaults: defaults
+    )
+    let repository = try makeRepository()
+    let catalog = makeCatalog(lexemeCount: 0, sentenceCount: 6)
+    let first = try PracticeViewModel(
+      catalog: catalog,
+      repository: repository,
+      now: { self.start },
+      calendar: utcCalendar,
+      navigationStore: navigationStore
+    )
+    first.jumpToQuestion(at: 4)
+    first.reveal()
+
+    let restored = try PracticeViewModel(
+      catalog: catalog,
+      repository: repository,
+      now: { self.start.addingTimeInterval(3_600) },
+      calendar: utcCalendar,
+      navigationStore: navigationStore
+    )
+
+    XCTAssertEqual(restored.currentIndex, 4)
+    XCTAssertEqual(
+      restored.sessionNavigator.status(at: 4),
+      .openedUnassessed
+    )
+  }
+
   func testPromptSwitchesFromChineseToRussianCueAtMasteryThree() throws {
     let fixture = try makeFixture(
       initialState: ReviewState(masteryLevel: 3, dueAt: start)
@@ -1154,7 +1274,8 @@ final class PracticeViewModelTests: XCTestCase {
     sentenceCount: Int = 1,
     initialState: ReviewState? = nil,
     cueRu: String = "Что вы скажете о работе сегодня?",
-    now: @escaping () -> Date = { Date(timeIntervalSince1970: 1_700_000_000) }
+    now: @escaping () -> Date = { Date(timeIntervalSince1970: 1_700_000_000) },
+    navigationStore: PracticeNavigationSnapshotStore? = nil
   ) throws -> (
     model: PracticeViewModel,
     repository: ProgressRepository
@@ -1192,7 +1313,8 @@ final class PracticeViewModelTests: XCTestCase {
       repository: repository,
       targetCount: targetCount,
       mode: .quiet,
-      now: now
+      now: now,
+      navigationStore: navigationStore
     )
     return (model, repository)
   }
