@@ -4,6 +4,21 @@ import XCTest
 @testable import RussianCornerUI
 
 final class FloatingPanelControllerTests: XCTestCase {
+  func testPracticeCardBrandIsKeptOnOneLine() throws {
+    let source = try String(
+      contentsOf: URL(fileURLWithPath: #filePath)
+        .deletingLastPathComponent()
+        .deletingLastPathComponent()
+        .deletingLastPathComponent()
+        .appendingPathComponent("Sources/RussianCornerUI/PracticeCardView.swift"),
+      encoding: .utf8
+    )
+
+    XCTAssertTrue(source.contains("Text(\"LANGUAGE CORNER\")"))
+    XCTAssertTrue(source.contains(".lineLimit(1)"))
+    XCTAssertTrue(source.contains(".minimumScaleFactor(0.75)"))
+  }
+
     func testCollapsedPresentationUsesDedicatedDragSurface() {
         XCTAssertFalse(
             PracticePanelPresentation.collapsed
