@@ -211,15 +211,6 @@ public struct PracticeCardView: View {
             header
             Divider().overlay(palette.border)
             mainContent
-            if practice.isStructuredRecallPresented,
-                !practice.isComplete
-            {
-                Divider().overlay(palette.border)
-                structuredRecallSection
-                    .padding(.horizontal, 18)
-                    .padding(.vertical, 9)
-                    .frame(maxHeight: 118)
-            }
             if practice.isDetailExpanded, !practice.isComplete {
                 Divider().overlay(palette.border)
                 PracticeDetailSection(
@@ -234,6 +225,15 @@ public struct PracticeCardView: View {
                     maxHeight: practice.selectedWordAnalysis == nil
                         ? 136 : 215
                 )
+            }
+            if practice.isStructuredRecallPresented,
+                !practice.isComplete
+            {
+                Divider().overlay(palette.border)
+                structuredRecallSection
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 9)
+                    .frame(maxHeight: 118)
             }
             Divider().overlay(palette.border)
             bottomControls

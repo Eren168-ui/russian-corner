@@ -84,6 +84,42 @@ final class FloatingPanelControllerTests: XCTestCase {
         )
     }
 
+    func testWordDetailsRenderBeforeRecallAssessment() throws {
+        let projectRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let source = try String(
+            contentsOf: projectRoot
+                .appendingPathComponent("Sources")
+                .appendingPathComponent("RussianCornerUI")
+                .appendingPathComponent("PracticeCardView.swift"),
+            encoding: .utf8
+        )
+        let cardStart = try XCTUnwrap(
+            source.range(of: "private var standardPracticeCard")
+        ).lowerBound
+        let cardEnd = try XCTUnwrap(
+            source.range(
+                of: "private var standardCardPresentation",
+                range: cardStart..<source.endIndex
+            )
+        ).lowerBound
+        let cardSource = source[cardStart..<cardEnd]
+        let details = try XCTUnwrap(
+            cardSource.range(of: "if practice.isDetailExpanded")
+        )
+        let assessment = try XCTUnwrap(
+            cardSource.range(of: "if practice.isStructuredRecallPresented")
+        )
+
+        XCTAssertLessThan(
+            details.lowerBound,
+            assessment.lowerBound,
+            "word details must appear before the action that advances the card"
+        )
+    }
+
     func testDetailResizeKeepsTopEdgeFixed() {
         let frame = FloatingPanelController.topAnchoredFrame(
             currentFrame: CGRect(
