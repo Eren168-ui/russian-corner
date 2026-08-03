@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "sourcePolicy": "reviewed-local-resources-read-only",
+  "counts": {
+    "english": {
+      "lexemes": 400,
+      "sentences": 200,
+      "topics": 20,
+      "lessons": 20
+    },
+    "russian": {
+      "lexemes": 360,
+      "supplementalLexemes": 80,
+      "sentences": 214,
+      "supplementalSentences": 60,
+      "topics": 32,
+      "speakingChallenges": 24
+    }
+  },
+  "files": {
+    "english-lessons.json": {
+      "sha256": "9c5d649b3292661ecea22a1d8b02177f154680d3b504998e5d6c7c522a8dece9",
+      "bytes": 19517
+    },
+    "english-lexemes.json": {
+      "sha256": "16e45f51f2240865a831c65e20b95096c03aae2d259916a20b2d4eaa100c497d",
+      "bytes": 411533
+    },
+    "english-sentences.json": {
+      "sha256": "e8dbf2a49e5b5ce0f492703633fb6abd34803f12b38796010ef1e6296cdbc389",
+      "bytes": 256306
+    },
+    "english-topics.json": {
+      "sha256": "b6457b3fcf0677c51b64bb83b1484ded7476eb928a53c769ef13d1b49d5ff305",
+      "bytes": 12199
+    },
+    "lexemes.json": {
+      "sha256": "be6751854fe6660b4d5a4cbb02c3b9c79672aab03b033ecb8b74268d69ac7b46",
+      "bytes": 197684
+    },
+    "long-term-sentences.json": {
+      "sha256": "2f5c6756701af4c374ee2863bb5b762bcde2793db0a359cc008018e2e84b475e",
+      "bytes": 276266
+    },
+    "speaking-challenges.json": {
+      "sha256": "bb9df3da965e857a50f92f56e9caba1380a2554326042e20efa9a4d331dc3b7f",
+      "bytes": 24435
+    },
+    "supplemental-lexemes.json": {
+      "sha256": "d19f09646cacdeb030a9ed0889d5415521ba5912c49d457bf9c2eb653bd0abb9",
+      "bytes": 103766
+    },
+    "supplemental-sentences.json": {
+      "sha256": "c38358450713766cd36cd8bb5feffe7743ea3fd60f74e77320852e912c437c43",
+      "bytes": 96686
+    },
+    "topics.json": {
+      "sha256": "f5097e641216c20c1b8db14e052e519d8c65a2bcf9537d2c2fbb2151d5cf412b",
+      "bytes": 7394
+    }
+  }
+}
