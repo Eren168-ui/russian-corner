@@ -66,6 +66,24 @@ final class FloatingPanelControllerTests: XCTestCase {
         )
     }
 
+    func testWordDetailsAndRecallAssessmentGetSeparateVerticalSpace() {
+        let presentation = PracticePanelPresentation.resolve(
+            isCollapsed: false,
+            isDetailExpanded: true,
+            hasSelectedWord: true,
+            isTransferPresented: true
+        )
+
+        XCTAssertEqual(
+            presentation.size.width,
+            PracticePanelPresentation.details.size.width
+        )
+        XCTAssertGreaterThan(
+            presentation.size.height,
+            PracticePanelPresentation.details.size.height
+        )
+    }
+
     func testDetailResizeKeepsTopEdgeFixed() {
         let frame = FloatingPanelController.topAnchoredFrame(
             currentFrame: CGRect(

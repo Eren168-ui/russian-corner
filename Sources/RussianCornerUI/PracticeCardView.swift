@@ -218,8 +218,9 @@ public struct PracticeCardView: View {
                 structuredRecallSection
                     .padding(.horizontal, 18)
                     .padding(.vertical, 9)
-                    .frame(maxHeight: 136)
-            } else if practice.isDetailExpanded, !practice.isComplete {
+                    .frame(maxHeight: 118)
+            }
+            if practice.isDetailExpanded, !practice.isComplete {
                 Divider().overlay(palette.border)
                 PracticeDetailSection(
                     appModel: appModel,
@@ -570,11 +571,16 @@ public struct PracticeCardView: View {
 
     private var recallOutcomeSection: some View {
         VStack(alignment: .leading, spacing: 7) {
-            HStack {
-                Text("刚才实际说到了哪一步？")
-                    .font(.system(size: 11, weight: .semibold))
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("本次记忆评估")
+                        .font(.system(size: 11, weight: .semibold))
+                    Text("刚才实际说到了哪一步？")
+                        .font(.system(size: 9))
+                        .foregroundStyle(palette.muted)
+                }
                 Spacer()
-                Text("按真实表现选择")
+                Text("用于安排下次复习")
                     .font(.system(size: 8))
                     .foregroundStyle(palette.muted)
             }
@@ -632,6 +638,9 @@ public struct PracticeCardView: View {
         _ exercise: TransferExercise
     ) -> some View {
         VStack(alignment: .leading, spacing: 6) {
+            Text("记忆迁移检验 · 用于安排下次复习")
+                .font(.system(size: 8.5, weight: .medium))
+                .foregroundStyle(palette.muted)
             Text("再验一次：\(exercise.prompt)")
                 .font(.system(size: 10, weight: .semibold))
                 .foregroundStyle(palette.accent)

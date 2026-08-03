@@ -6,6 +6,7 @@ public enum PracticePanelPresentation: Equatable, Sendable {
   case collapsed
   case compact
   case details
+  case detailsWithAssessment
 
   public var size: CGSize {
     switch self {
@@ -15,6 +16,8 @@ public enum PracticePanelPresentation: Equatable, Sendable {
       CGSize(width: 360, height: 240)
     case .details:
       CGSize(width: 360, height: 386)
+    case .detailsWithAssessment:
+      CGSize(width: 360, height: 510)
     }
   }
 
@@ -30,6 +33,9 @@ public enum PracticePanelPresentation: Equatable, Sendable {
     isReflectionPresented: Bool = false
   ) -> Self {
     if isCollapsed { return .collapsed }
+    if isTransferPresented && (hasSelectedWord || isDetailExpanded) {
+      return .detailsWithAssessment
+    }
     return hasSelectedWord || isDetailExpanded
       || isTransferPresented || isReflectionPresented
       ? .details : .compact
