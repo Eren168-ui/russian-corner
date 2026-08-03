@@ -16,6 +16,16 @@ public enum PracticeSessionItemStatus:
   }
 }
 
+public struct PracticeAnswerSheetItem: Identifiable, Equatable, Sendable {
+  public let index: Int
+  public let number: Int
+  public let status: PracticeSessionItemStatus
+  public let isCurrent: Bool
+  public let isRetry: Bool
+
+  public var id: Int { index }
+}
+
 public struct PracticeSessionEntryKey:
   Hashable,
   Codable,
