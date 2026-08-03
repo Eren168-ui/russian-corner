@@ -55,6 +55,17 @@ let package = Package(
             name: "RussianCornerResourceProbe",
             dependencies: ["RussianCornerCore"]
         ),
+        .executableTarget(
+            name: "RussianCornerEnglishAudit",
+            dependencies: [
+                "RussianCornerCore",
+                "RussianCornerPlatform",
+            ]
+        ),
+        .executableTarget(
+            name: "RussianCornerEnglishContentBuilder",
+            dependencies: ["RussianCornerCore"]
+        ),
         .testTarget(
             name: "RussianCornerCoreTests",
             dependencies: ["RussianCornerCore"]

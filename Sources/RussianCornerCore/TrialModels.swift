@@ -99,6 +99,10 @@ public struct TrialInteraction: Codable, Equatable, Sendable {
     public let openedDetails: Bool
     public let practiceMode: PracticeMode
     public let createdAt: Date
+    public let recallOutcome: RecallOutcome?
+    public let transferExerciseID: String?
+    public let transferAnswerID: String?
+    public let transferCorrect: Bool?
 
     public init(
         sessionID: UUID,
@@ -112,7 +116,11 @@ public struct TrialInteraction: Codable, Equatable, Sendable {
         usedSpeech: Bool,
         openedDetails: Bool,
         practiceMode: PracticeMode,
-        createdAt: Date
+        createdAt: Date,
+        recallOutcome: RecallOutcome? = nil,
+        transferExerciseID: String? = nil,
+        transferAnswerID: String? = nil,
+        transferCorrect: Bool? = nil
     ) {
         self.sessionID = sessionID
         self.itemType = itemType
@@ -126,6 +134,10 @@ public struct TrialInteraction: Codable, Equatable, Sendable {
         self.openedDetails = openedDetails
         self.practiceMode = practiceMode
         self.createdAt = createdAt
+        self.recallOutcome = recallOutcome
+        self.transferExerciseID = transferExerciseID
+        self.transferAnswerID = transferAnswerID
+        self.transferCorrect = transferCorrect
     }
 }
 

@@ -52,6 +52,20 @@ final class FloatingPanelControllerTests: XCTestCase {
         XCTAssertEqual(presentation.size, CGSize(width: 360, height: 386))
     }
 
+    func testTransferCheckExtendsOnlyWindowHeight() {
+        let presentation = PracticePanelPresentation.resolve(
+            isCollapsed: false,
+            isDetailExpanded: false,
+            isTransferPresented: true
+        )
+
+        XCTAssertEqual(presentation, .details)
+        XCTAssertEqual(
+            presentation.size,
+            CGSize(width: 360, height: 386)
+        )
+    }
+
     func testDetailResizeKeepsTopEdgeFixed() {
         let frame = FloatingPanelController.topAnchoredFrame(
             currentFrame: CGRect(
@@ -79,10 +93,24 @@ final class FloatingPanelControllerTests: XCTestCase {
         )
     }
 
+    func testRecallChoicesDescribeEvidenceInsteadOfGrades() {
+        XCTAssertEqual(
+            PracticeCardMetrics.recallOutcomeTitles,
+            [
+                "3 秒内完整说出",
+                "大意对，用法有卡顿",
+                "看答案才想起",
+                "不会",
+            ]
+        )
+    }
+
     func testCardMoreMenuExposesEveryUtilityAction() {
         XCTAssertEqual(
             PracticeCardUtilityAction.allCases.map(\.title),
             [
+                "今日英语场景…",
+                "收集英语表达…",
                 "设置…",
                 "学习记录…",
                 "今日反馈…",

@@ -121,6 +121,10 @@ final class TrialInteractionRecord {
     var openedDetails: Bool
     var practiceModeRaw: String
     var createdAt: Date
+    var recallOutcomeRaw: String?
+    var transferExerciseID: String?
+    var transferAnswerID: String?
+    var transferCorrect: Bool?
 
     init(interaction: TrialInteraction) {
         id = UUID()
@@ -136,6 +140,10 @@ final class TrialInteractionRecord {
         openedDetails = interaction.openedDetails
         practiceModeRaw = interaction.practiceMode.rawValue
         createdAt = interaction.createdAt
+        recallOutcomeRaw = interaction.recallOutcome?.rawValue
+        transferExerciseID = interaction.transferExerciseID
+        transferAnswerID = interaction.transferAnswerID
+        transferCorrect = interaction.transferCorrect
     }
 
     func value() throws -> TrialInteraction {
@@ -186,7 +194,13 @@ final class TrialInteractionRecord {
             usedSpeech: usedSpeech,
             openedDetails: openedDetails,
             practiceMode: practiceMode,
-            createdAt: createdAt
+            createdAt: createdAt,
+            recallOutcome: recallOutcomeRaw.flatMap(
+                RecallOutcome.init(rawValue:)
+            ),
+            transferExerciseID: transferExerciseID,
+            transferAnswerID: transferAnswerID,
+            transferCorrect: transferCorrect
         )
     }
 
@@ -316,6 +330,7 @@ public final class TrialRepository: TrialDataStoring {
 
     public static func makeContainer(
         inMemory: Bool = false,
+        language: StudyLanguage = .russian,
         applicationSupportDirectory: URL? = nil,
         fileManager: FileManager = .default
     ) throws -> ModelContainer {
@@ -348,12 +363,15 @@ public final class TrialRepository: TrialDataStoring {
                 at: appDirectory,
                 withIntermediateDirectories: true
             )
+            let storeName =
+                language == .russian
+                ? "RussianCornerTrial" : "EnglishCornerTrial"
             let storeURL = appDirectory.appendingPathComponent(
-                "RussianCornerTrial.store",
+                "\(storeName).store",
                 isDirectory: false
             )
             configuration = ModelConfiguration(
-                "RussianCornerTrial",
+                storeName,
                 schema: schema,
                 url: storeURL,
                 cloudKitDatabase: .none

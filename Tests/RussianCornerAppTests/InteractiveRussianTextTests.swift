@@ -6,6 +6,26 @@ import XCTest
 @testable import RussianCornerUI
 
 final class InteractiveRussianTextTests: XCTestCase {
+    func testTargetBuilderLinksEveryEnglishWordAndPreservesPunctuation() {
+        let value = InteractiveTargetTextBuilder.make(
+            text: "I'm ready—are you?",
+            language: .english,
+            selectedTokenIndex: 1
+        )
+
+        XCTAssertEqual(String(value.characters), "I'm ready—are you?")
+        let links = value.runs.compactMap(\.link)
+        XCTAssertEqual(links.count, 4)
+        XCTAssertEqual(
+            InteractiveTargetTextBuilder.tokenIndex(from: links[0]),
+            0
+        )
+        XCTAssertEqual(
+            InteractiveTargetTextBuilder.tokenIndex(from: links[3]),
+            3
+        )
+    }
+
     func testDetailTypographyIsReadableButSmallerThanMainAnswer() {
         XCTAssertEqual(PracticeDetailTypography.bodySize, 14)
         XCTAssertEqual(PracticeDetailTypography.relatedRussianSize, 16)
@@ -69,6 +89,18 @@ final class InteractiveRussianTextTests: XCTestCase {
                 "%D1%87%D1%83%D0%B2%D1%81%D1%82%D0%B2%D0%BE%D0%B2%D0%B0%D1%82%D1%8C"
             )
         )
+    }
+
+    func testEnglishWiktionaryUsesEnglishHost() throws {
+        let url = try XCTUnwrap(
+            OnlineDictionary.wiktionaryURL(
+                for: "about to",
+                language: .english
+            )
+        )
+
+        XCTAssertEqual(url.scheme, "https")
+        XCTAssertEqual(url.host, "en.wiktionary.org")
     }
 
     func testEveryBundledTrialSentenceRendersEveryWordAsALink() throws {

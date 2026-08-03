@@ -44,11 +44,31 @@ struct RussianCornerResourceProbe {
                         "\(catalog.longTermSentences.count)"
                 )
             }
+            let english = try EnglishContentBundle(
+                resourceDirectory: resourceDirectory
+            )
+            guard english.catalog.lexemes.count == 400,
+                  english.catalog.sentences.count == 200,
+                  english.topics.count == 20,
+                  english.lessons.count == 20
+            else {
+                throw ProbeError(
+                    message:
+                        "unexpected English resource counts "
+                        + "\(english.catalog.lexemes.count)/"
+                        + "\(english.catalog.sentences.count)/"
+                        + "\(english.topics.count)/"
+                        + "\(english.lessons.count)"
+                )
+            }
             print(
-                "resource_probe=PASS lexemes=440 sentences=72 trial=50 " +
+                "resource_probe=PASS russian_lexemes=440 " +
+                    "russian_sentences=72 trial=50 " +
                     "topics=32 long_term_sentences=274 " +
                     "supplemental_lexemes=80 " +
                     "supplemental_sentences=60 speaking_challenges=24 " +
+                    "english_lexemes=400 english_sentences=200 " +
+                    "english_topics=20 english_lessons=20 " +
                     "directory=\(resourceDirectory.path)"
             )
         } catch {

@@ -1,0 +1,382 @@
+[
+  {
+    "descriptionZh" : "自然聊近况、解释忙碌状态并约下一次见面。",
+    "id" : "en.topic.01.reconnecting",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.01.reconnecting.01",
+      "en.topic.01.reconnecting.02",
+      "en.topic.01.reconnecting.03",
+      "en.topic.01.reconnecting.04",
+      "en.topic.01.reconnecting.05",
+      "en.topic.01.reconnecting.06",
+      "en.topic.01.reconnecting.07",
+      "en.topic.01.reconnecting.08",
+      "en.topic.01.reconnecting.09",
+      "en.topic.01.reconnecting.10"
+    ],
+    "titleTarget" : "Reconnecting and catching up",
+    "titleZh" : "重逢与近况"
+  },
+  {
+    "descriptionZh" : "确认时间、提出替代方案并处理临时变化。",
+    "id" : "en.topic.02.scheduling",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.02.scheduling.01",
+      "en.topic.02.scheduling.02",
+      "en.topic.02.scheduling.03",
+      "en.topic.02.scheduling.04",
+      "en.topic.02.scheduling.05",
+      "en.topic.02.scheduling.06",
+      "en.topic.02.scheduling.07",
+      "en.topic.02.scheduling.08",
+      "en.topic.02.scheduling.09",
+      "en.topic.02.scheduling.10"
+    ],
+    "titleTarget" : "Plans and scheduling",
+    "titleZh" : "计划与改期"
+  },
+  {
+    "descriptionZh" : "没听懂时追问、换一种说法并复述确认。",
+    "id" : "en.topic.03.clarifying",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.03.clarifying.01",
+      "en.topic.03.clarifying.02",
+      "en.topic.03.clarifying.03",
+      "en.topic.03.clarifying.04",
+      "en.topic.03.clarifying.05",
+      "en.topic.03.clarifying.06",
+      "en.topic.03.clarifying.07",
+      "en.topic.03.clarifying.08",
+      "en.topic.03.clarifying.09",
+      "en.topic.03.clarifying.10"
+    ],
+    "titleTarget" : "Clarifying and repairing",
+    "titleZh" : "澄清与补救"
+  },
+  {
+    "descriptionZh" : "表达真实看法、委婉不同意并补充理由。",
+    "id" : "en.topic.04.opinions",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.04.opinions.01",
+      "en.topic.04.opinions.02",
+      "en.topic.04.opinions.03",
+      "en.topic.04.opinions.04",
+      "en.topic.04.opinions.05",
+      "en.topic.04.opinions.06",
+      "en.topic.04.opinions.07",
+      "en.topic.04.opinions.08",
+      "en.topic.04.opinions.09",
+      "en.topic.04.opinions.10"
+    ],
+    "titleTarget" : "Opinions and reactions",
+    "titleZh" : "观点与反应"
+  },
+  {
+    "descriptionZh" : "汇报进度、说明卡点并争取支持。",
+    "id" : "en.topic.05.work-study",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.05.work-study.01",
+      "en.topic.05.work-study.02",
+      "en.topic.05.work-study.03",
+      "en.topic.05.work-study.04",
+      "en.topic.05.work-study.05",
+      "en.topic.05.work-study.06",
+      "en.topic.05.work-study.07",
+      "en.topic.05.work-study.08",
+      "en.topic.05.work-study.09",
+      "en.topic.05.work-study.10"
+    ],
+    "titleTarget" : "Work and study updates",
+    "titleZh" : "工作与学习进展"
+  },
+  {
+    "descriptionZh" : "提出请求、说明边界并礼貌协商。",
+    "id" : "en.topic.06.favors",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.06.favors.01",
+      "en.topic.06.favors.02",
+      "en.topic.06.favors.03",
+      "en.topic.06.favors.04",
+      "en.topic.06.favors.05",
+      "en.topic.06.favors.06",
+      "en.topic.06.favors.07",
+      "en.topic.06.favors.08",
+      "en.topic.06.favors.09",
+      "en.topic.06.favors.10"
+    ],
+    "titleTarget" : "Requests and favors",
+    "titleZh" : "请求与帮忙"
+  },
+  {
+    "descriptionZh" : "发出邀请、婉拒并提出替代方案。",
+    "id" : "en.topic.07.invitations",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.07.invitations.01",
+      "en.topic.07.invitations.02",
+      "en.topic.07.invitations.03",
+      "en.topic.07.invitations.04",
+      "en.topic.07.invitations.05",
+      "en.topic.07.invitations.06",
+      "en.topic.07.invitations.07",
+      "en.topic.07.invitations.08",
+      "en.topic.07.invitations.09",
+      "en.topic.07.invitations.10"
+    ],
+    "titleTarget" : "Invitations and social plans",
+    "titleZh" : "邀请与社交安排"
+  },
+  {
+    "descriptionZh" : "询问细节、比较选择并处理退换货。",
+    "id" : "en.topic.08.shopping",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.08.shopping.01",
+      "en.topic.08.shopping.02",
+      "en.topic.08.shopping.03",
+      "en.topic.08.shopping.04",
+      "en.topic.08.shopping.05",
+      "en.topic.08.shopping.06",
+      "en.topic.08.shopping.07",
+      "en.topic.08.shopping.08",
+      "en.topic.08.shopping.09",
+      "en.topic.08.shopping.10"
+    ],
+    "titleTarget" : "Shopping and returns",
+    "titleZh" : "购物与退换"
+  },
+  {
+    "descriptionZh" : "点餐、确认需求并自然处理服务问题。",
+    "id" : "en.topic.09.dining",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.09.dining.01",
+      "en.topic.09.dining.02",
+      "en.topic.09.dining.03",
+      "en.topic.09.dining.04",
+      "en.topic.09.dining.05",
+      "en.topic.09.dining.06",
+      "en.topic.09.dining.07",
+      "en.topic.09.dining.08",
+      "en.topic.09.dining.09",
+      "en.topic.09.dining.10"
+    ],
+    "titleTarget" : "Restaurants and cafés",
+    "titleZh" : "餐厅与咖啡馆"
+  },
+  {
+    "descriptionZh" : "确认路线、处理延误并调整出行计划。",
+    "id" : "en.topic.10.transport",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.10.transport.01",
+      "en.topic.10.transport.02",
+      "en.topic.10.transport.03",
+      "en.topic.10.transport.04",
+      "en.topic.10.transport.05",
+      "en.topic.10.transport.06",
+      "en.topic.10.transport.07",
+      "en.topic.10.transport.08",
+      "en.topic.10.transport.09",
+      "en.topic.10.transport.10"
+    ],
+    "titleTarget" : "Travel and transport",
+    "titleZh" : "出行与交通"
+  },
+  {
+    "descriptionZh" : "确认位置、复述路线并在迷路时修复沟通。",
+    "id" : "en.topic.11.directions",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.11.directions.01",
+      "en.topic.11.directions.02",
+      "en.topic.11.directions.03",
+      "en.topic.11.directions.04",
+      "en.topic.11.directions.05",
+      "en.topic.11.directions.06",
+      "en.topic.11.directions.07",
+      "en.topic.11.directions.08",
+      "en.topic.11.directions.09",
+      "en.topic.11.directions.10"
+    ],
+    "titleTarget" : "Directions and finding places",
+    "titleZh" : "问路与找地点"
+  },
+  {
+    "descriptionZh" : "处理声音卡顿、打断和重新接通。",
+    "id" : "en.topic.12.calls",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.12.calls.01",
+      "en.topic.12.calls.02",
+      "en.topic.12.calls.03",
+      "en.topic.12.calls.04",
+      "en.topic.12.calls.05",
+      "en.topic.12.calls.06",
+      "en.topic.12.calls.07",
+      "en.topic.12.calls.08",
+      "en.topic.12.calls.09",
+      "en.topic.12.calls.10"
+    ],
+    "titleTarget" : "Phone and video calls",
+    "titleZh" : "电话与视频通话"
+  },
+  {
+    "descriptionZh" : "描述症状、说明程度并讨论休息安排。",
+    "id" : "en.topic.13.health",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.13.health.01",
+      "en.topic.13.health.02",
+      "en.topic.13.health.03",
+      "en.topic.13.health.04",
+      "en.topic.13.health.05",
+      "en.topic.13.health.06",
+      "en.topic.13.health.07",
+      "en.topic.13.health.08",
+      "en.topic.13.health.09",
+      "en.topic.13.health.10"
+    ],
+    "titleTarget" : "Health and well-being",
+    "titleZh" : "身体与状态"
+  },
+  {
+    "descriptionZh" : "具体说明问题、提出解决办法并保持礼貌。",
+    "id" : "en.topic.14.complaints",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.14.complaints.01",
+      "en.topic.14.complaints.02",
+      "en.topic.14.complaints.03",
+      "en.topic.14.complaints.04",
+      "en.topic.14.complaints.05",
+      "en.topic.14.complaints.06",
+      "en.topic.14.complaints.07",
+      "en.topic.14.complaints.08",
+      "en.topic.14.complaints.09",
+      "en.topic.14.complaints.10"
+    ],
+    "titleTarget" : "Problems and complaints",
+    "titleZh" : "问题与投诉"
+  },
+  {
+    "descriptionZh" : "承担责任、解释但不找借口，并给出补救。",
+    "id" : "en.topic.15.apologies",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.15.apologies.01",
+      "en.topic.15.apologies.02",
+      "en.topic.15.apologies.03",
+      "en.topic.15.apologies.04",
+      "en.topic.15.apologies.05",
+      "en.topic.15.apologies.06",
+      "en.topic.15.apologies.07",
+      "en.topic.15.apologies.08",
+      "en.topic.15.apologies.09",
+      "en.topic.15.apologies.10"
+    ],
+    "titleTarget" : "Apologies and mistakes",
+    "titleZh" : "道歉与失误"
+  },
+  {
+    "descriptionZh" : "组织过去事件、补充背景并突出转折。",
+    "id" : "en.topic.16.storytelling",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.16.storytelling.01",
+      "en.topic.16.storytelling.02",
+      "en.topic.16.storytelling.03",
+      "en.topic.16.storytelling.04",
+      "en.topic.16.storytelling.05",
+      "en.topic.16.storytelling.06",
+      "en.topic.16.storytelling.07",
+      "en.topic.16.storytelling.08",
+      "en.topic.16.storytelling.09",
+      "en.topic.16.storytelling.10"
+    ],
+    "titleTarget" : "Telling stories naturally",
+    "titleZh" : "自然讲述经历"
+  },
+  {
+    "descriptionZh" : "谈感受、设定边界并处理误会。",
+    "id" : "en.topic.17.relationships",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.17.relationships.01",
+      "en.topic.17.relationships.02",
+      "en.topic.17.relationships.03",
+      "en.topic.17.relationships.04",
+      "en.topic.17.relationships.05",
+      "en.topic.17.relationships.06",
+      "en.topic.17.relationships.07",
+      "en.topic.17.relationships.08",
+      "en.topic.17.relationships.09",
+      "en.topic.17.relationships.10"
+    ],
+    "titleTarget" : "Friends and relationships",
+    "titleZh" : "朋友与关系"
+  },
+  {
+    "descriptionZh" : "无字幕观看后复述、推断并讨论自然表达。",
+    "id" : "en.topic.18.screen-dialogue",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.18.screen-dialogue.01",
+      "en.topic.18.screen-dialogue.02",
+      "en.topic.18.screen-dialogue.03",
+      "en.topic.18.screen-dialogue.04",
+      "en.topic.18.screen-dialogue.05",
+      "en.topic.18.screen-dialogue.06",
+      "en.topic.18.screen-dialogue.07",
+      "en.topic.18.screen-dialogue.08",
+      "en.topic.18.screen-dialogue.09",
+      "en.topic.18.screen-dialogue.10"
+    ],
+    "titleTarget" : "Reacting to shows and dialogue",
+    "titleZh" : "影视内容与对白"
+  },
+  {
+    "descriptionZh" : "用英语概括、提问并评价阅读内容。",
+    "id" : "en.topic.19.reading",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.19.reading.01",
+      "en.topic.19.reading.02",
+      "en.topic.19.reading.03",
+      "en.topic.19.reading.04",
+      "en.topic.19.reading.05",
+      "en.topic.19.reading.06",
+      "en.topic.19.reading.07",
+      "en.topic.19.reading.08",
+      "en.topic.19.reading.09",
+      "en.topic.19.reading.10"
+    ],
+    "titleTarget" : "Reading and discussing ideas",
+    "titleZh" : "阅读与讨论观点"
+  },
+  {
+    "descriptionZh" : "处理预约、交接、取件和生活安排。",
+    "id" : "en.topic.20.everyday-logistics",
+    "language" : "english",
+    "sentenceIDs" : [
+      "en.topic.20.everyday-logistics.01",
+      "en.topic.20.everyday-logistics.02",
+      "en.topic.20.everyday-logistics.03",
+      "en.topic.20.everyday-logistics.04",
+      "en.topic.20.everyday-logistics.05",
+      "en.topic.20.everyday-logistics.06",
+      "en.topic.20.everyday-logistics.07",
+      "en.topic.20.everyday-logistics.08",
+      "en.topic.20.everyday-logistics.09",
+      "en.topic.20.everyday-logistics.10"
+    ],
+    "titleTarget" : "Everyday logistics",
+    "titleZh" : "日常事务协调"
+  }
+]

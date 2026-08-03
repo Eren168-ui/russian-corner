@@ -77,11 +77,14 @@ public final class AppModel {
     static let morningMinute = "reminder.morning.minute"
     static let eveningHour = "reminder.evening.hour"
     static let eveningMinute = "reminder.evening.minute"
+    static let remindersEnabled = "reminder.enabled"
+    static let preferredVoiceLanguage = "speech.preferredVoiceLanguage"
     static let preferredTopicID = "practice.preferredTopicID"
     static let preferredTopicDay = "practice.preferredTopicDay"
   }
 
   private let defaults: UserDefaults
+  public let language: StudyLanguage
   private var isLoading = true
   public private(set) var hasExplicitModePreference = false
 
@@ -151,26 +154,57 @@ public final class AppModel {
         dailyCardCount = clamped
         return
       }
-      persist(dailyCardCount, forKey: Key.dailyCardCount)
+      persist(
+        dailyCardCount,
+        forKey: languageKey(Key.dailyCardCount)
+      )
     }
   }
   public var mode: PracticeMode {
     didSet {
       guard !isLoading else { return }
       hasExplicitModePreference = true
-      persist(mode.rawValue, forKey: Key.mode)
+      persist(mode.rawValue, forKey: languageKey(Key.mode))
     }
   }
   public var morningReminder: ReminderTime {
     didSet {
-      persist(morningReminder.hour, forKey: Key.morningHour)
-      persist(morningReminder.minute, forKey: Key.morningMinute)
+      persist(
+        morningReminder.hour,
+        forKey: languageKey(Key.morningHour)
+      )
+      persist(
+        morningReminder.minute,
+        forKey: languageKey(Key.morningMinute)
+      )
     }
   }
   public var eveningReminder: ReminderTime {
     didSet {
-      persist(eveningReminder.hour, forKey: Key.eveningHour)
-      persist(eveningReminder.minute, forKey: Key.eveningMinute)
+      persist(
+        eveningReminder.hour,
+        forKey: languageKey(Key.eveningHour)
+      )
+      persist(
+        eveningReminder.minute,
+        forKey: languageKey(Key.eveningMinute)
+      )
+    }
+  }
+  public var remindersEnabled: Bool {
+    didSet {
+      persist(
+        remindersEnabled,
+        forKey: languageKey(Key.remindersEnabled)
+      )
+    }
+  }
+  public var preferredVoiceLanguage: String {
+    didSet {
+      persist(
+        preferredVoiceLanguage,
+        forKey: languageKey(Key.preferredVoiceLanguage)
+      )
     }
   }
   public var transientStatus: String?
@@ -178,10 +212,18 @@ public final class AppModel {
   public private(set) var preferredTopicID: String?
   public private(set) var preferredTopicDay: Date?
 
-  public init(defaults: UserDefaults = .standard) {
+  public init(
+    defaults: UserDefaults = .standard,
+    language: StudyLanguage = .russian
+  ) {
     self.defaults = defaults
+    self.language = language
+    let modeKey = LanguageStudySettings.storageKey(
+      Key.mode,
+      for: language
+    )
     hasExplicitModePreference =
-      defaults.object(forKey: Key.mode) != nil
+      defaults.object(forKey: modeKey) != nil
     corner =
       FloatingCorner(
         rawValue: defaults.string(forKey: Key.corner) ?? ""
@@ -209,30 +251,75 @@ public final class AppModel {
     fontScale =
       defaults.object(forKey: Key.fontScale) == nil
       ? 1 : defaults.double(forKey: Key.fontScale)
-    let storedCount = defaults.integer(forKey: Key.dailyCardCount)
+    let dailyCardCountKey = LanguageStudySettings.storageKey(
+      Key.dailyCardCount,
+      for: language
+    )
+    let storedCount = defaults.integer(forKey: dailyCardCountKey)
     dailyCardCount =
       storedCount == 0
       ? 7 : min(max(storedCount, 5), 10)
     mode =
       PracticeMode(
-        rawValue: defaults.string(forKey: Key.mode) ?? ""
+        rawValue: defaults.string(forKey: modeKey) ?? ""
       ) ?? .quiet
+    let morningHourKey = LanguageStudySettings.storageKey(
+      Key.morningHour,
+      for: language
+    )
+    let morningMinuteKey = LanguageStudySettings.storageKey(
+      Key.morningMinute,
+      for: language
+    )
     morningReminder = ReminderTime(
-      hour: defaults.object(forKey: Key.morningHour) == nil
-        ? 11 : defaults.integer(forKey: Key.morningHour),
-      minute: defaults.object(forKey: Key.morningMinute) == nil
-        ? 30 : defaults.integer(forKey: Key.morningMinute)
+      hour: defaults.object(forKey: morningHourKey) == nil
+        ? 11 : defaults.integer(forKey: morningHourKey),
+      minute: defaults.object(forKey: morningMinuteKey) == nil
+        ? 30 : defaults.integer(forKey: morningMinuteKey)
+    )
+    let eveningHourKey = LanguageStudySettings.storageKey(
+      Key.eveningHour,
+      for: language
+    )
+    let eveningMinuteKey = LanguageStudySettings.storageKey(
+      Key.eveningMinute,
+      for: language
     )
     eveningReminder = ReminderTime(
-      hour: defaults.object(forKey: Key.eveningHour) == nil
-        ? 17 : defaults.integer(forKey: Key.eveningHour),
-      minute: defaults.object(forKey: Key.eveningMinute) == nil
-        ? 30 : defaults.integer(forKey: Key.eveningMinute)
+      hour: defaults.object(forKey: eveningHourKey) == nil
+        ? 17 : defaults.integer(forKey: eveningHourKey),
+      minute: defaults.object(forKey: eveningMinuteKey) == nil
+        ? 30 : defaults.integer(forKey: eveningMinuteKey)
     )
+    let remindersEnabledKey = LanguageStudySettings.storageKey(
+      Key.remindersEnabled,
+      for: language
+    )
+    remindersEnabled =
+      defaults.object(forKey: remindersEnabledKey) == nil
+      ? LanguageStudySettings.remindersEnabledByDefault(for: language)
+      : defaults.bool(forKey: remindersEnabledKey)
+    let voiceLanguageKey = LanguageStudySettings.storageKey(
+      Key.preferredVoiceLanguage,
+      for: language
+    )
+    preferredVoiceLanguage =
+      defaults.string(forKey: voiceLanguageKey)
+      ?? LanguageStudySettings.preferredVoiceLanguageByDefault(
+        for: language
+      )
     isCollapsed = defaults.bool(forKey: Key.collapsed)
-    preferredTopicID = defaults.string(forKey: Key.preferredTopicID)
+    preferredTopicID = defaults.string(
+      forKey: LanguageStudySettings.storageKey(
+        Key.preferredTopicID,
+        for: language
+      )
+    )
     preferredTopicDay = defaults.object(
-      forKey: Key.preferredTopicDay
+      forKey: LanguageStudySettings.storageKey(
+        Key.preferredTopicDay,
+        for: language
+      )
     ) as? Date
     opacity = min(max(opacity, 0.55), 1)
     fontScale = min(max(fontScale, 0.85), 1.35)
@@ -274,12 +361,26 @@ public final class AppModel {
     preferredTopicID = topicID
     preferredTopicDay = topicID == nil ? nil : date
     if let topicID {
-      defaults.set(topicID, forKey: Key.preferredTopicID)
-      defaults.set(date, forKey: Key.preferredTopicDay)
+      defaults.set(
+        topicID,
+        forKey: languageKey(Key.preferredTopicID)
+      )
+      defaults.set(
+        date,
+        forKey: languageKey(Key.preferredTopicDay)
+      )
     } else {
-      defaults.removeObject(forKey: Key.preferredTopicID)
-      defaults.removeObject(forKey: Key.preferredTopicDay)
+      defaults.removeObject(
+        forKey: languageKey(Key.preferredTopicID)
+      )
+      defaults.removeObject(
+        forKey: languageKey(Key.preferredTopicDay)
+      )
     }
+  }
+
+  private func languageKey(_ baseKey: String) -> String {
+    LanguageStudySettings.storageKey(baseKey, for: language)
   }
 
   private func persist(_ value: Any, forKey key: String) {
@@ -324,8 +425,12 @@ private struct DailyPracticeQueueSnapshot: Codable {
 }
 
 private struct DailyPracticeQueueStore {
-  private static let key = "practice.dailyQueueSnapshot.v1"
   let defaults: UserDefaults
+  let language: StudyLanguage
+
+  private var key: String {
+    LanguageStudySettings.dailyQueueKey(for: language)
+  }
 
   func unfinishedItemIDs(
     on instant: Date,
@@ -333,7 +438,7 @@ private struct DailyPracticeQueueStore {
     calendar: Calendar
   ) -> Set<PracticeItemIdentity> {
     guard
-      let data = defaults.data(forKey: Self.key),
+      let data = defaults.data(forKey: key),
       let snapshot = try? JSONDecoder().decode(
         DailyPracticeQueueSnapshot.self,
         from: data
@@ -386,7 +491,7 @@ private struct DailyPracticeQueueStore {
     guard let data = try? JSONEncoder().encode(snapshot) else {
       return
     }
-    defaults.set(data, forKey: Self.key)
+    defaults.set(data, forKey: key)
   }
 }
 
@@ -409,10 +514,15 @@ public final class AppRuntime {
   public private(set) var sourceSyncResult: SourceSyncResult?
   public private(set) var pendingCandidateCount = 0
   public private(set) var lastSourceSyncAt: Date?
+  public private(set) var sceneLessons: [SceneLesson] = []
 
+  private let defaults: UserDefaults
   private var catalog: ContentCatalog?
+  private var studyCatalog: LanguageContentCatalog?
   private var repository: ProgressRepository?
   private var candidateCorpusStore: CandidateCorpusStore?
+  private var expressionCaptureStore: ExpressionCaptureStore?
+  private var baseEnglishContent: EnglishContentBundle?
   private let sourceCorpusScanner = SourceCorpusScanner()
   private let enableSourceSync: Bool
   private var trialSessionCoordinator: TrialSessionCoordinator?
@@ -425,7 +535,11 @@ public final class AppRuntime {
 
   public init(
     defaults: UserDefaults = .standard,
+    language: StudyLanguage = .russian,
     catalog injectedCatalog: ContentCatalog? = nil,
+    studyCatalog injectedStudyCatalog:
+      LanguageContentCatalog? = nil,
+    sceneLessons injectedSceneLessons: [SceneLesson] = [],
     repository injectedRepository: ProgressRepository? = nil,
     trialRepository injectedTrialRepository:
       (any TrialDataStoring)? = nil,
@@ -440,11 +554,15 @@ public final class AppRuntime {
       CandidateCorpusStore? = nil,
     enableSourceSync: Bool = false
   ) {
-    dailyQueueStore = DailyPracticeQueueStore(defaults: defaults)
+    self.defaults = defaults
+    dailyQueueStore = DailyPracticeQueueStore(
+      defaults: defaults,
+      language: language
+    )
     notificationSettingsOpener =
       injectedNotificationSettingsOpener
       ?? Self.openSystemNotificationSettings
-    appModel = AppModel(defaults: defaults)
+    appModel = AppModel(defaults: defaults, language: language)
     self.enableSourceSync = enableSourceSync
     if let injectedCandidateCorpusStore {
       candidateCorpusStore = injectedCandidateCorpusStore
@@ -464,15 +582,67 @@ public final class AppRuntime {
       let catalog: ContentCatalog
       if let injectedCatalog {
         catalog = injectedCatalog
+        studyCatalog =
+          injectedStudyCatalog ?? injectedCatalog.studyCatalog
+        sceneLessons = injectedSceneLessons
+      } else if language == .english {
+        let currentDirectoryURL = URL(
+          fileURLWithPath:
+            FileManager.default.currentDirectoryPath,
+          isDirectory: true
+        )
+        let preferredResourceDirectory =
+          try EnglishContentBundle.defaultResourceDirectory(
+            bundleIdentifier: Bundle.main.bundleIdentifier,
+            bundleResourceURL: Bundle.main.resourceURL,
+            currentDirectoryURL: currentDirectoryURL
+          )
+        let englishBundle: EnglishContentBundle
+        do {
+          englishBundle = try EnglishContentBundle(
+            resourceDirectory: preferredResourceDirectory
+          )
+        } catch {
+          let sourceResourceDirectory =
+            try EnglishContentBundle.defaultResourceDirectory(
+              bundleIdentifier: nil,
+              bundleResourceURL: nil,
+              currentDirectoryURL: currentDirectoryURL
+            )
+          englishBundle = try EnglishContentBundle(
+            resourceDirectory: sourceResourceDirectory
+          )
+        }
+        baseEnglishContent = englishBundle
+        if let fileURL = try? ExpressionCaptureStore.defaultFileURL() {
+          let captureStore = ExpressionCaptureStore(fileURL: fileURL)
+          expressionCaptureStore = captureStore
+          let imported =
+            (try? captureStore.practiceEligibleExpressions()) ?? []
+          let merged = Self.merging(
+            englishBundle: englishBundle,
+            imported: imported
+          )
+          studyCatalog = merged.catalog
+          sceneLessons = merged.lessons
+          catalog = merged.legacyCatalog
+        } else {
+          studyCatalog = englishBundle.catalog
+          sceneLessons = englishBundle.lessons
+          catalog = englishBundle.legacyCatalog
+        }
       } else {
         catalog = try ContentCatalog()
+        studyCatalog = catalog.studyCatalog
       }
       let repository: ProgressRepository
       if let injectedRepository {
         repository = injectedRepository
       } else {
         repository = ProgressRepository(
-          container: try ProgressRepository.makeContainer()
+          container: try ProgressRepository.makeContainer(
+            language: language
+          )
         )
       }
       self.catalog = catalog
@@ -494,7 +664,8 @@ public final class AppRuntime {
         } else {
           trialRepository = TrialRepository(
             container: try TrialRepository.makeContainer(
-              inMemory: injectedRepository != nil
+              inMemory: injectedRepository != nil,
+              language: language
             )
           )
         }
@@ -507,7 +678,8 @@ public final class AppRuntime {
           }
         )
         let reflection = DailyReflectionViewModel(
-          repository: trialRepository
+          repository: trialRepository,
+          language: language
         )
         _ = reflection.loadToday()
         dailyReflection = reflection
@@ -534,6 +706,7 @@ public final class AppRuntime {
         repository: repository,
         reviewStore: repository,
         oralAttemptStore: trialRepository,
+        language: language,
         onReportSaved: { [weak self] in
           self?.applyLatestDiagnosticStrategy()
         }
@@ -572,6 +745,8 @@ public final class AppRuntime {
     let nextPractice = try PracticeViewModel(
       catalog: catalog,
       repository: repository,
+      language: appModel.language,
+      studyCatalog: studyCatalog,
       targetCount: appModel.dailyCardCount,
       mode: appModel.mode,
       preferredTopicID: appModel.preferredTopic(on: instant),
@@ -634,6 +809,103 @@ public final class AppRuntime {
       appModel.transientStatus =
         "话题切换失败：\(error.localizedDescription)"
     }
+  }
+
+  public func makeTodaySceneTraining(
+    now: Date = Date()
+  ) throws -> SceneTrainingViewModel? {
+    guard
+      appModel.language == .english,
+      let studyCatalog,
+      !sceneLessons.isEmpty
+    else {
+      return nil
+    }
+    let preferredTopicID = practice?.selectedTopicID
+    let lesson: SceneLesson
+    if let preferredTopicID,
+      let matching = sceneLessons.first(where: {
+        $0.topicID == preferredTopicID
+      })
+    {
+      lesson = matching
+    } else {
+      let dayIndex = Int(
+        floor(
+          Calendar.current.startOfDay(for: now)
+            .timeIntervalSince1970 / 86_400
+        )
+      )
+      lesson = sceneLessons[
+        abs(dayIndex) % sceneLessons.count
+      ]
+    }
+    return try SceneTrainingViewModel(
+      lesson: lesson,
+      catalog: studyCatalog,
+      defaults: defaults,
+      onlineDictionary: onlineDictionary,
+      onOfferSelectedExpressions: { [weak self] sentenceIDs in
+        guard let self, !sentenceIDs.isEmpty else { return }
+        practice?.prioritizeSentenceIDs(sentenceIDs)
+        if let practice {
+          dailyQueueStore.save(
+            queue: practice.queue,
+            on: Date(),
+            calendar: .current
+          )
+        }
+      }
+    )
+  }
+
+  public func reloadEnglishImportedExpressions() {
+    guard
+      appModel.language == .english,
+      let baseEnglishContent,
+      let expressionCaptureStore
+    else {
+      return
+    }
+    do {
+      let imported = try expressionCaptureStore
+        .practiceEligibleExpressions()
+      let merged = Self.merging(
+        englishBundle: baseEnglishContent,
+        imported: imported
+      )
+      studyCatalog = merged.catalog
+      catalog = merged.legacyCatalog
+      sceneLessons = merged.lessons
+      try reloadPractice()
+      appModel.transientStatus =
+        "已把审核后的英语表达加入可用语料"
+    } catch {
+      appModel.transientStatus =
+        "英语表达刷新失败：\(error.localizedDescription)"
+    }
+  }
+
+  private static func merging(
+    englishBundle: EnglishContentBundle,
+    imported: [ImportedExpression]
+  ) -> EnglishContentBundle {
+    let existingIDs = Set(
+      englishBundle.catalog.sentences.map(\.id)
+    )
+    let importedSentences = imported
+      .map(\.studySentence)
+      .filter { !existingIDs.contains($0.id) }
+    let catalog = LanguageContentCatalog(
+      lexemes: englishBundle.catalog.lexemes,
+      sentences:
+        englishBundle.catalog.sentences + importedSentences
+    )
+    return EnglishContentBundle(
+      catalog: catalog,
+      topics: englishBundle.topics,
+      lessons: englishBundle.lessons
+    )
   }
 
   public func syncSourceCorpus(now: Date = Date()) {
@@ -712,7 +984,10 @@ public final class AppRuntime {
   public func reconcileRemindersOnLaunch() async
     -> ReminderScheduleResult?
   {
-    guard launchError == nil, let reminderScheduler else {
+    guard appModel.remindersEnabled,
+      launchError == nil,
+      let reminderScheduler
+    else {
       return nil
     }
     let settings = RussianCornerSettings(

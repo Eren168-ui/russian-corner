@@ -18,6 +18,12 @@ BUNDLE_IDENTIFIER="com.openclaw.russiancorner"
 DIST_DIR="$REPO_ROOT/dist"
 STATE_FILE="$REPO_ROOT/.build-app-transaction"
 SOURCE_RESOURCES_DIR="$REPO_ROOT/Sources/RussianCornerCore/Resources"
+ENGLISH_RESOURCE_NAMES=(
+  english-lexemes.json
+  english-sentences.json
+  english-topics.json
+  english-lessons.json
+)
 APP_ICON_PATH="$REPO_ROOT/Assets/AppIcon/RussianCorner.icns"
 CODESIGN_BIN=${CODESIGN_BIN:-/usr/bin/codesign}
 SUPPLEMENTAL_RESOURCE_NAMES="
@@ -37,6 +43,14 @@ TRANSACTION_OWNED=0
 OLD_MOVED=0
 NEW_PUBLISHED=0
 PUBLISH_COMMITTED=0
+
+english_resource_manifest_hash() {
+  resource_directory=$1
+  for resource_name in "${ENGLISH_RESOURCE_NAMES[@]}"; do
+    shasum -a 256 "$resource_directory/$resource_name" |
+      awk '{print $1}'
+  done | shasum -a 256 | awk '{print $1}'
+}
 
 GIT_ADMIN_DIR=$(
   /usr/bin/git -C "$REPO_ROOT" rev-parse --absolute-git-dir
@@ -312,6 +326,14 @@ final_dist_is_valid() {
     [ ! -L "$recovery_resources/sentences.json" ] &&
     [ -f "$recovery_resources/trial-slice.json" ] &&
     [ ! -L "$recovery_resources/trial-slice.json" ] &&
+    [ -f "$recovery_resources/english-lexemes.json" ] &&
+    [ ! -L "$recovery_resources/english-lexemes.json" ] &&
+    [ -f "$recovery_resources/english-sentences.json" ] &&
+    [ ! -L "$recovery_resources/english-sentences.json" ] &&
+    [ -f "$recovery_resources/english-topics.json" ] &&
+    [ ! -L "$recovery_resources/english-topics.json" ] &&
+    [ -f "$recovery_resources/english-lessons.json" ] &&
+    [ ! -L "$recovery_resources/english-lessons.json" ] &&
     "$CODESIGN_BIN" --verify --deep --strict "$recovery_app" \
       >/dev/null 2>&1
 }
@@ -520,6 +542,13 @@ if [ ! -f "$SOURCE_RESOURCES_DIR/lexemes.json" ] ||
   exit 1
 fi
 "$REPO_ROOT/Scripts/verify-supplemental-content.sh"
+for resource_name in "${ENGLISH_RESOURCE_NAMES[@]}"; do
+  if [ ! -f "$SOURCE_RESOURCES_DIR/$resource_name" ]; then
+    printf 'error: English resource is missing: %s\n' \
+      "$resource_name" >&2
+    exit 1
+  fi
+done
 if [ ! -f "$APP_ICON_PATH" ]; then
   printf 'error: app icon is missing: %s\n' "$APP_ICON_PATH" >&2
   exit 1
@@ -555,6 +584,9 @@ SUPPLEMENTAL_SOURCE_INVENTORY_BEFORE="$STAGING_ROOT/supplemental-source-before.s
 write_supplemental_inventory \
   "$SOURCE_RESOURCES_DIR" \
   "$SUPPLEMENTAL_SOURCE_INVENTORY_BEFORE"
+SOURCE_ENGLISH_SHA_BEFORE=$(
+  english_resource_manifest_hash "$SOURCE_RESOURCES_DIR"
+)
 
 mkdir -p "$STAGED_MACOS" "$STAGED_RESOURCES"
 chmod 0755 \
@@ -580,6 +612,11 @@ install -m 0644 \
   "$SOURCE_RESOURCES_DIR/long-term-sentences.json" \
   "$STAGED_RESOURCES/long-term-sentences.json"
 for resource_name in $SUPPLEMENTAL_RESOURCE_NAMES; do
+  install -m 0644 \
+    "$SOURCE_RESOURCES_DIR/$resource_name" \
+    "$STAGED_RESOURCES/$resource_name"
+done
+for resource_name in "${ENGLISH_RESOURCE_NAMES[@]}"; do
   install -m 0644 \
     "$SOURCE_RESOURCES_DIR/$resource_name" \
     "$STAGED_RESOURCES/$resource_name"
@@ -626,6 +663,12 @@ write_supplemental_inventory \
 write_supplemental_inventory \
   "$STAGED_RESOURCES" \
   "$SUPPLEMENTAL_STAGED_INVENTORY"
+SOURCE_ENGLISH_SHA_AFTER=$(
+  english_resource_manifest_hash "$SOURCE_RESOURCES_DIR"
+)
+STAGED_ENGLISH_SHA=$(
+  english_resource_manifest_hash "$STAGED_RESOURCES"
+)
 if [ "$SOURCE_LEXEMES_SHA_BEFORE" != "$SOURCE_LEXEMES_SHA_AFTER" ] ||
   [ "$SOURCE_SENTENCES_SHA_BEFORE" != "$SOURCE_SENTENCES_SHA_AFTER" ] ||
   [ "$SOURCE_TRIAL_SLICE_SHA_BEFORE" != "$SOURCE_TRIAL_SLICE_SHA_AFTER" ] ||
@@ -643,6 +686,11 @@ if [ "$SOURCE_LEXEMES_SHA_BEFORE" != "$SOURCE_LEXEMES_SHA_AFTER" ] ||
     "$SUPPLEMENTAL_SOURCE_INVENTORY_AFTER" \
     "$SUPPLEMENTAL_STAGED_INVENTORY"; then
   printf 'error: JSON resources changed or differed during staging\n' >&2
+  exit 1
+fi
+if [ "$SOURCE_ENGLISH_SHA_BEFORE" != "$SOURCE_ENGLISH_SHA_AFTER" ] ||
+  [ "$SOURCE_ENGLISH_SHA_AFTER" != "$STAGED_ENGLISH_SHA" ]; then
+  printf 'error: English JSON resources changed during staging\n' >&2
   exit 1
 fi
 
@@ -718,6 +766,12 @@ if [ "$(stat -f '%Lp' "$STAGED_RESOURCES")" != "755" ] ||
   printf 'error: staged app permissions are incorrect\n' >&2
   exit 1
 fi
+for resource_name in "${ENGLISH_RESOURCE_NAMES[@]}"; do
+  if [ "$(stat -f '%Lp' "$STAGED_RESOURCES/$resource_name")" != "644" ]; then
+    printf 'error: staged English resource permissions are incorrect\n' >&2
+    exit 1
+  fi
+done
 printf 'permissions=PASS resources=0755 executable=0755 json=0644\n'
 
 validate_dist_directory
@@ -828,6 +882,12 @@ write_supplemental_inventory \
 write_supplemental_inventory \
   "$FINAL_RESOURCES" \
   "$SUPPLEMENTAL_FINAL_INVENTORY"
+FINAL_ENGLISH_SHA=$(
+  english_resource_manifest_hash "$FINAL_RESOURCES"
+)
+CURRENT_SOURCE_ENGLISH_SHA=$(
+  english_resource_manifest_hash "$SOURCE_RESOURCES_DIR"
+)
 if [ "$CURRENT_SOURCE_LEXEMES_SHA" != "$STAGED_LEXEMES_SHA" ] ||
   [ "$CURRENT_SOURCE_SENTENCES_SHA" != "$STAGED_SENTENCES_SHA" ] ||
   [ "$CURRENT_SOURCE_TRIAL_SLICE_SHA" != "$STAGED_TRIAL_SLICE_SHA" ] ||
@@ -845,6 +905,11 @@ if [ "$CURRENT_SOURCE_LEXEMES_SHA" != "$STAGED_LEXEMES_SHA" ] ||
     "$SUPPLEMENTAL_FINAL_INVENTORY" \
     "$SUPPLEMENTAL_STAGED_INVENTORY"; then
   printf 'error: final JSON resources differ from source or staging\n' >&2
+  exit 1
+fi
+if [ "$CURRENT_SOURCE_ENGLISH_SHA" != "$STAGED_ENGLISH_SHA" ] ||
+  [ "$FINAL_ENGLISH_SHA" != "$STAGED_ENGLISH_SHA" ]; then
+  printf 'error: final English resources differ from source or staging\n' >&2
   exit 1
 fi
 
@@ -868,6 +933,12 @@ if [ "$(stat -f '%Lp' "$FINAL_RESOURCES")" != "755" ] ||
   printf 'error: published app permissions are incorrect\n' >&2
   exit 1
 fi
+for resource_name in "${ENGLISH_RESOURCE_NAMES[@]}"; do
+  if [ "$(stat -f '%Lp' "$FINAL_RESOURCES/$resource_name")" != "644" ]; then
+    printf 'error: published English resource permissions are incorrect\n' >&2
+    exit 1
+  fi
+done
 
 PUBLISH_COMMITTED=1
 NEW_PUBLISHED=0
@@ -888,4 +959,5 @@ printf \
   "$FINAL_TRIAL_SLICE_SHA" \
   "$FINAL_TOPICS_SHA" \
   "$FINAL_LONG_TERM_SHA"
+printf 'english_resource_sha256=PASS manifest=%s\n' "$FINAL_ENGLISH_SHA"
 printf 'Published app: %s\n' "$FINAL_APP"

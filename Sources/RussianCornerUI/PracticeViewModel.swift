@@ -9,11 +9,17 @@ public enum PracticeViewModelError:
   Sendable
 {
   case answerNotRevealed
+  case transferCheckUnavailable
+  case invalidTransferAnswer
 
   public var errorDescription: String? {
     switch self {
     case .answerNotRevealed:
       return "请先显示答案，再提交评分"
+    case .transferCheckUnavailable:
+      return "当前没有待完成的迁移检验"
+    case .invalidTransferAnswer:
+      return "请选择一个有效答案"
     }
   }
 }
@@ -151,7 +157,11 @@ public final class PracticeViewModel {
   public private(set) var selectedWordAnalysis: ResolvedWordAnalysis?
   public private(set) var onlineWordLookupState:
     OnlineWordLookupState = .idle
+  public private(set) var selectedRecallOutcome: RecallOutcome?
+  public private(set) var currentTransferExercise: TransferExercise?
+  public private(set) var selectedTransferAnswerID: String?
   public let targetCount: Int
+  public let language: StudyLanguage
   public let newWordLimit: Int
   public let remainingNewWordCount: Int
   public let remainingSentenceCardCount: Int
@@ -173,6 +183,8 @@ public final class PracticeViewModel {
   private let sentencesByTheme: [String: [SentenceCard]]
   private let lexemesByID: [String: Lexeme]
   private let wordAnalysesByCardID: [String: [ResolvedWordAnalysis]]
+  private let studyLexemesByID: [String: StudyLexeme]
+  private let studySentencesByID: [String: StudySentence]
   private var states: [PracticeItemIdentity: ReviewState]
   private var successfulToday: Set<PracticeItemIdentity>
   private var recallStartedAt: Date
@@ -181,6 +193,7 @@ public final class PracticeViewModel {
   private var usedSpeechOnCurrentItem = false
   private var openedDetailsOnCurrentItem = false
   private var onlineLookupTask: Task<Void, Never>?
+  private var structuredResponseTimeMs: Int?
 
   public var currentItem: PracticeQueueEntry? {
     queue.indices.contains(currentIndex) ? queue[currentIndex] : nil
@@ -209,6 +222,11 @@ public final class PracticeViewModel {
       return nil
     }
     return lexeme
+  }
+
+  public var currentStudyLexeme: StudyLexeme? {
+    guard let currentLexeme else { return nil }
+    return studyLexemesByID[currentLexeme.id]
   }
 
   public var selectedWordExamples: [WordLearningExample] {
@@ -340,6 +358,14 @@ public final class PracticeViewModel {
     currentItem == nil
   }
 
+  public var isStructuredRecallPresented: Bool {
+    isRevealed
+      && (
+        selectedRecallOutcome == nil
+          || currentTransferExercise != nil
+      )
+  }
+
   public var currentTheme: String {
     switch currentContent {
     case .lexeme:
@@ -387,6 +413,8 @@ public final class PracticeViewModel {
   public init(
     catalog: ContentCatalog,
     repository: any PracticeProgressStoring,
+    language: StudyLanguage = .russian,
+    studyCatalog: LanguageContentCatalog? = nil,
     targetCount: Int = 7,
     mode: PracticeMode = .quiet,
     preferredTopicID: String? = nil,
@@ -401,6 +429,7 @@ public final class PracticeViewModel {
     carryoverItemIDs: Set<PracticeItemIdentity> = []
   ) throws {
     self.repository = repository
+    self.language = language
     let sentenceTargetCount = min(max(targetCount, 5), 10)
     self.targetCount = sentenceTargetCount
     self.mode = mode
@@ -442,8 +471,23 @@ public final class PracticeViewModel {
     )
     wordAnalysesByCardID = Dictionary(
       uniqueKeysWithValues: servedSentences.map {
-        ($0.id, catalog.wordAnalyses(for: $0))
+        (
+          $0.id,
+          catalog.wordAnalyses(for: $0, language: language)
+        )
       }
+    )
+    studyLexemesByID = Dictionary(
+      uniqueKeysWithValues: (
+        studyCatalog?.lexemes
+          ?? servedLexemes.map(\.studyContent)
+      ).map { ($0.id, $0) }
+    )
+    studySentencesByID = Dictionary(
+      uniqueKeysWithValues: (
+        studyCatalog?.sentences
+          ?? servedSentences.map(\.studyContent)
+      ).map { ($0.id, $0) }
     )
 
     let events = try repository.reviewEvents()
@@ -869,6 +913,62 @@ public final class PracticeViewModel {
     )
   }
 
+  public func submitRecallOutcome(
+    _ outcome: RecallOutcome
+  ) throws {
+    guard isRevealed else {
+      throw PracticeViewModelError.answerNotRevealed
+    }
+    let elapsed = max(0, now().timeIntervalSince(recallStartedAt))
+    let responseTimeMs = Int((elapsed * 1_000).rounded())
+    selectedRecallOutcome = outcome
+    structuredResponseTimeMs = responseTimeMs
+    selectedTransferAnswerID = nil
+    clearWordAnalysis()
+
+    guard outcome.requiresTransferCheck else {
+      let grade = outcome.reviewGrade(
+        responseTimeMs: responseTimeMs,
+        transferCorrect: false
+      )
+      try persistGrade(
+        grade,
+        recallOutcome: outcome,
+        responseTimeMs: responseTimeMs
+      )
+      return
+    }
+
+    currentTransferExercise = makeTransferExercise()
+  }
+
+  public func submitTransferAnswer(optionID: String) throws {
+    guard
+      let outcome = selectedRecallOutcome,
+      let exercise = currentTransferExercise,
+      let responseTimeMs = structuredResponseTimeMs
+    else {
+      throw PracticeViewModelError.transferCheckUnavailable
+    }
+    guard exercise.options.contains(where: { $0.id == optionID }) else {
+      throw PracticeViewModelError.invalidTransferAnswer
+    }
+    selectedTransferAnswerID = optionID
+    let isCorrect = exercise.isCorrect(optionID: optionID)
+    let grade = outcome.reviewGrade(
+      responseTimeMs: responseTimeMs,
+      transferCorrect: isCorrect
+    )
+    try persistGrade(
+      grade,
+      recallOutcome: outcome,
+      responseTimeMs: responseTimeMs,
+      transferExerciseID: exercise.id,
+      transferAnswerID: optionID,
+      transferCorrect: isCorrect
+    )
+  }
+
   public func toggleDetails() {
     guard currentItem != nil else { return }
     isDetailExpanded.toggle()
@@ -1002,10 +1102,12 @@ public final class PracticeViewModel {
       return
     }
     onlineWordLookupState = .loading(lookupText)
+    let lookupLanguage = language
     onlineLookupTask = Task { [weak self] in
       do {
         let result = try await onlineDictionary.lookup(
-          lemma: lookupText
+          lemma: lookupText,
+          language: lookupLanguage
         )
         guard !Task.isCancelled else { return }
         guard self?.selectedWordAnalysis?.id == selectionID else {
@@ -1043,6 +1145,17 @@ public final class PracticeViewModel {
   }
 
   public func grade(_ grade: ReviewGrade) throws {
+    try persistGrade(grade)
+  }
+
+  private func persistGrade(
+    _ grade: ReviewGrade,
+    recallOutcome: RecallOutcome? = nil,
+    responseTimeMs explicitResponseTimeMs: Int? = nil,
+    transferExerciseID: String? = nil,
+    transferAnswerID: String? = nil,
+    transferCorrect: Bool? = nil
+  ) throws {
     guard isRevealed else {
       throw PracticeViewModelError.answerNotRevealed
     }
@@ -1054,9 +1167,14 @@ public final class PracticeViewModel {
       itemType: item.kind,
       itemId: item.id,
       grade: grade,
-      responseTimeMs: Int((elapsed * 1_000).rounded()),
+      responseTimeMs: explicitResponseTimeMs
+        ?? Int((elapsed * 1_000).rounded()),
       practiceMode: mode,
-      createdAt: instant
+      createdAt: instant,
+      recallOutcome: recallOutcome,
+      transferExerciseID: transferExerciseID,
+      transferAnswerID: transferAnswerID,
+      transferCorrect: transferCorrect
     )
     let oldState =
       states[item.identity]
@@ -1104,7 +1222,11 @@ public final class PracticeViewModel {
         grade: grade,
         responseTimeMs: event.responseTimeMs,
         isNewItem: wasNewItem,
-        occurredAt: instant
+        occurredAt: instant,
+        recallOutcome: recallOutcome,
+        transferExerciseID: transferExerciseID,
+        transferAnswerID: transferAnswerID,
+        transferCorrect: transferCorrect
       )
     )
     advance(status: nil)
@@ -1122,11 +1244,49 @@ public final class PracticeViewModel {
     advance(status: nil)
   }
 
+  public func prioritizeSentenceIDs(_ sentenceIDs: [String]) {
+    let requested = sentenceIDs.reduce(into: [String]()) {
+      guard !$0.contains($1), sentencesByID[$1] != nil else {
+        return
+      }
+      $0.append($1)
+    }
+    guard !requested.isEmpty else { return }
+    let requestedSet = Set(requested)
+    let completedPrefix = Array(queue.prefix(currentIndex))
+    let remaining = queue.dropFirst(currentIndex).filter {
+      !requestedSet.contains($0.id)
+        || $0.kind != .sentence
+    }
+    let prioritized = requested.compactMap { id in
+      sentencesByID[id].map {
+        PracticeQueueEntry(
+          content: .sentence($0),
+          origin: .reinforcement
+        )
+      }
+    }
+    queue = completedPrefix + prioritized + remaining
+    isRevealed = false
+    selectedRecallOutcome = nil
+    currentTransferExercise = nil
+    selectedTransferAnswerID = nil
+    structuredResponseTimeMs = nil
+    clearWordAnalysis()
+    remainingRecallSeconds = 3
+    recallStartedAt = now()
+    statusMessage = "已把场景中选中的表达放到当前复习队列"
+  }
+
   private func advance(status: String?) {
     guard currentItem != nil else { return }
     speechService.stop()
     currentIndex += 1
     isRevealed = false
+    selectedRecallOutcome = nil
+    currentTransferExercise = nil
+    selectedTransferAnswerID = nil
+    structuredResponseTimeMs = nil
     clearWordAnalysis()
     usedSpeechOnCurrentItem = false
     openedDetailsOnCurrentItem = false
@@ -1165,13 +1325,19 @@ public final class PracticeViewModel {
         occurredAt: now()
       )
     )
-    switch speechService.speak(text) {
-    case .russianVoice:
-      statusMessage = "正在朗读俄语"
-    case .fallbackVoice(_, let language):
-      statusMessage = "未找到俄语语音，使用 \(language) 朗读"
+    switch speechService.speak(
+      text,
+      language: language,
+      allowUnrelatedFallback: false
+    ) {
+    case .preferredVoice, .fallbackVoice:
+      statusMessage =
+        language == .english ? "正在朗读英语" : "正在朗读俄语"
     case .unavailable:
-      statusMessage = "系统中没有可用语音，练习可继续"
+      statusMessage =
+        language == .english
+        ? "系统中没有英语语音，练习可继续"
+        : "系统中没有俄语语音，练习可继续"
     case .emptyText:
       statusMessage = "本卡没有可朗读内容"
     }
@@ -1182,7 +1348,11 @@ public final class PracticeViewModel {
     grade: ReviewGrade? = nil,
     responseTimeMs: Int? = nil,
     isNewItem explicitIsNewItem: Bool? = nil,
-    occurredAt: Date
+    occurredAt: Date,
+    recallOutcome: RecallOutcome? = nil,
+    transferExerciseID: String? = nil,
+    transferAnswerID: String? = nil,
+    transferCorrect: Bool? = nil
   ) -> TrialInteractionContext {
     guard let item = currentItem else {
       preconditionFailure("Trial context requires a current practice item")
@@ -1225,7 +1395,90 @@ public final class PracticeViewModel {
       remainingBacklogCount: initialBacklogIDs
         .subtracting(resolvedBacklogIDs).count,
       isNewItem: explicitIsNewItem
-        ?? (states[item.identity] == nil && !item.isRetry)
+        ?? (states[item.identity] == nil && !item.isRetry),
+      recallOutcome: recallOutcome,
+      transferExerciseID: transferExerciseID,
+      transferAnswerID: transferAnswerID,
+      transferCorrect: transferCorrect
+    )
+  }
+
+  private func makeTransferExercise() -> TransferExercise {
+    let exerciseID = "transfer.\(currentItem?.id ?? "unknown")"
+    let kind: TransferExerciseKind
+    let promptText: String
+    let correctText: String
+    var distractors: [String] = []
+
+    if let card = currentCard,
+      let studySentence = studySentencesByID[card.id],
+      let variant = studySentence.variants.first
+    {
+      kind = .slotReplacement
+      promptText = "换一个信息来说：\(variant.promptZh)"
+      correctText = variant.targetText
+      distractors = studySentencesByID.values
+        .flatMap(\.variants)
+        .map(\.targetText)
+    } else if let card = currentCard,
+      let expectedReply = card.expectedReply,
+      !expectedReply.isEmpty
+    {
+      kind = .nextReplySelection
+      promptText = "对方说完这句，下一轮最自然怎么接？"
+      correctText = expectedReply
+      distractors = sentencesByID.values.compactMap(\.expectedReply)
+    } else if let card = currentCard {
+      kind = .slotReplacement
+      promptText = "同类场景里，哪一句表达最自然？"
+      correctText = card.practiceRu
+      distractors = sentencesByID.values.map(\.practiceRu)
+    } else if let lexeme = currentLexeme {
+      kind = .collocationCompletion
+      promptText = "哪个搭配最适合直接用于口语？"
+      correctText = lexeme.collocations.first ?? lexeme.example
+      distractors = lexemesByID.values.flatMap(\.collocations)
+    } else {
+      kind = .slotReplacement
+      promptText = "请选择刚刚练习的自然表达"
+      correctText = answer ?? ""
+    }
+
+    let fallbackDistractors =
+      language == .english
+      ? ["Could you give me a moment?", "I’m not sure yet."]
+      : ["Мину́точку, пожа́луйста.", "Я пока́ не уве́рен."]
+    let uniqueDistractors = (distractors + fallbackDistractors)
+      .filter {
+        $0.caseInsensitiveCompare(correctText) != .orderedSame
+      }
+      .reduce(into: [String]()) { result, candidate in
+        guard !result.contains(where: {
+          $0.caseInsensitiveCompare(candidate) == .orderedSame
+        }) else { return }
+        result.append(candidate)
+      }
+
+    var options = [
+      TransferOption(id: "\(exerciseID).correct", text: correctText)
+    ]
+    options += uniqueDistractors.prefix(2).enumerated().map {
+      TransferOption(
+        id: "\(exerciseID).distractor.\($0.offset)",
+        text: $0.element
+      )
+    }
+    let rotation = exerciseID.unicodeScalars.reduce(0) {
+      $0 + Int($1.value)
+    } % options.count
+    options = Array(options[rotation...] + options[..<rotation])
+
+    return try! TransferExercise(
+      id: exerciseID,
+      kind: kind,
+      prompt: promptText,
+      options: options,
+      correctOptionID: "\(exerciseID).correct"
     )
   }
 

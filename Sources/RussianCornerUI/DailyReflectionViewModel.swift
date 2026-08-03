@@ -14,6 +14,7 @@ public final class DailyReflectionViewModel {
     public private(set) var hasSavedToday = false
     public private(set) var statusMessage: String?
     public private(set) var isCompletionOfferPresented = false
+    public let language: StudyLanguage
 
     private let repository: any TrialDataStoring
     private let now: () -> Date
@@ -23,12 +24,18 @@ public final class DailyReflectionViewModel {
 
     public init(
         repository: any TrialDataStoring,
+        language: StudyLanguage = .russian,
         now: @escaping () -> Date = Date.init,
         calendar: Calendar = .current
     ) {
         self.repository = repository
+        self.language = language
         self.now = now
         self.calendar = calendar
+    }
+
+    public var languageLabel: String {
+        language == .english ? "ENGLISH" : "РУССКИЙ"
     }
 
     @discardableResult

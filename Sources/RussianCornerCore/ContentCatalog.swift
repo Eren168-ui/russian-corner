@@ -42,6 +42,14 @@ public struct ContentCatalog: Sendable {
     public let supplementalLoadIssue: String?
     public let longTermSentences: [SentenceCard]
     public let surfaceLemmas: [String: String]
+    private let lexemesByNormalizedForm: [String: Lexeme]
+
+    public var studyCatalog: LanguageContentCatalog {
+        LanguageContentCatalog(
+            lexemes: lexemes.map(\.studyContent),
+            sentences: practiceSentences.map(\.studyContent)
+        )
+    }
 
     public init() throws {
         try self.init(
@@ -228,6 +236,16 @@ public struct ContentCatalog: Sendable {
                 (Self.normalizedForm($0.key), Self.normalizedForm($0.value))
             }
         )
+        var lexemeIndex: [String: Lexeme] = [:]
+        for lexeme in self.lexemes {
+            for form in [lexeme.lemma] + lexeme.surfaceForms {
+                let normalized = Self.normalizedForm(form)
+                if !normalized.isEmpty, lexemeIndex[normalized] == nil {
+                    lexemeIndex[normalized] = lexeme
+                }
+            }
+        }
+        lexemesByNormalizedForm = lexemeIndex
     }
 
     public var practiceLexemes: [Lexeme] {
@@ -285,12 +303,22 @@ public struct ContentCatalog: Sendable {
     public func wordAnalyses(
         for sentence: SentenceCard
     ) -> [ResolvedWordAnalysis] {
+        wordAnalyses(for: sentence, language: .russian)
+    }
+
+    public func wordAnalyses(
+        for sentence: SentenceCard,
+        language: StudyLanguage
+    ) -> [ResolvedWordAnalysis] {
         let exactByIndex = Dictionary(
             uniqueKeysWithValues: wordAnalyses(for: sentence.id).map {
                 ($0.tokenIndex, $0)
             }
         )
-        return RussianWordTokenizer.words(in: sentence.practiceRu)
+        return TargetLanguageTokenizer.words(
+            in: sentence.practiceRu,
+            language: language
+        )
             .enumerated()
             .map { index, surface in
                 if let exact = exactByIndex[index] {
@@ -309,7 +337,10 @@ public struct ContentCatalog: Sendable {
                         aspectPair: lexeme.aspectPair,
                         government: lexeme.government,
                         collocations: lexeme.collocations,
-                        usageNote: "通用审核词条；本句词形尚无人工语境解析",
+                        usageNote:
+                            language == .english
+                            ? "本地审核词条；当前句中的具体用法可结合例句学习"
+                            : "通用审核词条；本句词形尚无人工语境解析",
                         lexemeID: lexeme.id,
                         reviewStatus: lexeme.reviewStatus,
                         source: .reviewedLexeme
@@ -325,8 +356,14 @@ public struct ContentCatalog: Sendable {
                     ] ?? Self.normalizedForm(surface),
                     glossZh: "本地暂无审核释义",
                     partOfSpeech: "待查询",
-                    morphology: "当前词形：\(surface)",
-                    usageNote: "可查询在线词典；在线结果不会自动标记为已审核",
+                    morphology:
+                        language == .english
+                        ? "当前形式：\(surface)"
+                        : "当前词形：\(surface)",
+                    usageNote:
+                        language == .english
+                        ? "可查询英中在线词典；网络结果仅作补充"
+                        : "可查询在线词典；在线结果不会自动标记为已审核",
                     reviewStatus: .draft,
                     source: .unavailable
                 )
@@ -334,12 +371,7 @@ public struct ContentCatalog: Sendable {
     }
 
     private func matchingLexeme(for surface: String) -> Lexeme? {
-        let normalized = Self.normalizedForm(surface)
-        return lexemes.first { lexeme in
-            ([lexeme.lemma] + lexeme.surfaceForms).contains {
-                Self.normalizedForm($0) == normalized
-            }
-        }
+        lexemesByNormalizedForm[Self.normalizedForm(surface)]
     }
 
     private static func loadSupplementalContent(

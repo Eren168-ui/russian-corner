@@ -1,4 +1,5 @@
 import Foundation
+import RussianCornerCore
 
 public struct DictionaryExample: Equatable, Sendable {
     public let russian: String
@@ -17,6 +18,7 @@ public enum DictionaryTranslationLanguage:
 {
     case chinese
     case english
+    case russian
 }
 
 public struct OnlineDictionaryResult: Equatable, Sendable {
@@ -116,7 +118,16 @@ public struct DictionaryPreferenceKeyStore:
 }
 
 public protocol OnlineDictionaryLookingUp: Sendable {
-    func lookup(lemma: String) async throws -> OnlineDictionaryResult
+    func lookup(
+        lemma: String,
+        language: StudyLanguage
+    ) async throws -> OnlineDictionaryResult
+}
+
+public extension OnlineDictionaryLookingUp {
+    func lookup(lemma: String) async throws -> OnlineDictionaryResult {
+        try await lookup(lemma: lemma, language: .russian)
+    }
 }
 
 public actor YandexDictionaryService: OnlineDictionaryLookingUp {
@@ -134,7 +145,8 @@ public actor YandexDictionaryService: OnlineDictionaryLookingUp {
     }
 
     public func lookup(
-        lemma: String
+        lemma: String,
+        language: StudyLanguage
     ) async throws -> OnlineDictionaryResult {
         let normalized = lemma.trimmingCharacters(
             in: .whitespacesAndNewlines
@@ -142,7 +154,8 @@ public actor YandexDictionaryService: OnlineDictionaryLookingUp {
         guard !normalized.isEmpty else {
             throw YandexDictionaryError.invalidRequest
         }
-        if let cached = cache[normalized] {
+        let cacheKey = "\(language.storageNamespace):\(normalized)"
+        if let cached = cache[cacheKey] {
             return cached
         }
         guard
@@ -154,10 +167,17 @@ public actor YandexDictionaryService: OnlineDictionaryLookingUp {
         }
         let languages: [
             (DictionaryTranslationLanguage, String)
-        ] = [
-            (.chinese, "ru-zh"),
-            (.english, "ru-en"),
-        ]
+        ] = language.dictionaryLanguagePairs.map { languagePair in
+            let translationLanguage: DictionaryTranslationLanguage
+            if languagePair.hasSuffix("-zh") {
+                translationLanguage = .chinese
+            } else if languagePair.hasSuffix("-ru") {
+                translationLanguage = .russian
+            } else {
+                translationLanguage = .english
+            }
+            return (translationLanguage, languagePair)
+        }
         for (translationLanguage, languagePair) in languages {
             let data = try await requestData(
                 text: normalized,
@@ -170,7 +190,7 @@ public actor YandexDictionaryService: OnlineDictionaryLookingUp {
                 translationLanguage: translationLanguage
             )
             if !result.translations.isEmpty {
-                cache[normalized] = result
+                cache[cacheKey] = result
                 return result
             }
         }

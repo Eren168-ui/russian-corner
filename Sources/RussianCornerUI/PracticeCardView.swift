@@ -26,9 +26,17 @@ public enum PracticeCardMetrics {
     public static let historyActionTitle = "记录"
     public static let historyActionHitHeight: CGFloat = 30
     public static let wordCloseActionTitle = "关闭词义"
+    public static let recallOutcomeTitles = [
+        "3 秒内完整说出",
+        "大意对，用法有卡顿",
+        "看答案才想起",
+        "不会",
+    ]
 }
 
 public enum PracticeCardUtilityAction: CaseIterable, Sendable {
+    case sceneTraining
+    case expressionCapture
     case settings
     case history
     case reflection
@@ -37,6 +45,8 @@ public enum PracticeCardUtilityAction: CaseIterable, Sendable {
 
     public var title: String {
         switch self {
+        case .sceneTraining: "今日英语场景…"
+        case .expressionCapture: "收集英语表达…"
         case .settings: "设置…"
         case .history: "学习记录…"
         case .reflection: "今日反馈…"
@@ -47,6 +57,8 @@ public enum PracticeCardUtilityAction: CaseIterable, Sendable {
 
     public var symbolName: String {
         switch self {
+        case .sceneTraining: "person.2.wave.2"
+        case .expressionCapture: "text.badge.plus"
         case .settings: "gearshape"
         case .history: "chart.bar"
         case .reflection: "square.and.pencil"
@@ -57,6 +69,8 @@ public enum PracticeCardUtilityAction: CaseIterable, Sendable {
 }
 
 public struct PracticeCardUtilityActions {
+    public var openSceneTraining: () -> Void
+    public var openExpressionCapture: () -> Void
     public var openSettings: () -> Void
     public var openHistory: () -> Void
     public var openReflection: () -> Void
@@ -64,12 +78,16 @@ public struct PracticeCardUtilityActions {
     public var exportReport: () -> Void
 
     public init(
+        openSceneTraining: @escaping () -> Void = {},
+        openExpressionCapture: @escaping () -> Void = {},
         openSettings: @escaping () -> Void = {},
         openHistory: @escaping () -> Void = {},
         openReflection: @escaping () -> Void = {},
         openDiagnostics: @escaping () -> Void = {},
         exportReport: @escaping () -> Void = {}
     ) {
+        self.openSceneTraining = openSceneTraining
+        self.openExpressionCapture = openExpressionCapture
         self.openSettings = openSettings
         self.openHistory = openHistory
         self.openReflection = openReflection
@@ -79,12 +97,27 @@ public struct PracticeCardUtilityActions {
 
     public func perform(_ action: PracticeCardUtilityAction) {
         switch action {
+        case .sceneTraining: openSceneTraining()
+        case .expressionCapture: openExpressionCapture()
         case .settings: openSettings()
         case .history: openHistory()
         case .reflection: openReflection()
         case .diagnostics: openDiagnostics()
         case .exportReport: exportReport()
         }
+    }
+}
+
+public struct PracticeCardLanguageActions {
+    public let availableLanguages: [StudyLanguage]
+    public let switchLanguage: (StudyLanguage) -> Void
+
+    public init(
+        availableLanguages: [StudyLanguage],
+        switchLanguage: @escaping (StudyLanguage) -> Void
+    ) {
+        self.availableLanguages = availableLanguages
+        self.switchLanguage = switchLanguage
     }
 }
 
@@ -100,6 +133,7 @@ public struct PracticeCardView: View {
     private let onReminderPermissionAction: () -> Void
     private let onOpenLearningHistory: () -> Void
     private let utilityActions: PracticeCardUtilityActions
+    private let languageActions: PracticeCardLanguageActions?
 
     public init(
         appModel: AppModel,
@@ -109,7 +143,8 @@ public struct PracticeCardView: View {
         onCollapsedCardActivated: (() -> Void)? = nil,
         onReminderPermissionAction: @escaping () -> Void = {},
         onOpenLearningHistory: @escaping () -> Void = {},
-        utilityActions: PracticeCardUtilityActions = .init()
+        utilityActions: PracticeCardUtilityActions = .init(),
+        languageActions: PracticeCardLanguageActions? = nil
     ) {
         self.appModel = appModel
         self.practice = practice
@@ -119,6 +154,7 @@ public struct PracticeCardView: View {
         self.onReminderPermissionAction = onReminderPermissionAction
         self.onOpenLearningHistory = onOpenLearningHistory
         self.utilityActions = utilityActions
+        self.languageActions = languageActions
     }
 
     public var body: some View {
@@ -175,7 +211,15 @@ public struct PracticeCardView: View {
             header
             Divider().overlay(palette.border)
             mainContent
-            if practice.isDetailExpanded, !practice.isComplete {
+            if practice.isStructuredRecallPresented,
+                !practice.isComplete
+            {
+                Divider().overlay(palette.border)
+                structuredRecallSection
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 9)
+                    .frame(maxHeight: 136)
+            } else if practice.isDetailExpanded, !practice.isComplete {
                 Divider().overlay(palette.border)
                 PracticeDetailSection(
                     appModel: appModel,
@@ -222,7 +266,9 @@ public struct PracticeCardView: View {
         PracticePanelPresentation.resolve(
             isCollapsed: false,
             isDetailExpanded: practice.isDetailExpanded,
-            hasSelectedWord: practice.selectedWordAnalysis != nil
+            hasSelectedWord: practice.selectedWordAnalysis != nil,
+            isTransferPresented:
+                practice.isStructuredRecallPresented
         )
     }
 
@@ -233,7 +279,9 @@ public struct PracticeCardView: View {
                 .fill(palette.accentSurface)
                 .frame(width: 42, height: 42)
             VStack(spacing: 0) {
-                Text("Я")
+                Text(
+                    appModel.language == .english ? "EN" : "Я"
+                )
                     .font(.system(size: 23, design: .serif))
                     .foregroundStyle(palette.primary)
                 Text(
@@ -271,9 +319,38 @@ public struct PracticeCardView: View {
 
     private var header: some View {
         HStack(spacing: 7) {
-            Text("РУССКИЙ УГОЛОК")
+            Text("LANGUAGE CORNER")
                 .font(.system(size: 9, weight: .semibold))
                 .tracking(1.1)
+            if let languageActions {
+                Menu {
+                    ForEach(
+                        languageActions.availableLanguages,
+                        id: \.self
+                    ) { language in
+                        Button {
+                            languageActions.switchLanguage(language)
+                        } label: {
+                            if language == appModel.language {
+                                Label(
+                                    language.displayName,
+                                    systemImage: "checkmark"
+                                )
+                            } else {
+                                Text(language.displayName)
+                            }
+                        }
+                    }
+                } label: {
+                    Text(appModel.language.shortLabel)
+                        .font(.system(size: 8, weight: .bold))
+                        .foregroundStyle(palette.accent)
+                }
+                .menuStyle(.borderlessButton)
+                .menuIndicator(.hidden)
+                .fixedSize()
+                .accessibilityLabel("切换学习语言")
+            }
             Circle()
                 .fill(palette.accent)
                 .frame(width: 4, height: 4)
@@ -482,15 +559,124 @@ public struct PracticeCardView: View {
         .clipShape(Capsule())
     }
 
+    @ViewBuilder
+    private var structuredRecallSection: some View {
+        if let exercise = practice.currentTransferExercise {
+            transferExerciseSection(exercise)
+        } else {
+            recallOutcomeSection
+        }
+    }
+
+    private var recallOutcomeSection: some View {
+        VStack(alignment: .leading, spacing: 7) {
+            HStack {
+                Text("刚才实际说到了哪一步？")
+                    .font(.system(size: 11, weight: .semibold))
+                Spacer()
+                Text("按真实表现选择")
+                    .font(.system(size: 8))
+                    .foregroundStyle(palette.muted)
+            }
+            LazyVGrid(
+                columns: [
+                    GridItem(.flexible(), spacing: 7),
+                    GridItem(.flexible(), spacing: 7),
+                ],
+                spacing: 7
+            ) {
+                recallOutcomeButton(
+                    PracticeCardMetrics.recallOutcomeTitles[0],
+                    outcome: .fluentWithinThreeSeconds
+                )
+                recallOutcomeButton(
+                    PracticeCardMetrics.recallOutcomeTitles[1],
+                    outcome: .coreMeaningWithUsageIssue
+                )
+                recallOutcomeButton(
+                    PracticeCardMetrics.recallOutcomeTitles[2],
+                    outcome: .rememberedAfterReveal
+                )
+                recallOutcomeButton(
+                    PracticeCardMetrics.recallOutcomeTitles[3],
+                    outcome: .unknown
+                )
+            }
+        }
+    }
+
+    private func recallOutcomeButton(
+        _ title: String,
+        outcome: RecallOutcome
+    ) -> some View {
+        Button(title) {
+            do {
+                try practice.submitRecallOutcome(outcome)
+                onLayoutChanged()
+            } catch {
+                practice.showStatus(error.localizedDescription)
+            }
+        }
+        .buttonStyle(.plain)
+        .font(.system(size: 9, weight: .medium))
+        .foregroundStyle(palette.primary)
+        .frame(maxWidth: .infinity, minHeight: 30)
+        .background(palette.accentSurface)
+        .clipShape(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
+        .accessibilityHint("记录回忆表现；必要时继续完成迁移检验")
+    }
+
+    private func transferExerciseSection(
+        _ exercise: TransferExercise
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("再验一次：\(exercise.prompt)")
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundStyle(palette.accent)
+                .lineLimit(2)
+            ForEach(exercise.options) { option in
+                Button {
+                    do {
+                        try practice.submitTransferAnswer(
+                            optionID: option.id
+                        )
+                        onLayoutChanged()
+                    } catch {
+                        practice.showStatus(
+                            error.localizedDescription
+                        )
+                    }
+                } label: {
+                    HStack(spacing: 7) {
+                        Circle()
+                            .stroke(palette.border, lineWidth: 1)
+                            .frame(width: 11, height: 11)
+                        Text(option.text)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.82)
+                        Spacer(minLength: 0)
+                    }
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .font(.system(size: 9.5, weight: .medium))
+                .foregroundStyle(palette.primary)
+                .accessibilityLabel("迁移答案：\(option.text)")
+            }
+        }
+    }
+
     private func revealedAnswer(_ answer: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Group {
                 if practice.currentCard != nil,
                     !practice.currentSentenceWords.isEmpty
                 {
-                    InteractiveRussianText(
+                    InteractiveTargetText(
                         text: answer,
-                        analyses: practice.currentSentenceWords,
+                        language: appModel.language,
                         selectedTokenIndex:
                             practice.selectedWordAnalysis?.tokenIndex
                     ) { tokenIndex in
@@ -575,9 +761,13 @@ public struct PracticeCardView: View {
             }
             Spacer(minLength: 4)
             if practice.isRevealed, !practice.isComplete {
-                gradeButton("Again", grade: .again)
-                gradeButton("Hard", grade: .hard)
-                gradeButton("Easy", grade: .easy, prominent: true)
+                Text(
+                    practice.currentTransferExercise == nil
+                        ? "选择实际回忆表现"
+                        : "完成上方迁移检验"
+                )
+                .font(.system(size: 8.5, weight: .medium))
+                .foregroundStyle(palette.muted)
             } else if !practice.isComplete {
                 compactButton("下一项", systemImage: "arrow.right") {
                     practice.next()
@@ -607,28 +797,6 @@ public struct PracticeCardView: View {
         .buttonStyle(.plain)
         .foregroundStyle(palette.muted)
         .accessibilityLabel(title)
-    }
-
-    private func gradeButton(
-        _ title: String,
-        grade: ReviewGrade,
-        prominent: Bool = false
-    ) -> some View {
-        Button(title) {
-            do {
-                try practice.grade(grade)
-                onLayoutChanged()
-            } catch {
-                practice.showStatus(error.localizedDescription)
-            }
-        }
-        .buttonStyle(
-            GradeButtonStyle(
-                palette: palette,
-                prominent: prominent
-            )
-        )
-        .accessibilityHint("提交 \(title) 评分并进入下一项")
     }
 
     private var progressText: String {

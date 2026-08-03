@@ -162,7 +162,8 @@ public struct PracticeDetailSection: View {
             Spacer()
             VStack(alignment: .trailing, spacing: 7) {
                 if let url = OnlineDictionary.wiktionaryURL(
-                    for: summary.lemma
+                    for: summary.lemma,
+                    language: appModel.language
                 ) {
                     Link(destination: url) {
                         Label("词典", systemImage: "arrow.up.right.square")
@@ -319,7 +320,9 @@ public struct PracticeDetailSection: View {
                 detail(
                     result.translationLanguage == .chinese
                         ? "Yandex 中文释义"
-                        : "Yandex 英文释义（中文暂缺）",
+                        : result.translationLanguage == .english
+                            ? "Yandex 英文释义（中文暂缺）"
+                            : "Yandex 俄语释义（中文暂缺）",
                     result.translations.joined(separator: "；")
                 )
             }
@@ -354,6 +357,37 @@ public struct PracticeDetailSection: View {
 
     @ViewBuilder
     private func lexemeContent(_ lexeme: Lexeme) -> some View {
+        if let study = practice.currentStudyLexeme,
+            study.language == .english
+        {
+            if let phonetic = study.phonetic, !phonetic.isEmpty {
+                detail("发音", phonetic)
+            }
+            if !study.inflections.isEmpty {
+                detail("常见词形", study.inflections.joined(separator: " · "))
+            }
+            if !study.collocations.isEmpty {
+                detail("固定搭配", study.collocations.joined(separator: " · "))
+            }
+            if !study.phrasalVerbs.isEmpty {
+                detail("短语动词", study.phrasalVerbs.joined(separator: " · "))
+            }
+            if !study.wordFamily.isEmpty {
+                detail("词族", study.wordFamily.joined(separator: " · "))
+            }
+            if !study.morphologyNotes.isEmpty {
+                detail(
+                    "构词与用法",
+                    study.morphologyNotes.joined(separator: " · ")
+                )
+            }
+            ForEach(
+                Array(study.memoryNotes.enumerated()),
+                id: \.offset
+            ) { _, note in
+                detail(memoryNoteTitle(note.kind), note.text)
+            }
+        }
         if !practice.lexemeGrammarLabels.isEmpty {
             detail(
                 "必要语法",
@@ -372,7 +406,9 @@ public struct PracticeDetailSection: View {
         if let note = lexeme.aspectPairNote, !note.isEmpty {
             detail("体对说明", note)
         }
-        detail("例句", lexeme.example)
+        if !lexeme.example.isEmpty {
+            detail("例句", lexeme.example)
+        }
         if let context = practice.currentContextSentence {
             detail("场景 · \(context.theme)", context.practiceRu)
         }
@@ -397,7 +433,11 @@ public struct PracticeDetailSection: View {
         }
 
         if !practice.isRevealed {
-            Text("显示答案后，可查看同场景延伸表达；其中每个俄语词都可以点击。")
+            Text(
+                appModel.language == .english
+                    ? "显示答案后，可查看同场景延伸表达；其中每个英语词都可以点击。"
+                    : "显示答案后，可查看同场景延伸表达；其中每个俄语词都可以点击。"
+            )
                 .font(
                     .system(
                         size: PracticeDetailTypography.supportingSize
@@ -406,7 +446,11 @@ public struct PracticeDetailSection: View {
                 )
                 .foregroundStyle(palette.muted)
         } else if practice.relatedSentenceExpressions.isEmpty {
-            Text("点击上方答案中的任意俄语词，可查看词义、词形和用法。")
+            Text(
+                appModel.language == .english
+                    ? "点击上方答案中的任意英语词，可查看词义、词形和用法。"
+                    : "点击上方答案中的任意俄语词，可查看词义、词形和用法。"
+            )
                 .font(
                     .system(
                         size: PracticeDetailTypography.supportingSize
@@ -415,7 +459,11 @@ public struct PracticeDetailSection: View {
                 )
                 .foregroundStyle(palette.muted)
         } else {
-            Text("同场景延伸 · 点击任意俄语词")
+            Text(
+                appModel.language == .english
+                    ? "同场景延伸 · 点击任意英语词"
+                    : "同场景延伸 · 点击任意俄语词"
+            )
                 .font(
                     .system(
                         size: PracticeDetailTypography.labelSize,
@@ -434,9 +482,9 @@ public struct PracticeDetailSection: View {
                             )
                         )
                         .foregroundStyle(palette.muted)
-                    InteractiveRussianText(
+                    InteractiveTargetText(
                         text: expression.text,
-                        analyses: expression.analyses,
+                        language: appModel.language,
                         selectedTokenIndex:
                             practice.selectedWordAnalysis?.cardID
                                 == expression.cardID
@@ -594,6 +642,17 @@ public struct PracticeDetailSection: View {
         case "numeral": "数词"
         case "interjection": "感叹词"
         default: value
+        }
+    }
+
+    private func memoryNoteTitle(_ kind: MemoryNoteKind) -> String {
+        switch kind {
+        case .verifiedEtymology:
+            "可靠词源"
+        case .morphologicalBreakdown:
+            "构词拆分"
+        case .mnemonic:
+            "联想助记（不是词源）"
         }
     }
 }

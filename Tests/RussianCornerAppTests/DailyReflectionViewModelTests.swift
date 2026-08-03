@@ -76,6 +76,18 @@ final class DailyReflectionViewModelTests: XCTestCase {
         )
     }
 
+    func testReflectionKeepsTheActiveStudyLanguage() {
+        let model = DailyReflectionViewModel(
+            repository: ReflectionStoreSpy(),
+            language: .english,
+            now: { self.start },
+            calendar: utcCalendar
+        )
+
+        XCTAssertEqual(model.language, .english)
+        XCTAssertEqual(model.languageLabel, "ENGLISH")
+    }
+
     func testCompletedDayOffersReflectionOnlyOnce() {
         let store = ReflectionStoreSpy()
         let model = makeModel(store: store)

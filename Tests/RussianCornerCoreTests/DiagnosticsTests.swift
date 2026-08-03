@@ -32,7 +32,7 @@ final class DiagnosticsTests: XCTestCase {
         )
 
         XCTAssertEqual(restored, report)
-        XCTAssertEqual(restored.diagnosticVersion, 2)
+        XCTAssertEqual(restored.diagnosticVersion, 3)
         XCTAssertEqual(restored.seed, 42)
         XCTAssertEqual(restored.sampleLexemeIDs, ["lexeme-1", "lexeme-2"])
         XCTAssertEqual(restored.listeningSentenceIDs, ["sentence-1"])

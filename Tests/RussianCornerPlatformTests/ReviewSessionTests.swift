@@ -907,7 +907,13 @@ final class SpeechServiceTests: XCTestCase {
 
         let status = service.speak("Здравствуйте")
 
-        XCTAssertEqual(status, .russianVoice(identifier: "russian"))
+        XCTAssertEqual(
+            status,
+            .preferredVoice(
+                identifier: "russian",
+                language: "ru-RU"
+            )
+        )
         XCTAssertEqual(synthesizer.spoken.first?.text, "Здравствуйте")
         XCTAssertEqual(synthesizer.spoken.first?.voiceIdentifier, "russian")
         XCTAssertEqual(synthesizer.stopCallCount, 1)
@@ -931,6 +937,72 @@ final class SpeechServiceTests: XCTestCase {
         )
         XCTAssertEqual(synthesizer.spoken.count, 1)
         XCTAssertEqual(synthesizer.stopCallCount, 2)
+    }
+
+    func testEnglishSpeechPrefersUSVoiceThenBritishVoice() {
+        let synthesizer = FakeSpeechSynthesizer()
+        let service = SpeechService(
+            voiceProvider: FixedSpeechVoiceProvider(voices: [
+                SpeechVoice(identifier: "russian", language: "ru-RU"),
+                SpeechVoice(identifier: "british", language: "en-GB"),
+                SpeechVoice(identifier: "american", language: "en-US"),
+            ]),
+            synthesizer: synthesizer
+        )
+
+        let preferred = service.speak(
+            "I was just about to call you.",
+            language: .english,
+            allowUnrelatedFallback: false
+        )
+
+        XCTAssertEqual(
+            preferred,
+            .preferredVoice(
+                identifier: "american",
+                language: "en-US"
+            )
+        )
+        XCTAssertEqual(
+            synthesizer.spoken.last?.voiceIdentifier,
+            "american"
+        )
+
+        let britishOnly = SpeechService(
+            voiceProvider: FixedSpeechVoiceProvider(voices: [
+                SpeechVoice(identifier: "british", language: "en-GB"),
+            ]),
+            synthesizer: FakeSpeechSynthesizer()
+        )
+        XCTAssertEqual(
+            britishOnly.voiceStatus(
+                language: .english,
+                allowUnrelatedFallback: false
+            ),
+            .preferredVoice(
+                identifier: "british",
+                language: "en-GB"
+            )
+        )
+    }
+
+    func testEnglishSpeechNeverUsesRussianWhenUnrelatedFallbackIsDisabled() {
+        let synthesizer = FakeSpeechSynthesizer()
+        let service = SpeechService(
+            voiceProvider: FixedSpeechVoiceProvider(voices: [
+                SpeechVoice(identifier: "russian", language: "ru-RU"),
+            ]),
+            synthesizer: synthesizer
+        )
+
+        let status = service.speak(
+            "Can you say that again?",
+            language: .english,
+            allowUnrelatedFallback: false
+        )
+
+        XCTAssertEqual(status, .unavailable)
+        XCTAssertTrue(synthesizer.spoken.isEmpty)
     }
 
     func testSpeechReturnsUnavailableWithoutCrashingWhenNoVoiceExists() {
