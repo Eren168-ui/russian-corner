@@ -769,7 +769,16 @@ public struct PracticeCardView: View {
                 }
             }
             Spacer(minLength: 4)
-            if practice.isRevealed, !practice.isComplete {
+            if practice.isAssessmentComplete, !practice.isComplete {
+                Button("下一题") {
+                    practice.next()
+                    onLayoutChanged()
+                }
+                .buttonStyle(AccentButtonStyle(palette: palette))
+                .keyboardShortcut(.return, modifiers: [])
+                .help("评估已记录；看完本卡后再进入下一题")
+                .accessibilityHint("由你确认后进入下一题")
+            } else if practice.isRevealed, !practice.isComplete {
                 Text(
                     practice.currentTransferExercise == nil
                         ? "选择实际回忆表现"

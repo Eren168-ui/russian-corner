@@ -99,6 +99,37 @@ final class PracticeViewModelTests: XCTestCase {
     XCTAssertEqual(event.transferCorrect, true)
   }
 
+  func testTransferAssessmentWaitsForExplicitNext() throws {
+    let fixture = try makeFixture(sentenceCount: 3)
+    let firstItemID = try XCTUnwrap(fixture.model.currentItem?.id)
+    fixture.model.reveal()
+    try fixture.model.submitRecallOutcome(
+      .fluentWithinThreeSeconds
+    )
+    let exercise = try XCTUnwrap(
+      fixture.model.currentTransferExercise
+    )
+
+    try fixture.model.submitTransferAnswer(
+      optionID: exercise.correctOptionID
+    )
+
+    XCTAssertEqual(fixture.model.currentItem?.id, firstItemID)
+    XCTAssertEqual(fixture.model.currentIndex, 0)
+    XCTAssertTrue(fixture.model.isRevealed)
+    XCTAssertTrue(fixture.model.isAssessmentComplete)
+    XCTAssertEqual(
+      fixture.model.statusMessage,
+      "评估已记录；可继续查看词义，看完后点击“下一题”"
+    )
+
+    fixture.model.next()
+
+    XCTAssertEqual(fixture.model.currentIndex, 1)
+    XCTAssertFalse(fixture.model.isRevealed)
+    XCTAssertFalse(fixture.model.isAssessmentComplete)
+  }
+
   func testFailedTransferDowngradesFluentRecallToHard() throws {
     let fixture = try makeFixture(sentenceCount: 3)
     fixture.model.reveal()
@@ -138,6 +169,35 @@ final class PracticeViewModelTests: XCTestCase {
     XCTAssertEqual(event.grade, .again)
     XCTAssertEqual(event.recallOutcome, .unknown)
     XCTAssertNil(event.transferAnswerID)
+  }
+
+  func testRecallAssessmentKeepsWordDetailUntilExplicitNext() throws {
+    let fixture = try makeFixture(sentenceCount: 2)
+    let firstItemID = try XCTUnwrap(fixture.model.currentItem?.id)
+    fixture.model.reveal()
+    fixture.model.toggleWordAnalysis(tokenIndex: 0)
+    let selectedWordID = try XCTUnwrap(
+      fixture.model.selectedWordAnalysis?.id
+    )
+
+    try fixture.model.submitRecallOutcome(.unknown)
+
+    XCTAssertEqual(fixture.model.currentItem?.id, firstItemID)
+    XCTAssertEqual(fixture.model.currentIndex, 0)
+    XCTAssertTrue(fixture.model.isRevealed)
+    XCTAssertTrue(fixture.model.isAssessmentComplete)
+    XCTAssertEqual(
+      fixture.model.selectedWordAnalysis?.id,
+      selectedWordID
+    )
+    XCTAssertTrue(fixture.model.isDetailExpanded)
+
+    fixture.model.next()
+
+    XCTAssertEqual(fixture.model.currentIndex, 1)
+    XCTAssertFalse(fixture.model.isRevealed)
+    XCTAssertFalse(fixture.model.isAssessmentComplete)
+    XCTAssertNil(fixture.model.selectedWordAnalysis)
   }
 
   func testPromptSwitchesFromChineseToRussianCueAtMasteryThree() throws {

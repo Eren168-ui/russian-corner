@@ -160,6 +160,7 @@ public final class PracticeViewModel {
   public private(set) var selectedRecallOutcome: RecallOutcome?
   public private(set) var currentTransferExercise: TransferExercise?
   public private(set) var selectedTransferAnswerID: String?
+  public private(set) var isAssessmentComplete = false
   public let targetCount: Int
   public let language: StudyLanguage
   public let newWordLimit: Int
@@ -360,6 +361,7 @@ public final class PracticeViewModel {
 
   public var isStructuredRecallPresented: Bool {
     isRevealed
+      && !isAssessmentComplete
       && (
         selectedRecallOutcome == nil
           || currentTransferExercise != nil
@@ -924,7 +926,7 @@ public final class PracticeViewModel {
     selectedRecallOutcome = outcome
     structuredResponseTimeMs = responseTimeMs
     selectedTransferAnswerID = nil
-    clearWordAnalysis()
+    isAssessmentComplete = false
 
     guard outcome.requiresTransferCheck else {
       let grade = outcome.reviewGrade(
@@ -934,7 +936,8 @@ public final class PracticeViewModel {
       try persistGrade(
         grade,
         recallOutcome: outcome,
-        responseTimeMs: responseTimeMs
+        responseTimeMs: responseTimeMs,
+        advancesAfterPersist: false
       )
       return
     }
@@ -965,7 +968,8 @@ public final class PracticeViewModel {
       responseTimeMs: responseTimeMs,
       transferExerciseID: exercise.id,
       transferAnswerID: optionID,
-      transferCorrect: isCorrect
+      transferCorrect: isCorrect,
+      advancesAfterPersist: false
     )
   }
 
@@ -1133,6 +1137,11 @@ public final class PracticeViewModel {
       lexemeDirection == .recognition
       ? .production : .recognition
     isRevealed = false
+    selectedRecallOutcome = nil
+    currentTransferExercise = nil
+    selectedTransferAnswerID = nil
+    structuredResponseTimeMs = nil
+    isAssessmentComplete = false
     remainingRecallSeconds = 3
     recallStartedAt = now()
     clearWordAnalysis()
@@ -1154,7 +1163,8 @@ public final class PracticeViewModel {
     responseTimeMs explicitResponseTimeMs: Int? = nil,
     transferExerciseID: String? = nil,
     transferAnswerID: String? = nil,
-    transferCorrect: Bool? = nil
+    transferCorrect: Bool? = nil,
+    advancesAfterPersist: Bool = true
   ) throws {
     guard isRevealed else {
       throw PracticeViewModelError.answerNotRevealed
@@ -1229,18 +1239,25 @@ public final class PracticeViewModel {
         transferCorrect: transferCorrect
       )
     )
-    advance(status: nil)
+    if advancesAfterPersist {
+      advance(status: nil)
+    } else {
+      isAssessmentComplete = true
+      statusMessage = "评估已记录；可继续查看词义，看完后点击“下一题”"
+    }
   }
 
   public func next() {
     guard currentItem != nil else { return }
-    trialTracker?.record(
-      kind: .next,
-      context: trialContext(
+    if !isAssessmentComplete {
+      trialTracker?.record(
         kind: .next,
-        occurredAt: now()
+        context: trialContext(
+          kind: .next,
+          occurredAt: now()
+        )
       )
-    )
+    }
     advance(status: nil)
   }
 
@@ -1272,6 +1289,7 @@ public final class PracticeViewModel {
     currentTransferExercise = nil
     selectedTransferAnswerID = nil
     structuredResponseTimeMs = nil
+    isAssessmentComplete = false
     clearWordAnalysis()
     remainingRecallSeconds = 3
     recallStartedAt = now()
@@ -1287,6 +1305,7 @@ public final class PracticeViewModel {
     currentTransferExercise = nil
     selectedTransferAnswerID = nil
     structuredResponseTimeMs = nil
+    isAssessmentComplete = false
     clearWordAnalysis()
     usedSpeechOnCurrentItem = false
     openedDetailsOnCurrentItem = false
