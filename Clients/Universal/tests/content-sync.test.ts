@@ -25,7 +25,7 @@ describe('audited content sync', () => {
     const manifest = JSON.parse(await readFile(resolve(root, 'public/content/content-manifest.json'), 'utf8'))
     expect(after).toEqual(before)
     expect(manifest.counts).toEqual({
-      english: { lexemes: 400, sentences: 200, topics: 20, lessons: 20 },
+      english: { lexemes: 480, sentences: 240, topics: 24, lessons: 24 },
       russian: { lexemes: 360, supplementalLexemes: 80, sentences: 214, supplementalSentences: 60, topics: 32, speakingChallenges: 24 },
     })
     expect(Object.values(manifest.files).every((entry: unknown) => /^[a-f0-9]{64}$/.test((entry as { sha256: string }).sha256))).toBe(true)

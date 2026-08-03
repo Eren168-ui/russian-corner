@@ -378,5 +378,81 @@
     ],
     "titleTarget": "Small everyday logistics",
     "titleZh": "日常事务与家里"
+  },
+  {
+    "descriptionZh": "在校园、教室门口和课后自然问候外籍老师，开启简短交流。",
+    "id": "en.topic.21.campus-teacher-greetings",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.01",
+      "en.topic.21.campus-teacher-greetings.02",
+      "en.topic.21.campus-teacher-greetings.03",
+      "en.topic.21.campus-teacher-greetings.04",
+      "en.topic.21.campus-teacher-greetings.05",
+      "en.topic.21.campus-teacher-greetings.06",
+      "en.topic.21.campus-teacher-greetings.07",
+      "en.topic.21.campus-teacher-greetings.08",
+      "en.topic.21.campus-teacher-greetings.09",
+      "en.topic.21.campus-teacher-greetings.10"
+    ],
+    "titleTarget": "Greeting teachers around campus",
+    "titleZh": "校园遇见老师"
+  },
+  {
+    "descriptionZh": "课后请教外籍老师、说明卡点、约时间并确认后续做法。",
+    "id": "en.topic.22.asking-teacher-help",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.22.asking-teacher-help.01",
+      "en.topic.22.asking-teacher-help.02",
+      "en.topic.22.asking-teacher-help.03",
+      "en.topic.22.asking-teacher-help.04",
+      "en.topic.22.asking-teacher-help.05",
+      "en.topic.22.asking-teacher-help.06",
+      "en.topic.22.asking-teacher-help.07",
+      "en.topic.22.asking-teacher-help.08",
+      "en.topic.22.asking-teacher-help.09",
+      "en.topic.22.asking-teacher-help.10"
+    ],
+    "titleTarget": "Asking a teacher for help",
+    "titleZh": "请教老师与约时间"
+  },
+  {
+    "descriptionZh": "上课时礼貌打断、追问、确认术语并请老师举例说明。",
+    "id": "en.topic.23.classroom-questions",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.23.classroom-questions.01",
+      "en.topic.23.classroom-questions.02",
+      "en.topic.23.classroom-questions.03",
+      "en.topic.23.classroom-questions.04",
+      "en.topic.23.classroom-questions.05",
+      "en.topic.23.classroom-questions.06",
+      "en.topic.23.classroom-questions.07",
+      "en.topic.23.classroom-questions.08",
+      "en.topic.23.classroom-questions.09",
+      "en.topic.23.classroom-questions.10"
+    ],
+    "titleTarget": "Asking questions in class",
+    "titleZh": "课堂提问与澄清"
+  },
+  {
+    "descriptionZh": "回答老师提问、争取思考时间、补充同学观点并表达不确定。",
+    "id": "en.topic.24.classroom-answers",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.24.classroom-answers.01",
+      "en.topic.24.classroom-answers.02",
+      "en.topic.24.classroom-answers.03",
+      "en.topic.24.classroom-answers.04",
+      "en.topic.24.classroom-answers.05",
+      "en.topic.24.classroom-answers.06",
+      "en.topic.24.classroom-answers.07",
+      "en.topic.24.classroom-answers.08",
+      "en.topic.24.classroom-answers.09",
+      "en.topic.24.classroom-answers.10"
+    ],
+    "titleTarget": "Answering and joining class discussion",
+    "titleZh": "课堂回答与讨论"
   }
 ]

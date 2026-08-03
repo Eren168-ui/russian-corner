@@ -21,7 +21,7 @@ const approvedFiles = [
 ]
 
 const expectedCounts = {
-  english: { lexemes: 400, sentences: 200, topics: 20, lessons: 20 },
+  english: { lexemes: 480, sentences: 240, topics: 24, lessons: 24 },
   russian: { lexemes: 360, supplementalLexemes: 80, sentences: 214, supplementalSentences: 60, topics: 32, speakingChallenges: 24 },
 }
 
