@@ -11,7 +11,7 @@
     "russian": {
       "lexemes": 360,
       "supplementalLexemes": 80,
-      "sentences": 214,
+      "sentences": 231,
       "supplementalSentences": 60,
       "topics": 32,
       "speakingChallenges": 24
@@ -39,8 +39,8 @@
       "bytes": 197684
     },
     "long-term-sentences.json": {
-      "sha256": "2f5c6756701af4c374ee2863bb5b762bcde2793db0a359cc008018e2e84b475e",
-      "bytes": 276266
+      "sha256": "47a96db2238d0e3ea3b024a8f758c6c3315ee9d3d34572bc7bdc3d147b573228",
+      "bytes": 297576
     },
     "speaking-challenges.json": {
       "sha256": "bb9df3da965e857a50f92f56e9caba1380a2554326042e20efa9a4d331dc3b7f",

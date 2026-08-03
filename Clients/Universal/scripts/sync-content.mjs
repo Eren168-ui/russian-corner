@@ -22,7 +22,7 @@ const approvedFiles = [
 
 const expectedCounts = {
   english: { lexemes: 480, sentences: 240, topics: 24, lessons: 24 },
-  russian: { lexemes: 360, supplementalLexemes: 80, sentences: 214, supplementalSentences: 60, topics: 32, speakingChallenges: 24 },
+  russian: { lexemes: 360, supplementalLexemes: 80, sentences: 231, supplementalSentences: 60, topics: 32, speakingChallenges: 24 },
 }
 
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex')

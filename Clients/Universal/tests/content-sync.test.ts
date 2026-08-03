@@ -26,7 +26,7 @@ describe('audited content sync', () => {
     expect(after).toEqual(before)
     expect(manifest.counts).toEqual({
       english: { lexemes: 480, sentences: 240, topics: 24, lessons: 24 },
-      russian: { lexemes: 360, supplementalLexemes: 80, sentences: 214, supplementalSentences: 60, topics: 32, speakingChallenges: 24 },
+      russian: { lexemes: 360, supplementalLexemes: 80, sentences: 231, supplementalSentences: 60, topics: 32, speakingChallenges: 24 },
     })
     expect(Object.values(manifest.files).every((entry: unknown) => /^[a-f0-9]{64}$/.test((entry as { sha256: string }).sha256))).toBe(true)
   })
