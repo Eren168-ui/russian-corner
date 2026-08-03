@@ -29,7 +29,7 @@ struct RussianCornerResourceProbe {
                 catalog.sentences.count == 72,
                 catalog.trialSlice?.cardCount == 50,
                 catalog.topics.count == 32,
-                catalog.longTermSentences.count == 274,
+                catalog.longTermSentences.count == 291,
                 catalog.supplementalLexemes.count == 80,
                 catalog.supplementalSentences.count == 60,
                 catalog.speakingChallenges.count == 24,
@@ -64,7 +64,7 @@ struct RussianCornerResourceProbe {
             print(
                 "resource_probe=PASS russian_lexemes=440 " +
                     "russian_sentences=72 trial=50 " +
-                    "topics=32 long_term_sentences=274 " +
+                    "topics=32 long_term_sentences=291 " +
                     "supplemental_lexemes=80 " +
                     "supplemental_sentences=60 speaking_challenges=24 " +
                     "english_lexemes=480 english_sentences=240 " +

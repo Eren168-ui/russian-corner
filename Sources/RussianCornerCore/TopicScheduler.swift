@@ -1,4 +1,15 @@
 public struct TopicSelector: Sendable {
+    private static let priorityTopicIDs = [
+        "topic-21",
+        "topic-22",
+        "topic-23",
+        "topic-24",
+        "en.topic.21.campus-teacher-greetings",
+        "en.topic.22.asking-teacher-help",
+        "en.topic.23.classroom-questions",
+        "en.topic.24.classroom-answers",
+    ]
+
     public init() {}
 
     public func select(
@@ -20,6 +31,11 @@ public struct TopicSelector: Sendable {
         }
 
         let ordered = topics.sorted {
+            let leftRank = Self.priorityRank(for: $0.id)
+            let rightRank = Self.priorityRank(for: $1.id)
+            if leftRank != rightRank {
+                return leftRank < rightRank
+            }
             if $0.number == $1.number {
                 return $0.id < $1.id
             }
@@ -64,5 +80,12 @@ public struct TopicSelector: Sendable {
         count: Int
     ) -> Int {
         positiveModulo(to - from, count)
+    }
+
+    private static func priorityRank(for topicID: String) -> Int {
+        guard let index = priorityTopicIDs.firstIndex(of: topicID) else {
+            return priorityTopicIDs.count
+        }
+        return index
     }
 }

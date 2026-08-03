@@ -40,6 +40,26 @@ final class TopicSchedulerTests: XCTestCase {
         XCTAssertEqual(selected?.id, "topic-19")
     }
 
+    func testRussianCourseStartsWithUniversityInteractionTopics() {
+        let topics = (1...32).map(topic)
+        let selector = TopicSelector()
+
+        let selectedIDs = (0..<4).compactMap { dayIndex in
+            selector.select(
+                dayIndex: dayIndex,
+                topics: topics,
+                recentTopicIDs: [],
+                weaknessByTopic: [:],
+                manualTopicID: nil
+            )?.id
+        }
+
+        XCTAssertEqual(
+            selectedIDs,
+            ["topic-21", "topic-22", "topic-23", "topic-24"]
+        )
+    }
+
     func testEmptyTopicsReturnNil() {
         XCTAssertNil(
             TopicSelector().select(

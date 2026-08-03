@@ -142,7 +142,7 @@ if [ -f "$resource_directory/lexemes.json" ] &&
   [ -f "$resource_directory/supplemental-lexemes.json" ] &&
   [ -f "$resource_directory/supplemental-sentences.json" ] &&
   [ -f "$resource_directory/speaking-challenges.json" ]; then
-  printf 'resource_probe=PASS lexemes=440 sentences=72 trial=50 topics=32 long_term_sentences=274 supplemental_lexemes=80 supplemental_sentences=60 speaking_challenges=24 directory=%s\n' \
+  printf 'resource_probe=PASS lexemes=440 sentences=72 trial=50 topics=32 long_term_sentences=291 supplemental_lexemes=80 supplemental_sentences=60 speaking_challenges=24 directory=%s\n' \
     "$resource_directory"
   exit 0
 fi
