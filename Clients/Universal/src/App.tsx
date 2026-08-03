@@ -110,6 +110,7 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
   const [finished, setFinished] = useState(false)
   const [progress, setProgress] = useState<StudyProgress | null>(null)
   const promptStartedAt = useRef(Date.now())
+  const frozenResponseTimeMs = useRef<number | null>(null)
   const current = queue[cardIndex]
   const voice = useVoice(language)
 
@@ -117,6 +118,7 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
     if (!current) return
     setHintReady(false)
     promptStartedAt.current = Date.now()
+    frozenResponseTimeMs.current = null
     const timer = window.setTimeout(() => setHintReady(true), 3000)
     return () => window.clearTimeout(timer)
   }, [current])
@@ -190,7 +192,7 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
       currentIndex: 0,
       queueIDs: next.map((card) => card.id),
       dailyMinutes,
-      attempts: [],
+      attempts: progress?.attempts ?? [],
     }
     setSelectedTopic(topicID)
     setQueue(next)
@@ -209,6 +211,11 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
     window.speechSynthesis.speak(utterance)
   }
 
+  function showHint() {
+    frozenResponseTimeMs.current ??= Math.max(0, Date.now() - promptStartedAt.current)
+    setStage('hint')
+  }
+
   function chooseOutcome(outcome: RecallOutcome) {
     if (!current || !progress) return
     if (requiresTransfer(outcome) && !transferEvidence.trim()) {
@@ -217,7 +224,7 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
     }
     const next = recordAttempt(progress, {
       sentenceID: current.id,
-      responseTimeMs: Math.max(0, Date.now() - promptStartedAt.current),
+      responseTimeMs: frozenResponseTimeMs.current ?? Math.max(0, Date.now() - promptStartedAt.current),
       outcome,
       transferEvidence: transferEvidence.trim(),
       completedAt: new Date().toISOString(),
@@ -339,7 +346,7 @@ export default function App({ catalogLoader = loadCatalog }: { catalogLoader?: C
               <div className={`three-second ${hintReady ? 'ready' : ''}`} aria-live="polite">
                 <span aria-hidden="true" />{hintReady ? '可以看提示了' : '先想 3 秒'}
               </div>
-              <button className="primary-button" disabled={!hintReady} onClick={() => setStage('hint')}>查看提示</button>
+              <button className="primary-button" disabled={!hintReady} onClick={showHint}>查看提示</button>
             </div>
           )}
 

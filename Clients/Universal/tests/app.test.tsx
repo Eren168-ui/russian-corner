@@ -1,8 +1,9 @@
-import { render, screen, waitFor, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from '../src/App'
 import type { ContentCatalog, StudyLanguage } from '../src/domain/models'
+import { localDateKey } from '../src/domain/dailyQueue'
 import { firstSessionKey } from '../src/domain/session'
 import { progressKey, type StudyProgress } from '../src/domain/progress'
 
@@ -41,10 +42,10 @@ const makeCatalog = (language: 'english' | 'russian'): ContentCatalog => ({
 
 function seedProgress(language: StudyLanguage, queueIDs: string[], currentIndex = 0, dailyMinutes = 5) {
   const value: StudyProgress = {
-    language, date: '2026-08-03', currentIndex, queueIDs, dailyMinutes,
+    language, date: localDateKey(), currentIndex, queueIDs, dailyMinutes,
     attempts: currentIndex > 0 ? [{
       sentenceID: queueIDs[0], responseTimeMs: 2200, outcome: 'fluentUnder3s',
-      transferEvidence: 'saved transfer', completedAt: '2026-08-03T08:00:00Z',
+      transferEvidence: 'saved transfer', completedAt: new Date().toISOString(),
     }] : [],
   }
   localStorage.setItem(progressKey(language), JSON.stringify(value))
@@ -55,6 +56,8 @@ describe('Language Corner app', () => {
   beforeEach(() => {
     localStorage.clear()
   })
+
+  afterEach(() => vi.useRealTimers())
 
   it('shows the brand and switches between English and Russian', async () => {
     const user = userEvent.setup()
@@ -116,6 +119,42 @@ describe('Language Corner app', () => {
     expect(await screen.findByText('2 / 3')).toBeInTheDocument()
     expect(screen.getByText('词汇 / 句块')).toBeInTheDocument()
     expect(JSON.parse(localStorage.getItem(progressKey('english'))!)).toEqual(saved)
+  })
+
+  it('rebuilds a topic queue without clearing completed attempts or transfer evidence', async () => {
+    const user = userEvent.setup()
+    const saved = seedProgress('english', [
+      'sentence:english-sentence-0', 'lexeme:english-lex', 'challenge:english-challenge',
+    ], 1)
+    render(<App catalogLoader={async (language) => makeCatalog(language)} />)
+    await user.click(screen.getByRole('button', { name: '开始今天练习' }))
+    await user.selectOptions(screen.getByLabelText('主题'), 'english-topic')
+    const updated = JSON.parse(localStorage.getItem(progressKey('english'))!) as StudyProgress
+    expect(updated.currentIndex).toBe(0)
+    expect(updated.attempts).toEqual(saved.attempts)
+    expect(updated.attempts[0].transferEvidence).toBe('saved transfer')
+  })
+
+  it('freezes response time when the learner requests the hint', async () => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2030-01-02T08:00:00Z'))
+    seedProgress('english', ['sentence:english-sentence-0'])
+    render(<App catalogLoader={async (language) => makeCatalog(language)} />)
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: '开始今天练习' }))
+    })
+    act(() => vi.advanceTimersByTime(3000))
+    fireEvent.click(screen.getByRole('button', { name: '查看提示' }))
+    expect(screen.getByRole('button', { name: '揭晓答案' })).toBeInTheDocument()
+
+    act(() => vi.advanceTimersByTime(20_000))
+    fireEvent.click(screen.getByRole('button', { name: '揭晓答案' }))
+    fireEvent.click(within(screen.getByTestId('target-answer')).getByRole('button', { name: 'text' }))
+    fireEvent.change(screen.getByLabelText('迁移回答'), { target: { value: 'text my friend' } })
+    fireEvent.click(screen.getByRole('button', { name: '流利说出（3 秒内）' }))
+
+    const updated = JSON.parse(localStorage.getItem(progressKey('english'))!) as StudyProgress
+    expect(updated.attempts[0].responseTimeMs).toBe(3000)
   })
 
   it('keeps the first experience at three cards, then lets 15 minutes produce eight', async () => {
