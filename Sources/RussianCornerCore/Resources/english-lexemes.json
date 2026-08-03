@@ -10798,5 +10798,2165 @@
     "sourcePath": "curated/english/everyday-logistics",
     "sourceText": "That should do it.",
     "qualityFlags": []
+  },
+  {
+    "id": "en.expression.campus-teacher-greetings.01",
+    "language": "english",
+    "lemma": "Hi, Professor. How's your day going?",
+    "displayForm": "Hi, Professor. How's your day going?",
+    "speechText": "Hi, Professor. How's your day going?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "嗨，老师，今天过得怎么样？",
+    "inflections": [],
+    "collocations": [
+      "Hi, Professor. How's your day going?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.01"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Hi, Professor. How's your day going?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.campus-teacher-greetings.01",
+    "language": "english",
+    "lemma": "How's your day going?",
+    "displayForm": "How's your day going?",
+    "speechText": "How's your day going?",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "今天过得怎么样",
+    "inflections": [],
+    "collocations": [
+      "How's your day going?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.01"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Hi, Professor. How's your day going?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.campus-teacher-greetings.02",
+    "language": "english",
+    "lemma": "Good morning! Are we still in Room 204 today?",
+    "displayForm": "Good morning! Are we still in Room 204 today?",
+    "speechText": "Good morning! Are we still in Room 204 today?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "早上好！我们今天还是在204教室吗？",
+    "inflections": [],
+    "collocations": [
+      "Good morning! Are we still in Room 204 today?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.02"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Good morning! Are we still in Room 204 today?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.campus-teacher-greetings.02",
+    "language": "english",
+    "lemma": "Are we still in Room 204?",
+    "displayForm": "Are we still in Room 204?",
+    "speechText": "Are we still in Room 204?",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我们还是在204教室吗",
+    "inflections": [],
+    "collocations": [
+      "Are we still in Room 204?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.02"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Good morning! Are we still in Room 204 today?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.campus-teacher-greetings.03",
+    "language": "english",
+    "lemma": "I saw you in the hallway and wanted to say hi.",
+    "displayForm": "I saw you in the hallway and wanted to say hi.",
+    "speechText": "I saw you in the hallway and wanted to say hi.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我在走廊看到您，就想过来打个招呼。",
+    "inflections": [],
+    "collocations": [
+      "I saw you in the hallway and wanted to say hi."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.03"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "I saw you in the hallway and wanted to say hi.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.campus-teacher-greetings.03",
+    "language": "english",
+    "lemma": "I wanted to say hi",
+    "displayForm": "I wanted to say hi",
+    "speechText": "I wanted to say hi",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我想来打个招呼",
+    "inflections": [],
+    "collocations": [
+      "I wanted to say hi"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.03"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "I saw you in the hallway and wanted to say hi.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.campus-teacher-greetings.04",
+    "language": "english",
+    "lemma": "How did the workshop go yesterday?",
+    "displayForm": "How did the workshop go yesterday?",
+    "speechText": "How did the workshop go yesterday?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "昨天的工作坊进行得怎么样？",
+    "inflections": [],
+    "collocations": [
+      "How did the workshop go yesterday?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.04"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "How did the workshop go yesterday?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.campus-teacher-greetings.04",
+    "language": "english",
+    "lemma": "How did it go?",
+    "displayForm": "How did it go?",
+    "speechText": "How did it go?",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "进行得怎么样",
+    "inflections": [],
+    "collocations": [
+      "How did it go?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.04"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "How did the workshop go yesterday?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.campus-teacher-greetings.05",
+    "language": "english",
+    "lemma": "Are you free for a minute, or are you on your way to class?",
+    "displayForm": "Are you free for a minute, or are you on your way to class?",
+    "speechText": "Are you free for a minute, or are you on your way to class?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "您有空聊一分钟吗，还是正要去上课？",
+    "inflections": [],
+    "collocations": [
+      "Are you free for a minute, or are you on your way to class?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.05"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Are you free for a minute, or are you on your way to class?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.campus-teacher-greetings.05",
+    "language": "english",
+    "lemma": "Are you free for a minute?",
+    "displayForm": "Are you free for a minute?",
+    "speechText": "Are you free for a minute?",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "您有空聊一分钟吗",
+    "inflections": [],
+    "collocations": [
+      "Are you free for a minute?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.05"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Are you free for a minute, or are you on your way to class?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.campus-teacher-greetings.06",
+    "language": "english",
+    "lemma": "I hope I'm not catching you at a bad time.",
+    "displayForm": "I hope I'm not catching you at a bad time.",
+    "speechText": "I hope I'm not catching you at a bad time.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "希望我没有在您不方便的时候来打扰。",
+    "inflections": [],
+    "collocations": [
+      "I hope I'm not catching you at a bad time."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.06"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "I hope I'm not catching you at a bad time.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.campus-teacher-greetings.06",
+    "language": "english",
+    "lemma": "catching you at a bad time",
+    "displayForm": "catching you at a bad time",
+    "speechText": "catching you at a bad time",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "在不方便的时候打扰你",
+    "inflections": [],
+    "collocations": [
+      "catching you at a bad time"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.06"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "I hope I'm not catching you at a bad time.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.campus-teacher-greetings.07",
+    "language": "english",
+    "lemma": "Thanks for staying after class yesterday.",
+    "displayForm": "Thanks for staying after class yesterday.",
+    "speechText": "Thanks for staying after class yesterday.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "谢谢您昨天课后留下来。",
+    "inflections": [],
+    "collocations": [
+      "Thanks for staying after class yesterday."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.07"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Thanks for staying after class yesterday.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.campus-teacher-greetings.07",
+    "language": "english",
+    "lemma": "staying after class",
+    "displayForm": "staying after class",
+    "speechText": "staying after class",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "课后留下来",
+    "inflections": [],
+    "collocations": [
+      "staying after class"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.07"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Thanks for staying after class yesterday.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.campus-teacher-greetings.08",
+    "language": "english",
+    "lemma": "I wanted to ask you something, but it can wait until after class.",
+    "displayForm": "I wanted to ask you something, but it can wait until after class.",
+    "speechText": "I wanted to ask you something, but it can wait until after class.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我本来想问您一件事，但课后再问也可以。",
+    "inflections": [],
+    "collocations": [
+      "I wanted to ask you something, but it can wait until after class."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.08"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "I wanted to ask you something, but it can wait until after class.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.campus-teacher-greetings.08",
+    "language": "english",
+    "lemma": "it can wait until after class",
+    "displayForm": "it can wait until after class",
+    "speechText": "it can wait until after class",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "可以等到课后",
+    "inflections": [],
+    "collocations": [
+      "it can wait until after class"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.08"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "I wanted to ask you something, but it can wait until after class.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.campus-teacher-greetings.09",
+    "language": "english",
+    "lemma": "See you in class.",
+    "displayForm": "See you in class.",
+    "speechText": "See you in class.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "课堂上见。",
+    "inflections": [],
+    "collocations": [
+      "See you in class."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.09"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "See you in class.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.campus-teacher-greetings.09",
+    "language": "english",
+    "lemma": "See you in class",
+    "displayForm": "See you in class",
+    "speechText": "See you in class",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "课堂上见",
+    "inflections": [],
+    "collocations": [
+      "See you in class"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.09"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "See you in class.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.campus-teacher-greetings.10",
+    "language": "english",
+    "lemma": "Have a good weekend, Professor.",
+    "displayForm": "Have a good weekend, Professor.",
+    "speechText": "Have a good weekend, Professor.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "老师，祝您周末愉快。",
+    "inflections": [],
+    "collocations": [
+      "Have a good weekend, Professor."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.10"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Have a good weekend, Professor.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.campus-teacher-greetings.10",
+    "language": "english",
+    "lemma": "Have a good weekend",
+    "displayForm": "Have a good weekend",
+    "speechText": "Have a good weekend",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "祝周末愉快",
+    "inflections": [],
+    "collocations": [
+      "Have a good weekend"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.10"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Have a good weekend, Professor.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.asking-teacher-help.01",
+    "language": "english",
+    "lemma": "Could I ask you about the assignment?",
+    "displayForm": "Could I ask you about the assignment?",
+    "speechText": "Could I ask you about the assignment?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我可以请教您作业的问题吗？",
+    "inflections": [],
+    "collocations": [
+      "Could I ask you about the assignment?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.01"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Could I ask you about the assignment?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.asking-teacher-help.01",
+    "language": "english",
+    "lemma": "Could I ask you about ...?",
+    "displayForm": "Could I ask you about ...?",
+    "speechText": "Could I ask you about ...?",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我可以请教您……吗",
+    "inflections": [],
+    "collocations": [
+      "Could I ask you about ...?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.01"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Could I ask you about the assignment?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.asking-teacher-help.02",
+    "language": "english",
+    "lemma": "Would you have a few minutes after class?",
+    "displayForm": "Would you have a few minutes after class?",
+    "speechText": "Would you have a few minutes after class?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "您课后有几分钟时间吗？",
+    "inflections": [],
+    "collocations": [
+      "Would you have a few minutes after class?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.02"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Would you have a few minutes after class?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.asking-teacher-help.02",
+    "language": "english",
+    "lemma": "Would you have a few minutes?",
+    "displayForm": "Would you have a few minutes?",
+    "speechText": "Would you have a few minutes?",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "您有几分钟时间吗",
+    "inflections": [],
+    "collocations": [
+      "Would you have a few minutes?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.02"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Would you have a few minutes after class?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.asking-teacher-help.03",
+    "language": "english",
+    "lemma": "I'm stuck on the second part.",
+    "displayForm": "I'm stuck on the second part.",
+    "speechText": "I'm stuck on the second part.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我卡在第二部分了。",
+    "inflections": [],
+    "collocations": [
+      "I'm stuck on the second part."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.03"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "I'm stuck on the second part.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.asking-teacher-help.03",
+    "language": "english",
+    "lemma": "I'm stuck on ...",
+    "displayForm": "I'm stuck on ...",
+    "speechText": "I'm stuck on ...",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我卡在……了",
+    "inflections": [],
+    "collocations": [
+      "I'm stuck on ..."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.03"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "I'm stuck on the second part.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.asking-teacher-help.04",
+    "language": "english",
+    "lemma": "Could you point me in the right direction?",
+    "displayForm": "Could you point me in the right direction?",
+    "speechText": "Could you point me in the right direction?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "您能给我指一下方向吗？",
+    "inflections": [],
+    "collocations": [
+      "Could you point me in the right direction?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.04"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Could you point me in the right direction?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.asking-teacher-help.04",
+    "language": "english",
+    "lemma": "point me in the right direction",
+    "displayForm": "point me in the right direction",
+    "speechText": "point me in the right direction",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "给我指一下方向",
+    "inflections": [],
+    "collocations": [
+      "point me in the right direction"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.04"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Could you point me in the right direction?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.asking-teacher-help.05",
+    "language": "english",
+    "lemma": "I tried it this way, but I'm not sure what I'm missing.",
+    "displayForm": "I tried it this way, but I'm not sure what I'm missing.",
+    "speechText": "I tried it this way, but I'm not sure what I'm missing.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我试着这样做了，但不知道漏了什么。",
+    "inflections": [],
+    "collocations": [
+      "I tried it this way, but I'm not sure what I'm missing."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.05"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "I tried it this way, but I'm not sure what I'm missing.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.asking-teacher-help.05",
+    "language": "english",
+    "lemma": "I'm not sure what I'm missing",
+    "displayForm": "I'm not sure what I'm missing",
+    "speechText": "I'm not sure what I'm missing",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我不确定自己漏了什么",
+    "inflections": [],
+    "collocations": [
+      "I'm not sure what I'm missing"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.05"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "I tried it this way, but I'm not sure what I'm missing.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.asking-teacher-help.06",
+    "language": "english",
+    "lemma": "Could you recommend something I can read?",
+    "displayForm": "Could you recommend something I can read?",
+    "speechText": "Could you recommend something I can read?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "您能推荐一些我可以阅读的材料吗？",
+    "inflections": [],
+    "collocations": [
+      "Could you recommend something I can read?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.06"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Could you recommend something I can read?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.asking-teacher-help.06",
+    "language": "english",
+    "lemma": "recommend something I can read",
+    "displayForm": "recommend something I can read",
+    "speechText": "recommend something I can read",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "推荐一些我可以阅读的材料",
+    "inflections": [],
+    "collocations": [
+      "recommend something I can read"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.06"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Could you recommend something I can read?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.asking-teacher-help.07",
+    "language": "english",
+    "lemma": "Would it be okay if I sent you a follow-up question by email?",
+    "displayForm": "Would it be okay if I sent you a follow-up question by email?",
+    "speechText": "Would it be okay if I sent you a follow-up question by email?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我之后通过邮件再问一个问题，可以吗？",
+    "inflections": [],
+    "collocations": [
+      "Would it be okay if I sent you a follow-up question by email?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.07"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Would it be okay if I sent you a follow-up question by email?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.asking-teacher-help.07",
+    "language": "english",
+    "lemma": "a follow-up question",
+    "displayForm": "a follow-up question",
+    "speechText": "a follow-up question",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "后续问题",
+    "inflections": [],
+    "collocations": [
+      "a follow-up question"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.07"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Would it be okay if I sent you a follow-up question by email?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.asking-teacher-help.08",
+    "language": "english",
+    "lemma": "I want to make sure I'm using the term correctly.",
+    "displayForm": "I want to make sure I'm using the term correctly.",
+    "speechText": "I want to make sure I'm using the term correctly.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我想确认一下自己对这个术语的用法是否正确。",
+    "inflections": [],
+    "collocations": [
+      "I want to make sure I'm using the term correctly."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.08"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "I want to make sure I'm using the term correctly.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.asking-teacher-help.08",
+    "language": "english",
+    "lemma": "make sure I'm using ... correctly",
+    "displayForm": "make sure I'm using ... correctly",
+    "speechText": "make sure I'm using ... correctly",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "确认自己是否正确使用……",
+    "inflections": [],
+    "collocations": [
+      "make sure I'm using ... correctly"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.08"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "I want to make sure I'm using the term correctly.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.asking-teacher-help.09",
+    "language": "english",
+    "lemma": "Thanks, that clears things up.",
+    "displayForm": "Thanks, that clears things up.",
+    "speechText": "Thanks, that clears things up.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "谢谢，这下我明白了。",
+    "inflections": [],
+    "collocations": [
+      "Thanks, that clears things up."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.09"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Thanks, that clears things up.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.asking-teacher-help.09",
+    "language": "english",
+    "lemma": "that clears things up",
+    "displayForm": "that clears things up",
+    "speechText": "that clears things up",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "这下把问题讲清楚了",
+    "inflections": [],
+    "collocations": [
+      "that clears things up"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.09"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Thanks, that clears things up.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.asking-teacher-help.10",
+    "language": "english",
+    "lemma": "I'll try it again and let you know how it goes.",
+    "displayForm": "I'll try it again and let you know how it goes.",
+    "speechText": "I'll try it again and let you know how it goes.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我再试一次，有结果后告诉您。",
+    "inflections": [],
+    "collocations": [
+      "I'll try it again and let you know how it goes."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.10"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "I'll try it again and let you know how it goes.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.asking-teacher-help.10",
+    "language": "english",
+    "lemma": "let you know how it goes",
+    "displayForm": "let you know how it goes",
+    "speechText": "let you know how it goes",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "告诉你进展如何",
+    "inflections": [],
+    "collocations": [
+      "let you know how it goes"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.22.asking-teacher-help.10"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "I'll try it again and let you know how it goes.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-questions.01",
+    "language": "english",
+    "lemma": "Sorry, could you go over that last point?",
+    "displayForm": "Sorry, could you go over that last point?",
+    "speechText": "Sorry, could you go over that last point?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "不好意思，您能再讲一下刚才最后一点吗？",
+    "inflections": [],
+    "collocations": [
+      "Sorry, could you go over that last point?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.01"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Sorry, could you go over that last point?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-questions.01",
+    "language": "english",
+    "lemma": "go over that last point",
+    "displayForm": "go over that last point",
+    "speechText": "go over that last point",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "再讲一下刚才那一点",
+    "inflections": [],
+    "collocations": [
+      "go over that last point"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.01"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Sorry, could you go over that last point?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-questions.02",
+    "language": "english",
+    "lemma": "Could you give us an example?",
+    "displayForm": "Could you give us an example?",
+    "speechText": "Could you give us an example?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "您能给我们举个例子吗？",
+    "inflections": [],
+    "collocations": [
+      "Could you give us an example?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.02"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Could you give us an example?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-questions.02",
+    "language": "english",
+    "lemma": "give us an example",
+    "displayForm": "give us an example",
+    "speechText": "give us an example",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "给我们举个例子",
+    "inflections": [],
+    "collocations": [
+      "give us an example"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.02"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Could you give us an example?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-questions.03",
+    "language": "english",
+    "lemma": "What does this term mean in this context?",
+    "displayForm": "What does this term mean in this context?",
+    "speechText": "What does this term mean in this context?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "这个术语在这里是什么意思？",
+    "inflections": [],
+    "collocations": [
+      "What does this term mean in this context?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.03"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "What does this term mean in this context?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-questions.03",
+    "language": "english",
+    "lemma": "in this context",
+    "displayForm": "in this context",
+    "speechText": "in this context",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "在这个语境下",
+    "inflections": [],
+    "collocations": [
+      "in this context"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.03"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "What does this term mean in this context?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-questions.04",
+    "language": "english",
+    "lemma": "Do you mean that the two terms are related?",
+    "displayForm": "Do you mean that the two terms are related?",
+    "speechText": "Do you mean that the two terms are related?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "您的意思是这两个术语有关联吗？",
+    "inflections": [],
+    "collocations": [
+      "Do you mean that the two terms are related?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.04"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Do you mean that the two terms are related?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-questions.04",
+    "language": "english",
+    "lemma": "Do you mean that ...?",
+    "displayForm": "Do you mean that ...?",
+    "speechText": "Do you mean that ...?",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "您的意思是……吗",
+    "inflections": [],
+    "collocations": [
+      "Do you mean that ...?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.04"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Do you mean that the two terms are related?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-questions.05",
+    "language": "english",
+    "lemma": "Could you say that a little more slowly?",
+    "displayForm": "Could you say that a little more slowly?",
+    "speechText": "Could you say that a little more slowly?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "您能说慢一点吗？",
+    "inflections": [],
+    "collocations": [
+      "Could you say that a little more slowly?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.05"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Could you say that a little more slowly?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-questions.05",
+    "language": "english",
+    "lemma": "a little more slowly",
+    "displayForm": "a little more slowly",
+    "speechText": "a little more slowly",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "稍微慢一点",
+    "inflections": [],
+    "collocations": [
+      "a little more slowly"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.05"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Could you say that a little more slowly?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-questions.06",
+    "language": "english",
+    "lemma": "I'm not sure I understand the connection between these two ideas.",
+    "displayForm": "I'm not sure I understand the connection between these two ideas.",
+    "speechText": "I'm not sure I understand the connection between these two ideas.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我不太理解这两个观点之间的联系。",
+    "inflections": [],
+    "collocations": [
+      "I'm not sure I understand the connection between these two ideas."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.06"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "I'm not sure I understand the connection between these two ideas.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-questions.06",
+    "language": "english",
+    "lemma": "the connection between ... and ...",
+    "displayForm": "the connection between ... and ...",
+    "speechText": "the connection between ... and ...",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "……和……之间的联系",
+    "inflections": [],
+    "collocations": [
+      "the connection between ... and ..."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.06"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "I'm not sure I understand the connection between these two ideas.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-questions.07",
+    "language": "english",
+    "lemma": "Can I ask a quick question?",
+    "displayForm": "Can I ask a quick question?",
+    "speechText": "Can I ask a quick question?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我可以问一个小问题吗？",
+    "inflections": [],
+    "collocations": [
+      "Can I ask a quick question?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.07"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Can I ask a quick question?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-questions.07",
+    "language": "english",
+    "lemma": "Can I ask a quick question?",
+    "displayForm": "Can I ask a quick question?",
+    "speechText": "Can I ask a quick question?",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我可以问个小问题吗",
+    "inflections": [],
+    "collocations": [
+      "Can I ask a quick question?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.07"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Can I ask a quick question?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-questions.08",
+    "language": "english",
+    "lemma": "Where should we start with this reading?",
+    "displayForm": "Where should we start with this reading?",
+    "speechText": "Where should we start with this reading?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我们应该从这篇阅读材料的哪里开始？",
+    "inflections": [],
+    "collocations": [
+      "Where should we start with this reading?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.08"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Where should we start with this reading?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-questions.08",
+    "language": "english",
+    "lemma": "Where should we start?",
+    "displayForm": "Where should we start?",
+    "speechText": "Where should we start?",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我们应该从哪里开始",
+    "inflections": [],
+    "collocations": [
+      "Where should we start?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.08"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Where should we start with this reading?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-questions.09",
+    "language": "english",
+    "lemma": "Is this the part we need to include in the presentation?",
+    "displayForm": "Is this the part we need to include in the presentation?",
+    "speechText": "Is this the part we need to include in the presentation?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "这是我们需要放进展示里的部分吗？",
+    "inflections": [],
+    "collocations": [
+      "Is this the part we need to include in the presentation?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.09"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Is this the part we need to include in the presentation?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-questions.09",
+    "language": "english",
+    "lemma": "the part we need to include",
+    "displayForm": "the part we need to include",
+    "speechText": "the part we need to include",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我们需要包含的部分",
+    "inflections": [],
+    "collocations": [
+      "the part we need to include"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.09"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Is this the part we need to include in the presentation?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-questions.10",
+    "language": "english",
+    "lemma": "Could you repeat the question, please?",
+    "displayForm": "Could you repeat the question, please?",
+    "speechText": "Could you repeat the question, please?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "您能重复一下问题吗？",
+    "inflections": [],
+    "collocations": [
+      "Could you repeat the question, please?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.10"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Could you repeat the question, please?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-questions.10",
+    "language": "english",
+    "lemma": "repeat the question",
+    "displayForm": "repeat the question",
+    "speechText": "repeat the question",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "重复问题",
+    "inflections": [],
+    "collocations": [
+      "repeat the question"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.23.classroom-questions.10"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Could you repeat the question, please?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-answers.01",
+    "language": "english",
+    "lemma": "I think the main point is that context matters.",
+    "displayForm": "I think the main point is that context matters.",
+    "speechText": "I think the main point is that context matters.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我觉得重点是语境很重要。",
+    "inflections": [],
+    "collocations": [
+      "I think the main point is that context matters."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.01"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I think the main point is that context matters.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-answers.01",
+    "language": "english",
+    "lemma": "the main point is that ...",
+    "displayForm": "the main point is that ...",
+    "speechText": "the main point is that ...",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "重点是……",
+    "inflections": [],
+    "collocations": [
+      "the main point is that ..."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.01"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I think the main point is that context matters.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-answers.02",
+    "language": "english",
+    "lemma": "My understanding is that the two ideas are connected.",
+    "displayForm": "My understanding is that the two ideas are connected.",
+    "speechText": "My understanding is that the two ideas are connected.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我的理解是，这两个观点是有关联的。",
+    "inflections": [],
+    "collocations": [
+      "My understanding is that the two ideas are connected."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.02"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "My understanding is that the two ideas are connected.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-answers.02",
+    "language": "english",
+    "lemma": "My understanding is that ...",
+    "displayForm": "My understanding is that ...",
+    "speechText": "My understanding is that ...",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我的理解是……",
+    "inflections": [],
+    "collocations": [
+      "My understanding is that ..."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.02"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "My understanding is that the two ideas are connected.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-answers.03",
+    "language": "english",
+    "lemma": "I would say the example supports the author's argument.",
+    "displayForm": "I would say the example supports the author's argument.",
+    "speechText": "I would say the example supports the author's argument.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我觉得这个例子支持作者的论点。",
+    "inflections": [],
+    "collocations": [
+      "I would say the example supports the author's argument."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.03"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I would say the example supports the author's argument.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-answers.03",
+    "language": "english",
+    "lemma": "I would say ...",
+    "displayForm": "I would say ...",
+    "speechText": "I would say ...",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我会认为……",
+    "inflections": [],
+    "collocations": [
+      "I would say ..."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.03"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I would say the example supports the author's argument.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-answers.04",
+    "language": "english",
+    "lemma": "I'm not completely sure, but I think it relates to the second section.",
+    "displayForm": "I'm not completely sure, but I think it relates to the second section.",
+    "speechText": "I'm not completely sure, but I think it relates to the second section.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我不完全确定，但我觉得它和第二部分有关。",
+    "inflections": [],
+    "collocations": [
+      "I'm not completely sure, but I think it relates to the second section."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.04"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I'm not completely sure, but I think it relates to the second section.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-answers.04",
+    "language": "english",
+    "lemma": "I'm not completely sure, but ...",
+    "displayForm": "I'm not completely sure, but ...",
+    "speechText": "I'm not completely sure, but ...",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我不完全确定，但……",
+    "inflections": [],
+    "collocations": [
+      "I'm not completely sure, but ..."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.04"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I'm not completely sure, but I think it relates to the second section.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-answers.05",
+    "language": "english",
+    "lemma": "Could I take a second to think about that?",
+    "displayForm": "Could I take a second to think about that?",
+    "speechText": "Could I take a second to think about that?",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我可以想一下再回答吗？",
+    "inflections": [],
+    "collocations": [
+      "Could I take a second to think about that?"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.05"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "Could I take a second to think about that?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-answers.05",
+    "language": "english",
+    "lemma": "take a second to think",
+    "displayForm": "take a second to think",
+    "speechText": "take a second to think",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "花一点时间想一想",
+    "inflections": [],
+    "collocations": [
+      "take a second to think"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.05"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "Could I take a second to think about that?",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-answers.06",
+    "language": "english",
+    "lemma": "I see it a little differently.",
+    "displayForm": "I see it a little differently.",
+    "speechText": "I see it a little differently.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我的看法有一点不同。",
+    "inflections": [],
+    "collocations": [
+      "I see it a little differently."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.06"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I see it a little differently.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-answers.06",
+    "language": "english",
+    "lemma": "I see it a little differently",
+    "displayForm": "I see it a little differently",
+    "speechText": "I see it a little differently",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我的看法有一点不同",
+    "inflections": [],
+    "collocations": [
+      "I see it a little differently"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.06"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I see it a little differently.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-answers.07",
+    "language": "english",
+    "lemma": "Building on what she said, I think the example shows a change over time.",
+    "displayForm": "Building on what she said, I think the example shows a change over time.",
+    "speechText": "Building on what she said, I think the example shows a change over time.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "接着她刚才说的，我觉得这个例子体现了随时间的变化。",
+    "inflections": [],
+    "collocations": [
+      "Building on what she said, I think the example shows a change over time."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.07"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "Building on what she said, I think the example shows a change over time.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-answers.07",
+    "language": "english",
+    "lemma": "Building on what she said",
+    "displayForm": "Building on what she said",
+    "speechText": "Building on what she said",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "接着她刚才说的观点",
+    "inflections": [],
+    "collocations": [
+      "Building on what she said"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.07"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "Building on what she said, I think the example shows a change over time.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-answers.08",
+    "language": "english",
+    "lemma": "I agree with that, especially because the evidence is clear.",
+    "displayForm": "I agree with that, especially because the evidence is clear.",
+    "speechText": "I agree with that, especially because the evidence is clear.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我同意，尤其是因为证据很清楚。",
+    "inflections": [],
+    "collocations": [
+      "I agree with that, especially because the evidence is clear."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.08"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I agree with that, especially because the evidence is clear.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-answers.08",
+    "language": "english",
+    "lemma": "I agree with that, especially because ...",
+    "displayForm": "I agree with that, especially because ...",
+    "speechText": "I agree with that, especially because ...",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我同意，尤其是因为……",
+    "inflections": [],
+    "collocations": [
+      "I agree with that, especially because ..."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.08"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I agree with that, especially because the evidence is clear.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-answers.09",
+    "language": "english",
+    "lemma": "I don't know the exact word, but I can explain the idea.",
+    "displayForm": "I don't know the exact word, but I can explain the idea.",
+    "speechText": "I don't know the exact word, but I can explain the idea.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "我不知道准确的词，但我可以解释这个意思。",
+    "inflections": [],
+    "collocations": [
+      "I don't know the exact word, but I can explain the idea."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.09"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I don't know the exact word, but I can explain the idea.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-answers.09",
+    "language": "english",
+    "lemma": "I don't know the exact word, but ...",
+    "displayForm": "I don't know the exact word, but ...",
+    "speechText": "I don't know the exact word, but ...",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "我不知道准确的词，但……",
+    "inflections": [],
+    "collocations": [
+      "I don't know the exact word, but ..."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.09"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I don't know the exact word, but I can explain the idea.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.expression.classroom-answers.10",
+    "language": "english",
+    "lemma": "So, in other words, the context changes how we understand it.",
+    "displayForm": "So, in other words, the context changes how we understand it.",
+    "speechText": "So, in other words, the context changes how we understand it.",
+    "partOfSpeech": "spoken expression",
+    "glossZh": "所以换句话说，语境会改变我们的理解。",
+    "inflections": [],
+    "collocations": [
+      "So, in other words, the context changes how we understand it."
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "整句作为口语块提取，先按场景说，再核对文本。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.10"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "So, in other words, the context changes how we understand it.",
+    "qualityFlags": []
+  },
+  {
+    "id": "en.focus.classroom-answers.10",
+    "language": "english",
+    "lemma": "in other words",
+    "displayForm": "in other words",
+    "speechText": "in other words",
+    "partOfSpeech": "high-frequency chunk",
+    "glossZh": "换句话说",
+    "inflections": [],
+    "collocations": [
+      "in other words"
+    ],
+    "phrasalVerbs": [],
+    "wordFamily": [],
+    "morphologyNotes": [
+      "把这个句块作为整体提取，不要先逐词翻译。"
+    ],
+    "memoryNotes": [],
+    "exampleSentenceIDs": [
+      "en.topic.24.classroom-answers.10"
+    ],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "So, in other words, the context changes how we understand it.",
+    "qualityFlags": []
   }
 ]

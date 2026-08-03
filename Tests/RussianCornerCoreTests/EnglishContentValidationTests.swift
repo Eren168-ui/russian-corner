@@ -8,10 +8,28 @@ final class EnglishContentValidationTests: XCTestCase {
             resourceDirectory: resourceDirectory
         )
 
-        XCTAssertEqual(bundle.topics.count, 20)
-        XCTAssertEqual(bundle.lessons.count, 20)
-        XCTAssertTrue((200...300).contains(bundle.catalog.sentences.count))
-        XCTAssertTrue((400...600).contains(bundle.catalog.lexemes.count))
+        XCTAssertEqual(bundle.topics.count, 24)
+        XCTAssertEqual(bundle.lessons.count, 24)
+        XCTAssertEqual(bundle.catalog.sentences.count, 240)
+        XCTAssertEqual(bundle.catalog.lexemes.count, 480)
+        XCTAssertEqual(
+            Array(bundle.topics.prefix(4).map(\.titleZh)),
+            [
+                "校园遇见老师",
+                "请教老师与约时间",
+                "课堂提问与澄清",
+                "课堂回答与讨论",
+            ]
+        )
+        XCTAssertEqual(
+            Array(bundle.legacyCatalog.topics.prefix(4).map(\.titleZh)),
+            [
+                "校园遇见老师",
+                "请教老师与约时间",
+                "课堂提问与澄清",
+                "课堂回答与讨论",
+            ]
+        )
         XCTAssertTrue(bundle.catalog.validate().isEmpty)
         XCTAssertTrue(
             bundle.catalog.lexemes.allSatisfy {
@@ -50,6 +68,34 @@ final class EnglishContentValidationTests: XCTestCase {
                 !$0.sentenceIDs.isEmpty
                     && Set($0.sentenceIDs).isSubset(of: sentenceIDs)
             }
+        )
+    }
+
+    func testTopicSelectorStartsEnglishCourseWithCampusThemes() throws {
+        let bundle = try EnglishContentBundle(
+            resourceDirectory: resourceDirectory
+        )
+        let topics = bundle.legacyCatalog.topics
+        let selector = TopicSelector()
+
+        let selectedTitles = (0..<4).compactMap { dayIndex in
+            selector.select(
+                dayIndex: dayIndex,
+                topics: topics,
+                recentTopicIDs: [],
+                weaknessByTopic: [:],
+                manualTopicID: nil
+            )?.titleZh
+        }
+
+        XCTAssertEqual(
+            selectedTitles,
+            [
+                "校园遇见老师",
+                "请教老师与约时间",
+                "课堂提问与澄清",
+                "课堂回答与讨论",
+            ]
         )
     }
 

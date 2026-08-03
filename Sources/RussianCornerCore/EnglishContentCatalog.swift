@@ -31,6 +31,13 @@ public struct StudyTopic:
 }
 
 public struct EnglishContentBundle: Sendable {
+    private static let priorityTopicIDs: [String] = [
+        "en.topic.21.campus-teacher-greetings",
+        "en.topic.22.asking-teacher-help",
+        "en.topic.23.classroom-questions",
+        "en.topic.24.classroom-answers",
+    ]
+
     public let catalog: LanguageContentCatalog
     public let topics: [StudyTopic]
     public let lessons: [SceneLesson]
@@ -74,17 +81,23 @@ public struct EnglishContentBundle: Sendable {
             resourceDirectory: resourceDirectory,
             decoder: decoder
         )
-        topics = try Self.decode(
+        let decodedTopics = try Self.decode(
             [StudyTopic].self,
             name: "english-topics",
             resourceDirectory: resourceDirectory,
             decoder: decoder
         )
-        lessons = try Self.decode(
+        let decodedLessons = try Self.decode(
             [SceneLesson].self,
             name: "english-lessons",
             resourceDirectory: resourceDirectory,
             decoder: decoder
+        )
+        let orderedTopics = Self.prioritizedTopics(decodedTopics)
+        topics = orderedTopics
+        lessons = Self.prioritizedLessons(
+            decodedLessons,
+            topicOrder: orderedTopics
         )
         let catalog = LanguageContentCatalog(
             lexemes: lexemes,
@@ -103,8 +116,51 @@ public struct EnglishContentBundle: Sendable {
         lessons: [SceneLesson]
     ) {
         self.catalog = catalog
-        self.topics = topics
-        self.lessons = lessons
+        let orderedTopics = Self.prioritizedTopics(topics)
+        self.topics = orderedTopics
+        self.lessons = Self.prioritizedLessons(
+            lessons,
+            topicOrder: orderedTopics
+        )
+    }
+
+    private static func prioritizedTopics(
+        _ topics: [StudyTopic]
+    ) -> [StudyTopic] {
+        topics.sorted { left, right in
+            let leftRank = priorityRank(for: left.id)
+            let rightRank = priorityRank(for: right.id)
+            if leftRank == rightRank {
+                return left.id < right.id
+            }
+            return leftRank < rightRank
+        }
+    }
+
+    private static func prioritizedLessons(
+        _ lessons: [SceneLesson],
+        topicOrder: [StudyTopic]
+    ) -> [SceneLesson] {
+        let ranks = Dictionary(
+            uniqueKeysWithValues: topicOrder.enumerated().map {
+                ($0.element.id, $0.offset)
+            }
+        )
+        return lessons.sorted {
+            let leftRank = ranks[$0.topicID, default: Int.max]
+            let rightRank = ranks[$1.topicID, default: Int.max]
+            if leftRank == rightRank {
+                return $0.id < $1.id
+            }
+            return leftRank < rightRank
+        }
+    }
+
+    private static func priorityRank(for topicID: String) -> Int {
+        if let index = priorityTopicIDs.firstIndex(of: topicID) {
+            return index
+        }
+        return priorityTopicIDs.count + 1
     }
 
     public static func defaultResourceDirectory(

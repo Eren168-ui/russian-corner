@@ -47,10 +47,10 @@ struct RussianCornerResourceProbe {
             let english = try EnglishContentBundle(
                 resourceDirectory: resourceDirectory
             )
-            guard english.catalog.lexemes.count == 400,
-                  english.catalog.sentences.count == 200,
-                  english.topics.count == 20,
-                  english.lessons.count == 20
+            guard english.catalog.lexemes.count == 480,
+                  english.catalog.sentences.count == 240,
+                  english.topics.count == 24,
+                  english.lessons.count == 24
             else {
                 throw ProbeError(
                     message:
@@ -67,8 +67,8 @@ struct RussianCornerResourceProbe {
                     "topics=32 long_term_sentences=274 " +
                     "supplemental_lexemes=80 " +
                     "supplemental_sentences=60 speaking_challenges=24 " +
-                    "english_lexemes=400 english_sentences=200 " +
-                    "english_topics=20 english_lessons=20 " +
+                    "english_lexemes=480 english_sentences=240 " +
+                    "english_topics=24 english_lessons=24 " +
                     "directory=\(resourceDirectory.path)"
             )
         } catch {

@@ -47,6 +47,10 @@ final class EnglishNaturalCorpusTests: XCTestCase {
         XCTAssertTrue(titles.contains("吃饭与咖啡"))
         XCTAssertTrue(titles.contains("电话与消息"))
         XCTAssertTrue(titles.contains("购物与退换"))
+        XCTAssertTrue(titles.contains("校园遇见老师"))
+        XCTAssertTrue(titles.contains("请教老师与约时间"))
+        XCTAssertTrue(titles.contains("课堂提问与澄清"))
+        XCTAssertTrue(titles.contains("课堂回答与讨论"))
     }
 
     private var resourceDirectory: URL {

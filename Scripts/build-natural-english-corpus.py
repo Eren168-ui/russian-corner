@@ -397,6 +397,78 @@ TOPICS = [
             row("这样应该就行了。", "Confirm that a small task is complete.", "That should do it.", "Looks good to me.", "should do it", "应该就行了", "confirming"),
         ],
     ),
+    (
+        "campus-teacher-greetings",
+        "校园遇见老师",
+        "Greeting teachers around campus",
+        "在校园、教室门口和课后自然问候外籍老师，开启简短交流。",
+        [
+            row("嗨，老师，今天过得怎么样？", "Greet a teacher you meet on campus.", "Hi, Professor. How's your day going?", "Pretty good, thanks. How about you?", "How's your day going?", "今天过得怎么样", "greeting"),
+            row("早上好！我们今天还是在204教室吗？", "Confirm the classroom with your teacher.", "Good morning! Are we still in Room 204 today?", "Yes, I'll see you there.", "Are we still in Room 204?", "我们还是在204教室吗", "confirming"),
+            row("我在走廊看到您，就想过来打个招呼。", "Start a brief, friendly exchange outside class.", "I saw you in the hallway and wanted to say hi.", "That's nice of you. How's the semester going?", "I wanted to say hi", "我想来打个招呼", "greeting"),
+            row("昨天的工作坊进行得怎么样？", "Make light conversation about a recent class event.", "How did the workshop go yesterday?", "It went well. A lot of students joined in.", "How did it go?", "进行得怎么样", "smallTalk"),
+            row("您有空聊一分钟吗，还是正要去上课？", "Check whether your teacher can talk right now.", "Are you free for a minute, or are you on your way to class?", "I have a minute. What's up?", "Are you free for a minute?", "您有空聊一分钟吗", "requesting"),
+            row("希望我没有在您不方便的时候来打扰。", "Soften a quick request to a busy teacher.", "I hope I'm not catching you at a bad time.", "Not at all. Go ahead.", "catching you at a bad time", "在不方便的时候打扰你", "apology"),
+            row("谢谢您昨天课后留下来。", "Thank your teacher for giving you extra time.", "Thanks for staying after class yesterday.", "Of course. I'm glad we could sort it out.", "staying after class", "课后留下来", "gratitude"),
+            row("我本来想问您一件事，但课后再问也可以。", "Tell your teacher you can wait instead of interrupting.", "I wanted to ask you something, but it can wait until after class.", "Sure. Just catch me afterward.", "it can wait until after class", "可以等到课后", "requesting"),
+            row("课堂上见。", "End a brief campus exchange naturally.", "See you in class.", "See you.", "See you in class", "课堂上见", "farewell"),
+            row("老师，祝您周末愉快。", "Say goodbye to a teacher before the weekend.", "Have a good weekend, Professor.", "You too. See you on Monday.", "Have a good weekend", "祝周末愉快", "farewell"),
+        ],
+    ),
+    (
+        "asking-teacher-help",
+        "请教老师与约时间",
+        "Asking a teacher for help",
+        "课后请教外籍老师、说明卡点、约时间并确认后续做法。",
+        [
+            row("我可以请教您作业的问题吗？", "Open a polite conversation about coursework.", "Could I ask you about the assignment?", "Sure. What are you working on?", "Could I ask you about ...?", "我可以请教您……吗", "requesting"),
+            row("您课后有几分钟时间吗？", "Ask a teacher for a short meeting.", "Would you have a few minutes after class?", "Yes, I can meet you outside the classroom.", "Would you have a few minutes?", "您有几分钟时间吗", "requesting"),
+            row("我卡在第二部分了。", "Explain exactly where you need help.", "I'm stuck on the second part.", "Let's look at that part together.", "I'm stuck on ...", "我卡在……了", "reportingProblem"),
+            row("您能给我指一下方向吗？", "Ask for guidance without asking the teacher to do the work.", "Could you point me in the right direction?", "Start by comparing these two examples.", "point me in the right direction", "给我指一下方向", "requesting"),
+            row("我试着这样做了，但不知道漏了什么。", "Show your attempt before asking for feedback.", "I tried it this way, but I'm not sure what I'm missing.", "Your approach is fine; check this step again.", "I'm not sure what I'm missing", "我不确定自己漏了什么", "requestingFeedback"),
+            row("您能推荐一些我可以阅读的材料吗？", "Ask for a useful extra resource.", "Could you recommend something I can read?", "I'll send you an article after class.", "recommend something I can read", "推荐一些我可以阅读的材料", "requesting"),
+            row("我之后通过邮件再问一个问题，可以吗？", "Ask how to continue the conversation later.", "Would it be okay if I sent you a follow-up question by email?", "Of course. Put the course name in the subject line.", "a follow-up question", "后续问题", "requesting"),
+            row("我想确认一下自己对这个术语的用法是否正确。", "Check your use of a key academic word.", "I want to make sure I'm using the term correctly.", "Yes, that's the right way to use it here.", "make sure I'm using ... correctly", "确认自己是否正确使用……", "clarifying"),
+            row("谢谢，这下我明白了。", "Close a helpful explanation naturally.", "Thanks, that clears things up.", "You're welcome. Let me know if anything else comes up.", "that clears things up", "这下把问题讲清楚了", "gratitude"),
+            row("我再试一次，有结果后告诉您。", "State your next step after receiving guidance.", "I'll try it again and let you know how it goes.", "Sounds good. Take your time.", "let you know how it goes", "告诉你进展如何", "confirming"),
+        ],
+    ),
+    (
+        "classroom-questions",
+        "课堂提问与澄清",
+        "Asking questions in class",
+        "上课时礼貌打断、追问、确认术语并请老师举例说明。",
+        [
+            row("不好意思，您能再讲一下刚才最后一点吗？", "Ask the teacher to repeat a key point.", "Sorry, could you go over that last point?", "Sure. Let me put it another way.", "go over that last point", "再讲一下刚才那一点", "clarifying"),
+            row("您能给我们举个例子吗？", "Ask for a concrete example during a lecture.", "Could you give us an example?", "Sure. Think about this case.", "give us an example", "给我们举个例子", "requesting"),
+            row("这个术语在这里是什么意思？", "Ask about the meaning of a word in the lecture.", "What does this term mean in this context?", "Here, it means the opposite of the usual assumption.", "in this context", "在这个语境下", "clarifying"),
+            row("您的意思是这两个术语有关联吗？", "Check your interpretation before moving on.", "Do you mean that the two terms are related?", "They're related, but they're not interchangeable.", "Do you mean that ...?", "您的意思是……吗", "confirming"),
+            row("您能说慢一点吗？", "Ask for a slower explanation without apologising too much.", "Could you say that a little more slowly?", "Of course. I'll slow down.", "a little more slowly", "稍微慢一点", "clarifying"),
+            row("我不太理解这两个观点之间的联系。", "Explain precisely what is unclear.", "I'm not sure I understand the connection between these two ideas.", "The second idea is an example of the first one.", "the connection between ... and ...", "……和……之间的联系", "clarifying"),
+            row("我可以问一个小问题吗？", "Politely take a turn during class.", "Can I ask a quick question?", "Of course. Go ahead.", "Can I ask a quick question?", "我可以问个小问题吗", "requesting"),
+            row("我们应该从这篇阅读材料的哪里开始？", "Ask how to approach a reading task.", "Where should we start with this reading?", "Start with the introduction and the first example.", "Where should we start?", "我们应该从哪里开始", "requesting"),
+            row("这是我们需要放进展示里的部分吗？", "Confirm what belongs in a class presentation.", "Is this the part we need to include in the presentation?", "Yes, but keep it brief.", "the part we need to include", "我们需要包含的部分", "confirming"),
+            row("您能重复一下问题吗？", "Ask the teacher to repeat a question before answering.", "Could you repeat the question, please?", "Sure. What is the author's main point?", "repeat the question", "重复问题", "clarifying"),
+        ],
+    ),
+    (
+        "classroom-answers",
+        "课堂回答与讨论",
+        "Answering and joining class discussion",
+        "回答老师提问、争取思考时间、补充同学观点并表达不确定。",
+        [
+            row("我觉得重点是语境很重要。", "Give a concise answer to a teacher's question.", "I think the main point is that context matters.", "Good. Can you explain why?", "the main point is that ...", "重点是……", "answering"),
+            row("我的理解是，这两个观点是有关联的。", "State your interpretation clearly but not too strongly.", "My understanding is that the two ideas are connected.", "Exactly. That's the connection I mean.", "My understanding is that ...", "我的理解是……", "answering"),
+            row("我觉得这个例子支持作者的论点。", "Answer with a reasoned opinion.", "I would say the example supports the author's argument.", "What in the example supports it?", "I would say ...", "我会认为……", "answering"),
+            row("我不完全确定，但我觉得它和第二部分有关。", "Answer honestly when you are only partly sure.", "I'm not completely sure, but I think it relates to the second section.", "That's a reasonable starting point.", "I'm not completely sure, but ...", "我不完全确定，但……", "answering"),
+            row("我可以想一下再回答吗？", "Buy a little time before answering aloud.", "Could I take a second to think about that?", "Of course. Take your time.", "take a second to think", "花一点时间想一想", "stalling"),
+            row("我的看法有一点不同。", "Disagree with an idea without sounding confrontational.", "I see it a little differently.", "Okay. What is your take on it?", "I see it a little differently", "我的看法有一点不同", "disagreeing"),
+            row("接着她刚才说的，我觉得这个例子体现了随时间的变化。", "Add a point to a classmate's answer.", "Building on what she said, I think the example shows a change over time.", "That's a useful addition.", "Building on what she said", "接着她刚才说的观点", "addingInformation"),
+            row("我同意，尤其是因为证据很清楚。", "Agree with a classmate and give a reason.", "I agree with that, especially because the evidence is clear.", "Right. The evidence is hard to ignore.", "I agree with that, especially because ...", "我同意，尤其是因为……", "agreeing"),
+            row("我不知道准确的词，但我可以解释这个意思。", "Keep speaking when one word does not come to mind.", "I don't know the exact word, but I can explain the idea.", "That's fine. Explain it in your own words.", "I don't know the exact word, but ...", "我不知道准确的词，但……", "selfRepair"),
+            row("所以换句话说，语境会改变我们的理解。", "Summarise your answer in simpler words.", "So, in other words, the context changes how we understand it.", "Exactly. That's a good summary.", "in other words", "换句话说", "summarizing"),
+        ],
+    ),
 ]
 
 
@@ -415,6 +487,12 @@ def build() -> None:
             focus_id = f"en.focus.{slug}.{index:02d}"
             source_path = f"curated/english/{slug}"
             sentence_ids.append(sentence_id)
+            is_school_topic = slug in {
+                "campus-teacher-greetings",
+                "asking-teacher-help",
+                "classroom-questions",
+                "classroom-answers",
+            }
             sentences.append(
                 {
                     "id": sentence_id,
@@ -427,8 +505,21 @@ def build() -> None:
                     "theme": title_target,
                     "lexemeIDs": [expression_id, focus_id],
                     "dialogueAct": item["dialogueAct"],
-                    "register": "informal",
-                    "speakerRole": "friends or everyday conversation partners",
+                    "register": (
+                        "polite"
+                        if slug in {
+                            "campus-teacher-greetings",
+                            "asking-teacher-help",
+                        }
+                        else "neutral"
+                        if is_school_topic
+                        else "informal"
+                    ),
+                    "speakerRole": (
+                        "student and international teacher"
+                        if is_school_topic
+                        else "friends or everyday conversation partners"
+                    ),
                     "addressForm": "notApplicable",
                     "expectedReplies": [item["reply"]],
                     "variants": [],

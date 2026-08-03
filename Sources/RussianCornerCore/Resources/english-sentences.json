@@ -5598,5 +5598,1125 @@
     "sourceText": "That should do it.",
     "qualityFlags": [],
     "topicID": "en.topic.20.everyday-logistics"
+  },
+  {
+    "id": "en.topic.21.campus-teacher-greetings.01",
+    "language": "english",
+    "promptZh": "嗨，老师，今天过得怎么样？",
+    "cueText": "Greet a teacher you meet on campus.",
+    "targetText": "Hi, Professor. How's your day going?",
+    "displayText": "Hi, Professor. How's your day going?",
+    "speechText": "Hi, Professor. How's your day going?",
+    "theme": "Greeting teachers around campus",
+    "lexemeIDs": [
+      "en.expression.campus-teacher-greetings.01",
+      "en.focus.campus-teacher-greetings.01"
+    ],
+    "dialogueAct": "greeting",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Pretty good, thanks. How about you?"
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Hi, Professor. How's your day going?",
+    "qualityFlags": [],
+    "topicID": "en.topic.21.campus-teacher-greetings"
+  },
+  {
+    "id": "en.topic.21.campus-teacher-greetings.02",
+    "language": "english",
+    "promptZh": "早上好！我们今天还是在204教室吗？",
+    "cueText": "Confirm the classroom with your teacher.",
+    "targetText": "Good morning! Are we still in Room 204 today?",
+    "displayText": "Good morning! Are we still in Room 204 today?",
+    "speechText": "Good morning! Are we still in Room 204 today?",
+    "theme": "Greeting teachers around campus",
+    "lexemeIDs": [
+      "en.expression.campus-teacher-greetings.02",
+      "en.focus.campus-teacher-greetings.02"
+    ],
+    "dialogueAct": "confirming",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Yes, I'll see you there."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Good morning! Are we still in Room 204 today?",
+    "qualityFlags": [],
+    "topicID": "en.topic.21.campus-teacher-greetings"
+  },
+  {
+    "id": "en.topic.21.campus-teacher-greetings.03",
+    "language": "english",
+    "promptZh": "我在走廊看到您，就想过来打个招呼。",
+    "cueText": "Start a brief, friendly exchange outside class.",
+    "targetText": "I saw you in the hallway and wanted to say hi.",
+    "displayText": "I saw you in the hallway and wanted to say hi.",
+    "speechText": "I saw you in the hallway and wanted to say hi.",
+    "theme": "Greeting teachers around campus",
+    "lexemeIDs": [
+      "en.expression.campus-teacher-greetings.03",
+      "en.focus.campus-teacher-greetings.03"
+    ],
+    "dialogueAct": "greeting",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "That's nice of you. How's the semester going?"
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "I saw you in the hallway and wanted to say hi.",
+    "qualityFlags": [],
+    "topicID": "en.topic.21.campus-teacher-greetings"
+  },
+  {
+    "id": "en.topic.21.campus-teacher-greetings.04",
+    "language": "english",
+    "promptZh": "昨天的工作坊进行得怎么样？",
+    "cueText": "Make light conversation about a recent class event.",
+    "targetText": "How did the workshop go yesterday?",
+    "displayText": "How did the workshop go yesterday?",
+    "speechText": "How did the workshop go yesterday?",
+    "theme": "Greeting teachers around campus",
+    "lexemeIDs": [
+      "en.expression.campus-teacher-greetings.04",
+      "en.focus.campus-teacher-greetings.04"
+    ],
+    "dialogueAct": "smallTalk",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "It went well. A lot of students joined in."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "How did the workshop go yesterday?",
+    "qualityFlags": [],
+    "topicID": "en.topic.21.campus-teacher-greetings"
+  },
+  {
+    "id": "en.topic.21.campus-teacher-greetings.05",
+    "language": "english",
+    "promptZh": "您有空聊一分钟吗，还是正要去上课？",
+    "cueText": "Check whether your teacher can talk right now.",
+    "targetText": "Are you free for a minute, or are you on your way to class?",
+    "displayText": "Are you free for a minute, or are you on your way to class?",
+    "speechText": "Are you free for a minute, or are you on your way to class?",
+    "theme": "Greeting teachers around campus",
+    "lexemeIDs": [
+      "en.expression.campus-teacher-greetings.05",
+      "en.focus.campus-teacher-greetings.05"
+    ],
+    "dialogueAct": "requesting",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "I have a minute. What's up?"
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Are you free for a minute, or are you on your way to class?",
+    "qualityFlags": [],
+    "topicID": "en.topic.21.campus-teacher-greetings"
+  },
+  {
+    "id": "en.topic.21.campus-teacher-greetings.06",
+    "language": "english",
+    "promptZh": "希望我没有在您不方便的时候来打扰。",
+    "cueText": "Soften a quick request to a busy teacher.",
+    "targetText": "I hope I'm not catching you at a bad time.",
+    "displayText": "I hope I'm not catching you at a bad time.",
+    "speechText": "I hope I'm not catching you at a bad time.",
+    "theme": "Greeting teachers around campus",
+    "lexemeIDs": [
+      "en.expression.campus-teacher-greetings.06",
+      "en.focus.campus-teacher-greetings.06"
+    ],
+    "dialogueAct": "apology",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Not at all. Go ahead."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "I hope I'm not catching you at a bad time.",
+    "qualityFlags": [],
+    "topicID": "en.topic.21.campus-teacher-greetings"
+  },
+  {
+    "id": "en.topic.21.campus-teacher-greetings.07",
+    "language": "english",
+    "promptZh": "谢谢您昨天课后留下来。",
+    "cueText": "Thank your teacher for giving you extra time.",
+    "targetText": "Thanks for staying after class yesterday.",
+    "displayText": "Thanks for staying after class yesterday.",
+    "speechText": "Thanks for staying after class yesterday.",
+    "theme": "Greeting teachers around campus",
+    "lexemeIDs": [
+      "en.expression.campus-teacher-greetings.07",
+      "en.focus.campus-teacher-greetings.07"
+    ],
+    "dialogueAct": "gratitude",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Of course. I'm glad we could sort it out."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Thanks for staying after class yesterday.",
+    "qualityFlags": [],
+    "topicID": "en.topic.21.campus-teacher-greetings"
+  },
+  {
+    "id": "en.topic.21.campus-teacher-greetings.08",
+    "language": "english",
+    "promptZh": "我本来想问您一件事，但课后再问也可以。",
+    "cueText": "Tell your teacher you can wait instead of interrupting.",
+    "targetText": "I wanted to ask you something, but it can wait until after class.",
+    "displayText": "I wanted to ask you something, but it can wait until after class.",
+    "speechText": "I wanted to ask you something, but it can wait until after class.",
+    "theme": "Greeting teachers around campus",
+    "lexemeIDs": [
+      "en.expression.campus-teacher-greetings.08",
+      "en.focus.campus-teacher-greetings.08"
+    ],
+    "dialogueAct": "requesting",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Sure. Just catch me afterward."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "I wanted to ask you something, but it can wait until after class.",
+    "qualityFlags": [],
+    "topicID": "en.topic.21.campus-teacher-greetings"
+  },
+  {
+    "id": "en.topic.21.campus-teacher-greetings.09",
+    "language": "english",
+    "promptZh": "课堂上见。",
+    "cueText": "End a brief campus exchange naturally.",
+    "targetText": "See you in class.",
+    "displayText": "See you in class.",
+    "speechText": "See you in class.",
+    "theme": "Greeting teachers around campus",
+    "lexemeIDs": [
+      "en.expression.campus-teacher-greetings.09",
+      "en.focus.campus-teacher-greetings.09"
+    ],
+    "dialogueAct": "farewell",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "See you."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "See you in class.",
+    "qualityFlags": [],
+    "topicID": "en.topic.21.campus-teacher-greetings"
+  },
+  {
+    "id": "en.topic.21.campus-teacher-greetings.10",
+    "language": "english",
+    "promptZh": "老师，祝您周末愉快。",
+    "cueText": "Say goodbye to a teacher before the weekend.",
+    "targetText": "Have a good weekend, Professor.",
+    "displayText": "Have a good weekend, Professor.",
+    "speechText": "Have a good weekend, Professor.",
+    "theme": "Greeting teachers around campus",
+    "lexemeIDs": [
+      "en.expression.campus-teacher-greetings.10",
+      "en.focus.campus-teacher-greetings.10"
+    ],
+    "dialogueAct": "farewell",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "You too. See you on Monday."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/campus-teacher-greetings",
+    "sourceText": "Have a good weekend, Professor.",
+    "qualityFlags": [],
+    "topicID": "en.topic.21.campus-teacher-greetings"
+  },
+  {
+    "id": "en.topic.22.asking-teacher-help.01",
+    "language": "english",
+    "promptZh": "我可以请教您作业的问题吗？",
+    "cueText": "Open a polite conversation about coursework.",
+    "targetText": "Could I ask you about the assignment?",
+    "displayText": "Could I ask you about the assignment?",
+    "speechText": "Could I ask you about the assignment?",
+    "theme": "Asking a teacher for help",
+    "lexemeIDs": [
+      "en.expression.asking-teacher-help.01",
+      "en.focus.asking-teacher-help.01"
+    ],
+    "dialogueAct": "requesting",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Sure. What are you working on?"
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Could I ask you about the assignment?",
+    "qualityFlags": [],
+    "topicID": "en.topic.22.asking-teacher-help"
+  },
+  {
+    "id": "en.topic.22.asking-teacher-help.02",
+    "language": "english",
+    "promptZh": "您课后有几分钟时间吗？",
+    "cueText": "Ask a teacher for a short meeting.",
+    "targetText": "Would you have a few minutes after class?",
+    "displayText": "Would you have a few minutes after class?",
+    "speechText": "Would you have a few minutes after class?",
+    "theme": "Asking a teacher for help",
+    "lexemeIDs": [
+      "en.expression.asking-teacher-help.02",
+      "en.focus.asking-teacher-help.02"
+    ],
+    "dialogueAct": "requesting",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Yes, I can meet you outside the classroom."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Would you have a few minutes after class?",
+    "qualityFlags": [],
+    "topicID": "en.topic.22.asking-teacher-help"
+  },
+  {
+    "id": "en.topic.22.asking-teacher-help.03",
+    "language": "english",
+    "promptZh": "我卡在第二部分了。",
+    "cueText": "Explain exactly where you need help.",
+    "targetText": "I'm stuck on the second part.",
+    "displayText": "I'm stuck on the second part.",
+    "speechText": "I'm stuck on the second part.",
+    "theme": "Asking a teacher for help",
+    "lexemeIDs": [
+      "en.expression.asking-teacher-help.03",
+      "en.focus.asking-teacher-help.03"
+    ],
+    "dialogueAct": "reportingProblem",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Let's look at that part together."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "I'm stuck on the second part.",
+    "qualityFlags": [],
+    "topicID": "en.topic.22.asking-teacher-help"
+  },
+  {
+    "id": "en.topic.22.asking-teacher-help.04",
+    "language": "english",
+    "promptZh": "您能给我指一下方向吗？",
+    "cueText": "Ask for guidance without asking the teacher to do the work.",
+    "targetText": "Could you point me in the right direction?",
+    "displayText": "Could you point me in the right direction?",
+    "speechText": "Could you point me in the right direction?",
+    "theme": "Asking a teacher for help",
+    "lexemeIDs": [
+      "en.expression.asking-teacher-help.04",
+      "en.focus.asking-teacher-help.04"
+    ],
+    "dialogueAct": "requesting",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Start by comparing these two examples."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Could you point me in the right direction?",
+    "qualityFlags": [],
+    "topicID": "en.topic.22.asking-teacher-help"
+  },
+  {
+    "id": "en.topic.22.asking-teacher-help.05",
+    "language": "english",
+    "promptZh": "我试着这样做了，但不知道漏了什么。",
+    "cueText": "Show your attempt before asking for feedback.",
+    "targetText": "I tried it this way, but I'm not sure what I'm missing.",
+    "displayText": "I tried it this way, but I'm not sure what I'm missing.",
+    "speechText": "I tried it this way, but I'm not sure what I'm missing.",
+    "theme": "Asking a teacher for help",
+    "lexemeIDs": [
+      "en.expression.asking-teacher-help.05",
+      "en.focus.asking-teacher-help.05"
+    ],
+    "dialogueAct": "requestingFeedback",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Your approach is fine; check this step again."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "I tried it this way, but I'm not sure what I'm missing.",
+    "qualityFlags": [],
+    "topicID": "en.topic.22.asking-teacher-help"
+  },
+  {
+    "id": "en.topic.22.asking-teacher-help.06",
+    "language": "english",
+    "promptZh": "您能推荐一些我可以阅读的材料吗？",
+    "cueText": "Ask for a useful extra resource.",
+    "targetText": "Could you recommend something I can read?",
+    "displayText": "Could you recommend something I can read?",
+    "speechText": "Could you recommend something I can read?",
+    "theme": "Asking a teacher for help",
+    "lexemeIDs": [
+      "en.expression.asking-teacher-help.06",
+      "en.focus.asking-teacher-help.06"
+    ],
+    "dialogueAct": "requesting",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "I'll send you an article after class."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Could you recommend something I can read?",
+    "qualityFlags": [],
+    "topicID": "en.topic.22.asking-teacher-help"
+  },
+  {
+    "id": "en.topic.22.asking-teacher-help.07",
+    "language": "english",
+    "promptZh": "我之后通过邮件再问一个问题，可以吗？",
+    "cueText": "Ask how to continue the conversation later.",
+    "targetText": "Would it be okay if I sent you a follow-up question by email?",
+    "displayText": "Would it be okay if I sent you a follow-up question by email?",
+    "speechText": "Would it be okay if I sent you a follow-up question by email?",
+    "theme": "Asking a teacher for help",
+    "lexemeIDs": [
+      "en.expression.asking-teacher-help.07",
+      "en.focus.asking-teacher-help.07"
+    ],
+    "dialogueAct": "requesting",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Of course. Put the course name in the subject line."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Would it be okay if I sent you a follow-up question by email?",
+    "qualityFlags": [],
+    "topicID": "en.topic.22.asking-teacher-help"
+  },
+  {
+    "id": "en.topic.22.asking-teacher-help.08",
+    "language": "english",
+    "promptZh": "我想确认一下自己对这个术语的用法是否正确。",
+    "cueText": "Check your use of a key academic word.",
+    "targetText": "I want to make sure I'm using the term correctly.",
+    "displayText": "I want to make sure I'm using the term correctly.",
+    "speechText": "I want to make sure I'm using the term correctly.",
+    "theme": "Asking a teacher for help",
+    "lexemeIDs": [
+      "en.expression.asking-teacher-help.08",
+      "en.focus.asking-teacher-help.08"
+    ],
+    "dialogueAct": "clarifying",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Yes, that's the right way to use it here."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "I want to make sure I'm using the term correctly.",
+    "qualityFlags": [],
+    "topicID": "en.topic.22.asking-teacher-help"
+  },
+  {
+    "id": "en.topic.22.asking-teacher-help.09",
+    "language": "english",
+    "promptZh": "谢谢，这下我明白了。",
+    "cueText": "Close a helpful explanation naturally.",
+    "targetText": "Thanks, that clears things up.",
+    "displayText": "Thanks, that clears things up.",
+    "speechText": "Thanks, that clears things up.",
+    "theme": "Asking a teacher for help",
+    "lexemeIDs": [
+      "en.expression.asking-teacher-help.09",
+      "en.focus.asking-teacher-help.09"
+    ],
+    "dialogueAct": "gratitude",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "You're welcome. Let me know if anything else comes up."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "Thanks, that clears things up.",
+    "qualityFlags": [],
+    "topicID": "en.topic.22.asking-teacher-help"
+  },
+  {
+    "id": "en.topic.22.asking-teacher-help.10",
+    "language": "english",
+    "promptZh": "我再试一次，有结果后告诉您。",
+    "cueText": "State your next step after receiving guidance.",
+    "targetText": "I'll try it again and let you know how it goes.",
+    "displayText": "I'll try it again and let you know how it goes.",
+    "speechText": "I'll try it again and let you know how it goes.",
+    "theme": "Asking a teacher for help",
+    "lexemeIDs": [
+      "en.expression.asking-teacher-help.10",
+      "en.focus.asking-teacher-help.10"
+    ],
+    "dialogueAct": "confirming",
+    "register": "polite",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Sounds good. Take your time."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/asking-teacher-help",
+    "sourceText": "I'll try it again and let you know how it goes.",
+    "qualityFlags": [],
+    "topicID": "en.topic.22.asking-teacher-help"
+  },
+  {
+    "id": "en.topic.23.classroom-questions.01",
+    "language": "english",
+    "promptZh": "不好意思，您能再讲一下刚才最后一点吗？",
+    "cueText": "Ask the teacher to repeat a key point.",
+    "targetText": "Sorry, could you go over that last point?",
+    "displayText": "Sorry, could you go over that last point?",
+    "speechText": "Sorry, could you go over that last point?",
+    "theme": "Asking questions in class",
+    "lexemeIDs": [
+      "en.expression.classroom-questions.01",
+      "en.focus.classroom-questions.01"
+    ],
+    "dialogueAct": "clarifying",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Sure. Let me put it another way."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Sorry, could you go over that last point?",
+    "qualityFlags": [],
+    "topicID": "en.topic.23.classroom-questions"
+  },
+  {
+    "id": "en.topic.23.classroom-questions.02",
+    "language": "english",
+    "promptZh": "您能给我们举个例子吗？",
+    "cueText": "Ask for a concrete example during a lecture.",
+    "targetText": "Could you give us an example?",
+    "displayText": "Could you give us an example?",
+    "speechText": "Could you give us an example?",
+    "theme": "Asking questions in class",
+    "lexemeIDs": [
+      "en.expression.classroom-questions.02",
+      "en.focus.classroom-questions.02"
+    ],
+    "dialogueAct": "requesting",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Sure. Think about this case."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Could you give us an example?",
+    "qualityFlags": [],
+    "topicID": "en.topic.23.classroom-questions"
+  },
+  {
+    "id": "en.topic.23.classroom-questions.03",
+    "language": "english",
+    "promptZh": "这个术语在这里是什么意思？",
+    "cueText": "Ask about the meaning of a word in the lecture.",
+    "targetText": "What does this term mean in this context?",
+    "displayText": "What does this term mean in this context?",
+    "speechText": "What does this term mean in this context?",
+    "theme": "Asking questions in class",
+    "lexemeIDs": [
+      "en.expression.classroom-questions.03",
+      "en.focus.classroom-questions.03"
+    ],
+    "dialogueAct": "clarifying",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Here, it means the opposite of the usual assumption."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "What does this term mean in this context?",
+    "qualityFlags": [],
+    "topicID": "en.topic.23.classroom-questions"
+  },
+  {
+    "id": "en.topic.23.classroom-questions.04",
+    "language": "english",
+    "promptZh": "您的意思是这两个术语有关联吗？",
+    "cueText": "Check your interpretation before moving on.",
+    "targetText": "Do you mean that the two terms are related?",
+    "displayText": "Do you mean that the two terms are related?",
+    "speechText": "Do you mean that the two terms are related?",
+    "theme": "Asking questions in class",
+    "lexemeIDs": [
+      "en.expression.classroom-questions.04",
+      "en.focus.classroom-questions.04"
+    ],
+    "dialogueAct": "confirming",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "They're related, but they're not interchangeable."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Do you mean that the two terms are related?",
+    "qualityFlags": [],
+    "topicID": "en.topic.23.classroom-questions"
+  },
+  {
+    "id": "en.topic.23.classroom-questions.05",
+    "language": "english",
+    "promptZh": "您能说慢一点吗？",
+    "cueText": "Ask for a slower explanation without apologising too much.",
+    "targetText": "Could you say that a little more slowly?",
+    "displayText": "Could you say that a little more slowly?",
+    "speechText": "Could you say that a little more slowly?",
+    "theme": "Asking questions in class",
+    "lexemeIDs": [
+      "en.expression.classroom-questions.05",
+      "en.focus.classroom-questions.05"
+    ],
+    "dialogueAct": "clarifying",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Of course. I'll slow down."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Could you say that a little more slowly?",
+    "qualityFlags": [],
+    "topicID": "en.topic.23.classroom-questions"
+  },
+  {
+    "id": "en.topic.23.classroom-questions.06",
+    "language": "english",
+    "promptZh": "我不太理解这两个观点之间的联系。",
+    "cueText": "Explain precisely what is unclear.",
+    "targetText": "I'm not sure I understand the connection between these two ideas.",
+    "displayText": "I'm not sure I understand the connection between these two ideas.",
+    "speechText": "I'm not sure I understand the connection between these two ideas.",
+    "theme": "Asking questions in class",
+    "lexemeIDs": [
+      "en.expression.classroom-questions.06",
+      "en.focus.classroom-questions.06"
+    ],
+    "dialogueAct": "clarifying",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "The second idea is an example of the first one."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "I'm not sure I understand the connection between these two ideas.",
+    "qualityFlags": [],
+    "topicID": "en.topic.23.classroom-questions"
+  },
+  {
+    "id": "en.topic.23.classroom-questions.07",
+    "language": "english",
+    "promptZh": "我可以问一个小问题吗？",
+    "cueText": "Politely take a turn during class.",
+    "targetText": "Can I ask a quick question?",
+    "displayText": "Can I ask a quick question?",
+    "speechText": "Can I ask a quick question?",
+    "theme": "Asking questions in class",
+    "lexemeIDs": [
+      "en.expression.classroom-questions.07",
+      "en.focus.classroom-questions.07"
+    ],
+    "dialogueAct": "requesting",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Of course. Go ahead."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Can I ask a quick question?",
+    "qualityFlags": [],
+    "topicID": "en.topic.23.classroom-questions"
+  },
+  {
+    "id": "en.topic.23.classroom-questions.08",
+    "language": "english",
+    "promptZh": "我们应该从这篇阅读材料的哪里开始？",
+    "cueText": "Ask how to approach a reading task.",
+    "targetText": "Where should we start with this reading?",
+    "displayText": "Where should we start with this reading?",
+    "speechText": "Where should we start with this reading?",
+    "theme": "Asking questions in class",
+    "lexemeIDs": [
+      "en.expression.classroom-questions.08",
+      "en.focus.classroom-questions.08"
+    ],
+    "dialogueAct": "requesting",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Start with the introduction and the first example."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Where should we start with this reading?",
+    "qualityFlags": [],
+    "topicID": "en.topic.23.classroom-questions"
+  },
+  {
+    "id": "en.topic.23.classroom-questions.09",
+    "language": "english",
+    "promptZh": "这是我们需要放进展示里的部分吗？",
+    "cueText": "Confirm what belongs in a class presentation.",
+    "targetText": "Is this the part we need to include in the presentation?",
+    "displayText": "Is this the part we need to include in the presentation?",
+    "speechText": "Is this the part we need to include in the presentation?",
+    "theme": "Asking questions in class",
+    "lexemeIDs": [
+      "en.expression.classroom-questions.09",
+      "en.focus.classroom-questions.09"
+    ],
+    "dialogueAct": "confirming",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Yes, but keep it brief."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Is this the part we need to include in the presentation?",
+    "qualityFlags": [],
+    "topicID": "en.topic.23.classroom-questions"
+  },
+  {
+    "id": "en.topic.23.classroom-questions.10",
+    "language": "english",
+    "promptZh": "您能重复一下问题吗？",
+    "cueText": "Ask the teacher to repeat a question before answering.",
+    "targetText": "Could you repeat the question, please?",
+    "displayText": "Could you repeat the question, please?",
+    "speechText": "Could you repeat the question, please?",
+    "theme": "Asking questions in class",
+    "lexemeIDs": [
+      "en.expression.classroom-questions.10",
+      "en.focus.classroom-questions.10"
+    ],
+    "dialogueAct": "clarifying",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Sure. What is the author's main point?"
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-questions",
+    "sourceText": "Could you repeat the question, please?",
+    "qualityFlags": [],
+    "topicID": "en.topic.23.classroom-questions"
+  },
+  {
+    "id": "en.topic.24.classroom-answers.01",
+    "language": "english",
+    "promptZh": "我觉得重点是语境很重要。",
+    "cueText": "Give a concise answer to a teacher's question.",
+    "targetText": "I think the main point is that context matters.",
+    "displayText": "I think the main point is that context matters.",
+    "speechText": "I think the main point is that context matters.",
+    "theme": "Answering and joining class discussion",
+    "lexemeIDs": [
+      "en.expression.classroom-answers.01",
+      "en.focus.classroom-answers.01"
+    ],
+    "dialogueAct": "answering",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Good. Can you explain why?"
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I think the main point is that context matters.",
+    "qualityFlags": [],
+    "topicID": "en.topic.24.classroom-answers"
+  },
+  {
+    "id": "en.topic.24.classroom-answers.02",
+    "language": "english",
+    "promptZh": "我的理解是，这两个观点是有关联的。",
+    "cueText": "State your interpretation clearly but not too strongly.",
+    "targetText": "My understanding is that the two ideas are connected.",
+    "displayText": "My understanding is that the two ideas are connected.",
+    "speechText": "My understanding is that the two ideas are connected.",
+    "theme": "Answering and joining class discussion",
+    "lexemeIDs": [
+      "en.expression.classroom-answers.02",
+      "en.focus.classroom-answers.02"
+    ],
+    "dialogueAct": "answering",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Exactly. That's the connection I mean."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "My understanding is that the two ideas are connected.",
+    "qualityFlags": [],
+    "topicID": "en.topic.24.classroom-answers"
+  },
+  {
+    "id": "en.topic.24.classroom-answers.03",
+    "language": "english",
+    "promptZh": "我觉得这个例子支持作者的论点。",
+    "cueText": "Answer with a reasoned opinion.",
+    "targetText": "I would say the example supports the author's argument.",
+    "displayText": "I would say the example supports the author's argument.",
+    "speechText": "I would say the example supports the author's argument.",
+    "theme": "Answering and joining class discussion",
+    "lexemeIDs": [
+      "en.expression.classroom-answers.03",
+      "en.focus.classroom-answers.03"
+    ],
+    "dialogueAct": "answering",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "What in the example supports it?"
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I would say the example supports the author's argument.",
+    "qualityFlags": [],
+    "topicID": "en.topic.24.classroom-answers"
+  },
+  {
+    "id": "en.topic.24.classroom-answers.04",
+    "language": "english",
+    "promptZh": "我不完全确定，但我觉得它和第二部分有关。",
+    "cueText": "Answer honestly when you are only partly sure.",
+    "targetText": "I'm not completely sure, but I think it relates to the second section.",
+    "displayText": "I'm not completely sure, but I think it relates to the second section.",
+    "speechText": "I'm not completely sure, but I think it relates to the second section.",
+    "theme": "Answering and joining class discussion",
+    "lexemeIDs": [
+      "en.expression.classroom-answers.04",
+      "en.focus.classroom-answers.04"
+    ],
+    "dialogueAct": "answering",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "That's a reasonable starting point."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I'm not completely sure, but I think it relates to the second section.",
+    "qualityFlags": [],
+    "topicID": "en.topic.24.classroom-answers"
+  },
+  {
+    "id": "en.topic.24.classroom-answers.05",
+    "language": "english",
+    "promptZh": "我可以想一下再回答吗？",
+    "cueText": "Buy a little time before answering aloud.",
+    "targetText": "Could I take a second to think about that?",
+    "displayText": "Could I take a second to think about that?",
+    "speechText": "Could I take a second to think about that?",
+    "theme": "Answering and joining class discussion",
+    "lexemeIDs": [
+      "en.expression.classroom-answers.05",
+      "en.focus.classroom-answers.05"
+    ],
+    "dialogueAct": "stalling",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Of course. Take your time."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "Could I take a second to think about that?",
+    "qualityFlags": [],
+    "topicID": "en.topic.24.classroom-answers"
+  },
+  {
+    "id": "en.topic.24.classroom-answers.06",
+    "language": "english",
+    "promptZh": "我的看法有一点不同。",
+    "cueText": "Disagree with an idea without sounding confrontational.",
+    "targetText": "I see it a little differently.",
+    "displayText": "I see it a little differently.",
+    "speechText": "I see it a little differently.",
+    "theme": "Answering and joining class discussion",
+    "lexemeIDs": [
+      "en.expression.classroom-answers.06",
+      "en.focus.classroom-answers.06"
+    ],
+    "dialogueAct": "disagreeing",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Okay. What is your take on it?"
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I see it a little differently.",
+    "qualityFlags": [],
+    "topicID": "en.topic.24.classroom-answers"
+  },
+  {
+    "id": "en.topic.24.classroom-answers.07",
+    "language": "english",
+    "promptZh": "接着她刚才说的，我觉得这个例子体现了随时间的变化。",
+    "cueText": "Add a point to a classmate's answer.",
+    "targetText": "Building on what she said, I think the example shows a change over time.",
+    "displayText": "Building on what she said, I think the example shows a change over time.",
+    "speechText": "Building on what she said, I think the example shows a change over time.",
+    "theme": "Answering and joining class discussion",
+    "lexemeIDs": [
+      "en.expression.classroom-answers.07",
+      "en.focus.classroom-answers.07"
+    ],
+    "dialogueAct": "addingInformation",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "That's a useful addition."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "Building on what she said, I think the example shows a change over time.",
+    "qualityFlags": [],
+    "topicID": "en.topic.24.classroom-answers"
+  },
+  {
+    "id": "en.topic.24.classroom-answers.08",
+    "language": "english",
+    "promptZh": "我同意，尤其是因为证据很清楚。",
+    "cueText": "Agree with a classmate and give a reason.",
+    "targetText": "I agree with that, especially because the evidence is clear.",
+    "displayText": "I agree with that, especially because the evidence is clear.",
+    "speechText": "I agree with that, especially because the evidence is clear.",
+    "theme": "Answering and joining class discussion",
+    "lexemeIDs": [
+      "en.expression.classroom-answers.08",
+      "en.focus.classroom-answers.08"
+    ],
+    "dialogueAct": "agreeing",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Right. The evidence is hard to ignore."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I agree with that, especially because the evidence is clear.",
+    "qualityFlags": [],
+    "topicID": "en.topic.24.classroom-answers"
+  },
+  {
+    "id": "en.topic.24.classroom-answers.09",
+    "language": "english",
+    "promptZh": "我不知道准确的词，但我可以解释这个意思。",
+    "cueText": "Keep speaking when one word does not come to mind.",
+    "targetText": "I don't know the exact word, but I can explain the idea.",
+    "displayText": "I don't know the exact word, but I can explain the idea.",
+    "speechText": "I don't know the exact word, but I can explain the idea.",
+    "theme": "Answering and joining class discussion",
+    "lexemeIDs": [
+      "en.expression.classroom-answers.09",
+      "en.focus.classroom-answers.09"
+    ],
+    "dialogueAct": "selfRepair",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "That's fine. Explain it in your own words."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "I don't know the exact word, but I can explain the idea.",
+    "qualityFlags": [],
+    "topicID": "en.topic.24.classroom-answers"
+  },
+  {
+    "id": "en.topic.24.classroom-answers.10",
+    "language": "english",
+    "promptZh": "所以换句话说，语境会改变我们的理解。",
+    "cueText": "Summarise your answer in simpler words.",
+    "targetText": "So, in other words, the context changes how we understand it.",
+    "displayText": "So, in other words, the context changes how we understand it.",
+    "speechText": "So, in other words, the context changes how we understand it.",
+    "theme": "Answering and joining class discussion",
+    "lexemeIDs": [
+      "en.expression.classroom-answers.10",
+      "en.focus.classroom-answers.10"
+    ],
+    "dialogueAct": "summarizing",
+    "register": "neutral",
+    "speakerRole": "student and international teacher",
+    "addressForm": "notApplicable",
+    "expectedReplies": [
+      "Exactly. That's a good summary."
+    ],
+    "variants": [],
+    "reviewStatus": "reviewed",
+    "provenanceType": "derived",
+    "sourcePath": "curated/english/classroom-answers",
+    "sourceText": "So, in other words, the context changes how we understand it.",
+    "qualityFlags": [],
+    "topicID": "en.topic.24.classroom-answers"
   }
 ]
