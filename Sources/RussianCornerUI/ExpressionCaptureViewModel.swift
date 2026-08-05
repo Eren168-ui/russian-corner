@@ -28,6 +28,7 @@ public enum ExpressionCaptureError:
 @MainActor
 @Observable
 public final class ExpressionCaptureViewModel {
+  public let language: StudyLanguage
   public private(set) var preview: SubtitleParseResult?
   public private(set) var selectedSegmentIDs: Set<Int> = []
   public private(set) var candidates: [ImportedExpression]
@@ -45,20 +46,24 @@ public final class ExpressionCaptureViewModel {
 
   public init(
     store: ExpressionCaptureStore,
+    language: StudyLanguage = .english,
     onReviewed: @escaping (String) -> Void = { _ in }
   ) {
     self.store = store
+    self.language = language
     self.onReviewed = onReviewed
     candidates = (try? store.load()) ?? []
   }
 
   public convenience init(
+    language: StudyLanguage = .english,
     onReviewed: @escaping (String) -> Void = { _ in }
   ) throws {
     self.init(
       store: ExpressionCaptureStore(
-        fileURL: try ExpressionCaptureStore.defaultFileURL()
+        fileURL: try ExpressionCaptureStore.defaultFileURL(language: language)
       ),
+      language: language,
       onReviewed: onReviewed
     )
   }
@@ -127,6 +132,7 @@ public final class ExpressionCaptureViewModel {
       throw ExpressionCaptureError.missingScene
     }
     let expression = ImportedExpression(
+      language: language,
       targetText: phrase.isEmpty ? selectedSource : phrase,
       promptZh: intent,
       scene: sceneValue,

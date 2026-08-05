@@ -1,27 +1,17 @@
-const CACHE = 'language-corner-core-v2'
+const CACHE = 'language-corner-core-v17'
 const CORE = [
-  '/',
-  '/index.html',
-  '/assets/app.js',
-  '/assets/app.css',
-  '/manifest.webmanifest',
-  '/icon-192.png',
-  '/icon-512.png',
-  '/content/content-manifest.json',
-  '/content/english-lessons.json',
-  '/content/english-lexemes.json',
-  '/content/english-sentences.json',
-  '/content/english-topics.json',
-  '/content/lexemes.json',
-  '/content/long-term-sentences.json',
-  '/content/speaking-challenges.json',
-  '/content/supplemental-lexemes.json',
-  '/content/supplemental-sentences.json',
-  '/content/topics.json',
+  '', 'index.html', 'assets/app.js', 'assets/app.css', 'manifest.webmanifest',
+  'icon-192.png', 'icon-512.png', 'content/content-manifest.json',
+  'content/english-lessons.json', 'content/english-lexemes.json',
+  'content/english-sentences.json', 'content/english-topics.json', 'content/lexemes.json',
+  'content/long-term-sentences.json', 'content/speaking-challenges.json',
+  'content/supplemental-lexemes.json', 'content/supplemental-sentences.json', 'content/topics.json',
 ]
 
+const scopedURL = (path) => new URL(path, self.registration.scope).toString()
+
 self.addEventListener('install', (event) => {
-  const freshRequests = CORE.map((url) => new Request(url, { cache: 'reload' }))
+  const freshRequests = CORE.map((path) => new Request(scopedURL(path), { cache: 'reload' }))
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(freshRequests)).then(() => self.skipWaiting()))
 })
 

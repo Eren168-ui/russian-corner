@@ -1,0 +1,458 @@
+[
+  {
+    "descriptionZh": "自然聊近况、接住对方的话，并约下一次见面。",
+    "id": "en.topic.01.reconnecting",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.01.reconnecting.01",
+      "en.topic.01.reconnecting.02",
+      "en.topic.01.reconnecting.03",
+      "en.topic.01.reconnecting.04",
+      "en.topic.01.reconnecting.05",
+      "en.topic.01.reconnecting.06",
+      "en.topic.01.reconnecting.07",
+      "en.topic.01.reconnecting.08",
+      "en.topic.01.reconnecting.09",
+      "en.topic.01.reconnecting.10"
+    ],
+    "titleTarget": "Catching up with friends",
+    "titleZh": "朋友与近况"
+  },
+  {
+    "descriptionZh": "确认时间、说明临时变化，并自然地提出替代方案。",
+    "id": "en.topic.02.scheduling",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.02.scheduling.01",
+      "en.topic.02.scheduling.02",
+      "en.topic.02.scheduling.03",
+      "en.topic.02.scheduling.04",
+      "en.topic.02.scheduling.05",
+      "en.topic.02.scheduling.06",
+      "en.topic.02.scheduling.07",
+      "en.topic.02.scheduling.08",
+      "en.topic.02.scheduling.09",
+      "en.topic.02.scheduling.10"
+    ],
+    "titleTarget": "Making plans and changing them",
+    "titleZh": "约时间与临时改期"
+  },
+  {
+    "descriptionZh": "听漏信息时追问、确认关键词，并用更简单的话重新组织。",
+    "id": "en.topic.03.clarifying",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.03.clarifying.01",
+      "en.topic.03.clarifying.02",
+      "en.topic.03.clarifying.03",
+      "en.topic.03.clarifying.04",
+      "en.topic.03.clarifying.05",
+      "en.topic.03.clarifying.06",
+      "en.topic.03.clarifying.07",
+      "en.topic.03.clarifying.08",
+      "en.topic.03.clarifying.09",
+      "en.topic.03.clarifying.10"
+    ],
+    "titleTarget": "Clarifying and repairing a conversation",
+    "titleZh": "没听清与重新说明"
+  },
+  {
+    "descriptionZh": "用短而自然的反应接住朋友的故事、消息和观点。",
+    "id": "en.topic.04.reactions",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.04.reactions.01",
+      "en.topic.04.reactions.02",
+      "en.topic.04.reactions.03",
+      "en.topic.04.reactions.04",
+      "en.topic.04.reactions.05",
+      "en.topic.04.reactions.06",
+      "en.topic.04.reactions.07",
+      "en.topic.04.reactions.08",
+      "en.topic.04.reactions.09",
+      "en.topic.04.reactions.10"
+    ],
+    "titleTarget": "Reacting naturally",
+    "titleZh": "惊讶、赞同与接话"
+  },
+  {
+    "descriptionZh": "聊进度、拖延、休息和下班下课后的状态，不用书面化表达。",
+    "id": "en.topic.05.work-study",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.05.work-study.01",
+      "en.topic.05.work-study.02",
+      "en.topic.05.work-study.03",
+      "en.topic.05.work-study.04",
+      "en.topic.05.work-study.05",
+      "en.topic.05.work-study.06",
+      "en.topic.05.work-study.07",
+      "en.topic.05.work-study.08",
+      "en.topic.05.work-study.09",
+      "en.topic.05.work-study.10"
+    ],
+    "titleTarget": "Work and study in real life",
+    "titleZh": "工作与学习进展"
+  },
+  {
+    "descriptionZh": "把求助、借东西、留位置说得自然，不像翻译腔。",
+    "id": "en.topic.06.requests",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.06.requests.01",
+      "en.topic.06.requests.02",
+      "en.topic.06.requests.03",
+      "en.topic.06.requests.04",
+      "en.topic.06.requests.05",
+      "en.topic.06.requests.06",
+      "en.topic.06.requests.07",
+      "en.topic.06.requests.08",
+      "en.topic.06.requests.09",
+      "en.topic.06.requests.10"
+    ],
+    "titleTarget": "Asking for small favors",
+    "titleZh": "请求与互相帮忙"
+  },
+  {
+    "descriptionZh": "练习发出邀请、接受、婉拒和临时改变主意。",
+    "id": "en.topic.07.invitations",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.07.invitations.01",
+      "en.topic.07.invitations.02",
+      "en.topic.07.invitations.03",
+      "en.topic.07.invitations.04",
+      "en.topic.07.invitations.05",
+      "en.topic.07.invitations.06",
+      "en.topic.07.invitations.07",
+      "en.topic.07.invitations.08",
+      "en.topic.07.invitations.09",
+      "en.topic.07.invitations.10"
+    ],
+    "titleTarget": "Inviting people and making social plans",
+    "titleZh": "邀请与社交安排"
+  },
+  {
+    "descriptionZh": "从试穿、比价到付款和退货，覆盖真实购物对话。",
+    "id": "en.topic.08.shopping",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.08.shopping.01",
+      "en.topic.08.shopping.02",
+      "en.topic.08.shopping.03",
+      "en.topic.08.shopping.04",
+      "en.topic.08.shopping.05",
+      "en.topic.08.shopping.06",
+      "en.topic.08.shopping.07",
+      "en.topic.08.shopping.08",
+      "en.topic.08.shopping.09",
+      "en.topic.08.shopping.10"
+    ],
+    "titleTarget": "Shopping without textbook phrases",
+    "titleZh": "购物与退换"
+  },
+  {
+    "descriptionZh": "覆盖点单、推荐、打包、分账和临时需求。",
+    "id": "en.topic.09.dining",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.09.dining.01",
+      "en.topic.09.dining.02",
+      "en.topic.09.dining.03",
+      "en.topic.09.dining.04",
+      "en.topic.09.dining.05",
+      "en.topic.09.dining.06",
+      "en.topic.09.dining.07",
+      "en.topic.09.dining.08",
+      "en.topic.09.dining.09",
+      "en.topic.09.dining.10"
+    ],
+    "titleTarget": "Eating out and getting coffee",
+    "titleZh": "吃饭与咖啡"
+  },
+  {
+    "descriptionZh": "坐公交、赶车、打车和约地点时使用的短句。",
+    "id": "en.topic.10.transport",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.10.transport.01",
+      "en.topic.10.transport.02",
+      "en.topic.10.transport.03",
+      "en.topic.10.transport.04",
+      "en.topic.10.transport.05",
+      "en.topic.10.transport.06",
+      "en.topic.10.transport.07",
+      "en.topic.10.transport.08",
+      "en.topic.10.transport.09",
+      "en.topic.10.transport.10"
+    ],
+    "titleTarget": "Getting around town",
+    "titleZh": "出行与交通"
+  },
+  {
+    "descriptionZh": "问路、描述位置、发定位时使用的自然表达。",
+    "id": "en.topic.11.directions",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.11.directions.01",
+      "en.topic.11.directions.02",
+      "en.topic.11.directions.03",
+      "en.topic.11.directions.04",
+      "en.topic.11.directions.05",
+      "en.topic.11.directions.06",
+      "en.topic.11.directions.07",
+      "en.topic.11.directions.08",
+      "en.topic.11.directions.09",
+      "en.topic.11.directions.10"
+    ],
+    "titleTarget": "Finding a place",
+    "titleZh": "问路与找地点"
+  },
+  {
+    "descriptionZh": "练习接电话、听不清、回拨、发地址和暂时没空。",
+    "id": "en.topic.12.calls",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.12.calls.01",
+      "en.topic.12.calls.02",
+      "en.topic.12.calls.03",
+      "en.topic.12.calls.04",
+      "en.topic.12.calls.05",
+      "en.topic.12.calls.06",
+      "en.topic.12.calls.07",
+      "en.topic.12.calls.08",
+      "en.topic.12.calls.09",
+      "en.topic.12.calls.10"
+    ],
+    "titleTarget": "Calls, texts, and quick messages",
+    "titleZh": "电话与消息"
+  },
+  {
+    "descriptionZh": "表达不舒服、休息、预约和关心别人，保持自然和清楚。",
+    "id": "en.topic.13.health",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.13.health.01",
+      "en.topic.13.health.02",
+      "en.topic.13.health.03",
+      "en.topic.13.health.04",
+      "en.topic.13.health.05",
+      "en.topic.13.health.06",
+      "en.topic.13.health.07",
+      "en.topic.13.health.08",
+      "en.topic.13.health.09",
+      "en.topic.13.health.10"
+    ],
+    "titleTarget": "Talking about how you feel",
+    "titleZh": "身体与状态"
+  },
+  {
+    "descriptionZh": "表达订单、软件和服务出了问题，同时保持清楚和有礼貌。",
+    "id": "en.topic.14.problems",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.14.problems.01",
+      "en.topic.14.problems.02",
+      "en.topic.14.problems.03",
+      "en.topic.14.problems.04",
+      "en.topic.14.problems.05",
+      "en.topic.14.problems.06",
+      "en.topic.14.problems.07",
+      "en.topic.14.problems.08",
+      "en.topic.14.problems.09",
+      "en.topic.14.problems.10"
+    ],
+    "titleTarget": "Handling everyday problems",
+    "titleZh": "问题与投诉"
+  },
+  {
+    "descriptionZh": "日常犯错、迟到、打断和接受道歉的自然说法。",
+    "id": "en.topic.15.apologies",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.15.apologies.01",
+      "en.topic.15.apologies.02",
+      "en.topic.15.apologies.03",
+      "en.topic.15.apologies.04",
+      "en.topic.15.apologies.05",
+      "en.topic.15.apologies.06",
+      "en.topic.15.apologies.07",
+      "en.topic.15.apologies.08",
+      "en.topic.15.apologies.09",
+      "en.topic.15.apologies.10"
+    ],
+    "titleTarget": "Apologising without sounding stiff",
+    "titleZh": "道歉与失误"
+  },
+  {
+    "descriptionZh": "用连接词、停顿和反应把一件小事讲完整。",
+    "id": "en.topic.16.storytelling",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.16.storytelling.01",
+      "en.topic.16.storytelling.02",
+      "en.topic.16.storytelling.03",
+      "en.topic.16.storytelling.04",
+      "en.topic.16.storytelling.05",
+      "en.topic.16.storytelling.06",
+      "en.topic.16.storytelling.07",
+      "en.topic.16.storytelling.08",
+      "en.topic.16.storytelling.09",
+      "en.topic.16.storytelling.10"
+    ],
+    "titleTarget": "Telling a story in everyday English",
+    "titleZh": "自然讲述经历"
+  },
+  {
+    "descriptionZh": "描述相处、分歧、边界和想念，避免像教科书一样抽象。",
+    "id": "en.topic.17.relationships",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.17.relationships.01",
+      "en.topic.17.relationships.02",
+      "en.topic.17.relationships.03",
+      "en.topic.17.relationships.04",
+      "en.topic.17.relationships.05",
+      "en.topic.17.relationships.06",
+      "en.topic.17.relationships.07",
+      "en.topic.17.relationships.08",
+      "en.topic.17.relationships.09",
+      "en.topic.17.relationships.10"
+    ],
+    "titleTarget": "Talking about friends and relationships",
+    "titleZh": "朋友与关系"
+  },
+  {
+    "descriptionZh": "用轻松的方式聊最近在看的剧、听的歌和意外的剧情。",
+    "id": "en.topic.18.screen-dialogue",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.18.screen-dialogue.01",
+      "en.topic.18.screen-dialogue.02",
+      "en.topic.18.screen-dialogue.03",
+      "en.topic.18.screen-dialogue.04",
+      "en.topic.18.screen-dialogue.05",
+      "en.topic.18.screen-dialogue.06",
+      "en.topic.18.screen-dialogue.07",
+      "en.topic.18.screen-dialogue.08",
+      "en.topic.18.screen-dialogue.09",
+      "en.topic.18.screen-dialogue.10"
+    ],
+    "titleTarget": "Talking about shows and music",
+    "titleZh": "影视与音乐"
+  },
+  {
+    "descriptionZh": "聊书、文章和观点时，练习赞同、保留意见和继续追问。",
+    "id": "en.topic.19.reading",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.19.reading.01",
+      "en.topic.19.reading.02",
+      "en.topic.19.reading.03",
+      "en.topic.19.reading.04",
+      "en.topic.19.reading.05",
+      "en.topic.19.reading.06",
+      "en.topic.19.reading.07",
+      "en.topic.19.reading.08",
+      "en.topic.19.reading.09",
+      "en.topic.19.reading.10"
+    ],
+    "titleTarget": "Sharing opinions about things you read",
+    "titleZh": "阅读与观点"
+  },
+  {
+    "descriptionZh": "处理买东西、找钥匙、家务和出门前的各种小事。",
+    "id": "en.topic.20.everyday-logistics",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.20.everyday-logistics.01",
+      "en.topic.20.everyday-logistics.02",
+      "en.topic.20.everyday-logistics.03",
+      "en.topic.20.everyday-logistics.04",
+      "en.topic.20.everyday-logistics.05",
+      "en.topic.20.everyday-logistics.06",
+      "en.topic.20.everyday-logistics.07",
+      "en.topic.20.everyday-logistics.08",
+      "en.topic.20.everyday-logistics.09",
+      "en.topic.20.everyday-logistics.10"
+    ],
+    "titleTarget": "Small everyday logistics",
+    "titleZh": "日常事务与家里"
+  },
+  {
+    "descriptionZh": "在校园、教室门口和课后自然问候外籍老师，开启简短交流。",
+    "id": "en.topic.21.campus-teacher-greetings",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.21.campus-teacher-greetings.01",
+      "en.topic.21.campus-teacher-greetings.02",
+      "en.topic.21.campus-teacher-greetings.03",
+      "en.topic.21.campus-teacher-greetings.04",
+      "en.topic.21.campus-teacher-greetings.05",
+      "en.topic.21.campus-teacher-greetings.06",
+      "en.topic.21.campus-teacher-greetings.07",
+      "en.topic.21.campus-teacher-greetings.08",
+      "en.topic.21.campus-teacher-greetings.09",
+      "en.topic.21.campus-teacher-greetings.10"
+    ],
+    "titleTarget": "Greeting teachers around campus",
+    "titleZh": "校园遇见老师"
+  },
+  {
+    "descriptionZh": "课后请教外籍老师、说明卡点、约时间并确认后续做法。",
+    "id": "en.topic.22.asking-teacher-help",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.22.asking-teacher-help.01",
+      "en.topic.22.asking-teacher-help.02",
+      "en.topic.22.asking-teacher-help.03",
+      "en.topic.22.asking-teacher-help.04",
+      "en.topic.22.asking-teacher-help.05",
+      "en.topic.22.asking-teacher-help.06",
+      "en.topic.22.asking-teacher-help.07",
+      "en.topic.22.asking-teacher-help.08",
+      "en.topic.22.asking-teacher-help.09",
+      "en.topic.22.asking-teacher-help.10"
+    ],
+    "titleTarget": "Asking a teacher for help",
+    "titleZh": "请教老师与约时间"
+  },
+  {
+    "descriptionZh": "上课时礼貌打断、追问、确认术语并请老师举例说明。",
+    "id": "en.topic.23.classroom-questions",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.23.classroom-questions.01",
+      "en.topic.23.classroom-questions.02",
+      "en.topic.23.classroom-questions.03",
+      "en.topic.23.classroom-questions.04",
+      "en.topic.23.classroom-questions.05",
+      "en.topic.23.classroom-questions.06",
+      "en.topic.23.classroom-questions.07",
+      "en.topic.23.classroom-questions.08",
+      "en.topic.23.classroom-questions.09",
+      "en.topic.23.classroom-questions.10"
+    ],
+    "titleTarget": "Asking questions in class",
+    "titleZh": "课堂提问与澄清"
+  },
+  {
+    "descriptionZh": "回答老师提问、争取思考时间、补充同学观点并表达不确定。",
+    "id": "en.topic.24.classroom-answers",
+    "language": "english",
+    "sentenceIDs": [
+      "en.topic.24.classroom-answers.01",
+      "en.topic.24.classroom-answers.02",
+      "en.topic.24.classroom-answers.03",
+      "en.topic.24.classroom-answers.04",
+      "en.topic.24.classroom-answers.05",
+      "en.topic.24.classroom-answers.06",
+      "en.topic.24.classroom-answers.07",
+      "en.topic.24.classroom-answers.08",
+      "en.topic.24.classroom-answers.09",
+      "en.topic.24.classroom-answers.10"
+    ],
+    "titleTarget": "Answering and joining class discussion",
+    "titleZh": "课堂回答与讨论"
+  }
+]

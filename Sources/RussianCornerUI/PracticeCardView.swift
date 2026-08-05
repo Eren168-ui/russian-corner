@@ -44,14 +44,23 @@ public enum PracticeCardUtilityAction: CaseIterable, Sendable {
     case exportReport
 
     public var title: String {
-        switch self {
-        case .sceneTraining: "今日英语场景…"
-        case .expressionCapture: "收集英语表达…"
+        return switch self {
+        case .sceneTraining: "今日场景…"
+        case .expressionCapture: "收集表达…"
         case .settings: "设置…"
         case .history: "学习记录…"
         case .reflection: "今日反馈…"
         case .diagnostics: "学习诊断…"
         case .exportReport: "导出近 7 天学习报告…"
+        }
+    }
+
+    public func title(for language: StudyLanguage) -> String {
+        let languageName = language == .russian ? "俄语" : "英语"
+        return switch self {
+        case .sceneTraining: "今日\(languageName)场景…"
+        case .expressionCapture: "收集\(languageName)表达…"
+        default: title
         }
     }
 
@@ -493,7 +502,7 @@ public struct PracticeCardView: View {
                 id: \.self
             ) { action in
                 Button(
-                    action.title,
+                    action.title(for: appModel.language),
                     systemImage: action.symbolName
                 ) {
                     if action == .history {
@@ -702,10 +711,20 @@ public struct PracticeCardView: View {
     ) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("记忆迁移检验 · 用于安排下次复习")
-                .font(.system(size: 8.5, weight: .medium))
+                .font(
+                    .system(
+                        size: 11.5 * appModel.fontScale,
+                        weight: .medium
+                    )
+                )
                 .foregroundStyle(palette.muted)
             Text("再验一次：\(exercise.prompt)")
-                .font(.system(size: 10, weight: .semibold))
+                .font(
+                    .system(
+                        size: 13 * appModel.fontScale,
+                        weight: .semibold
+                    )
+                )
                 .foregroundStyle(palette.accent)
                 .lineLimit(2)
             ForEach(exercise.options) { option in
@@ -733,7 +752,12 @@ public struct PracticeCardView: View {
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .font(.system(size: 9.5, weight: .medium))
+                .font(
+                    .system(
+                        size: 12.5 * appModel.fontScale,
+                        weight: .medium
+                    )
+                )
                 .foregroundStyle(palette.primary)
                 .accessibilityLabel("迁移答案：\(option.text)")
             }

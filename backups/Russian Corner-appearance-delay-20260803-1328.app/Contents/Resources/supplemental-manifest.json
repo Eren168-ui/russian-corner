@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "contentGateClosed": true,
+  "allowedSourceRoots": [
+    "01-按学期/大一下——莫斯科/基础俄语",
+    "01-按学期/大二上/基础俄语",
+    "01-按学期/！大二下/俄语"
+  ],
+  "sourceHashes": {
+    "01-按学期/！大二下/俄语/第三周作业.md": "40429840ed3c05c265189f3650fdc61c5b2d903c3adda33c53a5bd9eeebfe1ac",
+    "01-按学期/！大二下/俄语/Урок 5. О спорт, ты мир!.md": "a6ff452ac801ec7e0a686d67ea19991272e0f4e4856dc1063a22991d20ec4294",
+    "01-按学期/大二上/基础俄语/酒店主题.md": "6632b697f42c75bbc3619d7de7cb166d64eb9a39aead841a64945ad30e69768b",
+    "01-按学期/大二上/基础俄语/口语提问题目俄语.md": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "01-按学期/大一下——莫斯科/基础俄语/B1考试准备/B1 2025 口语 第2题 对话（问题）25个问题 Говорение. Задание 2. Вариант 2. Вопросы.md": "2da225231b9d62d5f95e36754e87bef8af5e3a93044389e355a76fc9ca3287d7"
+  },
+  "candidateCount": 4479,
+  "reviewedSentenceCount": 60,
+  "reviewedLexemeCount": 80,
+  "excludedCount": 1257
+}

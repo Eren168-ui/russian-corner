@@ -115,5 +115,6 @@ public final class LanguageCornerRuntime {
         destination.fontScale = source.fontScale
         destination.isCollapsed = source.isCollapsed
         destination.isCardVisible = source.isCardVisible
+        destination.appearanceMode = source.appearanceMode
     }
 }

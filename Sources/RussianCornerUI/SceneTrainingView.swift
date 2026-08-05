@@ -38,7 +38,7 @@ public struct SceneTrainingView: View {
   private var header: some View {
     VStack(alignment: .leading, spacing: 13) {
       HStack(alignment: .firstTextBaseline) {
-        Text("ENGLISH SCENE")
+        Text(model.lesson.language == .russian ? "RUSSIAN SCENE" : "ENGLISH SCENE")
           .font(.system(size: 12, weight: .bold))
           .tracking(2.2)
           .foregroundStyle(accent)
@@ -59,7 +59,7 @@ public struct SceneTrainingView: View {
                 ? accent : border
             )
             .frame(height: 4)
-            .accessibilityLabel(stage.titleZh)
+            .accessibilityLabel(stage.titleZh(for: model.lesson.language))
         }
       }
     }
@@ -73,7 +73,7 @@ public struct SceneTrainingView: View {
         .font(.system(size: 38, weight: .light, design: .serif))
         .foregroundStyle(accent)
       VStack(alignment: .leading, spacing: 4) {
-        Text(model.stage.titleZh)
+        Text(model.stage.titleZh(for: model.lesson.language))
           .font(.system(size: 25, weight: .semibold, design: .serif))
         Text(stageInstruction)
           .font(.system(size: 13))
@@ -246,7 +246,7 @@ public struct SceneTrainingView: View {
               .foregroundStyle(secondary)
             InteractiveTargetText(
               text: variant.targetText,
-              language: .english,
+              language: model.lesson.language,
               selectedTokenIndex: nil
             ) { _ in }
             .font(.system(size: 22, weight: .semibold, design: .serif))
@@ -270,7 +270,7 @@ public struct SceneTrainingView: View {
               .foregroundStyle(secondary)
             InteractiveTargetText(
               text: sentence.displayText,
-              language: .english,
+              language: model.lesson.language,
               selectedTokenIndex:
                 sentence.id == model.currentSentence.id
                   ? model.selectedTokenIndex : nil
@@ -367,7 +367,7 @@ public struct SceneTrainingView: View {
   private func targetText(_ sentence: StudySentence) -> some View {
     InteractiveTargetText(
       text: sentence.displayText,
-      language: .english,
+      language: model.lesson.language,
       selectedTokenIndex: model.selectedTokenIndex
     ) { tokenIndex in
       Task { await model.selectWord(tokenIndex: tokenIndex) }
@@ -412,7 +412,7 @@ public struct SceneTrainingView: View {
           if let word = model.selectedWord,
             let url = OnlineDictionary.wiktionaryURL(
               for: word,
-              language: .english
+              language: model.lesson.language
             )
           {
             Link("打开词典", destination: url)
@@ -522,7 +522,9 @@ public struct SceneTrainingView: View {
     switch model.stage {
     case .context: "先建立真实交流目的，再进入语言。"
     case .bilingual: "理解意图和表达，不逐词翻译。"
-    case .englishOnly: "让英语直接连接场景。"
+    case .englishOnly:
+      model.lesson.language == .russian
+        ? "让俄语直接连接场景。" : "让英语直接连接场景。"
     case .audioFirst: "先靠声音识别句块，再看文本。"
     case .shadowing: "模仿节奏、连读和重音。"
     case .retell: "脱离原句，用自己的嘴重新组织。"

@@ -44,6 +44,21 @@ final class FloatingPanelControllerTests: XCTestCase {
     XCTAssertTrue(detailSource.contains("practice.speakWord()"))
   }
 
+  func testTransferCheckUsesReadableDetailScaleTypography() throws {
+    let source = try String(
+      contentsOf: URL(fileURLWithPath: #filePath)
+        .deletingLastPathComponent()
+        .deletingLastPathComponent()
+        .deletingLastPathComponent()
+        .appendingPathComponent("Sources/RussianCornerUI/PracticeCardView.swift"),
+      encoding: .utf8
+    )
+
+    XCTAssertTrue(source.contains("size: 11.5 * appModel.fontScale"))
+    XCTAssertTrue(source.contains("size: 13 * appModel.fontScale"))
+    XCTAssertTrue(source.contains("size: 12.5 * appModel.fontScale"))
+  }
+
     func testCollapsedPresentationUsesDedicatedDragSurface() {
         XCTAssertFalse(
             PracticePanelPresentation.collapsed
@@ -203,8 +218,8 @@ final class FloatingPanelControllerTests: XCTestCase {
         XCTAssertEqual(
             PracticeCardUtilityAction.allCases.map(\.title),
             [
-                "今日英语场景…",
-                "收集英语表达…",
+                "今日场景…",
+                "收集表达…",
                 "设置…",
                 "学习记录…",
                 "今日反馈…",
@@ -215,6 +230,21 @@ final class FloatingPanelControllerTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(
             PracticeCardMetrics.moreActionHitWidth,
             30
+        )
+    }
+
+    func testLanguageSpecificUtilityTitlesFollowCurrentLanguage() {
+        XCTAssertEqual(
+            PracticeCardUtilityAction.sceneTraining.title(for: .russian),
+            "今日俄语场景…"
+        )
+        XCTAssertEqual(
+            PracticeCardUtilityAction.expressionCapture.title(for: .russian),
+            "收集俄语表达…"
+        )
+        XCTAssertEqual(
+            PracticeCardUtilityAction.sceneTraining.title(for: .english),
+            "今日英语场景…"
         )
     }
 

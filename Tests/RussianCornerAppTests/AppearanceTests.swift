@@ -47,6 +47,16 @@ final class AppearanceTests: XCTestCase {
         XCTAssertTrue(source.contains("切换外观"))
     }
 
+    func testFloatingPanelInheritsApplicationAppearance() throws {
+        let source = try source(named: "FloatingPanelController.swift")
+
+        XCTAssertFalse(
+            source.contains(
+                "panel.appearance = activeAppModel.appearanceMode.nsAppearance"
+            )
+        )
+    }
+
     private func source(named fileName: String) throws -> String {
         let projectRoot = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()

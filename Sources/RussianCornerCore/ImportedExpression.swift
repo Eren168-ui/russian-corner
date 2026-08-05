@@ -22,6 +22,7 @@ public struct ImportedExpression:
 
     public init(
         id: String = UUID().uuidString,
+        language: StudyLanguage = .english,
         targetText: String,
         promptZh: String,
         scene: String,
@@ -34,7 +35,7 @@ public struct ImportedExpression:
         createdAt: Date = Date()
     ) {
         self.id = id
-        language = .english
+        self.language = language
         self.targetText = targetText
         self.promptZh = promptZh
         self.scene = scene
@@ -53,6 +54,7 @@ public struct ImportedExpression:
     ) -> ImportedExpression {
         ImportedExpression(
             id: id,
+            language: language,
             targetText: targetText,
             promptZh: promptZh,
             scene: scene,
@@ -70,8 +72,8 @@ public struct ImportedExpression:
 public extension ImportedExpression {
     var studySentence: StudySentence {
         StudySentence(
-            id: "en.imported.\(id)",
-            language: .english,
+            id: "\(language.storageNamespace).imported.\(id)",
+            language: language,
             promptZh: promptZh,
             cueText: scene,
             targetText: targetText,

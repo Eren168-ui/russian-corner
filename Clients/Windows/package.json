@@ -1,0 +1,40 @@
+{
+  "name": "language-corner-windows",
+  "private": true,
+  "version": "1.0.0",
+  "main": "main.js",
+  "description": "Language Corner Windows desktop shell (local web wrapper for Universal client).",
+  "scripts": {
+    "sync": "node ./scripts/prepare-dist.mjs",
+    "start": "npm run sync && electron .",
+    "build:win": "npm run sync && electron-builder --win nsis --x64",
+    "build:win:portable": "npm run sync && electron-builder --win portable --x64"
+  },
+  "devDependencies": {
+    "electron": "^35.6.2",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.eren.language-corner",
+    "productName": "Language Corner",
+    "files": [
+      "main.js",
+      "dist/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "Language-Corner-Desktop-${version}-setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false
+    },
+    "extraFiles": [
+      {
+        "from": "dist",
+        "to": "dist"
+      }
+    ]
+  }
+}

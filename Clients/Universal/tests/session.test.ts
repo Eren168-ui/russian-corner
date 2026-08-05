@@ -48,8 +48,8 @@ describe('first experience and daily duration', () => {
   })
 
   it.each([
-    [5, false, 3], [10, false, 3], [15, false, 3],
-    [5, true, 3], [10, true, 5], [15, true, 8],
+    [5, false, 8], [10, false, 15], [15, false, 22],
+    [5, true, 8], [10, true, 15], [15, true, 22],
   ] as const)('maps %i minutes with completed=%s to %i cards', (minutes, completed, expected) => {
     expect(sessionCardCount(minutes, completed)).toBe(expected)
   })

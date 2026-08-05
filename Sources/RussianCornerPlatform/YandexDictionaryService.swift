@@ -178,21 +178,116 @@ public actor YandexDictionaryService: OnlineDictionaryLookingUp {
             }
             return (translationLanguage, languagePair)
         }
+        var receivedValidResponse = false
+        var rejectedPairError: YandexDictionaryError?
         for (translationLanguage, languagePair) in languages {
-            let data = try await requestData(
-                text: normalized,
-                key: key,
-                languagePair: languagePair
-            )
+            let data: Data
+            do {
+                data = try await requestData(
+                    text: normalized,
+                    key: key,
+                    languagePair: languagePair
+                )
+                receivedValidResponse = true
+            } catch let error as YandexDictionaryError
+                where error == .httpStatus(400)
+            {
+                rejectedPairError = error
+                continue
+            }
             let result = try Self.decodeResponse(
                 data,
                 fallbackLemma: normalized,
                 translationLanguage: translationLanguage
             )
             if !result.translations.isEmpty {
-                cache[cacheKey] = result
-                return result
+                let resolvedResult: OnlineDictionaryResult
+                if language == .english,
+                    translationLanguage == .russian,
+                    let bridged = try? await bridgeRussianResultToChinese(
+                        result,
+                        key: key
+                    )
+                {
+                    resolvedResult = bridged
+                } else if language == .english,
+                    translationLanguage == .russian,
+                    let bridged = try? await bridgeEnglishBaseFormToChinese(
+                        normalized,
+                        key: key
+                    )
+                {
+                    resolvedResult = bridged
+                } else {
+                    resolvedResult = result
+                }
+                cache[cacheKey] = resolvedResult
+                return resolvedResult
             }
+        }
+        if !receivedValidResponse, let rejectedPairError {
+            throw rejectedPairError
+        }
+        throw YandexDictionaryError.noResults
+    }
+
+    private func bridgeEnglishBaseFormToChinese(
+        _ word: String,
+        key: String
+    ) async throws -> OnlineDictionaryResult {
+        for baseForm in Self.englishBaseFormCandidates(for: word) {
+            guard
+                let data = try? await requestData(
+                    text: baseForm,
+                    key: key,
+                    languagePair: "en-ru"
+                ),
+                let russianResult = try? Self.decodeResponse(
+                    data,
+                    fallbackLemma: baseForm,
+                    translationLanguage: .russian
+                ),
+                !russianResult.translations.isEmpty,
+                let chineseResult = try? await bridgeRussianResultToChinese(
+                    russianResult,
+                    key: key
+                )
+            else {
+                continue
+            }
+            return chineseResult
+        }
+        throw YandexDictionaryError.noResults
+    }
+
+    private func bridgeRussianResultToChinese(
+        _ russianResult: OnlineDictionaryResult,
+        key: String
+    ) async throws -> OnlineDictionaryResult {
+        for russianTerm in russianResult.translations.prefix(5) {
+            guard
+                let data = try? await requestData(
+                    text: russianTerm,
+                    key: key,
+                    languagePair: "ru-zh"
+                ),
+                let chineseResult = try? Self.decodeResponse(
+                    data,
+                    fallbackLemma: russianTerm,
+                    translationLanguage: .chinese
+                ),
+                !chineseResult.translations.isEmpty
+            else {
+                continue
+            }
+            return OnlineDictionaryResult(
+                lemma: russianResult.lemma,
+                partOfSpeech: russianResult.partOfSpeech,
+                translations: chineseResult.translations,
+                synonyms: chineseResult.synonyms,
+                examples: russianResult.examples,
+                translationLanguage: .chinese
+            )
         }
         throw YandexDictionaryError.noResults
     }
@@ -286,6 +381,26 @@ public actor YandexDictionaryService: OnlineDictionaryLookingUp {
     ) -> [String] {
         var seen = Set<String>()
         return values.filter { seen.insert($0).inserted }
+    }
+
+    private nonisolated static func englishBaseFormCandidates(
+        for word: String
+    ) -> [String] {
+        if word.hasSuffix("ier"), word.count > 3 {
+            return [String(word.dropLast(3)) + "y"]
+        }
+        guard word.hasSuffix("er"), word.count > 2 else {
+            return []
+        }
+        let root = String(word.dropLast(2))
+        var candidates = [root]
+        if root.count >= 2,
+            root.last == root.dropLast().last
+        {
+            candidates.append(String(root.dropLast()))
+        }
+        candidates.append(root + "e")
+        return unique(candidates)
     }
 
     private struct Response: Decodable {

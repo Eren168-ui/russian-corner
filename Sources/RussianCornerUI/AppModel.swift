@@ -593,6 +593,7 @@ public final class AppRuntime {
   private var candidateCorpusStore: CandidateCorpusStore?
   private var expressionCaptureStore: ExpressionCaptureStore?
   private var baseEnglishContent: EnglishContentBundle?
+  private var baseStudyContent: LanguageContentCatalog?
   private let sourceCorpusScanner = SourceCorpusScanner()
   private let enableSourceSync: Bool
   private var trialSessionCoordinator: TrialSessionCoordinator?
@@ -688,7 +689,9 @@ public final class AppRuntime {
           )
         }
         baseEnglishContent = englishBundle
-        if let fileURL = try? ExpressionCaptureStore.defaultFileURL() {
+        if let fileURL = try? ExpressionCaptureStore.defaultFileURL(
+          language: language
+        ) {
           let captureStore = ExpressionCaptureStore(fileURL: fileURL)
           expressionCaptureStore = captureStore
           let imported =
@@ -707,7 +710,28 @@ public final class AppRuntime {
         }
       } else {
         catalog = try ContentCatalog()
-        studyCatalog = catalog.studyCatalog
+        let baseStudy = catalog.studyCatalog
+        baseStudyContent = baseStudy
+        if let fileURL = try? ExpressionCaptureStore.defaultFileURL(
+          language: language
+        ) {
+          let captureStore = ExpressionCaptureStore(fileURL: fileURL)
+          expressionCaptureStore = captureStore
+          let imported =
+            (try? captureStore.practiceEligibleExpressions()) ?? []
+          studyCatalog = Self.merging(
+            base: baseStudy,
+            imported: imported,
+            language: language
+          )
+        } else {
+          studyCatalog = baseStudy
+        }
+        sceneLessons = Self.derivedSceneLessons(
+          language: language,
+          catalog: studyCatalog ?? baseStudy,
+          topics: catalog.topics
+        )
       }
       let repository: ProgressRepository
       if let injectedRepository {
@@ -890,7 +914,6 @@ public final class AppRuntime {
     now: Date = Date()
   ) throws -> SceneTrainingViewModel? {
     guard
-      appModel.language == .english,
       let studyCatalog,
       !sceneLessons.isEmpty
     else {
@@ -934,9 +957,63 @@ public final class AppRuntime {
     )
   }
 
+  private static func derivedSceneLessons(
+    language: StudyLanguage,
+    catalog: LanguageContentCatalog,
+    topics: [TopicDefinition]
+  ) -> [SceneLesson] {
+    let eligible = catalog.sentences.filter {
+      $0.language == language
+        && ($0.reviewStatus == .reviewed || $0.reviewStatus == .verified)
+    }
+    let grouped = Dictionary(grouping: eligible) { $0.topicID ?? "" }
+    return topics.compactMap { topic in
+      let sentences = grouped[topic.id, default: []]
+      guard !sentences.isEmpty else { return nil }
+      let sentenceIDs = Array(sentences.prefix(10).map(\.id))
+      return SceneLesson(
+        id: "\(language.storageNamespace).scene.\(topic.id)",
+        language: language,
+        topicID: topic.id,
+        titleZh: topic.titleZh,
+        contextZh: "围绕「\(topic.titleZh)」完成真实口语交流。",
+        sentenceIDs: sentenceIDs,
+        dialogueOrder: Array(sentenceIDs.prefix(4))
+      )
+    }
+  }
+
   public func reloadEnglishImportedExpressions() {
+    reloadImportedExpressions()
+  }
+
+  public func reloadImportedExpressions() {
+    if appModel.language == .russian {
+      guard let baseStudyContent, let expressionCaptureStore else {
+        return
+      }
+      do {
+        let imported = try expressionCaptureStore
+          .practiceEligibleExpressions()
+        studyCatalog = Self.merging(
+          base: baseStudyContent,
+          imported: imported,
+          language: .russian
+        )
+        sceneLessons = Self.derivedSceneLessons(
+          language: .russian,
+          catalog: studyCatalog ?? baseStudyContent,
+          topics: topics
+        )
+        try reloadPractice()
+        appModel.transientStatus = "已把审核后的俄语表达加入可用语料"
+      } catch {
+        appModel.transientStatus =
+          "俄语表达刷新失败：\(error.localizedDescription)"
+      }
+      return
+    }
     guard
-      appModel.language == .english,
       let baseEnglishContent,
       let expressionCaptureStore
     else {
@@ -959,6 +1036,22 @@ public final class AppRuntime {
       appModel.transientStatus =
         "英语表达刷新失败：\(error.localizedDescription)"
     }
+  }
+
+  private static func merging(
+    base: LanguageContentCatalog,
+    imported: [ImportedExpression],
+    language: StudyLanguage
+  ) -> LanguageContentCatalog {
+    let existingIDs = Set(base.sentences.map(\.id))
+    let importedSentences = imported
+      .filter { $0.language == language }
+      .map(\.studySentence)
+      .filter { !existingIDs.contains($0.id) }
+    return LanguageContentCatalog(
+      lexemes: base.lexemes,
+      sentences: base.sentences + importedSentences
+    )
   }
 
   private static func merging(

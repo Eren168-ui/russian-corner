@@ -105,6 +105,30 @@ final class LanguageRuntimeTests: XCTestCase {
         XCTAssertEqual(restored.activeLanguage, .english)
     }
 
+    func testSwitchingLanguagesPreservesGlobalAppearance() throws {
+        let defaults = isolatedDefaults()
+        let russian = try makeRuntime(
+            language: .russian,
+            idPrefix: "ru"
+        )
+        let english = try makeRuntime(
+            language: .english,
+            idPrefix: "en"
+        )
+        let runtime = LanguageCornerRuntime(
+            defaults: defaults,
+            runtimes: [
+                .russian: russian,
+                .english: english,
+            ]
+        )
+
+        russian.appModel.appearanceMode = .light
+        runtime.switchLanguage(to: .english)
+
+        XCTAssertEqual(english.appModel.appearanceMode, .light)
+    }
+
     private func makeRuntime(
         language: StudyLanguage,
         idPrefix: String

@@ -1,12 +1,16 @@
 import type { ContentCatalog, PracticeCard } from './models'
 
-export function buildPracticeCards(catalog: ContentCatalog): PracticeCard[] {
-  const sentenceCards: PracticeCard[] = catalog.sentences.map((sentence) => ({
+export function buildDailyPracticeCards(catalog: ContentCatalog): PracticeCard[] {
+  return catalog.sentences.map((sentence) => ({
     ...sentence,
     id: `sentence:${sentence.id}`,
     sourceID: sentence.id,
     cardType: 'sentence',
   }))
+}
+
+export function buildPracticeCards(catalog: ContentCatalog): PracticeCard[] {
+  const sentenceCards = buildDailyPracticeCards(catalog)
 
   const lexemeCards: PracticeCard[] = catalog.lexemes
     .filter((lexeme) => Boolean(lexeme.glossZh && lexeme.currentForm))

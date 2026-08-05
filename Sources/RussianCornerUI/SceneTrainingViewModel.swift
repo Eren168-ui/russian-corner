@@ -21,10 +21,14 @@ public enum SceneTrainingStage:
   case selection
 
   public var titleZh: String {
+    titleZh(for: .english)
+  }
+
+  public func titleZh(for language: StudyLanguage) -> String {
     switch self {
     case .context: "进入场景"
     case .bilingual: "理解表达"
-    case .englishOnly: "只看英语"
+    case .englishOnly: language == .russian ? "只看俄语" : "只看英语"
     case .audioFirst: "先听后看"
     case .shadowing: "逐句跟读"
     case .retell: "脱稿复述"
@@ -40,13 +44,10 @@ public enum SceneTrainingViewModelError:
   Equatable,
   Sendable
 {
-  case wrongLanguage
   case noResolvedSentences
 
   public var errorDescription: String? {
     switch self {
-    case .wrongLanguage:
-      "英语场景训练只能载入英语课程"
     case .noResolvedSentences:
       "这个场景暂时没有可用表达"
     }
@@ -110,12 +111,9 @@ public final class SceneTrainingViewModel {
       YandexDictionaryService(),
     onOfferSelectedExpressions: @escaping ([String]) -> Void = { _ in }
   ) throws {
-    guard lesson.language == .english else {
-      throw SceneTrainingViewModelError.wrongLanguage
-    }
     let sentencesByID = Dictionary(
       uniqueKeysWithValues: catalog.sentences
-        .filter { $0.language == .english }
+        .filter { $0.language == lesson.language }
         .map { ($0.id, $0) }
     )
     let resolved = lesson.sentenceIDs.compactMap {
@@ -130,7 +128,7 @@ public final class SceneTrainingViewModel {
     self.speechService = speechService
     self.onlineDictionary = onlineDictionary
     self.onOfferSelectedExpressions = onOfferSelectedExpressions
-    progressKey = "english.sceneTraining.\(lesson.id)"
+    progressKey = "\(lesson.language.storageNamespace).sceneTraining.\(lesson.id)"
 
     if let data = defaults.data(forKey: progressKey),
       let progress = try? JSONDecoder().decode(
@@ -211,7 +209,7 @@ public final class SceneTrainingViewModel {
   public func selectWord(tokenIndex: Int) async {
     let words = TargetLanguageTokenizer.words(
       in: currentSentence.displayText,
-      language: .english
+      language: lesson.language
     )
     guard words.indices.contains(tokenIndex) else { return }
     if selectedTokenIndex == tokenIndex {
@@ -229,7 +227,7 @@ public final class SceneTrainingViewModel {
     do {
       wordLookupResult = try await onlineDictionary.lookup(
         lemma: word,
-        language: .english
+        language: lesson.language
       )
     } catch {
       wordLookupIssue =
@@ -241,7 +239,7 @@ public final class SceneTrainingViewModel {
   public func speakCurrent(slow: Bool = false) {
     _ = speechService.speak(
       currentSentence.speechText,
-      language: .english,
+      language: lesson.language,
       playbackRate: slow ? 0.38 : 0.5,
       allowUnrelatedFallback: false
     )

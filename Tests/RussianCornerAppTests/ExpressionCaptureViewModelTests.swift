@@ -69,6 +69,21 @@ final class ExpressionCaptureViewModelTests: XCTestCase {
     XCTAssertEqual(reviewedIDs, [candidate.id])
   }
 
+  func testRussianCaptureKeepsLanguageThroughReview() throws {
+    let store = try makeStore()
+    let model = ExpressionCaptureViewModel(store: store, language: .russian)
+    model.loadPastedText("Мне нужно уточнить время встречи.")
+    model.toggleSegmentSelection(0)
+    model.promptZh = "我需要确认见面时间。"
+    model.scene = "确认安排"
+
+    let candidate = try model.saveSelectedAsDraft()
+    try model.markReviewed(candidate.id)
+
+    XCTAssertEqual(candidate.language, .russian)
+    XCTAssertEqual(try store.load().first?.language, .russian)
+  }
+
   private func makeStore() throws -> ExpressionCaptureStore {
     let directory = FileManager.default.temporaryDirectory
       .appendingPathComponent(UUID().uuidString, isDirectory: true)

@@ -118,6 +118,50 @@ final class SceneTrainingViewModelTests: XCTestCase {
     XCTAssertNotNil(try runtime.makeTodaySceneTraining())
   }
 
+  func testRussianLessonUsesRussianContentAndDictionaryLanguage() async throws {
+    let suite = "SceneTrainingViewModelTests.Russian.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: suite)!
+    addTeardownBlock {
+      defaults.removePersistentDomain(forName: suite)
+    }
+    let sentence = StudySentence(
+      id: "ru-sentence-one",
+      language: .russian,
+      promptZh: "您还需要什么文件？",
+      cueText: "询问还需要哪些文件",
+      targetText: "Нужны ли ещё какие-либо документы?",
+      displayText: "Нужны ли ещё какие-либо документы?",
+      speechText: "Нужны ли ещё какие-либо документы?",
+      theme: "国际交往",
+      lexemeIDs: [],
+      reviewStatus: .reviewed,
+      provenanceType: .courseMaterial,
+      sourcePath: "fixtures/russian/international"
+    )
+    let lesson = SceneLesson(
+      id: "ru-lesson-one",
+      language: .russian,
+      topicID: "topic-24",
+      titleZh: "国际交往",
+      contextZh: "办理国际交流手续。",
+      sentenceIDs: [sentence.id],
+      dialogueOrder: [sentence.id]
+    )
+    let dictionary = SceneRecordingDictionary()
+    let model = try SceneTrainingViewModel(
+      lesson: lesson,
+      catalog: LanguageContentCatalog(lexemes: [], sentences: [sentence]),
+      defaults: defaults,
+      onlineDictionary: dictionary
+    )
+
+    await model.selectWord(tokenIndex: 0)
+
+    XCTAssertEqual(model.currentSentence.language, .russian)
+    let queries = await dictionary.languageQueries()
+    XCTAssertEqual(queries, [.russian])
+  }
+
   private func makeFixture() -> (
     lesson: SceneLesson,
     catalog: LanguageContentCatalog,
@@ -177,12 +221,14 @@ final class SceneTrainingViewModelTests: XCTestCase {
 
 private actor SceneRecordingDictionary: OnlineDictionaryLookingUp {
   private var recorded: [String] = []
+  private var recordedLanguages: [StudyLanguage] = []
 
   func lookup(
     lemma: String,
     language: StudyLanguage
   ) async throws -> OnlineDictionaryResult {
     recorded.append(lemma)
+    recordedLanguages.append(language)
     return OnlineDictionaryResult(
       lemma: lemma,
       partOfSpeech: "pronoun",
@@ -194,5 +240,9 @@ private actor SceneRecordingDictionary: OnlineDictionaryLookingUp {
 
   func queries() -> [String] {
     recorded
+  }
+
+  func languageQueries() -> [StudyLanguage] {
+    recordedLanguages
   }
 }

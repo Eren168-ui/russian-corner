@@ -34,7 +34,7 @@ public struct ExpressionCaptureView: View {
         .font(.system(size: 27))
         .foregroundStyle(accent)
       VStack(alignment: .leading, spacing: 4) {
-        Text("收集英语表达")
+        Text("收集\(languageName)表达")
           .font(.system(size: 25, weight: .semibold, design: .serif))
         Text("从字幕、阅读笔记或粘贴文本中，只挑你真正想说出口的内容。")
           .font(.system(size: 12))
@@ -47,6 +47,10 @@ public struct ExpressionCaptureView: View {
         .foregroundStyle(accent)
     }
     .padding(22)
+  }
+
+  private var languageName: String {
+    model.language == .russian ? "俄语" : "英语"
   }
 
   private var importColumn: some View {

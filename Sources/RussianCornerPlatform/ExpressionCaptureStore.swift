@@ -9,6 +9,7 @@ public struct ExpressionCaptureStore: Sendable {
     }
 
     public static func defaultFileURL(
+        language: StudyLanguage = .english,
         fileManager: FileManager = .default
     ) throws -> URL {
         let support = try fileManager.url(
@@ -23,7 +24,9 @@ public struct ExpressionCaptureStore: Sendable {
                 isDirectory: true
             )
             .appendingPathComponent(
-                "EnglishImportedExpressions.json"
+                language == .russian
+                    ? "RussianImportedExpressions.json"
+                    : "EnglishImportedExpressions.json"
             )
     }
 

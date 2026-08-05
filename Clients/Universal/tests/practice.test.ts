@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildPracticeCards } from '../src/domain/practiceCards'
+import { buildDailyPracticeCards, buildPracticeCards } from '../src/domain/practiceCards'
 import { createDailyQueue } from '../src/domain/dailyQueue'
 import { requiresTransfer } from '../src/domain/progress'
 import { resolveWord } from '../src/domain/wordResolution'
@@ -40,9 +40,11 @@ describe('three real practice card types', () => {
     expect(cards.find((card) => card.cardType === 'challenge')).toMatchObject({ targetText: 'Perfect timing.', source: 'reviewed/english' })
   })
 
-  it('mixes all three types into a three-card daily queue', () => {
-    const queue = createDailyQueue(buildPracticeCards(catalog), 'english', '2026-08-03', 3)
-    expect(new Set(queue.map((card) => card.cardType))).toEqual(new Set(['sentence', 'lexeme', 'challenge']))
+  it('keeps the daily active-recall queue semantically consistent with complete scene sentences', () => {
+    const queue = createDailyQueue(buildDailyPracticeCards(catalog), 'english', '2026-08-03', 3)
+    expect(queue).toHaveLength(1)
+    expect(queue.every((card) => card.cardType === 'sentence')).toBe(true)
+    expect(queue[0]).toMatchObject({ promptZh: '我正要给你发消息。', targetText: 'I was just about to text you.' })
   })
 })
 

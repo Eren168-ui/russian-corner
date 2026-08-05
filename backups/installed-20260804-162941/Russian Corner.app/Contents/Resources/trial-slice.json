@@ -1,0 +1,3697 @@
+{
+  "schemaVersion": 1,
+  "sourceRoot": "/Users/Openclawworkspace/Library/CloudStorage/OneDrive-个人/Documents/20-语言学习与专业/大学知识库（俄语学习+专业）/01-按学期/大一下——莫斯科/口语Диалоги",
+  "sentences": [
+    {
+      "id": "trial-greeting-01",
+      "promptZh": "礼貌问候后询问是否可以进门。",
+      "cueRu": "Что вы скажете перед тем, как войти?",
+      "practiceRu": "Здравствуйте! Можно войти?",
+      "stressedForm": "Здра́вствуйте! Мо́жно войти́?",
+      "speechText": "Здравствуйте! Можно войти?",
+      "theme": "greeting-introduction",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/тема 1 приветствие обращение.md",
+      "sourceText": "20. **Здравствуйте! Можно войти? 您好，可以进来吗？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "greetingAndPermission",
+      "register": "polite",
+      "speakerRole": "学生对老师",
+      "addressForm": "вы",
+      "expectedReply": "Да, входите, пожалуйста.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-greeting-02",
+      "promptZh": "问熟人最近怎么样。",
+      "cueRu": "Как спросить знакомого о его делах?",
+      "practiceRu": "Как дела?",
+      "stressedForm": "Как дела́?",
+      "speechText": "Как дела?",
+      "theme": "greeting-introduction",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/тема 1 приветствие обращение.md",
+      "sourceText": "7. Как дела? (Как поживаете?) 近况如何？（近来生活怎么样？）",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "smallTalkQuestion",
+      "register": "informal",
+      "speakerRole": "朋友",
+      "addressForm": "ты",
+      "expectedReply": "Нормально, спасибо. А у тебя?",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-greeting-03",
+      "promptZh": "和同学约好明天见。",
+      "cueRu": "Как попрощаться до следующего дня?",
+      "practiceRu": "До завтра!",
+      "stressedForm": "До за́втра!",
+      "speechText": "До завтра!",
+      "theme": "greeting-introduction",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/тема 1 приветствие обращение.md",
+      "sourceText": "16. **До завтра! 明天见！**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "farewell",
+      "register": "neutral",
+      "speakerRole": "同学",
+      "addressForm": "ты",
+      "expectedReply": "До завтра!",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-greeting-04",
+      "promptZh": "礼貌地向对方道歉。",
+      "cueRu": "Как коротко и вежливо извиниться?",
+      "practiceRu": "Извините, пожалуйста!",
+      "stressedForm": "Извини́те, пожа́луйста!",
+      "speechText": "Извините, пожалуйста!",
+      "theme": "greeting-introduction",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/тема 1 приветствие обращение.md",
+      "sourceText": "19. Извините, пожалуйста! 请原谅！",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "apology",
+      "register": "polite",
+      "speakerRole": "陌生人",
+      "addressForm": "вы",
+      "expectedReply": "Ничего страшного.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-greeting-05",
+      "promptZh": "提议彼此认识一下。",
+      "cueRu": "Как предложить познакомиться?",
+      "practiceRu": "Давайте познакомимся!",
+      "stressedForm": "Дава́йте познако́мимся!",
+      "speechText": "Давайте познакомимся!",
+      "theme": "greeting-introduction",
+      "lexemeIDs": [
+        "lexeme-greetings-познакомиться"
+      ],
+      "sourcePath": "具体场景对话/тема 2 знакомство представление.md",
+      "sourceText": "12. **Давайте познакомимся! 让我们认识一下吧！**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "introductionProposal",
+      "register": "neutral",
+      "speakerRole": "新同学",
+      "addressForm": "вы",
+      "expectedReply": "Давайте. Меня зовут Антон.",
+      "alternativeReplyIDs": [
+        "trial-greeting-06"
+      ]
+    },
+    {
+      "id": "trial-greeting-06",
+      "promptZh": "初次认识后表示很高兴。",
+      "cueRu": "Что сказать после знакомства?",
+      "practiceRu": "Очень приятно!",
+      "stressedForm": "О́чень прия́тно!",
+      "speechText": "Очень приятно!",
+      "theme": "greeting-introduction",
+      "lexemeIDs": [
+        "lexeme-greetings-приятно"
+      ],
+      "sourcePath": "具体场景对话/тема 2 знакомство представление.md",
+      "sourceText": "13. **Очень приятно! 很高兴（认识您）。**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "positiveReaction",
+      "register": "polite",
+      "speakerRole": "新认识的人",
+      "addressForm": "notApplicable",
+      "expectedReply": "Мне тоже очень приятно.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-phone-01",
+      "promptZh": "接通电话后礼貌询问对方是谁。",
+      "cueRu": "Как начать разговор по телефону?",
+      "practiceRu": "Алло! Здравствуйте! Кто это?",
+      "stressedForm": "Алло́! Здра́вствуйте! Кто э́то?",
+      "speechText": "Алло! Здравствуйте! Кто это?",
+      "theme": "phone",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 11. Телефонный разговор..md",
+      "sourceText": "1. Алло! Здравствуйте! Кто это? 喂，您好！您是哪位？",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "identifyCaller",
+      "register": "polite",
+      "speakerRole": "接电话者",
+      "addressForm": "вы",
+      "expectedReply": "Здравствуйте, это Антон.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-phone-02",
+      "promptZh": "接电话时询问对方找谁。",
+      "cueRu": "Как спросить, кого зовут к телефону?",
+      "practiceRu": "Вам кого?",
+      "stressedForm": "Вам кого́?",
+      "speechText": "Вам кого?",
+      "theme": "phone",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 11. Телефонный разговор..md",
+      "sourceText": "2. Здравствуйте! **Вам кого?** 您好，**您找谁？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "askForAddressee",
+      "register": "neutral",
+      "speakerRole": "接电话者",
+      "addressForm": "вы",
+      "expectedReply": "Ивана Ивановича, пожалуйста.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-phone-03",
+      "promptZh": "没有听出对方是谁，请对方说明身份。",
+      "cueRu": "Что сказать, если вы не узнали голос?",
+      "practiceRu": "Извините, я вас не узнаю. Кто это говорит?",
+      "stressedForm": "Извини́те, я вас не узнаю́. Кто э́то говори́т?",
+      "speechText": "Извините, я вас не узнаю. Кто это говорит?",
+      "theme": "phone",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 11. Телефонный разговор..md",
+      "sourceText": "6. **Извините, я вас не узнаю. Кто это говорит? 抱歉，我听不出来，您是哪位？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "clarification",
+      "register": "polite",
+      "speakerRole": "接电话者",
+      "addressForm": "вы",
+      "expectedReply": "Это Антон Петров.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-phone-04",
+      "promptZh": "请对方稍等，并叫伊拉来接电话。",
+      "cueRu": "Как попросить подождать у телефона?",
+      "practiceRu": "Минутку. Ира, тебя к телефону!",
+      "stressedForm": "Мину́тку. И́ра, тебя́ к телефо́ну!",
+      "speechText": "Минутку. Ира, тебя к телефону!",
+      "theme": "phone",
+      "lexemeIDs": [
+        "lexeme-communication-телефон"
+      ],
+      "sourcePath": "具体场景对话/Тема 11. Телефонный разговор..md",
+      "sourceText": "7. Минутку (Минуточку). Ира, тебя к телефону! 稍候。伊拉，来接电话！",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "holdAndSummon",
+      "register": "informal",
+      "speakerRole": "接电话者对家人",
+      "addressForm": "ты",
+      "expectedReply": "Сейчас подойду.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-phone-05",
+      "promptZh": "请对方晚一点再打电话。",
+      "cueRu": "Что сказать, если человек сейчас недоступен?",
+      "practiceRu": "Позвоните, пожалуйста, позже.",
+      "stressedForm": "Позвони́те, пожа́луйста, по́зже.",
+      "speechText": "Позвоните, пожалуйста, позже.",
+      "theme": "phone",
+      "lexemeIDs": [
+        "lexeme-communication-позвонить",
+        "lexeme-communication-позже"
+      ],
+      "sourcePath": "具体场景对话/Тема 11. Телефонный разговор..md",
+      "sourceText": "11. Позвоните, пожалуйста, позже. Он (она) не пришёл (-ла). 请稍后再打，他（她）还没回来。",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "requestCallback",
+      "register": "polite",
+      "speakerRole": "接电话者",
+      "addressForm": "вы",
+      "expectedReply": "Хорошо, я позвоню позже.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-phone-06",
+      "promptZh": "告诉对方打错电话了。",
+      "cueRu": "Что сказать человеку, который ошибся номером?",
+      "practiceRu": "Вы не туда попали.",
+      "stressedForm": "Вы не туда́ попа́ли.",
+      "speechText": "Вы не туда попали.",
+      "theme": "phone",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 11. Телефонный разговор..md",
+      "sourceText": "14. **Вы не туда попали[进入]. 您打错了。**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "correctMistake",
+      "register": "polite",
+      "speakerRole": "接电话者",
+      "addressForm": "вы",
+      "expectedReply": "Извините, я ошибся номером.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-directions-01",
+      "promptZh": "礼貌询问“图书大厦”在哪里。",
+      "cueRu": "Как спросить дорогу к Дому книги?",
+      "practiceRu": "Скажите, пожалуйста, где находится «Дом книги»?",
+      "stressedForm": "Скажи́те, пожа́луйста, где нахо́дится «Дом кни́ги»?",
+      "speechText": "Скажите, пожалуйста, где находится Дом книги?",
+      "theme": "directions",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 17. Ориентация в городе..md",
+      "sourceText": "1. **Скажите, пожалуйста, где находится «Дом Книги»? 请问，图书大厦在哪儿？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "askLocation",
+      "register": "polite",
+      "speakerRole": "问路者",
+      "addressForm": "вы",
+      "expectedReply": "Он находится недалеко отсюда.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-directions-02",
+      "promptZh": "询问附近有没有银行。",
+      "cueRu": "Как узнать, есть ли рядом банк?",
+      "practiceRu": "Есть ли поблизости банк?",
+      "stressedForm": "Есть ли побли́зости банк?",
+      "speechText": "Есть ли поблизости банк?",
+      "theme": "directions",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 17. Ориентация в городе..md",
+      "sourceText": "2. **Есть ли поблизости банк? 附近有银行吗？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "askNearbyPlace",
+      "register": "neutral",
+      "speakerRole": "问路者",
+      "addressForm": "notApplicable",
+      "expectedReply": "Да, банк находится за углом.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-directions-03",
+      "promptZh": "询问最近的公交车站在哪里。",
+      "cueRu": "Как спросить о ближайшей остановке?",
+      "practiceRu": "Где ближайшая остановка автобуса?",
+      "stressedForm": "Где ближа́йшая остано́вка авто́буса?",
+      "speechText": "Где ближайшая остановка автобуса?",
+      "theme": "directions",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 17. Ориентация в городе..md",
+      "sourceText": "3. Где ближайшая остановка автобуса? 附近最近的汽车站在哪儿？",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "askLocation",
+      "register": "neutral",
+      "speakerRole": "乘客",
+      "addressForm": "notApplicable",
+      "expectedReply": "Остановка находится через дорогу.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-directions-04",
+      "promptZh": "询问怎样到列宁大街。",
+      "cueRu": "Как спросить о маршруте?",
+      "practiceRu": "Как доехать до Ленинского проспекта?",
+      "stressedForm": "Как дое́хать до Ле́нинского проспе́кта?",
+      "speechText": "Как доехать до Ленинского проспекта?",
+      "theme": "directions",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 17. Ориентация в городе..md",
+      "sourceText": "4. **Как доехать до** Ленинского проспекта? 到列宁大街怎么走？",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "askRoute",
+      "register": "neutral",
+      "speakerRole": "乘客",
+      "addressForm": "notApplicable",
+      "expectedReply": "Доедьте до следующей станции на метро.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-directions-05",
+      "promptZh": "告诉对方一直走，然后向右转。",
+      "cueRu": "Как кратко объяснить маршрут?",
+      "practiceRu": "Идите прямо, потом направо.",
+      "stressedForm": "Иди́те пря́мо, пото́м напра́во.",
+      "speechText": "Идите прямо, потом направо.",
+      "theme": "directions",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 17. Ориентация в городе..md",
+      "sourceText": "9. **Идите прямо, потом направо (налево). 一直走，然后向右（向左）。**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "giveDirections",
+      "register": "polite",
+      "speakerRole": "路人",
+      "addressForm": "вы",
+      "expectedReply": "Спасибо, я понял.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-directions-06",
+      "promptZh": "告诉对方走到十字路口再左转。",
+      "cueRu": "Как объяснить поворот у перекрёстка?",
+      "practiceRu": "Дойдите до перекрёстка и поверните налево.",
+      "stressedForm": "Дойди́те до перекрёстка и поверни́те нале́во.",
+      "speechText": "Дойдите до перекрёстка и поверните налево.",
+      "theme": "directions",
+      "lexemeIDs": [
+        "lexeme-directions-перекресток",
+        "lexeme-directions-повернуть"
+      ],
+      "sourcePath": "具体场景对话/Тема 17. Ориентация в городе..md",
+      "sourceText": "10. **Дойдите до перекрестка и поверните налево. 走到交叉路口然后向左转。**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "giveDirections",
+      "register": "polite",
+      "speakerRole": "路人",
+      "addressForm": "вы",
+      "expectedReply": "Хорошо, спасибо за помощь.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-health-01",
+      "promptZh": "建议对方去看医生。",
+      "cueRu": "Что посоветовать человеку, который заболел?",
+      "practiceRu": "Нужно идти к врачу.",
+      "stressedForm": "Ну́жно идти́ к врачу́.",
+      "speechText": "Нужно идти к врачу.",
+      "theme": "health",
+      "lexemeIDs": [
+        "lexeme-health-нужно"
+      ],
+      "sourcePath": "具体场景对话/Тема 25. Самочувствие..md",
+      "sourceText": "2. **Нужно идти к врачу. 应该找医生看看。**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "advice",
+      "register": "neutral",
+      "speakerRole": "朋友",
+      "addressForm": "notApplicable",
+      "expectedReply": "Да, сегодня запишусь на приём.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-health-02",
+      "promptZh": "告诉医生自己有过敏。",
+      "cueRu": "Как сообщить врачу об аллергии?",
+      "practiceRu": "У меня аллергия.",
+      "stressedForm": "У меня́ аллерги́я.",
+      "speechText": "У меня аллергия.",
+      "theme": "health",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 25. Самочувствие..md",
+      "sourceText": "3. У меня аллергия. 我皮肤过敏。",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "reportSymptom",
+      "register": "neutral",
+      "speakerRole": "病人",
+      "addressForm": "notApplicable",
+      "expectedReply": "А что вызывает у вас аллергию?",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-health-03",
+      "promptZh": "说明自己感觉不舒服。",
+      "cueRu": "Как сказать о плохом самочувствии?",
+      "practiceRu": "Я плохо себя чувствую.",
+      "stressedForm": "Я пло́хо себя́ чу́вствую.",
+      "speechText": "Я плохо себя чувствую.",
+      "theme": "health",
+      "lexemeIDs": [
+        "lexeme-feelings-чувствовать"
+      ],
+      "sourcePath": "具体场景对话/Тема 25. Самочувствие..md",
+      "sourceText": "7. **Я плохо себя чувствую. 我感觉不舒服。**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "reportCondition",
+      "register": "neutral",
+      "speakerRole": "病人",
+      "addressForm": "notApplicable",
+      "expectedReply": "Что у вас болит?",
+      "alternativeReplyIDs": [
+        "trial-health-04"
+      ]
+    },
+    {
+      "id": "trial-health-04",
+      "promptZh": "询问病人哪里疼。",
+      "cueRu": "Как уточнить симптом у пациента?",
+      "practiceRu": "Что у вас болит?",
+      "stressedForm": "Что у вас боли́т?",
+      "speechText": "Что у вас болит?",
+      "theme": "health",
+      "lexemeIDs": [
+        "lexeme-health-болеть"
+      ],
+      "sourcePath": "具体场景对话/Тема 25. Самочувствие..md",
+      "sourceText": "11. **Что у тебя (вас) болит? 你（您）哪儿疼？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "symptomClarification",
+      "register": "polite",
+      "speakerRole": "医生",
+      "addressForm": "вы",
+      "expectedReply": "У меня болит горло.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-health-05",
+      "promptZh": "说明自己已经好一些了。",
+      "cueRu": "Как сказать об улучшении состояния?",
+      "practiceRu": "Мне уже лучше.",
+      "stressedForm": "Мне уже́ лу́чше.",
+      "speechText": "Мне уже лучше.",
+      "theme": "health",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 25. Самочувствие..md",
+      "sourceText": "12. **Мне уже лучше. 我已经好多了。**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "confirmImprovement",
+      "register": "neutral",
+      "speakerRole": "病人",
+      "addressForm": "notApplicable",
+      "expectedReply": "Хорошо, продолжайте отдыхать.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-health-06",
+      "promptZh": "询问这种药应该怎么服用。",
+      "cueRu": "Как спросить врача о приёме лекарства?",
+      "practiceRu": "Как принимать это лекарство?",
+      "stressedForm": "Как принима́ть э́то лека́рство?",
+      "speechText": "Как принимать это лекарство?",
+      "theme": "health",
+      "lexemeIDs": [
+        "lexeme-health-лекарство"
+      ],
+      "sourcePath": "具体场景对话/Тема 26. В больнице..md",
+      "sourceText": "9. **Как принимать это лекарство? 这药怎么吃？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "requestInstruction",
+      "register": "neutral",
+      "speakerRole": "病人",
+      "addressForm": "notApplicable",
+      "expectedReply": "Три раза в день до еды.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-shopping-01",
+      "promptZh": "询问商店里有没有俄罗斯纪念品。",
+      "cueRu": "Как спросить продавца о сувенирах?",
+      "practiceRu": "Скажите, пожалуйста, у вас есть русские сувениры?",
+      "stressedForm": "Скажи́те, пожа́луйста, у вас есть ру́сские сувени́ры?",
+      "speechText": "Скажите, пожалуйста, у вас есть русские сувениры?",
+      "theme": "shopping",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 10. В государственном магазине..md",
+      "sourceText": "1. **Скажите, пожалуйста, у вас есть русские сувениры? 请问，你们这儿有俄罗斯纪念品吗？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "askAvailability",
+      "register": "polite",
+      "speakerRole": "顾客",
+      "addressForm": "вы",
+      "expectedReply": "Да, вот русские матрёшки.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-shopping-02",
+      "promptZh": "请售货员给自己一些建议。",
+      "cueRu": "Как попросить продавца посоветовать товар?",
+      "practiceRu": "Что вы мне посоветуете?",
+      "stressedForm": "Что вы мне посове́туете?",
+      "speechText": "Что вы мне посоветуете?",
+      "theme": "shopping",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 10. В государственном магазине..md",
+      "sourceText": "4. **Что вы мне посоветуете? 您能给我什么建议？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "requestRecommendation",
+      "register": "polite",
+      "speakerRole": "顾客",
+      "addressForm": "вы",
+      "expectedReply": "Я советую вам вот этот вариант.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-shopping-03",
+      "promptZh": "请售货员把这些套娃拿给自己看看。",
+      "cueRu": "Как попросить показать товар?",
+      "practiceRu": "Покажите мне, пожалуйста, эти матрёшки.",
+      "stressedForm": "Покажи́те мне, пожа́луйста, э́ти матрёшки.",
+      "speechText": "Покажите мне, пожалуйста, эти матрёшки.",
+      "theme": "shopping",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 10. В государственном магазине..md",
+      "sourceText": "5. Покажите мне, пожалуйста, эти **матрёшки.** 请把这个**套娃**拿给我看看！",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "requestToSeeItem",
+      "register": "polite",
+      "speakerRole": "顾客",
+      "addressForm": "вы",
+      "expectedReply": "Конечно, пожалуйста.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-shopping-04",
+      "promptZh": "询问顾客是否需要袋子。",
+      "cueRu": "Как продавцу предложить пакет?",
+      "practiceRu": "Вам нужен пакет?",
+      "stressedForm": "Вам ну́жен паке́т?",
+      "speechText": "Вам нужен пакет?",
+      "theme": "shopping",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 10. В государственном магазине..md",
+      "sourceText": "14. **Вам нужен пакет? 您需要袋子吗？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "offerBag",
+      "register": "polite",
+      "speakerRole": "售货员",
+      "addressForm": "вы",
+      "expectedReply": "Да, пожалуйста.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-shopping-05",
+      "promptZh": "询问是否可以刷卡付款。",
+      "cueRu": "Как спросить о безналичной оплате?",
+      "practiceRu": "Скажите, я могу заплатить картой?",
+      "stressedForm": "Скажи́те, я могу́ заплати́ть ка́ртой?",
+      "speechText": "Скажите, я могу заплатить картой?",
+      "theme": "shopping",
+      "lexemeIDs": [
+        "lexeme-shopping-платить"
+      ],
+      "sourcePath": "具体场景对话/Тема 10. В государственном магазине..md",
+      "sourceText": "17. **Скажите, я могу заплатить карточкой? 请问，我可不可以刷卡支付？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "askPaymentMethod",
+      "register": "polite",
+      "speakerRole": "顾客",
+      "addressForm": "вы",
+      "expectedReply": "Да, конечно.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-restaurant-01",
+      "promptZh": "进餐厅时说明一共有两位。",
+      "cueRu": "Что сказать сотруднику ресторана при входе?",
+      "practiceRu": "Здравствуйте, нас двое.",
+      "stressedForm": "Здра́вствуйте, нас дво́е.",
+      "speechText": "Здравствуйте, нас двое.",
+      "theme": "restaurant",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 31. В русском ресторане..md",
+      "sourceText": "5. **Здравствуйте, нас двое. 您好，我们两位。**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "statePartySize",
+      "register": "polite",
+      "speakerRole": "顾客",
+      "addressForm": "вы",
+      "expectedReply": "Проходите, пожалуйста.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-restaurant-02",
+      "promptZh": "请服务员把菜单拿来。",
+      "cueRu": "Как попросить меню?",
+      "practiceRu": "Принесите нам, пожалуйста, меню.",
+      "stressedForm": "Принеси́те нам, пожа́луйста, меню́.",
+      "speechText": "Принесите нам, пожалуйста, меню.",
+      "theme": "restaurant",
+      "lexemeIDs": [
+        "lexeme-cafe-принести",
+        "lexeme-cafe-меню"
+      ],
+      "sourcePath": "具体场景对话/Тема 31. В русском ресторане..md",
+      "sourceText": "8. **Принесите нам, пожалуйста, меню. 请把菜单拿来。**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "requestMenu",
+      "register": "polite",
+      "speakerRole": "顾客",
+      "addressForm": "вы",
+      "expectedReply": "Конечно, сейчас принесу.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-restaurant-03",
+      "promptZh": "询问客人是否已经选好了。",
+      "cueRu": "Как официанту уточнить готовность к заказу?",
+      "practiceRu": "Вы уже выбрали?",
+      "stressedForm": "Вы уже́ вы́брали?",
+      "speechText": "Вы уже выбрали?",
+      "theme": "restaurant",
+      "lexemeIDs": [
+        "lexeme-shopping-выбирать"
+      ],
+      "sourcePath": "具体场景对话/Тема 31. В русском ресторане..md",
+      "sourceText": "9. **Вы уже выбрали? 你们选好菜了吗？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "checkReadiness",
+      "register": "polite",
+      "speakerRole": "服务员",
+      "addressForm": "вы",
+      "expectedReply": "Да, мы готовы заказать.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-restaurant-04",
+      "promptZh": "请服务员推荐菜品。",
+      "cueRu": "Как попросить рекомендацию в ресторане?",
+      "practiceRu": "Что вы нам рекомендуете?",
+      "stressedForm": "Что вы нам рекоменду́ете?",
+      "speechText": "Что вы нам рекомендуете?",
+      "theme": "restaurant",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 31. В русском ресторане..md",
+      "sourceText": "10. **Что вы нам рекомендуете? 您有什么好建议？**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "requestRecommendation",
+      "register": "polite",
+      "speakerRole": "顾客",
+      "addressForm": "вы",
+      "expectedReply": "Рекомендую наше фирменное блюдо.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-restaurant-05",
+      "promptZh": "在餐厅请服务员结账。",
+      "cueRu": "Как попросить счёт?",
+      "practiceRu": "Дайте, пожалуйста, счёт!",
+      "stressedForm": "Да́йте, пожа́луйста, счёт!",
+      "speechText": "Дайте, пожалуйста, счёт!",
+      "theme": "restaurant",
+      "lexemeIDs": [
+        "lexeme-cafe-счет"
+      ],
+      "sourcePath": "具体场景对话/Тема 31. В русском ресторане..md",
+      "sourceText": "18. **Девушка, дайте, пожалуйста, счёт! 姑娘，请结账！**",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "requestBill",
+      "register": "polite",
+      "speakerRole": "顾客",
+      "addressForm": "вы",
+      "expectedReply": "Конечно, сейчас принесу.",
+      "alternativeReplyIDs": []
+    },
+    {
+      "id": "trial-restaurant-06",
+      "promptZh": "说明自己不能喝酒，因为正在开车。",
+      "cueRu": "Как вежливо отказаться от алкоголя?",
+      "practiceRu": "Мне нельзя пить — я за рулём.",
+      "stressedForm": "Мне нельзя́ пить — я за рулём.",
+      "speechText": "Мне нельзя пить — я за рулём.",
+      "theme": "restaurant",
+      "lexemeIDs": [],
+      "sourcePath": "具体场景对话/Тема 31. В русском ресторане..md",
+      "sourceText": "17. Мне нельзя пить – я за рулём. 我不能喝酒，今天开车。",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": [
+        "mixedAnnotation"
+      ],
+      "dialogueAct": "refusalWithReason",
+      "register": "neutral",
+      "speakerRole": "顾客",
+      "addressForm": "notApplicable",
+      "expectedReply": "Тогда я принесу вам воду.",
+      "alternativeReplyIDs": []
+    }
+  ],
+  "lexemeReviews": [
+    {
+      "lexemeID": "lexeme-greetings-познакомиться",
+      "supportingSentenceID": "trial-greeting-05",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-greetings-приятно",
+      "supportingSentenceID": "trial-greeting-06",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-communication-телефон",
+      "supportingSentenceID": "trial-phone-04",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-communication-позвонить",
+      "supportingSentenceID": "trial-phone-05",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-communication-позже",
+      "supportingSentenceID": "trial-phone-05",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-directions-перекресток",
+      "supportingSentenceID": "trial-directions-06",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-directions-повернуть",
+      "supportingSentenceID": "trial-directions-06",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-health-нужно",
+      "supportingSentenceID": "trial-health-01",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-health-болеть",
+      "supportingSentenceID": "trial-health-04",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-health-лекарство",
+      "supportingSentenceID": "trial-health-06",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-shopping-платить",
+      "supportingSentenceID": "trial-shopping-05",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-cafe-принести",
+      "supportingSentenceID": "trial-restaurant-02",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-feelings-чувствовать",
+      "supportingSentenceID": "trial-health-03",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-shopping-выбирать",
+      "supportingSentenceID": "trial-restaurant-03",
+      "reviewStatus": "reviewed",
+      "provenanceType": "courseMaterial",
+      "qualityFlags": []
+    },
+    {
+      "lexemeID": "lexeme-cafe-счет",
+      "supportingSentenceID": "trial-restaurant-05",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    }
+  ],
+  "manualReviewSampleIDs": [
+    "trial-greeting-01",
+    "trial-greeting-02",
+    "trial-greeting-03",
+    "trial-greeting-04",
+    "trial-greeting-05",
+    "trial-greeting-06",
+    "trial-phone-01",
+    "trial-phone-02",
+    "trial-phone-03",
+    "trial-phone-04",
+    "trial-phone-05",
+    "trial-phone-06",
+    "trial-directions-01",
+    "trial-directions-02",
+    "trial-directions-03",
+    "trial-directions-04",
+    "trial-directions-05",
+    "trial-directions-06",
+    "trial-health-01",
+    "trial-health-02",
+    "trial-health-03",
+    "trial-health-04",
+    "trial-health-05",
+    "trial-health-06",
+    "trial-shopping-01",
+    "trial-shopping-02",
+    "trial-shopping-03",
+    "trial-shopping-04",
+    "trial-shopping-05",
+    "trial-restaurant-01",
+    "trial-restaurant-02",
+    "trial-restaurant-03",
+    "trial-restaurant-04",
+    "trial-restaurant-05",
+    "trial-restaurant-06"
+  ],
+  "wordEntries": [
+    {
+      "id": "trial-word-001",
+      "lookupForm": "автобуса",
+      "stressedForm": "авто́буса",
+      "lemma": "автобус",
+      "glossZh": "公交车",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "остановка автобуса"
+      ],
+      "usageNote": "与 остановка 连用，表示“公交车站”",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-002",
+      "lookupForm": "аллергия",
+      "stressedForm": "аллерги́я",
+      "lemma": "аллергия",
+      "glossZh": "过敏",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "аллергия на лекарства"
+      ],
+      "usageNote": "У меня аллергия 是说明过敏情况的常用表达",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-003",
+      "lookupForm": "алло",
+      "stressedForm": "алло́",
+      "lemma": "алло",
+      "glossZh": "喂",
+      "partOfSpeech": "interjection",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Алло, вы меня слышите?"
+      ],
+      "usageNote": "只用于接通电话或确认线路",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-004",
+      "lookupForm": "банк",
+      "stressedForm": "банк",
+      "lemma": "банк",
+      "glossZh": "银行",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "ближайший банк"
+      ],
+      "usageNote": "作 Есть ли... 结构中被询问是否存在的地点",
+      "lexemeID": "lexeme-directions-банк",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-005",
+      "lookupForm": "ближайшая",
+      "stressedForm": "ближа́йшая",
+      "lemma": "ближайший",
+      "glossZh": "最近的",
+      "partOfSpeech": "adjective",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "ближайшая остановка"
+      ],
+      "usageNote": "最高级意义的形容词，表示距离最近",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-006",
+      "lookupForm": "болит",
+      "stressedForm": "боли́т",
+      "lemma": "болеть",
+      "glossZh": "疼；痛",
+      "partOfSpeech": "verb",
+      "aspectPair": "заболеть",
+      "government": "主语为疼痛部位；常与 у + 属格表示人",
+      "collocations": [
+        "болит голова"
+      ],
+      "usageNote": "身体部位作主语：У меня болит горло",
+      "lexemeID": "lexeme-health-болеть",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-007",
+      "lookupForm": "вам",
+      "stressedForm": "вам",
+      "lemma": "вы",
+      "glossZh": "给您；您（与格）",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Вам помочь?"
+      ],
+      "usageNote": "常表示接受者或体验者，如 Вам нужен пакет?",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-008",
+      "lookupForm": "вас",
+      "stressedForm": "вас",
+      "lemma": "вы",
+      "glossZh": "您；你们（属格或宾格）",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "у вас есть"
+      ],
+      "usageNote": "与 у 构成“您有/您这里”；作动词宾语时表示“您”",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-009",
+      "lookupForm": "войти",
+      "stressedForm": "войти́",
+      "lemma": "войти",
+      "glossZh": "进入；进来",
+      "partOfSpeech": "verb",
+      "aspectPair": "входить",
+      "government": "в + 宾格；куда?",
+      "collocations": [
+        "можно войти"
+      ],
+      "usageNote": "Можно войти? 是进门前询问许可的固定表达",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-010",
+      "lookupForm": "врачу",
+      "stressedForm": "врачу́",
+      "lemma": "врач",
+      "glossZh": "医生",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "идти к врачу"
+      ],
+      "usageNote": "идти к врачу 表示“去看医生”",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-011",
+      "lookupForm": "вы",
+      "stressedForm": "вы",
+      "lemma": "вы",
+      "glossZh": "您；你们",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Как вы себя чувствуете?"
+      ],
+      "usageNote": "正式或礼貌交流中称呼对方",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-012",
+      "lookupForm": "выбрали",
+      "stressedForm": "вы́брали",
+      "lemma": "выбрать",
+      "glossZh": "选好了；选择了",
+      "partOfSpeech": "verb",
+      "aspectPair": "выбирать",
+      "government": "кого? что? 宾格",
+      "collocations": [
+        "выбрать блюдо"
+      ],
+      "usageNote": "餐厅中 Вы уже выбрали? 表示“您选好了吗”",
+      "lexemeID": "lexeme-shopping-выбирать",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-013",
+      "lookupForm": "где",
+      "stressedForm": "где",
+      "lemma": "где",
+      "glossZh": "在哪里",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Где находится...?"
+      ],
+      "usageNote": "询问静态位置；移动方向通常用 куда",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-014",
+      "lookupForm": "говорит",
+      "stressedForm": "говори́т",
+      "lemma": "говорить",
+      "glossZh": "说话；是……在说",
+      "partOfSpeech": "verb",
+      "aspectPair": "сказать",
+      "government": "говорить кому? о чём?",
+      "collocations": [
+        "говорить по телефону"
+      ],
+      "usageNote": "电话中 Кто это говорит? 用来询问来电者身份",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-015",
+      "lookupForm": "давайте",
+      "stressedForm": "дава́йте",
+      "lemma": "давайте",
+      "glossZh": "来吧；让我们",
+      "partOfSpeech": "particle",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Давайте познакомимся"
+      ],
+      "usageNote": "后接完成体第一人称复数，构成共同建议",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-016",
+      "lookupForm": "дайте",
+      "stressedForm": "да́йте",
+      "lemma": "дать",
+      "glossZh": "请给",
+      "partOfSpeech": "verb",
+      "aspectPair": "давать",
+      "government": "дать кому? что?",
+      "collocations": [
+        "дайте счёт"
+      ],
+      "usageNote": "礼貌请求时通常加 пожалуйста",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-017",
+      "lookupForm": "двое",
+      "stressedForm": "дво́е",
+      "lemma": "двое",
+      "glossZh": "两个人",
+      "partOfSpeech": "numeral",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "нас двое"
+      ],
+      "usageNote": "нас двое 表示“我们一共两个人”",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-018",
+      "lookupForm": "дела",
+      "stressedForm": "дела́",
+      "lemma": "дело",
+      "glossZh": "情况；近况",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Как дела?"
+      ],
+      "usageNote": "Как дела? 是询问近况的固定表达",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-019",
+      "lookupForm": "до",
+      "stressedForm": "до",
+      "lemma": "до",
+      "glossZh": "到；直到",
+      "partOfSpeech": "preposition",
+      "aspectPair": null,
+      "government": "до + 属格",
+      "collocations": [
+        "до завтра"
+      ],
+      "usageNote": "表示终点、界限或时间截止点",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-020",
+      "lookupForm": "доехать",
+      "stressedForm": "дое́хать",
+      "lemma": "доехать",
+      "glossZh": "乘车到达",
+      "partOfSpeech": "verb",
+      "aspectPair": "доезжать",
+      "government": "до + 属格；на + 前置格表示交通工具",
+      "collocations": [
+        "доехать до центра"
+      ],
+      "usageNote": "强调借助交通工具到达目的地",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-021",
+      "lookupForm": "дойдите",
+      "stressedForm": "дойди́те",
+      "lemma": "дойти",
+      "glossZh": "请走到",
+      "partOfSpeech": "verb",
+      "aspectPair": "доходить",
+      "government": "до + 属格",
+      "collocations": [
+        "дойти до перекрёстка"
+      ],
+      "usageNote": "强调步行到达某个地点",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-022",
+      "lookupForm": "дом",
+      "stressedForm": "Дом",
+      "lemma": "дом",
+      "glossZh": "大厦；房屋",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Дом книги"
+      ],
+      "usageNote": "Дом книги 是“图书大厦/书店”的名称",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-023",
+      "lookupForm": "есть",
+      "stressedForm": "есть",
+      "lemma": "быть",
+      "glossZh": "有；存在",
+      "partOfSpeech": "verb",
+      "aspectPair": null,
+      "government": "у + 属格 + есть 表示拥有",
+      "collocations": [
+        "у вас есть"
+      ],
+      "usageNote": "Есть ли...? 用来询问是否存在或是否有",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-024",
+      "lookupForm": "за",
+      "stressedForm": "за",
+      "lemma": "за",
+      "glossZh": "在……后；处于……位置",
+      "partOfSpeech": "preposition",
+      "aspectPair": null,
+      "government": "за + 工具格（位置）",
+      "collocations": [
+        "за рулём"
+      ],
+      "usageNote": "за рулём 是“在驾驶、开车”的固定表达",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-025",
+      "lookupForm": "завтра",
+      "stressedForm": "за́втра",
+      "lemma": "завтра",
+      "glossZh": "明天",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "до завтра"
+      ],
+      "usageNote": "До завтра! 表示“明天见”",
+      "lexemeID": "lexeme-plans-завтра",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-026",
+      "lookupForm": "заплатить",
+      "stressedForm": "заплати́ть",
+      "lemma": "заплатить",
+      "glossZh": "支付；付钱",
+      "partOfSpeech": "verb",
+      "aspectPair": "платить",
+      "government": "заплатить за что? чем?",
+      "collocations": [
+        "заплатить картой"
+      ],
+      "usageNote": "картой 使用工具格，表示付款方式",
+      "lexemeID": "lexeme-shopping-платить",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-027",
+      "lookupForm": "здравствуйте",
+      "stressedForm": "Здра́вствуйте",
+      "lemma": "здравствуйте",
+      "glossZh": "您好；你们好",
+      "partOfSpeech": "interjection",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Здравствуйте!"
+      ],
+      "usageNote": "适合陌生人、老师、服务人员或正式场合",
+      "lexemeID": "lexeme-greetings-здравствуйте",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-028",
+      "lookupForm": "и",
+      "stressedForm": "и",
+      "lemma": "и",
+      "glossZh": "和；并且",
+      "partOfSpeech": "conjunction",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "и потом"
+      ],
+      "usageNote": "连接同类成分或连续动作",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-029",
+      "lookupForm": "идите",
+      "stressedForm": "иди́те",
+      "lemma": "идти",
+      "glossZh": "请走；请去",
+      "partOfSpeech": "verb",
+      "aspectPair": "пойти",
+      "government": "идти куда? к кому?",
+      "collocations": [
+        "идите прямо"
+      ],
+      "usageNote": "用于给路线或持续方向指示",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-030",
+      "lookupForm": "идти",
+      "stressedForm": "идти́",
+      "lemma": "идти",
+      "glossZh": "走；去",
+      "partOfSpeech": "verb",
+      "aspectPair": "пойти",
+      "government": "идти куда? к кому?",
+      "collocations": [
+        "идти к врачу"
+      ],
+      "usageNote": "强调正在进行或一般性的单向移动",
+      "lexemeID": "lexeme-plans-пойти",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-031",
+      "lookupForm": "извините",
+      "stressedForm": "Извини́те",
+      "lemma": "извинить",
+      "glossZh": "对不起；请原谅",
+      "partOfSpeech": "verb",
+      "aspectPair": "извинять",
+      "government": "извинить кого? за что?",
+      "collocations": [
+        "Извините, пожалуйста"
+      ],
+      "usageNote": "可单独道歉，也可放在请求或澄清之前",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-032",
+      "lookupForm": "ира",
+      "stressedForm": "И́ра",
+      "lemma": "Ира",
+      "glossZh": "伊拉（女性名字）",
+      "partOfSpeech": "properNoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Ира, подойди"
+      ],
+      "usageNote": "Ирина 的常用昵称形式",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-033",
+      "lookupForm": "к",
+      "stressedForm": "к",
+      "lemma": "к",
+      "glossZh": "向；到；去找",
+      "partOfSpeech": "preposition",
+      "aspectPair": null,
+      "government": "к + 与格",
+      "collocations": [
+        "к врачу"
+      ],
+      "usageNote": "表示朝向某人或某物",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-034",
+      "lookupForm": "как",
+      "stressedForm": "как",
+      "lemma": "как",
+      "glossZh": "怎样；如何",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Как доехать...?"
+      ],
+      "usageNote": "询问方式、状态或路线",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-035",
+      "lookupForm": "картой",
+      "stressedForm": "ка́ртой",
+      "lemma": "карта",
+      "glossZh": "用银行卡",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": "платить/заплатить чем?",
+      "collocations": [
+        "заплатить картой"
+      ],
+      "usageNote": "工具格表示付款方式",
+      "lexemeID": "lexeme-shopping-карта",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-036",
+      "lookupForm": "книги",
+      "stressedForm": "кни́ги",
+      "lemma": "книга",
+      "glossZh": "书",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Дом книги"
+      ],
+      "usageNote": "Дом книги 中属格表示“大厦的用途/名称”",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-037",
+      "lookupForm": "кого",
+      "stressedForm": "кого́",
+      "lemma": "кто",
+      "glossZh": "谁（宾格/属格）",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Кого вы ищете?"
+      ],
+      "usageNote": "Вам кого? 是电话口语中的省略表达",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-038",
+      "lookupForm": "кто",
+      "stressedForm": "кто",
+      "lemma": "кто",
+      "glossZh": "谁",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Кто это?"
+      ],
+      "usageNote": "询问人的身份",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-039",
+      "lookupForm": "лекарство",
+      "stressedForm": "лека́рство",
+      "lemma": "лекарство",
+      "glossZh": "药；药物",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "принимать лекарство"
+      ],
+      "usageNote": "принимать лекарство 表示“服药”",
+      "lexemeID": "lexeme-health-лекарство",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-040",
+      "lookupForm": "ленинского",
+      "stressedForm": "Ле́нинского",
+      "lemma": "Ленинский",
+      "glossZh": "列宁的；列宁大街的",
+      "partOfSpeech": "adjective",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Ленинский проспект"
+      ],
+      "usageNote": "用于街道名称 Ленинский проспект",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-041",
+      "lookupForm": "ли",
+      "stressedForm": "ли",
+      "lemma": "ли",
+      "glossZh": "是否",
+      "partOfSpeech": "particle",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Есть ли...?"
+      ],
+      "usageNote": "置于被询问成分之后构成一般疑问句",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-042",
+      "lookupForm": "лучше",
+      "stressedForm": "лу́чше",
+      "lemma": "хорошо",
+      "glossZh": "好一些；更好",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "мне лучше"
+      ],
+      "usageNote": "Мне лучше 表示身体或状态好转",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-043",
+      "lookupForm": "матрёшки",
+      "stressedForm": "матрёшки",
+      "lemma": "матрёшка",
+      "glossZh": "套娃",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "русские матрёшки"
+      ],
+      "usageNote": "常见俄罗斯纪念品",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-044",
+      "lookupForm": "меню",
+      "stressedForm": "меню́",
+      "lemma": "меню",
+      "glossZh": "菜单",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "принести меню"
+      ],
+      "usageNote": "所有格位形式相同",
+      "lexemeID": "lexeme-cafe-меню",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-045",
+      "lookupForm": "меня",
+      "stressedForm": "меня́",
+      "lemma": "я",
+      "glossZh": "我（属格/宾格）",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "у меня"
+      ],
+      "usageNote": "У меня 表示“我有/我这里/我的状态”",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-046",
+      "lookupForm": "минутку",
+      "stressedForm": "мину́тку",
+      "lemma": "минутка",
+      "glossZh": "稍等一下",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Минутку, пожалуйста"
+      ],
+      "usageNote": "电话中相当于“请稍等”",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-047",
+      "lookupForm": "мне",
+      "stressedForm": "мне",
+      "lemma": "я",
+      "glossZh": "给我；我觉得/我处于",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "мне лучше"
+      ],
+      "usageNote": "用于无主句表示体验者或接受者",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-048",
+      "lookupForm": "могу",
+      "stressedForm": "могу́",
+      "lemma": "мочь",
+      "glossZh": "我可以；我能",
+      "partOfSpeech": "verb",
+      "aspectPair": null,
+      "government": "мочь + 不定式",
+      "collocations": [
+        "могу заплатить"
+      ],
+      "usageNote": "后接不定式表示能力或许可",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-049",
+      "lookupForm": "можно",
+      "stressedForm": "мо́жно",
+      "lemma": "можно",
+      "glossZh": "可以；允许",
+      "partOfSpeech": "predicative",
+      "aspectPair": null,
+      "government": "можно + 不定式",
+      "collocations": [
+        "Можно войти?"
+      ],
+      "usageNote": "Можно + 不定式用于询问许可或可能性",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-050",
+      "lookupForm": "налево",
+      "stressedForm": "нале́во",
+      "lemma": "налево",
+      "glossZh": "向左",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "повернуть налево"
+      ],
+      "usageNote": "与 повернуть 连用表示左转",
+      "lexemeID": "lexeme-directions-налево",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-051",
+      "lookupForm": "нам",
+      "stressedForm": "нам",
+      "lemma": "мы",
+      "glossZh": "给我们；向我们",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "принесите нам"
+      ],
+      "usageNote": "表示接受者或建议的对象",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-052",
+      "lookupForm": "направо",
+      "stressedForm": "напра́во",
+      "lemma": "направо",
+      "glossZh": "向右",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "повернуть направо"
+      ],
+      "usageNote": "路线说明中表示向右转或朝右走",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-053",
+      "lookupForm": "нас",
+      "stressedForm": "нас",
+      "lemma": "мы",
+      "glossZh": "我们（属格/宾格）",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "нас двое"
+      ],
+      "usageNote": "нас двое 表示人数",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-054",
+      "lookupForm": "находится",
+      "stressedForm": "нахо́дится",
+      "lemma": "находиться",
+      "glossZh": "位于；在",
+      "partOfSpeech": "verb",
+      "aspectPair": null,
+      "government": "находиться где? 前置格/副词",
+      "collocations": [
+        "где находится"
+      ],
+      "usageNote": "用于说明地点的静态位置",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-055",
+      "lookupForm": "не",
+      "stressedForm": "не",
+      "lemma": "не",
+      "glossZh": "不；没有",
+      "partOfSpeech": "particle",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "не узнаю"
+      ],
+      "usageNote": "放在被否定的动词、形容词或其他成分之前",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-056",
+      "lookupForm": "нельзя",
+      "stressedForm": "нельзя́",
+      "lemma": "нельзя",
+      "glossZh": "不可以；不能",
+      "partOfSpeech": "predicative",
+      "aspectPair": null,
+      "government": "нельзя + 不定式",
+      "collocations": [
+        "нельзя пить"
+      ],
+      "usageNote": "可表示禁止，也可表示客观上不能",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-057",
+      "lookupForm": "нужен",
+      "stressedForm": "ну́жен",
+      "lemma": "нужный",
+      "glossZh": "需要的；需要",
+      "partOfSpeech": "adjective",
+      "aspectPair": null,
+      "government": "кому? 与格 + нужен/нужна/нужно/нужны",
+      "collocations": [
+        "Вам нужен пакет?"
+      ],
+      "usageNote": "кому нужен кто/что 表示“某人需要……”",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-058",
+      "lookupForm": "нужно",
+      "stressedForm": "ну́жно",
+      "lemma": "нужно",
+      "glossZh": "需要；应该",
+      "partOfSpeech": "predicative",
+      "aspectPair": null,
+      "government": "нужно + 不定式",
+      "collocations": [
+        "нужно идти"
+      ],
+      "usageNote": "后接不定式表达必要性或建议",
+      "lexemeID": "lexeme-health-нужно",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-059",
+      "lookupForm": "остановка",
+      "stressedForm": "остано́вка",
+      "lemma": "остановка",
+      "glossZh": "车站；停靠站",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "остановка автобуса"
+      ],
+      "usageNote": "常与交通工具的属格连用",
+      "lexemeID": "lexeme-transport-остановка",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-060",
+      "lookupForm": "очень",
+      "stressedForm": "о́чень",
+      "lemma": "очень",
+      "glossZh": "很；非常",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "очень приятно"
+      ],
+      "usageNote": "修饰形容词、副词或状态词",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-061",
+      "lookupForm": "пакет",
+      "stressedForm": "паке́т",
+      "lemma": "пакет",
+      "glossZh": "袋子；塑料袋",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "нужен пакет"
+      ],
+      "usageNote": "商店结账场景中通常指购物袋",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-062",
+      "lookupForm": "перекрёстка",
+      "stressedForm": "перекрёстка",
+      "lemma": "перекрёсток",
+      "glossZh": "十字路口",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "дойти до перекрёстка"
+      ],
+      "usageNote": "до перекрёстка 表示“走到十字路口”",
+      "lexemeID": "lexeme-directions-перекресток",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-063",
+      "lookupForm": "пить",
+      "stressedForm": "пить",
+      "lemma": "пить",
+      "glossZh": "喝；饮用",
+      "partOfSpeech": "verb",
+      "aspectPair": "выпить",
+      "government": "пить что? 宾格",
+      "collocations": [
+        "нельзя пить"
+      ],
+      "usageNote": "本句结合 за рулём，通常指不能喝酒",
+      "lexemeID": "lexeme-health-пить",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-064",
+      "lookupForm": "плохо",
+      "stressedForm": "пло́хо",
+      "lemma": "плохо",
+      "glossZh": "不好；不舒服",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "плохо себя чувствовать"
+      ],
+      "usageNote": "плохо себя чувствовать 表示感觉不舒服",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-065",
+      "lookupForm": "поблизости",
+      "stressedForm": "побли́зости",
+      "lemma": "поблизости",
+      "glossZh": "在附近",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "есть поблизости"
+      ],
+      "usageNote": "询问或说明附近的地点",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-066",
+      "lookupForm": "поверните",
+      "stressedForm": "поверни́те",
+      "lemma": "повернуть",
+      "glossZh": "请转弯",
+      "partOfSpeech": "verb",
+      "aspectPair": "поворачивать",
+      "government": "повернуть куда?",
+      "collocations": [
+        "повернуть налево"
+      ],
+      "usageNote": "后接 налево/направо 指示方向",
+      "lexemeID": "lexeme-directions-повернуть",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-067",
+      "lookupForm": "пожалуйста",
+      "stressedForm": "пожа́луйста",
+      "lemma": "пожалуйста",
+      "glossZh": "请；不客气",
+      "partOfSpeech": "particle",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "скажите, пожалуйста"
+      ],
+      "usageNote": "用于请求中表示“请”，回应感谢时表示“不客气”",
+      "lexemeID": "lexeme-greetings-пожалуйста",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-068",
+      "lookupForm": "позвоните",
+      "stressedForm": "позвони́те",
+      "lemma": "позвонить",
+      "glossZh": "请打电话",
+      "partOfSpeech": "verb",
+      "aspectPair": "звонить",
+      "government": "позвонить кому? 与格",
+      "collocations": [
+        "позвоните позже"
+      ],
+      "usageNote": "表示完成一次打电话动作",
+      "lexemeID": "lexeme-communication-позвонить",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-069",
+      "lookupForm": "позже",
+      "stressedForm": "по́зже",
+      "lemma": "позже",
+      "glossZh": "晚些；稍后",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "позвонить позже"
+      ],
+      "usageNote": "表示比当前或参照时间更晚",
+      "lexemeID": "lexeme-communication-позже",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-070",
+      "lookupForm": "познакомимся",
+      "stressedForm": "познако́мимся",
+      "lemma": "познакомиться",
+      "glossZh": "我们认识一下",
+      "partOfSpeech": "verb",
+      "aspectPair": "знакомиться",
+      "government": "познакомиться с кем? 工具格",
+      "collocations": [
+        "давайте познакомимся"
+      ],
+      "usageNote": "表示双方完成认识这一动作",
+      "lexemeID": "lexeme-greetings-познакомиться",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-071",
+      "lookupForm": "покажите",
+      "stressedForm": "покажи́те",
+      "lemma": "показать",
+      "glossZh": "请给……看",
+      "partOfSpeech": "verb",
+      "aspectPair": "показывать",
+      "government": "показать кому? что?",
+      "collocations": [
+        "покажите товар"
+      ],
+      "usageNote": "礼貌请求服务人员展示商品",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-072",
+      "lookupForm": "попали",
+      "stressedForm": "попа́ли",
+      "lemma": "попасть",
+      "glossZh": "打到；到了",
+      "partOfSpeech": "verb",
+      "aspectPair": "попадать",
+      "government": "попасть куда?",
+      "collocations": [
+        "не туда попасть"
+      ],
+      "usageNote": "Вы не туда попали 是“您打错了”的固定电话表达",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-073",
+      "lookupForm": "посоветуете",
+      "stressedForm": "посове́туете",
+      "lemma": "посоветовать",
+      "glossZh": "您会建议；请推荐",
+      "partOfSpeech": "verb",
+      "aspectPair": "советовать",
+      "government": "посоветовать кому? что?",
+      "collocations": [
+        "Что вы посоветуете?"
+      ],
+      "usageNote": "疑问句中构成礼貌的推荐请求",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-074",
+      "lookupForm": "потом",
+      "stressedForm": "пото́м",
+      "lemma": "потом",
+      "glossZh": "然后；之后",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "сначала..., потом..."
+      ],
+      "usageNote": "连接路线或动作的下一步",
+      "lexemeID": "lexeme-directions-потом",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-075",
+      "lookupForm": "принесите",
+      "stressedForm": "принеси́те",
+      "lemma": "принести",
+      "glossZh": "请拿来",
+      "partOfSpeech": "verb",
+      "aspectPair": "приносить",
+      "government": "принести кому? что?",
+      "collocations": [
+        "принести меню"
+      ],
+      "usageNote": "表示把物品带到说话人所在处",
+      "lexemeID": "lexeme-cafe-принести",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-076",
+      "lookupForm": "принимать",
+      "stressedForm": "принима́ть",
+      "lemma": "принимать",
+      "glossZh": "服用；接受",
+      "partOfSpeech": "verb",
+      "aspectPair": "принять",
+      "government": "принимать что? 宾格",
+      "collocations": [
+        "принимать лекарство"
+      ],
+      "usageNote": "与 лекарство 连用表示按规律服药",
+      "lexemeID": "lexeme-daily-routine-принимать",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-077",
+      "lookupForm": "приятно",
+      "stressedForm": "прия́тно",
+      "lemma": "приятно",
+      "glossZh": "很高兴；令人愉快",
+      "partOfSpeech": "predicative",
+      "aspectPair": null,
+      "government": "кому? 与格 + приятно",
+      "collocations": [
+        "очень приятно"
+      ],
+      "usageNote": "Очень приятно 是初次认识时的固定回应",
+      "lexemeID": "lexeme-greetings-приятно",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-078",
+      "lookupForm": "проспекта",
+      "stressedForm": "проспе́кта",
+      "lemma": "проспект",
+      "glossZh": "大街；林荫大道",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Ленинский проспект"
+      ],
+      "usageNote": "до проспекта 中受介词 до 支配",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-079",
+      "lookupForm": "прямо",
+      "stressedForm": "пря́мо",
+      "lemma": "прямо",
+      "glossZh": "一直；直行",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "идите прямо"
+      ],
+      "usageNote": "路线说明中表示保持直行",
+      "lexemeID": "lexeme-directions-прямо",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-080",
+      "lookupForm": "рекомендуете",
+      "stressedForm": "рекоменду́ете",
+      "lemma": "рекомендовать",
+      "glossZh": "您推荐",
+      "partOfSpeech": "verb",
+      "aspectPair": null,
+      "government": "рекомендовать кому? что?",
+      "collocations": [
+        "Что вы рекомендуете?"
+      ],
+      "usageNote": "在餐厅询问服务员推荐菜品",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-081",
+      "lookupForm": "рулём",
+      "stressedForm": "рулём",
+      "lemma": "руль",
+      "glossZh": "方向盘；驾驶",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "быть за рулём"
+      ],
+      "usageNote": "за рулём 是“正在驾驶/开车”的固定表达",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-082",
+      "lookupForm": "русские",
+      "stressedForm": "ру́сские",
+      "lemma": "русский",
+      "glossZh": "俄罗斯的",
+      "partOfSpeech": "adjective",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "русские сувениры"
+      ],
+      "usageNote": "描述俄罗斯来源或文化属性",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-083",
+      "lookupForm": "себя",
+      "stressedForm": "себя́",
+      "lemma": "себя",
+      "glossZh": "自己",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "чувствовать себя хорошо"
+      ],
+      "usageNote": "чувствовать себя + 副词/形容词表示自我感觉",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-084",
+      "lookupForm": "скажите",
+      "stressedForm": "Скажи́те",
+      "lemma": "сказать",
+      "glossZh": "请说；请问",
+      "partOfSpeech": "verb",
+      "aspectPair": "говорить",
+      "government": "сказать кому? что?",
+      "collocations": [
+        "Скажите, пожалуйста"
+      ],
+      "usageNote": "句首 Скажите 常用于礼貌开启问题",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-085",
+      "lookupForm": "сувениры",
+      "stressedForm": "сувени́ры",
+      "lemma": "сувенир",
+      "glossZh": "纪念品",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "русские сувениры"
+      ],
+      "usageNote": "在 есть 结构中表示商店是否有纪念品",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-086",
+      "lookupForm": "счёт",
+      "stressedForm": "счёт",
+      "lemma": "счёт",
+      "glossZh": "账单；结账单",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "принести счёт"
+      ],
+      "usageNote": "餐厅中 попросить счёт 表示请求结账",
+      "lexemeID": "lexeme-cafe-счет",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-087",
+      "lookupForm": "тебя",
+      "stressedForm": "тебя́",
+      "lemma": "ты",
+      "glossZh": "你（属格/宾格）",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "тебя к телефону"
+      ],
+      "usageNote": "тебя к телефону 表示“有人找你接电话”",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-088",
+      "lookupForm": "телефону",
+      "stressedForm": "телефо́ну",
+      "lemma": "телефон",
+      "glossZh": "电话",
+      "partOfSpeech": "noun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "к телефону"
+      ],
+      "usageNote": "к телефону 中由介词 к 支配",
+      "lexemeID": "lexeme-communication-телефон",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-089",
+      "lookupForm": "туда",
+      "stressedForm": "туда́",
+      "lemma": "туда",
+      "glossZh": "往那里；那个方向",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "не туда"
+      ],
+      "usageNote": "не туда 表示方向或对象不对",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-090",
+      "lookupForm": "у",
+      "stressedForm": "у",
+      "lemma": "у",
+      "glossZh": "在……那里；某人有",
+      "partOfSpeech": "preposition",
+      "aspectPair": null,
+      "government": "у + 属格",
+      "collocations": [
+        "у вас есть"
+      ],
+      "usageNote": "у + 属格用于表达拥有、所在处或身体状态",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-091",
+      "lookupForm": "уже",
+      "stressedForm": "уже́",
+      "lemma": "уже",
+      "glossZh": "已经",
+      "partOfSpeech": "adverb",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "уже выбрали"
+      ],
+      "usageNote": "表示动作或状态在当前之前已经发生",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-092",
+      "lookupForm": "узнаю",
+      "stressedForm": "узнаю́",
+      "lemma": "узнавать",
+      "glossZh": "我认出来；我辨认出",
+      "partOfSpeech": "verb",
+      "aspectPair": "узнать",
+      "government": "узнавать кого? что?",
+      "collocations": [
+        "не узнавать голос"
+      ],
+      "usageNote": "电话中 не узнаю 表示没有听出对方是谁",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-093",
+      "lookupForm": "что",
+      "stressedForm": "что",
+      "lemma": "что",
+      "glossZh": "什么；哪一处",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Что вы рекомендуете?"
+      ],
+      "usageNote": "询问事物、建议内容或身体哪里疼",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-094",
+      "lookupForm": "чувствую",
+      "stressedForm": "чу́вствую",
+      "lemma": "чувствовать",
+      "glossZh": "我感觉",
+      "partOfSpeech": "verb",
+      "aspectPair": null,
+      "government": "чувствовать себя как?",
+      "collocations": [
+        "плохо себя чувствовать"
+      ],
+      "usageNote": "себя 是固定反身宾语，后接状态描述",
+      "lexemeID": "lexeme-feelings-чувствовать",
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-095",
+      "lookupForm": "эти",
+      "stressedForm": "э́ти",
+      "lemma": "этот",
+      "glossZh": "这些",
+      "partOfSpeech": "pronounAdjective",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "эти матрёшки"
+      ],
+      "usageNote": "指向说话现场中明确的多个物品",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-096",
+      "lookupForm": "это",
+      "stressedForm": "э́то",
+      "lemma": "это",
+      "glossZh": "这；这个；这是",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "Кто это?"
+      ],
+      "usageNote": "可用于确认身份，也可限定中性名词",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    },
+    {
+      "id": "trial-word-097",
+      "lookupForm": "я",
+      "stressedForm": "я",
+      "lemma": "я",
+      "glossZh": "我",
+      "partOfSpeech": "pronoun",
+      "aspectPair": null,
+      "government": null,
+      "collocations": [
+        "я могу"
+      ],
+      "usageNote": "作句子的说话人主语",
+      "lexemeID": null,
+      "reviewStatus": "reviewed",
+      "provenanceType": "derived",
+      "qualityFlags": []
+    }
+  ],
+  "sentenceWordTokens": [
+    {
+      "cardID": "trial-greeting-01",
+      "tokenIndex": 0,
+      "surfaceText": "Здравствуйте",
+      "wordEntryID": "trial-word-027",
+      "morphology": "礼貌问候固定形式"
+    },
+    {
+      "cardID": "trial-greeting-01",
+      "tokenIndex": 1,
+      "surfaceText": "Можно",
+      "wordEntryID": "trial-word-049",
+      "morphology": "无人称谓语副词"
+    },
+    {
+      "cardID": "trial-greeting-01",
+      "tokenIndex": 2,
+      "surfaceText": "войти",
+      "wordEntryID": "trial-word-009",
+      "morphology": "完成体不定式"
+    },
+    {
+      "cardID": "trial-greeting-02",
+      "tokenIndex": 0,
+      "surfaceText": "Как",
+      "wordEntryID": "trial-word-034",
+      "morphology": "疑问副词"
+    },
+    {
+      "cardID": "trial-greeting-02",
+      "tokenIndex": 1,
+      "surfaceText": "дела",
+      "wordEntryID": "trial-word-018",
+      "morphology": "中性复数主格"
+    },
+    {
+      "cardID": "trial-greeting-03",
+      "tokenIndex": 0,
+      "surfaceText": "До",
+      "wordEntryID": "trial-word-019",
+      "morphology": "时间介词，支配 завтра 的属格化固定形式"
+    },
+    {
+      "cardID": "trial-greeting-03",
+      "tokenIndex": 1,
+      "surfaceText": "завтра",
+      "wordEntryID": "trial-word-025",
+      "morphology": "时间副词"
+    },
+    {
+      "cardID": "trial-greeting-04",
+      "tokenIndex": 0,
+      "surfaceText": "Извините",
+      "wordEntryID": "trial-word-031",
+      "morphology": "完成体命令式复数或敬称单数，已固定为礼貌用语"
+    },
+    {
+      "cardID": "trial-greeting-04",
+      "tokenIndex": 1,
+      "surfaceText": "пожалуйста",
+      "wordEntryID": "trial-word-067",
+      "morphology": "礼貌语固定形式"
+    },
+    {
+      "cardID": "trial-greeting-05",
+      "tokenIndex": 0,
+      "surfaceText": "Давайте",
+      "wordEntryID": "trial-word-015",
+      "morphology": "提议用固定形式"
+    },
+    {
+      "cardID": "trial-greeting-05",
+      "tokenIndex": 1,
+      "surfaceText": "познакомимся",
+      "wordEntryID": "trial-word-070",
+      "morphology": "完成体将来时第一人称复数；在 давайте 后构成提议"
+    },
+    {
+      "cardID": "trial-greeting-06",
+      "tokenIndex": 0,
+      "surfaceText": "Очень",
+      "wordEntryID": "trial-word-060",
+      "morphology": "程度副词"
+    },
+    {
+      "cardID": "trial-greeting-06",
+      "tokenIndex": 1,
+      "surfaceText": "приятно",
+      "wordEntryID": "trial-word-077",
+      "morphology": "无人称状态词"
+    },
+    {
+      "cardID": "trial-phone-01",
+      "tokenIndex": 0,
+      "surfaceText": "Алло",
+      "wordEntryID": "trial-word-003",
+      "morphology": "电话用固定感叹词"
+    },
+    {
+      "cardID": "trial-phone-01",
+      "tokenIndex": 1,
+      "surfaceText": "Здравствуйте",
+      "wordEntryID": "trial-word-027",
+      "morphology": "礼貌问候固定形式"
+    },
+    {
+      "cardID": "trial-phone-01",
+      "tokenIndex": 2,
+      "surfaceText": "Кто",
+      "wordEntryID": "trial-word-038",
+      "morphology": "疑问代词主格"
+    },
+    {
+      "cardID": "trial-phone-01",
+      "tokenIndex": 3,
+      "surfaceText": "это",
+      "wordEntryID": "trial-word-096",
+      "morphology": "不变指示代词，用于询问来电者身份"
+    },
+    {
+      "cardID": "trial-phone-02",
+      "tokenIndex": 0,
+      "surfaceText": "Вам",
+      "wordEntryID": "trial-word-007",
+      "morphology": "第二人称复数或敬称单数与格"
+    },
+    {
+      "cardID": "trial-phone-02",
+      "tokenIndex": 1,
+      "surfaceText": "кого",
+      "wordEntryID": "trial-word-037",
+      "morphology": "疑问代词宾格；本句询问找谁"
+    },
+    {
+      "cardID": "trial-phone-03",
+      "tokenIndex": 0,
+      "surfaceText": "Извините",
+      "wordEntryID": "trial-word-031",
+      "morphology": "完成体命令式复数或敬称单数，已固定为礼貌用语"
+    },
+    {
+      "cardID": "trial-phone-03",
+      "tokenIndex": 1,
+      "surfaceText": "я",
+      "wordEntryID": "trial-word-097",
+      "morphology": "第一人称单数主格"
+    },
+    {
+      "cardID": "trial-phone-03",
+      "tokenIndex": 2,
+      "surfaceText": "вас",
+      "wordEntryID": "trial-word-008",
+      "morphology": "第二人称敬称单数宾格，作 узнаю 的直接宾语"
+    },
+    {
+      "cardID": "trial-phone-03",
+      "tokenIndex": 3,
+      "surfaceText": "не",
+      "wordEntryID": "trial-word-055",
+      "morphology": "否定语气词"
+    },
+    {
+      "cardID": "trial-phone-03",
+      "tokenIndex": 4,
+      "surfaceText": "узнаю",
+      "wordEntryID": "trial-word-092",
+      "morphology": "未完成体现在时第一人称单数"
+    },
+    {
+      "cardID": "trial-phone-03",
+      "tokenIndex": 5,
+      "surfaceText": "Кто",
+      "wordEntryID": "trial-word-038",
+      "morphology": "疑问代词主格"
+    },
+    {
+      "cardID": "trial-phone-03",
+      "tokenIndex": 6,
+      "surfaceText": "это",
+      "wordEntryID": "trial-word-096",
+      "morphology": "不变指示代词，用于询问说话者身份"
+    },
+    {
+      "cardID": "trial-phone-03",
+      "tokenIndex": 7,
+      "surfaceText": "говорит",
+      "wordEntryID": "trial-word-014",
+      "morphology": "未完成体现在时第三人称单数"
+    },
+    {
+      "cardID": "trial-phone-04",
+      "tokenIndex": 0,
+      "surfaceText": "Минутку",
+      "wordEntryID": "trial-word-046",
+      "morphology": "阴性单数宾格，口语省略句"
+    },
+    {
+      "cardID": "trial-phone-04",
+      "tokenIndex": 1,
+      "surfaceText": "Ира",
+      "wordEntryID": "trial-word-032",
+      "morphology": "阴性专名单数主格"
+    },
+    {
+      "cardID": "trial-phone-04",
+      "tokenIndex": 2,
+      "surfaceText": "тебя",
+      "wordEntryID": "trial-word-087",
+      "morphology": "第二人称单数宾格"
+    },
+    {
+      "cardID": "trial-phone-04",
+      "tokenIndex": 3,
+      "surfaceText": "к",
+      "wordEntryID": "trial-word-033",
+      "morphology": "支配与格"
+    },
+    {
+      "cardID": "trial-phone-04",
+      "tokenIndex": 4,
+      "surfaceText": "телефону",
+      "wordEntryID": "trial-word-088",
+      "morphology": "阳性单数与格"
+    },
+    {
+      "cardID": "trial-phone-05",
+      "tokenIndex": 0,
+      "surfaceText": "Позвоните",
+      "wordEntryID": "trial-word-068",
+      "morphology": "完成体命令式复数或敬称单数"
+    },
+    {
+      "cardID": "trial-phone-05",
+      "tokenIndex": 1,
+      "surfaceText": "пожалуйста",
+      "wordEntryID": "trial-word-067",
+      "morphology": "礼貌语固定形式"
+    },
+    {
+      "cardID": "trial-phone-05",
+      "tokenIndex": 2,
+      "surfaceText": "позже",
+      "wordEntryID": "trial-word-069",
+      "morphology": "时间副词比较级形式"
+    },
+    {
+      "cardID": "trial-phone-06",
+      "tokenIndex": 0,
+      "surfaceText": "Вы",
+      "wordEntryID": "trial-word-011",
+      "morphology": "第二人称复数主格，也用于敬称单数"
+    },
+    {
+      "cardID": "trial-phone-06",
+      "tokenIndex": 1,
+      "surfaceText": "не",
+      "wordEntryID": "trial-word-055",
+      "morphology": "否定语气词"
+    },
+    {
+      "cardID": "trial-phone-06",
+      "tokenIndex": 2,
+      "surfaceText": "туда",
+      "wordEntryID": "trial-word-089",
+      "morphology": "方向副词"
+    },
+    {
+      "cardID": "trial-phone-06",
+      "tokenIndex": 3,
+      "surfaceText": "попали",
+      "wordEntryID": "trial-word-072",
+      "morphology": "完成体过去时复数或敬称单数"
+    },
+    {
+      "cardID": "trial-directions-01",
+      "tokenIndex": 0,
+      "surfaceText": "Скажите",
+      "wordEntryID": "trial-word-084",
+      "morphology": "完成体命令式复数或敬称单数"
+    },
+    {
+      "cardID": "trial-directions-01",
+      "tokenIndex": 1,
+      "surfaceText": "пожалуйста",
+      "wordEntryID": "trial-word-067",
+      "morphology": "礼貌语固定形式"
+    },
+    {
+      "cardID": "trial-directions-01",
+      "tokenIndex": 2,
+      "surfaceText": "где",
+      "wordEntryID": "trial-word-013",
+      "morphology": "疑问副词"
+    },
+    {
+      "cardID": "trial-directions-01",
+      "tokenIndex": 3,
+      "surfaceText": "находится",
+      "wordEntryID": "trial-word-054",
+      "morphology": "未完成体现在时第三人称单数，反身动词"
+    },
+    {
+      "cardID": "trial-directions-01",
+      "tokenIndex": 4,
+      "surfaceText": "Дом",
+      "wordEntryID": "trial-word-022",
+      "morphology": "阳性单数主格；此处是专名组成部分"
+    },
+    {
+      "cardID": "trial-directions-01",
+      "tokenIndex": 5,
+      "surfaceText": "книги",
+      "wordEntryID": "trial-word-036",
+      "morphology": "阴性单数属格"
+    },
+    {
+      "cardID": "trial-directions-02",
+      "tokenIndex": 0,
+      "surfaceText": "Есть",
+      "wordEntryID": "trial-word-023",
+      "morphology": "быть 的现在时存在结构"
+    },
+    {
+      "cardID": "trial-directions-02",
+      "tokenIndex": 1,
+      "surfaceText": "ли",
+      "wordEntryID": "trial-word-041",
+      "morphology": "疑问语气词"
+    },
+    {
+      "cardID": "trial-directions-02",
+      "tokenIndex": 2,
+      "surfaceText": "поблизости",
+      "wordEntryID": "trial-word-065",
+      "morphology": "地点副词"
+    },
+    {
+      "cardID": "trial-directions-02",
+      "tokenIndex": 3,
+      "surfaceText": "банк",
+      "wordEntryID": "trial-word-004",
+      "morphology": "阳性单数主格"
+    },
+    {
+      "cardID": "trial-directions-03",
+      "tokenIndex": 0,
+      "surfaceText": "Где",
+      "wordEntryID": "trial-word-013",
+      "morphology": "疑问副词"
+    },
+    {
+      "cardID": "trial-directions-03",
+      "tokenIndex": 1,
+      "surfaceText": "ближайшая",
+      "wordEntryID": "trial-word-005",
+      "morphology": "阴性单数主格，与 остановка 一致"
+    },
+    {
+      "cardID": "trial-directions-03",
+      "tokenIndex": 2,
+      "surfaceText": "остановка",
+      "wordEntryID": "trial-word-059",
+      "morphology": "阴性单数主格"
+    },
+    {
+      "cardID": "trial-directions-03",
+      "tokenIndex": 3,
+      "surfaceText": "автобуса",
+      "wordEntryID": "trial-word-001",
+      "morphology": "阳性单数属格"
+    },
+    {
+      "cardID": "trial-directions-04",
+      "tokenIndex": 0,
+      "surfaceText": "Как",
+      "wordEntryID": "trial-word-034",
+      "morphology": "疑问副词"
+    },
+    {
+      "cardID": "trial-directions-04",
+      "tokenIndex": 1,
+      "surfaceText": "доехать",
+      "wordEntryID": "trial-word-020",
+      "morphology": "完成体不定式"
+    },
+    {
+      "cardID": "trial-directions-04",
+      "tokenIndex": 2,
+      "surfaceText": "до",
+      "wordEntryID": "trial-word-019",
+      "morphology": "表示到达终点的介词，支配属格"
+    },
+    {
+      "cardID": "trial-directions-04",
+      "tokenIndex": 3,
+      "surfaceText": "Ленинского",
+      "wordEntryID": "trial-word-040",
+      "morphology": "专名形容词阳性单数属格，与 проспекта 一致"
+    },
+    {
+      "cardID": "trial-directions-04",
+      "tokenIndex": 4,
+      "surfaceText": "проспекта",
+      "wordEntryID": "trial-word-078",
+      "morphology": "阳性单数属格"
+    },
+    {
+      "cardID": "trial-directions-05",
+      "tokenIndex": 0,
+      "surfaceText": "Идите",
+      "wordEntryID": "trial-word-029",
+      "morphology": "未完成体命令式复数或敬称单数"
+    },
+    {
+      "cardID": "trial-directions-05",
+      "tokenIndex": 1,
+      "surfaceText": "прямо",
+      "wordEntryID": "trial-word-079",
+      "morphology": "方向副词"
+    },
+    {
+      "cardID": "trial-directions-05",
+      "tokenIndex": 2,
+      "surfaceText": "потом",
+      "wordEntryID": "trial-word-074",
+      "morphology": "时间顺序副词"
+    },
+    {
+      "cardID": "trial-directions-05",
+      "tokenIndex": 3,
+      "surfaceText": "направо",
+      "wordEntryID": "trial-word-052",
+      "morphology": "方向副词"
+    },
+    {
+      "cardID": "trial-directions-06",
+      "tokenIndex": 0,
+      "surfaceText": "Дойдите",
+      "wordEntryID": "trial-word-021",
+      "morphology": "完成体命令式复数或敬称单数"
+    },
+    {
+      "cardID": "trial-directions-06",
+      "tokenIndex": 1,
+      "surfaceText": "до",
+      "wordEntryID": "trial-word-019",
+      "morphology": "表示步行终点的介词，支配属格"
+    },
+    {
+      "cardID": "trial-directions-06",
+      "tokenIndex": 2,
+      "surfaceText": "перекрёстка",
+      "wordEntryID": "trial-word-062",
+      "morphology": "阳性单数属格"
+    },
+    {
+      "cardID": "trial-directions-06",
+      "tokenIndex": 3,
+      "surfaceText": "и",
+      "wordEntryID": "trial-word-028",
+      "morphology": "并列连词"
+    },
+    {
+      "cardID": "trial-directions-06",
+      "tokenIndex": 4,
+      "surfaceText": "поверните",
+      "wordEntryID": "trial-word-066",
+      "morphology": "完成体命令式复数或敬称单数"
+    },
+    {
+      "cardID": "trial-directions-06",
+      "tokenIndex": 5,
+      "surfaceText": "налево",
+      "wordEntryID": "trial-word-050",
+      "morphology": "方向副词"
+    },
+    {
+      "cardID": "trial-health-01",
+      "tokenIndex": 0,
+      "surfaceText": "Нужно",
+      "wordEntryID": "trial-word-058",
+      "morphology": "无人称谓语副词"
+    },
+    {
+      "cardID": "trial-health-01",
+      "tokenIndex": 1,
+      "surfaceText": "идти",
+      "wordEntryID": "trial-word-030",
+      "morphology": "未完成体不定式"
+    },
+    {
+      "cardID": "trial-health-01",
+      "tokenIndex": 2,
+      "surfaceText": "к",
+      "wordEntryID": "trial-word-033",
+      "morphology": "支配与格"
+    },
+    {
+      "cardID": "trial-health-01",
+      "tokenIndex": 3,
+      "surfaceText": "врачу",
+      "wordEntryID": "trial-word-010",
+      "morphology": "阳性单数与格"
+    },
+    {
+      "cardID": "trial-health-02",
+      "tokenIndex": 0,
+      "surfaceText": "У",
+      "wordEntryID": "trial-word-090",
+      "morphology": "支配属格"
+    },
+    {
+      "cardID": "trial-health-02",
+      "tokenIndex": 1,
+      "surfaceText": "меня",
+      "wordEntryID": "trial-word-045",
+      "morphology": "第一人称单数属格形式"
+    },
+    {
+      "cardID": "trial-health-02",
+      "tokenIndex": 2,
+      "surfaceText": "аллергия",
+      "wordEntryID": "trial-word-002",
+      "morphology": "阴性单数主格"
+    },
+    {
+      "cardID": "trial-health-03",
+      "tokenIndex": 0,
+      "surfaceText": "Я",
+      "wordEntryID": "trial-word-097",
+      "morphology": "第一人称单数主格"
+    },
+    {
+      "cardID": "trial-health-03",
+      "tokenIndex": 1,
+      "surfaceText": "плохо",
+      "wordEntryID": "trial-word-064",
+      "morphology": "状态/程度副词"
+    },
+    {
+      "cardID": "trial-health-03",
+      "tokenIndex": 2,
+      "surfaceText": "себя",
+      "wordEntryID": "trial-word-083",
+      "morphology": "反身代词宾格"
+    },
+    {
+      "cardID": "trial-health-03",
+      "tokenIndex": 3,
+      "surfaceText": "чувствую",
+      "wordEntryID": "trial-word-094",
+      "morphology": "未完成体现在时第一人称单数"
+    },
+    {
+      "cardID": "trial-health-04",
+      "tokenIndex": 0,
+      "surfaceText": "Что",
+      "wordEntryID": "trial-word-093",
+      "morphology": "疑问代词主格或宾格，依句法决定"
+    },
+    {
+      "cardID": "trial-health-04",
+      "tokenIndex": 1,
+      "surfaceText": "у",
+      "wordEntryID": "trial-word-090",
+      "morphology": "支配属格"
+    },
+    {
+      "cardID": "trial-health-04",
+      "tokenIndex": 2,
+      "surfaceText": "вас",
+      "wordEntryID": "trial-word-008",
+      "morphology": "第二人称敬称单数属格，与 у 构成 у вас"
+    },
+    {
+      "cardID": "trial-health-04",
+      "tokenIndex": 3,
+      "surfaceText": "болит",
+      "wordEntryID": "trial-word-006",
+      "morphology": "未完成体现在时第三人称单数"
+    },
+    {
+      "cardID": "trial-health-05",
+      "tokenIndex": 0,
+      "surfaceText": "Мне",
+      "wordEntryID": "trial-word-047",
+      "morphology": "第一人称单数与格"
+    },
+    {
+      "cardID": "trial-health-05",
+      "tokenIndex": 1,
+      "surfaceText": "уже",
+      "wordEntryID": "trial-word-091",
+      "morphology": "时间副词"
+    },
+    {
+      "cardID": "trial-health-05",
+      "tokenIndex": 2,
+      "surfaceText": "лучше",
+      "wordEntryID": "trial-word-042",
+      "morphology": "比较级副词"
+    },
+    {
+      "cardID": "trial-health-06",
+      "tokenIndex": 0,
+      "surfaceText": "Как",
+      "wordEntryID": "trial-word-034",
+      "morphology": "疑问副词"
+    },
+    {
+      "cardID": "trial-health-06",
+      "tokenIndex": 1,
+      "surfaceText": "принимать",
+      "wordEntryID": "trial-word-076",
+      "morphology": "未完成体不定式"
+    },
+    {
+      "cardID": "trial-health-06",
+      "tokenIndex": 2,
+      "surfaceText": "это",
+      "wordEntryID": "trial-word-096",
+      "morphology": "中性单数宾格指示限定词，与 лекарство 一致"
+    },
+    {
+      "cardID": "trial-health-06",
+      "tokenIndex": 3,
+      "surfaceText": "лекарство",
+      "wordEntryID": "trial-word-039",
+      "morphology": "中性单数宾格，形式与主格相同"
+    },
+    {
+      "cardID": "trial-shopping-01",
+      "tokenIndex": 0,
+      "surfaceText": "Скажите",
+      "wordEntryID": "trial-word-084",
+      "morphology": "完成体命令式复数或敬称单数"
+    },
+    {
+      "cardID": "trial-shopping-01",
+      "tokenIndex": 1,
+      "surfaceText": "пожалуйста",
+      "wordEntryID": "trial-word-067",
+      "morphology": "礼貌语固定形式"
+    },
+    {
+      "cardID": "trial-shopping-01",
+      "tokenIndex": 2,
+      "surfaceText": "у",
+      "wordEntryID": "trial-word-090",
+      "morphology": "支配属格"
+    },
+    {
+      "cardID": "trial-shopping-01",
+      "tokenIndex": 3,
+      "surfaceText": "вас",
+      "wordEntryID": "trial-word-008",
+      "morphology": "第二人称敬称单数属格，与 у 构成 у вас"
+    },
+    {
+      "cardID": "trial-shopping-01",
+      "tokenIndex": 4,
+      "surfaceText": "есть",
+      "wordEntryID": "trial-word-023",
+      "morphology": "быть 的现在时存在结构"
+    },
+    {
+      "cardID": "trial-shopping-01",
+      "tokenIndex": 5,
+      "surfaceText": "русские",
+      "wordEntryID": "trial-word-082",
+      "morphology": "复数主格或非生命宾格，与 сувениры 一致"
+    },
+    {
+      "cardID": "trial-shopping-01",
+      "tokenIndex": 6,
+      "surfaceText": "сувениры",
+      "wordEntryID": "trial-word-085",
+      "morphology": "阳性复数主格"
+    },
+    {
+      "cardID": "trial-shopping-02",
+      "tokenIndex": 0,
+      "surfaceText": "Что",
+      "wordEntryID": "trial-word-093",
+      "morphology": "疑问代词主格或宾格，依句法决定"
+    },
+    {
+      "cardID": "trial-shopping-02",
+      "tokenIndex": 1,
+      "surfaceText": "вы",
+      "wordEntryID": "trial-word-011",
+      "morphology": "第二人称复数主格，也用于敬称单数"
+    },
+    {
+      "cardID": "trial-shopping-02",
+      "tokenIndex": 2,
+      "surfaceText": "мне",
+      "wordEntryID": "trial-word-047",
+      "morphology": "第一人称单数与格"
+    },
+    {
+      "cardID": "trial-shopping-02",
+      "tokenIndex": 3,
+      "surfaceText": "посоветуете",
+      "wordEntryID": "trial-word-073",
+      "morphology": "完成体将来时第二人称复数或敬称单数"
+    },
+    {
+      "cardID": "trial-shopping-03",
+      "tokenIndex": 0,
+      "surfaceText": "Покажите",
+      "wordEntryID": "trial-word-071",
+      "morphology": "完成体命令式复数或敬称单数"
+    },
+    {
+      "cardID": "trial-shopping-03",
+      "tokenIndex": 1,
+      "surfaceText": "мне",
+      "wordEntryID": "trial-word-047",
+      "morphology": "第一人称单数与格"
+    },
+    {
+      "cardID": "trial-shopping-03",
+      "tokenIndex": 2,
+      "surfaceText": "пожалуйста",
+      "wordEntryID": "trial-word-067",
+      "morphology": "礼貌语固定形式"
+    },
+    {
+      "cardID": "trial-shopping-03",
+      "tokenIndex": 3,
+      "surfaceText": "эти",
+      "wordEntryID": "trial-word-095",
+      "morphology": "复数宾格，与 матрёшки 一致"
+    },
+    {
+      "cardID": "trial-shopping-03",
+      "tokenIndex": 4,
+      "surfaceText": "матрёшки",
+      "wordEntryID": "trial-word-043",
+      "morphology": "阴性复数宾格；有生命性为否，形式同主格"
+    },
+    {
+      "cardID": "trial-shopping-04",
+      "tokenIndex": 0,
+      "surfaceText": "Вам",
+      "wordEntryID": "trial-word-007",
+      "morphology": "第二人称复数或敬称单数与格"
+    },
+    {
+      "cardID": "trial-shopping-04",
+      "tokenIndex": 1,
+      "surfaceText": "нужен",
+      "wordEntryID": "trial-word-057",
+      "morphology": "阳性单数短尾形，与 пакет 一致"
+    },
+    {
+      "cardID": "trial-shopping-04",
+      "tokenIndex": 2,
+      "surfaceText": "пакет",
+      "wordEntryID": "trial-word-061",
+      "morphology": "阳性单数主格"
+    },
+    {
+      "cardID": "trial-shopping-05",
+      "tokenIndex": 0,
+      "surfaceText": "Скажите",
+      "wordEntryID": "trial-word-084",
+      "morphology": "完成体命令式复数或敬称单数"
+    },
+    {
+      "cardID": "trial-shopping-05",
+      "tokenIndex": 1,
+      "surfaceText": "я",
+      "wordEntryID": "trial-word-097",
+      "morphology": "第一人称单数主格"
+    },
+    {
+      "cardID": "trial-shopping-05",
+      "tokenIndex": 2,
+      "surfaceText": "могу",
+      "wordEntryID": "trial-word-048",
+      "morphology": "未完成体现在时第一人称单数"
+    },
+    {
+      "cardID": "trial-shopping-05",
+      "tokenIndex": 3,
+      "surfaceText": "заплатить",
+      "wordEntryID": "trial-word-026",
+      "morphology": "完成体不定式"
+    },
+    {
+      "cardID": "trial-shopping-05",
+      "tokenIndex": 4,
+      "surfaceText": "картой",
+      "wordEntryID": "trial-word-035",
+      "morphology": "阴性单数工具格"
+    },
+    {
+      "cardID": "trial-restaurant-01",
+      "tokenIndex": 0,
+      "surfaceText": "Здравствуйте",
+      "wordEntryID": "trial-word-027",
+      "morphology": "礼貌问候固定形式"
+    },
+    {
+      "cardID": "trial-restaurant-01",
+      "tokenIndex": 1,
+      "surfaceText": "нас",
+      "wordEntryID": "trial-word-053",
+      "morphology": "第一人称复数属格；本句与集合数词连用"
+    },
+    {
+      "cardID": "trial-restaurant-01",
+      "tokenIndex": 2,
+      "surfaceText": "двое",
+      "wordEntryID": "trial-word-017",
+      "morphology": "集合数词主格"
+    },
+    {
+      "cardID": "trial-restaurant-02",
+      "tokenIndex": 0,
+      "surfaceText": "Принесите",
+      "wordEntryID": "trial-word-075",
+      "morphology": "完成体命令式复数或敬称单数"
+    },
+    {
+      "cardID": "trial-restaurant-02",
+      "tokenIndex": 1,
+      "surfaceText": "нам",
+      "wordEntryID": "trial-word-051",
+      "morphology": "第一人称复数与格"
+    },
+    {
+      "cardID": "trial-restaurant-02",
+      "tokenIndex": 2,
+      "surfaceText": "пожалуйста",
+      "wordEntryID": "trial-word-067",
+      "morphology": "礼貌语固定形式"
+    },
+    {
+      "cardID": "trial-restaurant-02",
+      "tokenIndex": 3,
+      "surfaceText": "меню",
+      "wordEntryID": "trial-word-044",
+      "morphology": "中性不变格名词，句中作宾格"
+    },
+    {
+      "cardID": "trial-restaurant-03",
+      "tokenIndex": 0,
+      "surfaceText": "Вы",
+      "wordEntryID": "trial-word-011",
+      "morphology": "第二人称复数主格，也用于敬称单数"
+    },
+    {
+      "cardID": "trial-restaurant-03",
+      "tokenIndex": 1,
+      "surfaceText": "уже",
+      "wordEntryID": "trial-word-091",
+      "morphology": "时间副词"
+    },
+    {
+      "cardID": "trial-restaurant-03",
+      "tokenIndex": 2,
+      "surfaceText": "выбрали",
+      "wordEntryID": "trial-word-012",
+      "morphology": "完成体过去时复数或敬称单数"
+    },
+    {
+      "cardID": "trial-restaurant-04",
+      "tokenIndex": 0,
+      "surfaceText": "Что",
+      "wordEntryID": "trial-word-093",
+      "morphology": "疑问代词主格或宾格，依句法决定"
+    },
+    {
+      "cardID": "trial-restaurant-04",
+      "tokenIndex": 1,
+      "surfaceText": "вы",
+      "wordEntryID": "trial-word-011",
+      "morphology": "第二人称复数主格，也用于敬称单数"
+    },
+    {
+      "cardID": "trial-restaurant-04",
+      "tokenIndex": 2,
+      "surfaceText": "нам",
+      "wordEntryID": "trial-word-051",
+      "morphology": "第一人称复数与格"
+    },
+    {
+      "cardID": "trial-restaurant-04",
+      "tokenIndex": 3,
+      "surfaceText": "рекомендуете",
+      "wordEntryID": "trial-word-080",
+      "morphology": "现在时第二人称复数或敬称单数"
+    },
+    {
+      "cardID": "trial-restaurant-05",
+      "tokenIndex": 0,
+      "surfaceText": "Дайте",
+      "wordEntryID": "trial-word-016",
+      "morphology": "完成体命令式复数或敬称单数"
+    },
+    {
+      "cardID": "trial-restaurant-05",
+      "tokenIndex": 1,
+      "surfaceText": "пожалуйста",
+      "wordEntryID": "trial-word-067",
+      "morphology": "礼貌语固定形式"
+    },
+    {
+      "cardID": "trial-restaurant-05",
+      "tokenIndex": 2,
+      "surfaceText": "счёт",
+      "wordEntryID": "trial-word-086",
+      "morphology": "阳性单数宾格，形式同主格"
+    },
+    {
+      "cardID": "trial-restaurant-06",
+      "tokenIndex": 0,
+      "surfaceText": "Мне",
+      "wordEntryID": "trial-word-047",
+      "morphology": "第一人称单数与格"
+    },
+    {
+      "cardID": "trial-restaurant-06",
+      "tokenIndex": 1,
+      "surfaceText": "нельзя",
+      "wordEntryID": "trial-word-056",
+      "morphology": "无人称谓语副词"
+    },
+    {
+      "cardID": "trial-restaurant-06",
+      "tokenIndex": 2,
+      "surfaceText": "пить",
+      "wordEntryID": "trial-word-063",
+      "morphology": "未完成体不定式"
+    },
+    {
+      "cardID": "trial-restaurant-06",
+      "tokenIndex": 3,
+      "surfaceText": "я",
+      "wordEntryID": "trial-word-097",
+      "morphology": "位置介词，与 рулём 的工具格构成固定搭配"
+    },
+    {
+      "cardID": "trial-restaurant-06",
+      "tokenIndex": 4,
+      "surfaceText": "за",
+      "wordEntryID": "trial-word-024",
+      "morphology": "本句支配工具格"
+    },
+    {
+      "cardID": "trial-restaurant-06",
+      "tokenIndex": 5,
+      "surfaceText": "рулём",
+      "wordEntryID": "trial-word-081",
+      "morphology": "阳性单数工具格"
+    }
+  ]
+}

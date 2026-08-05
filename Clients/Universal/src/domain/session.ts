@@ -16,9 +16,8 @@ export function markFirstSessionCompleted(
   storage.setItem(firstSessionKey(language), 'true')
 }
 
-export function sessionCardCount(minutes: number, completedFirstSession: boolean) {
-  if (!completedFirstSession) return 3
-  if (minutes >= 15) return 8
-  if (minutes >= 10) return 5
-  return 3
+export function sessionCardCount(minutes: number, _completedFirstSession: boolean) {
+  if (minutes >= 15) return 22
+  if (minutes >= 10) return 15
+  return 8
 }

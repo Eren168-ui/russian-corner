@@ -78,7 +78,35 @@ final class YandexDictionaryServiceTests: XCTestCase {
 
         XCTAssertFalse(result.translations.isEmpty)
         XCTAssertEqual(result.lemma, "ладонь")
-        XCTAssertEqual(result.translationLanguage, .chinese)
+        XCTAssertEqual(
+            result.translationLanguage,
+            .chinese,
+            "translations=\(result.translations) lemma=\(result.lemma)"
+        )
+    }
+
+    func testConfiguredKeyLiveEnglishLookupWhenExplicitlyEnabled() async throws {
+        let environment = ProcessInfo.processInfo.environment
+        guard environment["RUN_YANDEX_DICTIONARY_LIVE_TEST"] == "1",
+            let key = environment["YANDEX_DICTIONARY_API_KEY"],
+            !key.isEmpty
+        else {
+            throw XCTSkip("Live dictionary test is opt-in")
+        }
+
+        let result = try await YandexDictionaryService(
+            keyStore: RuntimeDictionaryKeyStore(key: key)
+        ).lookup(
+            lemma: "cheaper",
+            language: .english
+        )
+
+        XCTAssertFalse(result.translations.isEmpty)
+        XCTAssertEqual(
+            result.translationLanguage,
+            .chinese,
+            "translations=\(result.translations) lemma=\(result.lemma)"
+        )
     }
 
     func testPreferenceStorePersistsWithoutKeychainAccess() throws {
@@ -134,6 +162,28 @@ final class YandexDictionaryServiceTests: XCTestCase {
         XCTAssertEqual(
             DictionaryRequestRecorder.shared.languagePairs,
             ["en-zh", "ru-zh"]
+        )
+    }
+
+    func testEnglishLookupFallsBackWhenChinesePairIsRejected() async throws {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [DictionaryRejectedPairURLProtocol.self]
+        let service = YandexDictionaryService(
+            session: URLSession(configuration: configuration),
+            keyStore: FixedDictionaryKeyStore()
+        )
+        DictionaryRequestRecorder.shared.reset()
+
+        let result = try await service.lookup(
+            lemma: "cheaper",
+            language: .english
+        )
+
+        XCTAssertEqual(result.translations, ["更便宜"])
+        XCTAssertEqual(result.translationLanguage, .chinese)
+        XCTAssertEqual(
+            DictionaryRequestRecorder.shared.languagePairs,
+            ["en-zh", "en-ru", "ru-zh", "en-ru", "ru-zh"]
         )
     }
 }
@@ -250,6 +300,59 @@ private final class DictionaryLanguageURLProtocol: URLProtocol {
         let response = HTTPURLResponse(
             url: request.url!,
             statusCode: 200,
+            httpVersion: nil,
+            headerFields: ["Content-Type": "application/json"]
+        )!
+        client?.urlProtocol(
+            self,
+            didReceive: response,
+            cacheStoragePolicy: .notAllowed
+        )
+        client?.urlProtocol(self, didLoad: Data(body.utf8))
+        client?.urlProtocolDidFinishLoading(self)
+    }
+
+    override func stopLoading() {}
+}
+
+private final class DictionaryRejectedPairURLProtocol: URLProtocol {
+    override class func canInit(with request: URLRequest) -> Bool { true }
+
+    override class func canonicalRequest(
+        for request: URLRequest
+    ) -> URLRequest {
+        request
+    }
+
+    override func startLoading() {
+        let components = URLComponents(
+            url: request.url!,
+            resolvingAgainstBaseURL: false
+        )
+        let language = components?.queryItems?
+            .first(where: { $0.name == "lang" })?.value ?? ""
+        DictionaryRequestRecorder.shared.append(language)
+        let statusCode = language == "en-zh" ? 400 : 200
+        let body: String
+        switch language {
+        case "en-zh":
+            body = #"{"code":501,"message":"Unsupported direction"}"#
+        case "en-ru":
+            let text = components?.queryItems?
+                .first(where: { $0.name == "text" })?.value
+            body = text == "cheap"
+                ? #"{"def":[{"text":"cheap","pos":"adjective","tr":[{"text":"дешёвый"}]}]}"#
+                : #"{"def":[{"text":"cheaper","pos":"adjective","tr":[{"text":"выгоднее"}]}]}"#
+        default:
+            let text = components?.queryItems?
+                .first(where: { $0.name == "text" })?.value
+            body = text != "дешёвый"
+                ? #"{"def":[]}"#
+                : #"{"def":[{"text":"дешевле","pos":"adverb","tr":[{"text":"更便宜"}]}]}"#
+        }
+        let response = HTTPURLResponse(
+            url: request.url!,
+            statusCode: statusCode,
             httpVersion: nil,
             headerFields: ["Content-Type": "application/json"]
         )!

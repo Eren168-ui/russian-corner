@@ -2,7 +2,7 @@ import { decodeEnglishContent, decodeRussianContent } from './adapters'
 import type { ContentCatalog, StudyLanguage } from '../domain/models'
 
 async function json(path: string): Promise<unknown> {
-  const response = await fetch(`/content/${path}`)
+  const response = await fetch(`${import.meta.env.BASE_URL}content/${path}`)
   if (!response.ok) throw new Error(`无法读取本地内容：${path}`)
   return response.json()
 }

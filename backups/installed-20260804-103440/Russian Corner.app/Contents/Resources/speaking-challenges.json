@@ -1,0 +1,554 @@
+[
+  {
+    "id": "speaking-challenge-001",
+    "promptRu": "Где вы любите отдыхать: на природе или в городе? Почему?",
+    "promptZh": "你喜欢在哪里休息：在大自然中还是在城市里？为什么？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 1 | Где вы любите отдыхать: на природе или в городе? Почему? | 你喜欢在哪里休息：在大自然中还是在城市里？为什么？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-002",
+    "promptRu": "Опишите своё самое незабываемое путешествие. Куда вы ездили и с кем?",
+    "promptZh": "描述一次你最难忘的旅行。你去哪了，和谁去的？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 2 | Опишите своё самое незабываемое путешествие. Куда вы ездили и с кем? | 描述一次你最难忘的旅行。你去哪了，和谁去的？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-003",
+    "promptRu": "Какой вид транспорта вы предпочитаете для путешествий и почему?",
+    "promptZh": "你旅行时更喜欢哪种交通工具？为什么？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 4 | Какой вид транспорта вы предпочитаете для путешествий и почему? | 你旅行时更喜欢哪种交通工具？为什么？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-004",
+    "promptRu": "Какие достопримечательности есть в вашем родном городе? Что вы советуете посмотреть туристам?",
+    "promptZh": "你的家乡有哪些名胜古迹？你建议游客看什么？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 5 | Какие достопримечательности есть в вашем родном городе? Что вы советуете посмотреть туристам? | 你的家乡有哪些名胜古迹？你建议游客看什么？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-005",
+    "promptRu": "Вы «сова» или «жаворонок»? Как это влияет на ваш режим дня в путешествии?",
+    "promptZh": "你是“夜猫子”还是“早起鸟”？这对你在旅行中的作息时间有什么影响？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 6 | Вы «сова» или «жаворонок»? Как это влияет на ваш режим дня в путешествии? | 你是“夜猫子”还是“早起鸟”？这对你在旅行中的作息时间有什么影响？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-006",
+    "promptRu": "Какие необычные или экстремальные виды туризма вы знаете? Какие вы хотели бы попробовать?",
+    "promptZh": "你知道哪些不寻常或极限的旅游方式？你想尝试哪些？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 7 | Какие необычные или экстремальные виды туризма вы знаете? Какие вы хотели бы попробовать? | 你知道哪些不寻常或极限的旅游方式？你想尝试哪些？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-007",
+    "promptRu": "Как вы выбираете отель или жильё для отдыха? Что для вас важно?",
+    "promptZh": "你如何选择酒店或度假住宿？什么对你来说很重要？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 9 | Как вы выбираете отель или жильё для отдыха? Что для вас важно? | 你如何选择酒店或度假住宿？什么对你来说很重要？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-008",
+    "promptRu": "Что такое «гастрономический туризм»? Какие национальные блюда вы бы посоветовали попробовать в России/Китае?",
+    "promptZh": "什么是“美食旅游”？你会建议在俄罗斯/中国尝试哪些民族菜肴？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 10 | Что такое «гастрономический туризм»? Какие национальные блюда вы бы посоветовали попробовать в России/Китае? | 什么是“美食旅游”？你会建议在俄罗斯/中国尝试哪些民族菜肴？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-009",
+    "promptRu": "Как вы думаете, что важнее в путешествии: комфорт или новые впечатления?",
+    "promptZh": "你认为在旅行中什么更重要：舒适还是新的体验？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 11 | Как вы думаете, что важнее в путешествии: комфорт или новые впечатления? | 你认为在旅行中什么更重要：舒适还是新的体验？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-010",
+    "promptRu": "Если бы вы работали гидом, что бы вы показали другу из России в вашем родном городе?",
+    "promptZh": "如果你是导游，你会给来自俄罗斯的朋友展示你家乡的什么？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 12 | Если бы вы работали гидом, что бы вы показали другу из России в вашем родном городе? | 如果你是导游，你会给来自俄罗斯的朋友展示你家乡的什么？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-011",
+    "promptRu": "Опишите ваш обычный учебный день. Во сколько вы встаёте, какие пары у вас бывают?",
+    "promptZh": "描述你平常的学习日。你几点起床，通常有什么课？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 1 | Опишите ваш обычный учебный день. Во сколько вы встаёте, какие пары у вас бывают? | 描述你平常的学习日。你几点起床，通常有什么课？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-012",
+    "promptRu": "Чем учёба в университете отличается от учёбы в школе?",
+    "promptZh": "大学学习与学校（中学）学习有什么区别？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 2 | Чем учёба в университете отличается от учёбы в школе? | 大学学习与学校（中学）学习有什么区别？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-013",
+    "promptRu": "Какой ваш любимый предмет? Почему он вам нравится?",
+    "promptZh": "你最喜欢的科目是什么？为什么喜欢它？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 3 | Какой ваш любимый предмет? Почему он вам нравится? | 你最喜欢的科目是什么？为什么喜欢它？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-014",
+    "promptRu": "Что такое «лабораторная работа» и «семинар»? Чем они отличаются?",
+    "promptZh": "什么是“实验课”和“研讨课”？它们有什么区别？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 4 | Что такое «лабораторная работа» и «семинар»? Чем они отличаются? | 什么是“实验课”和“研讨课”？它们有什么区别？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-015",
+    "promptRu": "У вас больше лекций или семинаров? Что вам нравится больше?",
+    "promptZh": "你的讲座多还是研讨课多？你更喜欢哪个？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 5 | У вас больше лекций или семинаров? Что вам нравится больше? | 你的讲座多还是研讨课多？你更喜欢哪个？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-016",
+    "promptRu": "Что делать, если вы не понимаете материал на лекции?",
+    "promptZh": "如果你不理解讲座的内容该怎么办？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 6 | Что делать, если вы не понимаете материал на лекции? | 如果你不理解讲座的内容该怎么办？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-017",
+    "promptRu": "Что значит получить «автомат» по предмету? Как это можно сделать?",
+    "promptZh": "某门课获得“免考（自动通过）”是什么意思？如何做到这一点？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 8 | Что значит получить «автомат» по предмету? Как это можно сделать? | 某门课获得“免考（自动通过）”是什么意思？如何做到这一点？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-018",
+    "promptRu": "Опишите вашу университетскую столовую. Какая там еда, цены, атмосфера?",
+    "promptZh": "描述一下你的大学食堂。那里的食物、价格、氛围如何？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 9 | Опишите вашу университетскую столовую. Какая там еда, цены, атмосфера? | 描述一下你的大学食堂。那里的食物、价格、氛围如何？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-019",
+    "promptRu": "Как вы думаете, зачем нужно высшее образование?",
+    "promptZh": "你认为为什么需要高等教育？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 12 | Как вы думаете, зачем нужно высшее образование? | 你认为为什么需要高等教育？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-020",
+    "promptRu": "Что значит «преподаватель влюблён в свой предмет»? У вас есть такие?",
+    "promptZh": "“老师热爱自己的学科”是什么意思？你有这样的老师吗？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 13 | Что значит «преподаватель влюблён в свой предмет»? У вас есть такие? | “老师热爱自己的学科”是什么意思？你有这样的老师吗？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-021",
+    "promptRu": "Как вы справляетесь со стрессом во время сессии?",
+    "promptZh": "考试周（考期）期间你是如何应对压力的？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 14 | Как вы справляетесь со стрессом во время сессии? | 考试周（考期）期间你是如何应对压力的？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-022",
+    "promptRu": "Что такое «научный руководитель» и для чего он нужен?",
+    "promptZh": "什么是“学术导师/论文导师”，他有什么作用？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 15 | Что такое «научный руководитель» и для чего он нужен? | 什么是“学术导师/论文导师”，他有什么作用？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-023",
+    "promptRu": "Как вы думаете, каким должен быть хороший преподаватель?",
+    "promptZh": "你认为好老师应该是什么样的？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 16 | Как вы думаете, каким должен быть хороший преподаватель? | 你认为好老师应该是什么样的？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  },
+  {
+    "id": "speaking-challenge-024",
+    "promptRu": "Как вы познакомились с вашим лучшим другом/подругой?",
+    "promptZh": "你是如何结识你最好的朋友（男/女）的？",
+    "structureHintsZh": [
+      "先直接回答立场或事实",
+      "补充一个原因",
+      "最后给一个个人例子"
+    ],
+    "replacementSlots": [
+      "地点",
+      "时间",
+      "人物",
+      "个人经历"
+    ],
+    "lexemeIDs": [],
+    "sourcePath": "01-按学期/大二上/基础俄语/口语提问题目俄语.md",
+    "sourceText": "| 1 | Как вы познакомились с вашим лучшим другом/подругой? | 你是如何结识你最好的朋友（男/女）的？ |",
+    "sourceHash": "8aca7ab7dd56b835b530c4629c77627c3b028c375f75b4cbb917ad78e82896f5",
+    "reviewStatus": "reviewed",
+    "provenanceType": "courseMaterial",
+    "qualityFlags": []
+  }
+]

@@ -171,7 +171,7 @@ private final class SceneTrainingWindowController:
   init(runtime: LanguageCornerRuntime) {
     self.runtime = runtime
     let window = NSWindow(
-      contentRect: NSRect(x: 0, y: 0, width: 760, height: 680),
+      contentRect: NSRect(x: 0, y: 0, width: 900, height: 740),
       styleMask: [
         .titled,
         .closable,
@@ -181,11 +181,10 @@ private final class SceneTrainingWindowController:
       backing: .buffered,
       defer: false
     )
-    window.title = "Language Corner · 今日英语场景"
-    window.minSize = NSSize(width: 680, height: 600)
+    window.title = "Language Corner · 今日场景"
+    window.minSize = NSSize(width: 760, height: 620)
     window.isReleasedWhenClosed = false
     super.init(window: window)
-    window.setFrameAutosaveName("LanguageCornerEnglishScene")
     window.center()
   }
 
@@ -195,33 +194,50 @@ private final class SceneTrainingWindowController:
   }
 
   func show() {
-    guard let englishRuntime = runtime.languageRuntimes[.english] else {
+    let language = runtime.activeLanguage
+    let languageName = language == .russian ? "俄语" : "英语"
+    guard let activeRuntime = runtime.activeRuntime else {
       showUnavailable(
-        title: "英语场景暂时不可用",
-        message: "英语学习数据没有成功载入，俄语功能不受影响。"
+        title: "\(languageName)场景暂时不可用",
+        message: "\(languageName)学习数据没有成功载入。"
       )
       return
     }
     do {
-      guard let model = try englishRuntime.makeTodaySceneTraining() else {
+      guard let model = try activeRuntime.makeTodaySceneTraining() else {
         showUnavailable(
-          title: "今天还没有英语场景",
-          message: "英语语料仍可在角落卡中正常学习。"
+          title: "今天还没有\(languageName)场景",
+          message: "\(languageName)语料仍可在角落卡中正常学习。"
         )
         return
       }
+      window?.title = "Language Corner · 今日\(languageName)场景"
       window?.contentViewController = NSHostingController(
         rootView: SceneTrainingView(model: model)
       )
+      applyRecommendedSize()
       showWindow(nil)
       window?.makeKeyAndOrderFront(nil)
       NSApplication.shared.activate(ignoringOtherApps: true)
     } catch {
       showUnavailable(
-        title: "英语场景无法打开",
+        title: "\(languageName)场景无法打开",
         message: error.localizedDescription
       )
     }
+  }
+
+  private func applyRecommendedSize() {
+    guard let window else { return }
+    let visible = window.screen?.visibleFrame
+      ?? NSScreen.main?.visibleFrame
+      ?? NSRect(x: 0, y: 0, width: 1440, height: 900)
+    let size = NSSize(
+      width: min(900, max(760, visible.width - 80)),
+      height: min(740, max(620, visible.height - 80))
+    )
+    window.setContentSize(size)
+    window.center()
   }
 
   private func showUnavailable(title: String, message: String) {
@@ -232,6 +248,64 @@ private final class SceneTrainingWindowController:
         description: Text(message)
       )
     )
+    showWindow(nil)
+    window?.makeKeyAndOrderFront(nil)
+    NSApplication.shared.activate(ignoringOtherApps: true)
+  }
+}
+
+@MainActor
+private final class ExpressionCaptureWindowController:
+  NSWindowController
+{
+  private let runtime: LanguageCornerRuntime
+
+  init(runtime: LanguageCornerRuntime) {
+    self.runtime = runtime
+    let window = NSWindow(
+      contentRect: NSRect(x: 0, y: 0, width: 900, height: 680),
+      styleMask: [.titled, .closable, .miniaturizable, .resizable],
+      backing: .buffered,
+      defer: false
+    )
+    window.title = "Language Corner · 收集表达"
+    window.minSize = NSSize(width: 780, height: 600)
+    window.isReleasedWhenClosed = false
+    super.init(window: window)
+    window.center()
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  func show() {
+    let language = runtime.activeLanguage
+    let languageName = language == .russian ? "俄语" : "英语"
+    do {
+      let model = try ExpressionCaptureViewModel(
+        language: language,
+        onReviewed: { [weak runtime] _ in
+          runtime?.languageRuntimes[language]?
+            .reloadImportedExpressions()
+        }
+      )
+      window?.title = "Language Corner · 收集\(languageName)表达"
+      window?.contentViewController = NSHostingController(
+        rootView: ExpressionCaptureView(model: model)
+      )
+    } catch {
+      window?.contentViewController = NSHostingController(
+        rootView: ContentUnavailableView(
+          "表达收集暂时不可用",
+          systemImage: "text.badge.xmark",
+          description: Text(error.localizedDescription)
+        )
+      )
+    }
+    window?.setContentSize(NSSize(width: 900, height: 680))
+    window?.center()
     showWindow(nil)
     window?.makeKeyAndOrderFront(nil)
     NSApplication.shared.activate(ignoringOtherApps: true)
@@ -259,7 +333,7 @@ struct RussianCornerApp: App {
   private let sceneTrainingWindowController:
     SceneTrainingWindowController
   private let expressionCaptureWindowController:
-    FeatureWindowController
+    ExpressionCaptureWindowController
   private let utilityActions: PracticeCardUtilityActions
 
   init() {
@@ -323,34 +397,8 @@ struct RussianCornerApp: App {
     )
     let sceneTrainingWindowController =
       SceneTrainingWindowController(runtime: runtime)
-    let expressionCaptureWindowController: FeatureWindowController
-    do {
-      let captureModel = try ExpressionCaptureViewModel(
-        onReviewed: { _ in
-          runtime.languageRuntimes[.english]?
-            .reloadEnglishImportedExpressions()
-        }
-      )
-      expressionCaptureWindowController = FeatureWindowController(
-        title: "Language Corner · 收集英语表达",
-        size: NSSize(width: 900, height: 680),
-        minimumSize: NSSize(width: 780, height: 600),
-        content: AnyView(ExpressionCaptureView(model: captureModel))
-      )
-    } catch {
-      expressionCaptureWindowController = FeatureWindowController(
-        title: "Language Corner · 收集英语表达",
-        size: NSSize(width: 620, height: 420),
-        minimumSize: NSSize(width: 520, height: 360),
-        content: AnyView(
-          ContentUnavailableView(
-            "表达收集暂时不可用",
-            systemImage: "text.badge.xmark",
-            description: Text(error.localizedDescription)
-          )
-        )
-      )
-    }
+    let expressionCaptureWindowController =
+      ExpressionCaptureWindowController(runtime: runtime)
     let utilityActions = PracticeCardUtilityActions(
       openSceneTraining: {
         sceneTrainingWindowController.show()
@@ -583,11 +631,21 @@ private struct MenuBarContent: View {
 
     Divider()
 
-    Button("今日英语场景…", systemImage: "person.2.wave.2") {
+    Button(
+      PracticeCardUtilityAction.sceneTraining.title(
+        for: runtime.activeLanguage
+      ),
+      systemImage: "person.2.wave.2"
+    ) {
       utilityActions.openSceneTraining()
     }
-    .disabled(runtime.languageRuntimes[.english] == nil)
-    Button("收集英语表达…", systemImage: "text.badge.plus") {
+    .disabled(activeRuntime == nil)
+    Button(
+      PracticeCardUtilityAction.expressionCapture.title(
+        for: runtime.activeLanguage
+      ),
+      systemImage: "text.badge.plus"
+    ) {
       utilityActions.openExpressionCapture()
     }
 

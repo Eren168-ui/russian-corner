@@ -1,0 +1,6902 @@
+[
+  {
+    "id": "lexeme-greetings-здравствуйте",
+    "lemma": "здравствуйте",
+    "stressedForm": "здра́вствуйте",
+    "speechText": "здравствуйте",
+    "partOfSpeech": "interjection",
+    "glossZh": "您好",
+    "collocations": [
+      "вежливо сказать «здравствуйте»"
+    ],
+    "example": "При входе я всегда говорю «здравствуйте».",
+    "sentenceIDs": [
+      "sentence-greetings-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-greetings-привет",
+    "lemma": "привет",
+    "stressedForm": "приве́т",
+    "speechText": "привет",
+    "partOfSpeech": "interjection",
+    "glossZh": "你好",
+    "collocations": [
+      "передать привет родителям"
+    ],
+    "example": "Он передал большой привет всей семье.",
+    "sentenceIDs": [
+      "sentence-greetings-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-greetings-познакомиться",
+    "lemma": "познакомиться",
+    "stressedForm": "познако́миться",
+    "speechText": "познакомиться",
+    "partOfSpeech": "verb",
+    "glossZh": "认识",
+    "collocations": [
+      "познакомиться с соседями"
+    ],
+    "example": "Я хочу познакомиться с новой соседкой.",
+    "sentenceIDs": [
+      "sentence-greetings-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "познакомимся"
+    ],
+    "aspect": "perfective",
+    "aspectPair": "знакомиться",
+    "government": "с + 第五格（познакомиться с соседями）"
+  },
+  {
+    "id": "lexeme-greetings-приятно",
+    "lemma": "приятно",
+    "stressedForm": "прия́тно",
+    "speechText": "приятно",
+    "partOfSpeech": "adverb",
+    "glossZh": "愉快地",
+    "collocations": [
+      "приятно вас видеть"
+    ],
+    "example": "Мне приятно снова вас видеть.",
+    "sentenceIDs": [
+      "sentence-greetings-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-greetings-встреча",
+    "lemma": "встреча",
+    "stressedForm": "встре́ча",
+    "speechText": "встреча",
+    "partOfSpeech": "noun",
+    "glossZh": "见面",
+    "collocations": [
+      "случайная встреча в кафе"
+    ],
+    "example": "Наша встреча состоится после обеда.",
+    "sentenceIDs": [
+      "sentence-greetings-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-greetings-спасибо",
+    "lemma": "спасибо",
+    "stressedForm": "спаси́бо",
+    "speechText": "спасибо",
+    "partOfSpeech": "interjection",
+    "glossZh": "谢谢",
+    "collocations": [
+      "спасибо за поддержку"
+    ],
+    "example": "Большое спасибо за тёплый приём.",
+    "sentenceIDs": [
+      "sentence-greetings-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-greetings-пожалуйста",
+    "lemma": "пожалуйста",
+    "stressedForm": "пожа́луйста",
+    "speechText": "пожалуйста",
+    "partOfSpeech": "interjection",
+    "glossZh": "请；不客气",
+    "collocations": [
+      "скажите пожалуйста ещё раз"
+    ],
+    "example": "Повторите адрес, пожалуйста, немного медленнее.",
+    "sentenceIDs": [
+      "sentence-greetings-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-greetings-помощь",
+    "lemma": "помощь",
+    "stressedForm": "по́мощь",
+    "speechText": "помощь",
+    "partOfSpeech": "noun",
+    "glossZh": "帮助",
+    "collocations": [
+      "нужна срочная помощь"
+    ],
+    "example": "Помощь пришла как раз вовремя.",
+    "sentenceIDs": [
+      "sentence-greetings-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-greetings-свидание",
+    "lemma": "свидание",
+    "stressedForm": "свида́ние",
+    "speechText": "свидание",
+    "partOfSpeech": "noun",
+    "glossZh": "会面；再见",
+    "collocations": [
+      "первое свидание"
+    ],
+    "example": "Он пригласил меня на свидание.",
+    "sentenceIDs": [
+      "sentence-greetings-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "свидания"
+    ],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-greetings-пока",
+    "lemma": "пока",
+    "stressedForm": "пока́",
+    "speechText": "пока",
+    "partOfSpeech": "interjection",
+    "glossZh": "再见",
+    "collocations": [
+      "сказать пока друзьям"
+    ],
+    "example": "Мне пора домой, пока!",
+    "sentenceIDs": [
+      "sentence-greetings-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-family-семья",
+    "lemma": "семья",
+    "stressedForm": "семья́",
+    "speechText": "семья",
+    "partOfSpeech": "noun",
+    "glossZh": "家庭",
+    "collocations": [
+      "дружная семья"
+    ],
+    "example": "Наша семья часто ужинает вместе.",
+    "sentenceIDs": [
+      "sentence-family-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "семье"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-family-родитель",
+    "lemma": "родитель",
+    "stressedForm": "роди́тель",
+    "speechText": "родитель",
+    "partOfSpeech": "noun",
+    "glossZh": "父母之一",
+    "collocations": [
+      "заботливый родитель"
+    ],
+    "example": "Каждый родитель знает привычки своего ребёнка.",
+    "sentenceIDs": [
+      "sentence-family-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "родителями"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-family-мама",
+    "lemma": "мама",
+    "stressedForm": "ма́ма",
+    "speechText": "мама",
+    "partOfSpeech": "noun",
+    "glossZh": "妈妈",
+    "collocations": [
+      "молодая мама"
+    ],
+    "example": "Мама печёт яблочный пирог.",
+    "sentenceIDs": [
+      "sentence-family-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "мамой"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-family-папа",
+    "lemma": "папа",
+    "stressedForm": "па́па",
+    "speechText": "папа",
+    "partOfSpeech": "noun",
+    "glossZh": "爸爸",
+    "collocations": [
+      "мой папа"
+    ],
+    "example": "Папа чинит велосипед на балконе.",
+    "sentenceIDs": [
+      "sentence-family-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "папой"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-family-брат",
+    "lemma": "брат",
+    "stressedForm": "бра́т",
+    "speechText": "брат",
+    "partOfSpeech": "noun",
+    "glossZh": "兄弟",
+    "collocations": [
+      "младший брат"
+    ],
+    "example": "Брат учится в соседней школе.",
+    "sentenceIDs": [
+      "sentence-family-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "братом"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-family-сестра",
+    "lemma": "сестра",
+    "stressedForm": "сестра́",
+    "speechText": "сестра",
+    "partOfSpeech": "noun",
+    "glossZh": "姐妹",
+    "collocations": [
+      "старшая сестра"
+    ],
+    "example": "Сестра прислала фотографии из поездки.",
+    "sentenceIDs": [
+      "sentence-family-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-family-бабушка",
+    "lemma": "бабушка",
+    "stressedForm": "ба́бушка",
+    "speechText": "бабушка",
+    "partOfSpeech": "noun",
+    "glossZh": "祖母；外祖母",
+    "collocations": [
+      "любимая бабушка"
+    ],
+    "example": "Бабушка выращивает мяту на даче.",
+    "sentenceIDs": [
+      "sentence-family-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "бабушку"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-family-дедушка",
+    "lemma": "дедушка",
+    "stressedForm": "де́душка",
+    "speechText": "дедушка",
+    "partOfSpeech": "noun",
+    "glossZh": "祖父；外祖父",
+    "collocations": [
+      "весёлый дедушка"
+    ],
+    "example": "Дедушка рано выходит на прогулку.",
+    "sentenceIDs": [
+      "sentence-family-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "дедушку"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-family-внучка",
+    "lemma": "внучка",
+    "stressedForm": "вну́чка",
+    "speechText": "внучка",
+    "partOfSpeech": "noun",
+    "glossZh": "孙女；外孙女",
+    "collocations": [
+      "маленькая внучка"
+    ],
+    "example": "Внучка читает сказку вслух.",
+    "sentenceIDs": [
+      "sentence-family-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "внучку"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-family-родственник",
+    "lemma": "родственник",
+    "stressedForm": "ро́дственник",
+    "speechText": "родственник",
+    "partOfSpeech": "noun",
+    "glossZh": "亲戚",
+    "collocations": [
+      "близкий родственник"
+    ],
+    "example": "Этот родственник живёт в другом городе.",
+    "sentenceIDs": [
+      "sentence-family-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "родственников"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-home-квартира",
+    "lemma": "квартира",
+    "stressedForm": "кварти́ра",
+    "speechText": "квартира",
+    "partOfSpeech": "noun",
+    "glossZh": "公寓",
+    "collocations": [
+      "светлая квартира"
+    ],
+    "example": "Квартира находится на третьем этаже.",
+    "sentenceIDs": [
+      "sentence-home-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "квартире"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-home-кухня",
+    "lemma": "кухня",
+    "stressedForm": "ку́хня",
+    "speechText": "кухня",
+    "partOfSpeech": "noun",
+    "glossZh": "厨房",
+    "collocations": [
+      "просторная кухня"
+    ],
+    "example": "Кухня пахнет свежим хлебом.",
+    "sentenceIDs": [
+      "sentence-home-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-home-спальня",
+    "lemma": "спальня",
+    "stressedForm": "спа́льня",
+    "speechText": "спальня",
+    "partOfSpeech": "noun",
+    "glossZh": "卧室",
+    "collocations": [
+      "тихая спальня"
+    ],
+    "example": "Спальня выходит окнами во двор.",
+    "sentenceIDs": [
+      "sentence-home-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "спальне"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-home-балкон",
+    "lemma": "балкон",
+    "stressedForm": "балко́н",
+    "speechText": "балкон",
+    "partOfSpeech": "noun",
+    "glossZh": "阳台",
+    "collocations": [
+      "застеклённый балкон"
+    ],
+    "example": "Балкон украшен летними цветами.",
+    "sentenceIDs": [
+      "sentence-home-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "балконе"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-home-светлый",
+    "lemma": "светлый",
+    "stressedForm": "све́тлый",
+    "speechText": "светлый",
+    "partOfSpeech": "adjective",
+    "glossZh": "明亮的",
+    "collocations": [
+      "светлый коридор"
+    ],
+    "example": "Светлый ковёр делает комнату уютнее.",
+    "sentenceIDs": [
+      "sentence-home-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "светлая",
+      "светлой"
+    ]
+  },
+  {
+    "id": "lexeme-home-гостиная",
+    "lemma": "гостиная",
+    "stressedForm": "гости́ная",
+    "speechText": "гостиная",
+    "partOfSpeech": "noun",
+    "glossZh": "客厅",
+    "collocations": [
+      "уютная гостиная"
+    ],
+    "example": "Гостиная готова к приходу гостей.",
+    "sentenceIDs": [
+      "sentence-home-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "гостиной"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-home-удобный",
+    "lemma": "удобный",
+    "stressedForm": "удо́бный",
+    "speechText": "удобный",
+    "partOfSpeech": "adjective",
+    "glossZh": "舒适的",
+    "collocations": [
+      "удобный диван"
+    ],
+    "example": "Удобный стул стоит у стола.",
+    "sentenceIDs": [
+      "sentence-home-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "удобная"
+    ]
+  },
+  {
+    "id": "lexeme-home-диван",
+    "lemma": "диван",
+    "stressedForm": "дива́н",
+    "speechText": "диван",
+    "partOfSpeech": "noun",
+    "glossZh": "沙发",
+    "collocations": [
+      "мягкий диван"
+    ],
+    "example": "Диван раскладывается на ночь.",
+    "sentenceIDs": [
+      "sentence-home-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-home-окно",
+    "lemma": "окно",
+    "stressedForm": "окно́",
+    "speechText": "окно",
+    "partOfSpeech": "noun",
+    "glossZh": "窗户",
+    "collocations": [
+      "открыть окно"
+    ],
+    "example": "Окно осталось открытым после дождя.",
+    "sentenceIDs": [
+      "sentence-home-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "окна"
+    ],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-home-мебель",
+    "lemma": "мебель",
+    "stressedForm": "ме́бель",
+    "speechText": "мебель",
+    "partOfSpeech": "noun",
+    "glossZh": "家具",
+    "collocations": [
+      "новая мебель"
+    ],
+    "example": "Мебель привезут в пятницу.",
+    "sentenceIDs": [
+      "sentence-home-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-daily-routine-вставать",
+    "lemma": "вставать",
+    "stressedForm": "встава́ть",
+    "speechText": "вставать",
+    "partOfSpeech": "verb",
+    "glossZh": "起床",
+    "collocations": [
+      "рано вставать"
+    ],
+    "example": "Зимой мне трудно вставать до рассвета.",
+    "sentenceIDs": [
+      "sentence-daily-routine-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "встать",
+    "government": "不及物；常接时间或方式副词（вставать рано）"
+  },
+  {
+    "id": "lexeme-daily-routine-умываться",
+    "lemma": "умываться",
+    "stressedForm": "умыва́ться",
+    "speechText": "умываться",
+    "partOfSpeech": "verb",
+    "glossZh": "洗脸",
+    "collocations": [
+      "умываться холодной водой"
+    ],
+    "example": "Ребёнок уже умеет умываться сам.",
+    "sentenceIDs": [
+      "sentence-daily-routine-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "умыться",
+    "government": "第五格表示方式或工具（умываться холодной водой）"
+  },
+  {
+    "id": "lexeme-daily-routine-принимать",
+    "lemma": "принимать",
+    "stressedForm": "принима́ть",
+    "speechText": "принимать",
+    "partOfSpeech": "verb",
+    "glossZh": "接受；进行",
+    "collocations": [
+      "принимать тёплый душ"
+    ],
+    "example": "После тренировки приятно принимать душ.",
+    "sentenceIDs": [
+      "sentence-daily-routine-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "принимаю"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "принять",
+    "government": "直接接第四格（принимать душ / лекарство）"
+  },
+  {
+    "id": "lexeme-daily-routine-душ",
+    "lemma": "душ",
+    "stressedForm": "ду́ш",
+    "speechText": "душ",
+    "partOfSpeech": "noun",
+    "glossZh": "淋浴",
+    "collocations": [
+      "контрастный душ"
+    ],
+    "example": "Душ помогает мне окончательно проснуться.",
+    "sentenceIDs": [
+      "sentence-daily-routine-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-daily-routine-рано",
+    "lemma": "рано",
+    "stressedForm": "ра́но",
+    "speechText": "рано",
+    "partOfSpeech": "adverb",
+    "glossZh": "早地",
+    "collocations": [
+      "слишком рано"
+    ],
+    "example": "Сегодня автобус пришёл рано.",
+    "sentenceIDs": [
+      "sentence-daily-routine-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-daily-routine-завтрак",
+    "lemma": "завтрак",
+    "stressedForm": "за́втрак",
+    "speechText": "завтрак",
+    "partOfSpeech": "noun",
+    "glossZh": "早餐",
+    "collocations": [
+      "лёгкий завтрак"
+    ],
+    "example": "Завтрак уже стоит на столе.",
+    "sentenceIDs": [
+      "sentence-daily-routine-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-daily-routine-одеваться",
+    "lemma": "одеваться",
+    "stressedForm": "одева́ться",
+    "speechText": "одеваться",
+    "partOfSpeech": "verb",
+    "glossZh": "穿衣",
+    "collocations": [
+      "быстро одеваться"
+    ],
+    "example": "В темноте неудобно одеваться.",
+    "sentenceIDs": [
+      "sentence-daily-routine-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "одеваюсь"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "одеться",
+    "government": "不及物；穿某物常用 в + 第四格（одеваться в пальто）"
+  },
+  {
+    "id": "lexeme-daily-routine-ложиться",
+    "lemma": "ложиться",
+    "stressedForm": "ложи́ться",
+    "speechText": "ложиться",
+    "partOfSpeech": "verb",
+    "glossZh": "躺下；上床",
+    "collocations": [
+      "поздно ложиться"
+    ],
+    "example": "Я стараюсь ложиться до полуночи.",
+    "sentenceIDs": [
+      "sentence-daily-routine-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "ложусь"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "лечь",
+    "government": "不及物；方向常用 в/на + 第四格（ложиться в кровать）"
+  },
+  {
+    "id": "lexeme-daily-routine-спать",
+    "lemma": "спать",
+    "stressedForm": "спать",
+    "speechText": "спать",
+    "partOfSpeech": "verb",
+    "glossZh": "睡觉",
+    "collocations": [
+      "крепко спать"
+    ],
+    "example": "В поезде я не могу спать.",
+    "sentenceIDs": [
+      "sentence-daily-routine-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPairNote": "无中性的完成体对应词；поспать 表示“睡一会儿”",
+    "government": "不及物；常接方式或时长（спать крепко / восемь часов）"
+  },
+  {
+    "id": "lexeme-daily-routine-распорядок",
+    "lemma": "распорядок",
+    "stressedForm": "распоря́док",
+    "speechText": "распорядок",
+    "partOfSpeech": "noun",
+    "glossZh": "作息；秩序",
+    "collocations": [
+      "привычный распорядок дня"
+    ],
+    "example": "Чёткий распорядок экономит мне время.",
+    "sentenceIDs": [
+      "sentence-daily-routine-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-food-обед",
+    "lemma": "обед",
+    "stressedForm": "обе́д",
+    "speechText": "обед",
+    "partOfSpeech": "noun",
+    "glossZh": "午餐",
+    "collocations": [
+      "горячий обед"
+    ],
+    "example": "Обед будет готов к двум часам.",
+    "sentenceIDs": [
+      "sentence-food-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-food-суп",
+    "lemma": "суп",
+    "stressedForm": "су́п",
+    "speechText": "суп",
+    "partOfSpeech": "noun",
+    "glossZh": "汤",
+    "collocations": [
+      "овощной суп"
+    ],
+    "example": "Суп ещё греется на плите.",
+    "sentenceIDs": [
+      "sentence-food-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-food-салат",
+    "lemma": "салат",
+    "stressedForm": "сала́т",
+    "speechText": "салат",
+    "partOfSpeech": "noun",
+    "glossZh": "沙拉",
+    "collocations": [
+      "свежий салат"
+    ],
+    "example": "Салат заправили оливковым маслом.",
+    "sentenceIDs": [
+      "sentence-food-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-food-свежий",
+    "lemma": "свежий",
+    "stressedForm": "све́жий",
+    "speechText": "свежий",
+    "partOfSpeech": "adjective",
+    "glossZh": "新鲜的",
+    "collocations": [
+      "свежий хлеб"
+    ],
+    "example": "Свежий огурец приятно хрустит.",
+    "sentenceIDs": [
+      "sentence-food-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-food-хлеб",
+    "lemma": "хлеб",
+    "stressedForm": "хле́б",
+    "speechText": "хлеб",
+    "partOfSpeech": "noun",
+    "glossZh": "面包",
+    "collocations": [
+      "ржаной хлеб"
+    ],
+    "example": "Хлеб лежит в деревянной корзине.",
+    "sentenceIDs": [
+      "sentence-food-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-food-ужин",
+    "lemma": "ужин",
+    "stressedForm": "у́жин",
+    "speechText": "ужин",
+    "partOfSpeech": "noun",
+    "glossZh": "晚餐",
+    "collocations": [
+      "семейный ужин"
+    ],
+    "example": "Ужин сегодня готовит мой брат.",
+    "sentenceIDs": [
+      "sentence-food-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-food-готовить",
+    "lemma": "готовить",
+    "stressedForm": "гото́вить",
+    "speechText": "готовить",
+    "partOfSpeech": "verb",
+    "glossZh": "做饭；准备",
+    "collocations": [
+      "готовить дома"
+    ],
+    "example": "По выходным мы любим готовить вместе.",
+    "sentenceIDs": [
+      "sentence-food-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "приготовить",
+    "government": "直接接第四格（готовить ужин）"
+  },
+  {
+    "id": "lexeme-food-рис",
+    "lemma": "рис",
+    "stressedForm": "ри́с",
+    "speechText": "рис",
+    "partOfSpeech": "noun",
+    "glossZh": "米饭；大米",
+    "collocations": [
+      "варёный рис"
+    ],
+    "example": "Рис получился мягким и рассыпчатым.",
+    "sentenceIDs": [
+      "sentence-food-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-food-рыба",
+    "lemma": "рыба",
+    "stressedForm": "ры́ба",
+    "speechText": "рыба",
+    "partOfSpeech": "noun",
+    "glossZh": "鱼",
+    "collocations": [
+      "запечённая рыба"
+    ],
+    "example": "Рыба хорошо сочетается с овощами.",
+    "sentenceIDs": [
+      "sentence-food-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "рыбу"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-food-чай",
+    "lemma": "чай",
+    "stressedForm": "ча́й",
+    "speechText": "чай",
+    "partOfSpeech": "noun",
+    "glossZh": "茶",
+    "collocations": [
+      "зелёный чай"
+    ],
+    "example": "Чай немного остыл у окна.",
+    "sentenceIDs": [
+      "sentence-food-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-shopping-магазин",
+    "lemma": "магазин",
+    "stressedForm": "магази́н",
+    "speechText": "магазин",
+    "partOfSpeech": "noun",
+    "glossZh": "商店",
+    "collocations": [
+      "продуктовый магазин"
+    ],
+    "example": "Магазин закрывается в десять вечера.",
+    "sentenceIDs": [
+      "sentence-shopping-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "магазине"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-shopping-сравнивать",
+    "lemma": "сравнивать",
+    "stressedForm": "сравнива́ть",
+    "speechText": "сравнивать",
+    "partOfSpeech": "verb",
+    "glossZh": "比较",
+    "collocations": [
+      "сравнивать цены"
+    ],
+    "example": "Перед покупкой полезно сравнивать варианты.",
+    "sentenceIDs": [
+      "sentence-shopping-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "сравнить",
+    "government": "第四格 + с + 第五格（сравнивать цену с прошлой ценой）"
+  },
+  {
+    "id": "lexeme-shopping-цена",
+    "lemma": "цена",
+    "stressedForm": "цена́",
+    "speechText": "цена",
+    "partOfSpeech": "noun",
+    "glossZh": "价格",
+    "collocations": [
+      "доступная цена"
+    ],
+    "example": "Цена указана на жёлтом ярлыке.",
+    "sentenceIDs": [
+      "sentence-shopping-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "цены"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-shopping-выбирать",
+    "lemma": "выбирать",
+    "stressedForm": "выбира́ть",
+    "speechText": "выбирать",
+    "partOfSpeech": "verb",
+    "glossZh": "选择",
+    "collocations": [
+      "внимательно выбирать"
+    ],
+    "example": "Я предпочитаю выбирать продукты сам.",
+    "sentenceIDs": [
+      "sentence-shopping-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "выбрали"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "выбрать",
+    "government": "直接接第四格；从范围中选择用 из + 第二格"
+  },
+  {
+    "id": "lexeme-shopping-товар",
+    "lemma": "товар",
+    "stressedForm": "това́р",
+    "speechText": "товар",
+    "partOfSpeech": "noun",
+    "glossZh": "商品",
+    "collocations": [
+      "качественный товар"
+    ],
+    "example": "Этот товар можно вернуть завтра.",
+    "sentenceIDs": [
+      "sentence-shopping-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-shopping-чек",
+    "lemma": "чек",
+    "stressedForm": "че́к",
+    "speechText": "чек",
+    "partOfSpeech": "noun",
+    "glossZh": "小票",
+    "collocations": [
+      "кассовый чек"
+    ],
+    "example": "Чек лежит в кармане куртки.",
+    "sentenceIDs": [
+      "sentence-shopping-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-shopping-платить",
+    "lemma": "платить",
+    "stressedForm": "плати́ть",
+    "speechText": "платить",
+    "partOfSpeech": "verb",
+    "glossZh": "付款",
+    "collocations": [
+      "платить картой"
+    ],
+    "example": "Здесь можно платить наличными.",
+    "sentenceIDs": [
+      "sentence-shopping-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "заплатить",
+    "government": "за + 第四格；付款手段用第五格（платить за товар картой）"
+  },
+  {
+    "id": "lexeme-shopping-банковский",
+    "lemma": "банковский",
+    "stressedForm": "ба́нковский",
+    "speechText": "банковский",
+    "partOfSpeech": "adjective",
+    "glossZh": "银行的",
+    "collocations": [
+      "банковская карта"
+    ],
+    "example": "Банковский перевод пришёл утром.",
+    "sentenceIDs": [
+      "sentence-shopping-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "банковской",
+      "банковская"
+    ]
+  },
+  {
+    "id": "lexeme-shopping-карта",
+    "lemma": "карта",
+    "stressedForm": "ка́рта",
+    "speechText": "карта",
+    "partOfSpeech": "noun",
+    "glossZh": "卡片；银行卡",
+    "collocations": [
+      "дисконтная карта"
+    ],
+    "example": "Карта не проходит на кассе.",
+    "sentenceIDs": [
+      "sentence-shopping-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "картой"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-shopping-скидка",
+    "lemma": "скидка",
+    "stressedForm": "ски́дка",
+    "speechText": "скидка",
+    "partOfSpeech": "noun",
+    "glossZh": "折扣",
+    "collocations": [
+      "сезонная скидка"
+    ],
+    "example": "Скидка действует только до воскресенья.",
+    "sentenceIDs": [
+      "sentence-shopping-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "скидку"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-cafe-официант",
+    "lemma": "официант",
+    "stressedForm": "официа́нт",
+    "speechText": "официант",
+    "partOfSpeech": "noun",
+    "glossZh": "服务员",
+    "collocations": [
+      "вежливый официант"
+    ],
+    "example": "Официант принёс воду без газа.",
+    "sentenceIDs": [
+      "sentence-cafe-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-cafe-меню",
+    "lemma": "меню",
+    "stressedForm": "меню́",
+    "speechText": "меню",
+    "partOfSpeech": "noun",
+    "glossZh": "菜单",
+    "collocations": [
+      "посмотреть меню"
+    ],
+    "example": "Меню лежит рядом с салфетками.",
+    "sentenceIDs": [
+      "sentence-cafe-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-cafe-чашка",
+    "lemma": "чашка",
+    "stressedForm": "ча́шка",
+    "speechText": "чашка",
+    "partOfSpeech": "noun",
+    "glossZh": "杯子",
+    "collocations": [
+      "чистая чашка"
+    ],
+    "example": "Чашка оказалась слишком горячей.",
+    "sentenceIDs": [
+      "sentence-cafe-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "чашку"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-cafe-кофе",
+    "lemma": "кофе",
+    "stressedForm": "ко́фе",
+    "speechText": "кофе",
+    "partOfSpeech": "noun",
+    "glossZh": "咖啡",
+    "collocations": [
+      "крепкий кофе"
+    ],
+    "example": "Кофе здесь варят на песке.",
+    "sentenceIDs": [
+      "sentence-cafe-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-cafe-принести",
+    "lemma": "принести",
+    "stressedForm": "принести́",
+    "speechText": "принести",
+    "partOfSpeech": "verb",
+    "glossZh": "拿来",
+    "collocations": [
+      "принести стакан воды"
+    ],
+    "example": "Попросите принести ещё одну ложку.",
+    "sentenceIDs": [
+      "sentence-cafe-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "принесите"
+    ],
+    "aspect": "perfective",
+    "aspectPair": "приносить",
+    "government": "直接接第四格；给某人用第三格（принести гостю воду）"
+  },
+  {
+    "id": "lexeme-cafe-заказ",
+    "lemma": "заказ",
+    "stressedForm": "зака́з",
+    "speechText": "заказ",
+    "partOfSpeech": "noun",
+    "glossZh": "订单；点餐",
+    "collocations": [
+      "готовый заказ"
+    ],
+    "example": "Наш заказ скоро вынесут на террасу.",
+    "sentenceIDs": [
+      "sentence-cafe-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-cafe-сделать",
+    "lemma": "сделать",
+    "stressedForm": "сде́лать",
+    "speechText": "сделать",
+    "partOfSpeech": "verb",
+    "glossZh": "做；完成",
+    "collocations": [
+      "сделать заказ"
+    ],
+    "example": "Я хочу сделать заказ у окна.",
+    "sentenceIDs": [
+      "sentence-cafe-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "делать",
+    "government": "直接接第四格（сделать заказ）"
+  },
+  {
+    "id": "lexeme-cafe-просить",
+    "lemma": "просить",
+    "stressedForm": "проси́ть",
+    "speechText": "просить",
+    "partOfSpeech": "verb",
+    "glossZh": "请求",
+    "collocations": [
+      "просить счёт"
+    ],
+    "example": "Неудобно долго просить внимания.",
+    "sentenceIDs": [
+      "sentence-cafe-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "попросить",
+    "government": "第四格人 + 第二格事物，或 просить + 动词不定式"
+  },
+  {
+    "id": "lexeme-cafe-счет",
+    "lemma": "счёт",
+    "stressedForm": "счёт",
+    "speechText": "счёт",
+    "partOfSpeech": "noun",
+    "glossZh": "账单",
+    "collocations": [
+      "оплатить счёт"
+    ],
+    "example": "Счёт уже включал обслуживание.",
+    "sentenceIDs": [
+      "sentence-cafe-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-cafe-десерт",
+    "lemma": "десерт",
+    "stressedForm": "десе́рт",
+    "speechText": "десерт",
+    "partOfSpeech": "noun",
+    "glossZh": "甜点",
+    "collocations": [
+      "шоколадный десерт"
+    ],
+    "example": "Десерт украсили свежими ягодами.",
+    "sentenceIDs": [
+      "sentence-cafe-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-transport-автобус",
+    "lemma": "автобус",
+    "stressedForm": "авто́бус",
+    "speechText": "автобус",
+    "partOfSpeech": "noun",
+    "glossZh": "公共汽车",
+    "collocations": [
+      "городской автобус"
+    ],
+    "example": "Автобус остановился у театра.",
+    "sentenceIDs": [
+      "sentence-transport-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-transport-приехать",
+    "lemma": "приехать",
+    "stressedForm": "прие́хать",
+    "speechText": "приехать",
+    "partOfSpeech": "verb",
+    "glossZh": "到达（乘车）",
+    "collocations": [
+      "приехать вовремя"
+    ],
+    "example": "Мы надеемся приехать до темноты.",
+    "sentenceIDs": [
+      "sentence-transport-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "приезжать",
+    "government": "в/на + 第四格表示目的地；из/с + 第二格表示出发地"
+  },
+  {
+    "id": "lexeme-transport-остановка",
+    "lemma": "остановка",
+    "stressedForm": "остано́вка",
+    "speechText": "остановка",
+    "partOfSpeech": "noun",
+    "glossZh": "车站",
+    "collocations": [
+      "следующая остановка"
+    ],
+    "example": "Остановка находится за мостом.",
+    "sentenceIDs": [
+      "sentence-transport-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "остановку"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-transport-через",
+    "lemma": "через",
+    "stressedForm": "че́рез",
+    "speechText": "через",
+    "partOfSpeech": "preposition",
+    "glossZh": "经过；之后",
+    "collocations": [
+      "через пять минут"
+    ],
+    "example": "Через час начнётся последний сеанс.",
+    "sentenceIDs": [
+      "sentence-transport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "government": "支配第四格：穿过某处或在一段时间之后（через парк / через час）"
+  },
+  {
+    "id": "lexeme-transport-минута",
+    "lemma": "минута",
+    "stressedForm": "мину́та",
+    "speechText": "минута",
+    "partOfSpeech": "noun",
+    "glossZh": "分钟",
+    "collocations": [
+      "свободная минута"
+    ],
+    "example": "Каждая минута сейчас важна.",
+    "sentenceIDs": [
+      "sentence-transport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "минуту",
+      "минут"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-transport-обычно",
+    "lemma": "обычно",
+    "stressedForm": "обы́чно",
+    "speechText": "обычно",
+    "partOfSpeech": "adverb",
+    "glossZh": "通常",
+    "collocations": [
+      "как обычно"
+    ],
+    "example": "Обычно я хожу на работу пешком.",
+    "sentenceIDs": [
+      "sentence-transport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-transport-ехать",
+    "lemma": "ехать",
+    "stressedForm": "е́хать",
+    "speechText": "ехать",
+    "partOfSpeech": "verb",
+    "glossZh": "乘车行进",
+    "collocations": [
+      "ехать на метро"
+    ],
+    "example": "До центра удобнее ехать на метро.",
+    "sentenceIDs": [
+      "sentence-transport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "поехать",
+    "government": "на + 第六格表示交通工具；в/на + 第四格表示目的地"
+  },
+  {
+    "id": "lexeme-transport-метро",
+    "lemma": "метро",
+    "stressedForm": "метро́",
+    "speechText": "метро",
+    "partOfSpeech": "noun",
+    "glossZh": "地铁",
+    "collocations": [
+      "станция метро"
+    ],
+    "example": "Метро открывается рано утром.",
+    "sentenceIDs": [
+      "sentence-transport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-transport-вызывать",
+    "lemma": "вызывать",
+    "stressedForm": "вызыва́ть",
+    "speechText": "вызывать",
+    "partOfSpeech": "verb",
+    "glossZh": "呼叫",
+    "collocations": [
+      "вызывать такси"
+    ],
+    "example": "Ночью безопаснее вызывать такси.",
+    "sentenceIDs": [
+      "sentence-transport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "вызвать",
+    "government": "直接接第四格（вызывать такси / врача）"
+  },
+  {
+    "id": "lexeme-transport-такси",
+    "lemma": "такси",
+    "stressedForm": "такси́",
+    "speechText": "такси",
+    "partOfSpeech": "noun",
+    "glossZh": "出租车",
+    "collocations": [
+      "свободное такси"
+    ],
+    "example": "Такси ждёт у главного входа.",
+    "sentenceIDs": [
+      "sentence-transport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-city-центр",
+    "lemma": "центр",
+    "stressedForm": "це́нтр",
+    "speechText": "центр",
+    "partOfSpeech": "noun",
+    "glossZh": "中心",
+    "collocations": [
+      "исторический центр"
+    ],
+    "example": "Центр города перекрыли для фестиваля.",
+    "sentenceIDs": [
+      "sentence-city-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "центре"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-city-город",
+    "lemma": "город",
+    "stressedForm": "го́род",
+    "speechText": "город",
+    "partOfSpeech": "noun",
+    "glossZh": "城市",
+    "collocations": [
+      "родной город"
+    ],
+    "example": "Город особенно красив после дождя.",
+    "sentenceIDs": [
+      "sentence-city-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "города"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-city-широкий",
+    "lemma": "широкий",
+    "stressedForm": "широ́кий",
+    "speechText": "широкий",
+    "partOfSpeech": "adjective",
+    "glossZh": "宽阔的",
+    "collocations": [
+      "широкий проспект"
+    ],
+    "example": "Широкий мост соединяет два района.",
+    "sentenceIDs": [
+      "sentence-city-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "широкая"
+    ]
+  },
+  {
+    "id": "lexeme-city-площадь",
+    "lemma": "площадь",
+    "stressedForm": "пло́щадь",
+    "speechText": "площадь",
+    "partOfSpeech": "noun",
+    "glossZh": "广场；面积",
+    "collocations": [
+      "центральная площадь"
+    ],
+    "example": "Площадь заполнили уличные музыканты.",
+    "sentenceIDs": [
+      "sentence-city-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-city-музей",
+    "lemma": "музей",
+    "stressedForm": "музе́й",
+    "speechText": "музей",
+    "partOfSpeech": "noun",
+    "glossZh": "博物馆",
+    "collocations": [
+      "художественный музей"
+    ],
+    "example": "Музей работает до позднего вечера.",
+    "sentenceIDs": [
+      "sentence-city-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "музеем"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-city-тихий",
+    "lemma": "тихий",
+    "stressedForm": "ти́хий",
+    "speechText": "тихий",
+    "partOfSpeech": "adjective",
+    "glossZh": "安静的",
+    "collocations": [
+      "тихий переулок"
+    ],
+    "example": "Тихий двор спрятан за аркой.",
+    "sentenceIDs": [
+      "sentence-city-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "тихая"
+    ]
+  },
+  {
+    "id": "lexeme-city-улица",
+    "lemma": "улица",
+    "stressedForm": "у́лица",
+    "speechText": "улица",
+    "partOfSpeech": "noun",
+    "glossZh": "街道",
+    "collocations": [
+      "соседняя улица"
+    ],
+    "example": "Улица ведёт прямо к вокзалу.",
+    "sentenceIDs": [
+      "sentence-city-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-city-вести",
+    "lemma": "вести",
+    "stressedForm": "вести́",
+    "speechText": "вести",
+    "partOfSpeech": "verb",
+    "glossZh": "通向；带领",
+    "collocations": [
+      "вести к парку"
+    ],
+    "example": "Эта дорожка ведёт к реке.",
+    "sentenceIDs": [
+      "sentence-city-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "ведёт"
+    ],
+    "aspect": "imperfective",
+    "aspectPairNote": "无单一中性完成体；привести 强调带到，повести 强调开始带领",
+    "government": "第四格人 + к + 第三格或 в/на + 第四格（вести гостя к выходу）"
+  },
+  {
+    "id": "lexeme-city-парк",
+    "lemma": "парк",
+    "stressedForm": "па́рк",
+    "speechText": "парк",
+    "partOfSpeech": "noun",
+    "glossZh": "公园",
+    "collocations": [
+      "городской парк"
+    ],
+    "example": "Парк закрывают после полуночи.",
+    "sentenceIDs": [
+      "sentence-city-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-city-набережная",
+    "lemma": "набережная",
+    "stressedForm": "на́бережная",
+    "speechText": "набережная",
+    "partOfSpeech": "noun",
+    "glossZh": "河岸街",
+    "collocations": [
+      "вечерняя набережная"
+    ],
+    "example": "Набережная освещена тёплыми фонарями.",
+    "sentenceIDs": [
+      "sentence-city-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "набережной"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-directions-прямо",
+    "lemma": "прямо",
+    "stressedForm": "пря́мо",
+    "speechText": "прямо",
+    "partOfSpeech": "adverb",
+    "glossZh": "直行",
+    "collocations": [
+      "идти прямо"
+    ],
+    "example": "От светофора двигайтесь прямо.",
+    "sentenceIDs": [
+      "sentence-directions-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-directions-потом",
+    "lemma": "потом",
+    "stressedForm": "пото́м",
+    "speechText": "потом",
+    "partOfSpeech": "adverb",
+    "glossZh": "然后",
+    "collocations": [
+      "зайти потом"
+    ],
+    "example": "Сначала купим билеты, потом пообедаем.",
+    "sentenceIDs": [
+      "sentence-directions-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-directions-перекресток",
+    "lemma": "перекрёсток",
+    "stressedForm": "перекрёсток",
+    "speechText": "перекрёсток",
+    "partOfSpeech": "noun",
+    "glossZh": "十字路口",
+    "collocations": [
+      "ближайший перекрёсток"
+    ],
+    "example": "Перекрёсток хорошо виден отсюда.",
+    "sentenceIDs": [
+      "sentence-directions-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "перекрёстке",
+      "перекрёстка"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-directions-повернуть",
+    "lemma": "повернуть",
+    "stressedForm": "поверну́ть",
+    "speechText": "повернуть",
+    "partOfSpeech": "verb",
+    "glossZh": "转弯",
+    "collocations": [
+      "повернуть направо"
+    ],
+    "example": "После школы нужно повернуть налево.",
+    "sentenceIDs": [
+      "sentence-directions-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "поверните"
+    ],
+    "aspect": "perfective",
+    "aspectPair": "поворачивать",
+    "government": "на + 第四格表示转入某处；也常接方向副词（повернуть направо）"
+  },
+  {
+    "id": "lexeme-directions-налево",
+    "lemma": "налево",
+    "stressedForm": "нале́во",
+    "speechText": "налево",
+    "partOfSpeech": "adverb",
+    "glossZh": "向左",
+    "collocations": [
+      "свернуть налево"
+    ],
+    "example": "У аптеки поверните налево.",
+    "sentenceIDs": [
+      "sentence-directions-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-directions-аптека",
+    "lemma": "аптека",
+    "stressedForm": "апте́ка",
+    "speechText": "аптека",
+    "partOfSpeech": "noun",
+    "glossZh": "药店",
+    "collocations": [
+      "круглосуточная аптека"
+    ],
+    "example": "Аптека находится на первом этаже.",
+    "sentenceIDs": [
+      "sentence-directions-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-directions-напротив",
+    "lemma": "напротив",
+    "stressedForm": "напро́тив",
+    "speechText": "напротив",
+    "partOfSpeech": "preposition",
+    "glossZh": "在对面",
+    "collocations": [
+      "прямо напротив"
+    ],
+    "example": "Кафе стоит напротив библиотеки.",
+    "sentenceIDs": [
+      "sentence-directions-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "government": "作介词时支配第二格（напротив банка）"
+  },
+  {
+    "id": "lexeme-directions-банк",
+    "lemma": "банк",
+    "stressedForm": "ба́нк",
+    "speechText": "банк",
+    "partOfSpeech": "noun",
+    "glossZh": "银行",
+    "collocations": [
+      "ближайший банк"
+    ],
+    "example": "Банк откроется через десять минут.",
+    "sentenceIDs": [
+      "sentence-directions-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "банка"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-directions-вход",
+    "lemma": "вход",
+    "stressedForm": "вхо́д",
+    "speechText": "вход",
+    "partOfSpeech": "noun",
+    "glossZh": "入口",
+    "collocations": [
+      "главный вход"
+    ],
+    "example": "Вход во двор закрыт на код.",
+    "sentenceIDs": [
+      "sentence-directions-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-directions-справа",
+    "lemma": "справа",
+    "stressedForm": "спра́ва",
+    "speechText": "справа",
+    "partOfSpeech": "adverb",
+    "glossZh": "在右边",
+    "collocations": [
+      "дом справа"
+    ],
+    "example": "Справа начинается узкая лестница.",
+    "sentenceIDs": [
+      "sentence-directions-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-weather-сегодня",
+    "lemma": "сегодня",
+    "stressedForm": "сего́дня",
+    "speechText": "сегодня",
+    "partOfSpeech": "adverb",
+    "glossZh": "今天",
+    "collocations": [
+      "сегодня утром"
+    ],
+    "example": "Сегодня обещают ясную погоду.",
+    "sentenceIDs": [
+      "sentence-weather-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-weather-тепло",
+    "lemma": "тепло",
+    "stressedForm": "тепло́",
+    "speechText": "тепло",
+    "partOfSpeech": "adverb",
+    "glossZh": "暖和",
+    "collocations": [
+      "очень тепло"
+    ],
+    "example": "В комнате стало тепло.",
+    "sentenceIDs": [
+      "sentence-weather-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-weather-солнечно",
+    "lemma": "солнечно",
+    "stressedForm": "со́лнечно",
+    "speechText": "солнечно",
+    "partOfSpeech": "adverb",
+    "glossZh": "晴朗",
+    "collocations": [
+      "завтра солнечно"
+    ],
+    "example": "После обеда будет солнечно.",
+    "sentenceIDs": [
+      "sentence-weather-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-weather-ветер",
+    "lemma": "ветер",
+    "stressedForm": "ве́тер",
+    "speechText": "ветер",
+    "partOfSpeech": "noun",
+    "glossZh": "风",
+    "collocations": [
+      "сильный ветер"
+    ],
+    "example": "Ветер раскачивает ветви клёна.",
+    "sentenceIDs": [
+      "sentence-weather-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-weather-почти",
+    "lemma": "почти",
+    "stressedForm": "почти́",
+    "speechText": "почти",
+    "partOfSpeech": "adverb",
+    "glossZh": "几乎",
+    "collocations": [
+      "почти безоблачно"
+    ],
+    "example": "Озеро почти полностью замёрзло.",
+    "sentenceIDs": [
+      "sentence-weather-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-weather-днем",
+    "lemma": "днём",
+    "stressedForm": "днём",
+    "speechText": "днём",
+    "partOfSpeech": "adverb",
+    "glossZh": "白天；下午",
+    "collocations": [
+      "завтра днём"
+    ],
+    "example": "Днём температура поднимется до десяти.",
+    "sentenceIDs": [
+      "sentence-weather-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-weather-возможный",
+    "lemma": "возможный",
+    "stressedForm": "возмо́жный",
+    "speechText": "возможный",
+    "partOfSpeech": "adjective",
+    "glossZh": "可能的",
+    "collocations": [
+      "возможный дождь"
+    ],
+    "example": "Синоптик предупредил о возможном дожде.",
+    "sentenceIDs": [
+      "sentence-weather-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "возможен",
+      "возможном"
+    ]
+  },
+  {
+    "id": "lexeme-weather-дождь",
+    "lemma": "дождь",
+    "stressedForm": "до́ждь",
+    "speechText": "дождь",
+    "partOfSpeech": "noun",
+    "glossZh": "雨",
+    "collocations": [
+      "мелкий дождь"
+    ],
+    "example": "Дождь начался сразу после заката.",
+    "sentenceIDs": [
+      "sentence-weather-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-weather-забывать",
+    "lemma": "забывать",
+    "stressedForm": "забыва́ть",
+    "speechText": "забывать",
+    "partOfSpeech": "verb",
+    "glossZh": "忘记",
+    "collocations": [
+      "часто забывать"
+    ],
+    "example": "Я перестал забывать дома перчатки.",
+    "sentenceIDs": [
+      "sentence-weather-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "забыть",
+    "government": "直接接第四格；动作可用忘记 + 动词不定式"
+  },
+  {
+    "id": "lexeme-weather-зонт",
+    "lemma": "зонт",
+    "stressedForm": "зо́нт",
+    "speechText": "зонт",
+    "partOfSpeech": "noun",
+    "glossZh": "雨伞",
+    "collocations": [
+      "складной зонт"
+    ],
+    "example": "Зонт сушится в прихожей.",
+    "sentenceIDs": [
+      "sentence-weather-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-seasons-весна",
+    "lemma": "весна",
+    "stressedForm": "весна́",
+    "speechText": "весна",
+    "partOfSpeech": "noun",
+    "glossZh": "春天",
+    "collocations": [
+      "ранняя весна"
+    ],
+    "example": "Весна в этом году пришла поздно.",
+    "sentenceIDs": [
+      "sentence-seasons-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "весной"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-seasons-снег",
+    "lemma": "снег",
+    "stressedForm": "сне́г",
+    "speechText": "снег",
+    "partOfSpeech": "noun",
+    "glossZh": "雪",
+    "collocations": [
+      "первый снег"
+    ],
+    "example": "Снег тихо падает на крыши.",
+    "sentenceIDs": [
+      "sentence-seasons-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-seasons-таять",
+    "lemma": "таять",
+    "stressedForm": "та́ять",
+    "speechText": "таять",
+    "partOfSpeech": "verb",
+    "glossZh": "融化",
+    "collocations": [
+      "быстро таять"
+    ],
+    "example": "На солнце лёд начинает таять.",
+    "sentenceIDs": [
+      "sentence-seasons-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "растаять",
+    "government": "不及物；常接方式或地点（снег тает на солнце）"
+  },
+  {
+    "id": "lexeme-seasons-расцветать",
+    "lemma": "расцветать",
+    "stressedForm": "расцвета́ть",
+    "speechText": "расцветать",
+    "partOfSpeech": "verb",
+    "glossZh": "开花",
+    "collocations": [
+      "рано расцветать"
+    ],
+    "example": "Яблони будут расцветать в мае.",
+    "sentenceIDs": [
+      "sentence-seasons-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "расцвести",
+    "government": "不及物；常接时间或方式（цветы расцветают весной）"
+  },
+  {
+    "id": "lexeme-seasons-цветок",
+    "lemma": "цветок",
+    "stressedForm": "цвето́к",
+    "speechText": "цветок",
+    "partOfSpeech": "noun",
+    "glossZh": "花",
+    "collocations": [
+      "полевой цветок"
+    ],
+    "example": "Этот цветок пахнет мёдом.",
+    "sentenceIDs": [
+      "sentence-seasons-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "цветы"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-seasons-осень",
+    "lemma": "осень",
+    "stressedForm": "о́сень",
+    "speechText": "осень",
+    "partOfSpeech": "noun",
+    "glossZh": "秋天",
+    "collocations": [
+      "золотая осень"
+    ],
+    "example": "Осень раскрасила парк яркими красками.",
+    "sentenceIDs": [
+      "sentence-seasons-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "осенью"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-seasons-лист",
+    "lemma": "лист",
+    "stressedForm": "ли́ст",
+    "speechText": "лист",
+    "partOfSpeech": "noun",
+    "glossZh": "叶子",
+    "collocations": [
+      "жёлтый лист"
+    ],
+    "example": "Сухой лист кружится над дорожкой.",
+    "sentenceIDs": [
+      "sentence-seasons-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "листья"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-seasons-желтеть",
+    "lemma": "желтеть",
+    "stressedForm": "желте́ть",
+    "speechText": "желтеть",
+    "partOfSpeech": "verb",
+    "glossZh": "变黄",
+    "collocations": [
+      "постепенно желтеть"
+    ],
+    "example": "Берёзы начинают желтеть в сентябре.",
+    "sentenceIDs": [
+      "sentence-seasons-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "желтеет",
+      "желтеют"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "пожелтеть",
+    "government": "不及物；主体用第一格（листья желтеют）"
+  },
+  {
+    "id": "lexeme-seasons-воздух",
+    "lemma": "воздух",
+    "stressedForm": "во́здух",
+    "speechText": "воздух",
+    "partOfSpeech": "noun",
+    "glossZh": "空气",
+    "collocations": [
+      "прохладный воздух"
+    ],
+    "example": "Воздух после грозы особенно свежий.",
+    "sentenceIDs": [
+      "sentence-seasons-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-seasons-прохладный",
+    "lemma": "прохладный",
+    "stressedForm": "прохла́дный",
+    "speechText": "прохладный",
+    "partOfSpeech": "adjective",
+    "glossZh": "凉爽的",
+    "collocations": [
+      "прохладный вечер"
+    ],
+    "example": "Прохладный ветер дует с реки.",
+    "sentenceIDs": [
+      "sentence-seasons-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "прохладным"
+    ]
+  },
+  {
+    "id": "lexeme-time-сейчас",
+    "lemma": "сейчас",
+    "stressedForm": "сейча́с",
+    "speechText": "сейчас",
+    "partOfSpeech": "adverb",
+    "glossZh": "现在",
+    "collocations": [
+      "прямо сейчас"
+    ],
+    "example": "Сейчас у меня короткий перерыв.",
+    "sentenceIDs": [
+      "sentence-time-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-time-четверть",
+    "lemma": "четверть",
+    "stressedForm": "че́тверть",
+    "speechText": "четверть",
+    "partOfSpeech": "noun",
+    "glossZh": "四分之一；一刻钟",
+    "collocations": [
+      "четверть часа"
+    ],
+    "example": "Четверть часа пролетела незаметно.",
+    "sentenceIDs": [
+      "sentence-time-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-time-восьмой",
+    "lemma": "восьмой",
+    "stressedForm": "восьмо́й",
+    "speechText": "восьмой",
+    "partOfSpeech": "numeral",
+    "glossZh": "第八",
+    "collocations": [
+      "восьмой вагон"
+    ],
+    "example": "Восьмой урок отменили из-за собрания.",
+    "sentenceIDs": [
+      "sentence-time-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "восьмого"
+    ]
+  },
+  {
+    "id": "lexeme-time-полчаса",
+    "lemma": "полчаса",
+    "stressedForm": "полчаса́",
+    "speechText": "полчаса",
+    "partOfSpeech": "noun",
+    "glossZh": "半小时",
+    "collocations": [
+      "ещё полчаса"
+    ],
+    "example": "Полчаса достаточно для пересадки.",
+    "sentenceIDs": [
+      "sentence-time-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-time-успевать",
+    "lemma": "успевать",
+    "stressedForm": "успева́ть",
+    "speechText": "успевать",
+    "partOfSpeech": "verb",
+    "glossZh": "来得及",
+    "collocations": [
+      "всё успевать"
+    ],
+    "example": "Утром я стараюсь успевать на автобус.",
+    "sentenceIDs": [
+      "sentence-time-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "успеваю"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "успеть",
+    "government": "успевать + 动词不定式；也可接 в/на + 第四格"
+  },
+  {
+    "id": "lexeme-time-начинаться",
+    "lemma": "начинаться",
+    "stressedForm": "начина́ться",
+    "speechText": "начинаться",
+    "partOfSpeech": "verb",
+    "glossZh": "开始",
+    "collocations": [
+      "начинаться вовремя"
+    ],
+    "example": "Спектакль должен начинаться ровно в семь.",
+    "sentenceIDs": [
+      "sentence-time-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "начинается"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "начаться",
+    "government": "不及物；时间用 в + 第四格（начинаться в девять）"
+  },
+  {
+    "id": "lexeme-time-вовремя",
+    "lemma": "вовремя",
+    "stressedForm": "во́время",
+    "speechText": "вовремя",
+    "partOfSpeech": "adverb",
+    "glossZh": "准时",
+    "collocations": [
+      "прийти вовремя"
+    ],
+    "example": "Курьер приехал вовремя.",
+    "sentenceIDs": [
+      "sentence-time-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-time-длиться",
+    "lemma": "длиться",
+    "stressedForm": "дли́ться",
+    "speechText": "длиться",
+    "partOfSpeech": "verb",
+    "glossZh": "持续",
+    "collocations": [
+      "длиться недолго"
+    ],
+    "example": "Экскурсия будет длиться два часа.",
+    "sentenceIDs": [
+      "sentence-time-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPairNote": "表示持续状态，无自然完成体对应词",
+    "government": "直接接时长（длиться два часа）"
+  },
+  {
+    "id": "lexeme-time-всего",
+    "lemma": "всего",
+    "stressedForm": "всего́",
+    "speechText": "всего",
+    "partOfSpeech": "adverb",
+    "glossZh": "总共；仅仅",
+    "collocations": [
+      "всего пять минут"
+    ],
+    "example": "До дома осталось всего сто метров.",
+    "sentenceIDs": [
+      "sentence-time-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-time-сорок",
+    "lemma": "сорок",
+    "stressedForm": "со́рок",
+    "speechText": "сорок",
+    "partOfSpeech": "numeral",
+    "glossZh": "四十",
+    "collocations": [
+      "сорок минут"
+    ],
+    "example": "Сорок зрителей вошли в зал.",
+    "sentenceIDs": [
+      "sentence-time-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-calendar-назначать",
+    "lemma": "назначать",
+    "stressedForm": "назнача́ть",
+    "speechText": "назначать",
+    "partOfSpeech": "verb",
+    "glossZh": "安排；指定",
+    "collocations": [
+      "назначать встречу"
+    ],
+    "example": "Врач предпочитает назначать приём утром.",
+    "sentenceIDs": [
+      "sentence-calendar-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "назначить",
+    "government": "直接接第四格；时间用 на + 第四格（назначать встречу на вторник）"
+  },
+  {
+    "id": "lexeme-calendar-следующий",
+    "lemma": "следующий",
+    "stressedForm": "сле́дующий",
+    "speechText": "следующий",
+    "partOfSpeech": "adjective",
+    "glossZh": "下一个的",
+    "collocations": [
+      "следующий вторник"
+    ],
+    "example": "Следующий поезд отправится через час.",
+    "sentenceIDs": [
+      "sentence-calendar-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "следующая"
+    ]
+  },
+  {
+    "id": "lexeme-calendar-вторник",
+    "lemma": "вторник",
+    "stressedForm": "вто́рник",
+    "speechText": "вторник",
+    "partOfSpeech": "noun",
+    "glossZh": "星期二",
+    "collocations": [
+      "встреча во вторник"
+    ],
+    "example": "Вторник оказался самым загруженным днём.",
+    "sentenceIDs": [
+      "sentence-calendar-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-calendar-неделя",
+    "lemma": "неделя",
+    "stressedForm": "неде́ля",
+    "speechText": "неделя",
+    "partOfSpeech": "noun",
+    "glossZh": "星期；周",
+    "collocations": [
+      "рабочая неделя"
+    ],
+    "example": "Неделя началась с важного звонка.",
+    "sentenceIDs": [
+      "sentence-calendar-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-calendar-календарь",
+    "lemma": "календарь",
+    "stressedForm": "календа́рь",
+    "speechText": "календарь",
+    "partOfSpeech": "noun",
+    "glossZh": "日历",
+    "collocations": [
+      "настенный календарь"
+    ],
+    "example": "Календарь висит над письменным столом.",
+    "sentenceIDs": [
+      "sentence-calendar-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "календаре"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-calendar-конец",
+    "lemma": "конец",
+    "stressedForm": "коне́ц",
+    "speechText": "конец",
+    "partOfSpeech": "noun",
+    "glossZh": "末尾",
+    "collocations": [
+      "конец месяца"
+    ],
+    "example": "Конец фильма меня удивил.",
+    "sentenceIDs": [
+      "sentence-calendar-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "конце"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-calendar-месяц",
+    "lemma": "месяц",
+    "stressedForm": "ме́сяц",
+    "speechText": "месяц",
+    "partOfSpeech": "noun",
+    "glossZh": "月",
+    "collocations": [
+      "прошлый месяц"
+    ],
+    "example": "Месяц пролетел очень быстро.",
+    "sentenceIDs": [
+      "sentence-calendar-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "месяца"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-calendar-будущий",
+    "lemma": "будущий",
+    "stressedForm": "бу́дущий",
+    "speechText": "будущий",
+    "partOfSpeech": "adjective",
+    "glossZh": "将来的",
+    "collocations": [
+      "будущий отпуск"
+    ],
+    "example": "Будущий год обещает много поездок.",
+    "sentenceIDs": [
+      "sentence-calendar-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-calendar-день",
+    "lemma": "день",
+    "stressedForm": "де́нь",
+    "speechText": "день",
+    "partOfSpeech": "noun",
+    "glossZh": "天；日",
+    "collocations": [
+      "свободный день"
+    ],
+    "example": "День начался с солнечной погоды.",
+    "sentenceIDs": [
+      "sentence-calendar-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "дня"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-calendar-отпуск",
+    "lemma": "отпуск",
+    "stressedForm": "о́тпуск",
+    "speechText": "отпуск",
+    "partOfSpeech": "noun",
+    "glossZh": "休假",
+    "collocations": [
+      "летний отпуск"
+    ],
+    "example": "Отпуск мы проведём у моря.",
+    "sentenceIDs": [
+      "sentence-calendar-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-study-студент",
+    "lemma": "студент",
+    "stressedForm": "студе́нт",
+    "speechText": "студент",
+    "partOfSpeech": "noun",
+    "glossZh": "学生",
+    "collocations": [
+      "иностранный студент"
+    ],
+    "example": "Студент задал преподавателю вопрос.",
+    "sentenceIDs": [
+      "sentence-study-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-study-читать",
+    "lemma": "читать",
+    "stressedForm": "чита́ть",
+    "speechText": "читать",
+    "partOfSpeech": "verb",
+    "glossZh": "阅读",
+    "collocations": [
+      "читать вслух"
+    ],
+    "example": "Перед сном я люблю читать.",
+    "sentenceIDs": [
+      "sentence-study-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "читает"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "прочитать",
+    "government": "直接接第四格（читать учебник）"
+  },
+  {
+    "id": "lexeme-study-учебник",
+    "lemma": "учебник",
+    "stressedForm": "уче́бник",
+    "speechText": "учебник",
+    "partOfSpeech": "noun",
+    "glossZh": "课本",
+    "collocations": [
+      "новый учебник"
+    ],
+    "example": "Учебник лежит под тетрадью.",
+    "sentenceIDs": [
+      "sentence-study-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-study-библиотека",
+    "lemma": "библиотека",
+    "stressedForm": "библиоте́ка",
+    "speechText": "библиотека",
+    "partOfSpeech": "noun",
+    "glossZh": "图书馆",
+    "collocations": [
+      "городская библиотека"
+    ],
+    "example": "Библиотека открыта до восьми.",
+    "sentenceIDs": [
+      "sentence-study-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "библиотеке"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-study-запись",
+    "lemma": "запись",
+    "stressedForm": "за́пись",
+    "speechText": "запись",
+    "partOfSpeech": "noun",
+    "glossZh": "笔记；记录",
+    "collocations": [
+      "короткая запись"
+    ],
+    "example": "Запись в дневнике заняла одну строку.",
+    "sentenceIDs": [
+      "sentence-study-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-study-преподаватель",
+    "lemma": "преподаватель",
+    "stressedForm": "преподава́тель",
+    "speechText": "преподаватель",
+    "partOfSpeech": "noun",
+    "glossZh": "教师",
+    "collocations": [
+      "опытный преподаватель"
+    ],
+    "example": "Преподаватель проверяет наши работы.",
+    "sentenceIDs": [
+      "sentence-study-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-study-объяснять",
+    "lemma": "объяснять",
+    "stressedForm": "объясня́ть",
+    "speechText": "объяснять",
+    "partOfSpeech": "verb",
+    "glossZh": "解释",
+    "collocations": [
+      "понятно объяснять"
+    ],
+    "example": "Она умеет объяснять сложные правила.",
+    "sentenceIDs": [
+      "sentence-study-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "объясняет"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "объяснить",
+    "government": "第三格人 + 第四格内容（объяснять студенту правило）"
+  },
+  {
+    "id": "lexeme-study-задание",
+    "lemma": "задание",
+    "stressedForm": "зада́ние",
+    "speechText": "задание",
+    "partOfSpeech": "noun",
+    "glossZh": "任务；作业",
+    "collocations": [
+      "домашнее задание"
+    ],
+    "example": "Задание нужно сдать в пятницу.",
+    "sentenceIDs": [
+      "sentence-study-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-study-отвечать",
+    "lemma": "отвечать",
+    "stressedForm": "отвеча́ть",
+    "speechText": "отвечать",
+    "partOfSpeech": "verb",
+    "glossZh": "回答",
+    "collocations": [
+      "отвечать на вопрос"
+    ],
+    "example": "Не бойтесь отвечать своими словами.",
+    "sentenceIDs": [
+      "sentence-study-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "отвечают"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "ответить",
+    "government": "на + 第四格（отвечать на вопрос）；第三格表示回答某人"
+  },
+  {
+    "id": "lexeme-study-вопрос",
+    "lemma": "вопрос",
+    "stressedForm": "вопро́с",
+    "speechText": "вопрос",
+    "partOfSpeech": "noun",
+    "glossZh": "问题",
+    "collocations": [
+      "задать вопрос"
+    ],
+    "example": "Этот вопрос требует точного ответа.",
+    "sentenceIDs": [
+      "sentence-study-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-language-learning-повторять",
+    "lemma": "повторять",
+    "stressedForm": "повторя́ть",
+    "speechText": "повторять",
+    "partOfSpeech": "verb",
+    "glossZh": "复习；重复",
+    "collocations": [
+      "повторять слова"
+    ],
+    "example": "Утром полезно повторять новые выражения.",
+    "sentenceIDs": [
+      "sentence-language-learning-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "повторить",
+    "government": "直接接第四格（повторять слова）"
+  },
+  {
+    "id": "lexeme-language-learning-новый",
+    "lemma": "новый",
+    "stressedForm": "но́вый",
+    "speechText": "новый",
+    "partOfSpeech": "adjective",
+    "glossZh": "新的",
+    "collocations": [
+      "новое слово"
+    ],
+    "example": "Новый учебник оказался очень удобным.",
+    "sentenceIDs": [
+      "sentence-language-learning-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "новое"
+    ]
+  },
+  {
+    "id": "lexeme-language-learning-слово",
+    "lemma": "слово",
+    "stressedForm": "сло́во",
+    "speechText": "слово",
+    "partOfSpeech": "noun",
+    "glossZh": "单词；话",
+    "collocations": [
+      "русское слово"
+    ],
+    "example": "Это слово часто встречается в речи.",
+    "sentenceIDs": [
+      "sentence-language-learning-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-language-learning-фраза",
+    "lemma": "фраза",
+    "stressedForm": "фра́за",
+    "speechText": "фраза",
+    "partOfSpeech": "noun",
+    "glossZh": "短语",
+    "collocations": [
+      "полезная фраза"
+    ],
+    "example": "Фраза звучит естественно и вежливо.",
+    "sentenceIDs": [
+      "sentence-language-learning-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "фразу",
+      "фразы"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-language-learning-вслух",
+    "lemma": "вслух",
+    "stressedForm": "вслу́х",
+    "speechText": "вслух",
+    "partOfSpeech": "adverb",
+    "glossZh": "大声地",
+    "collocations": [
+      "читать вслух"
+    ],
+    "example": "Попробуйте произнести предложение вслух.",
+    "sentenceIDs": [
+      "sentence-language-learning-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-language-learning-свободно",
+    "lemma": "свободно",
+    "stressedForm": "свобо́дно",
+    "speechText": "свободно",
+    "partOfSpeech": "adverb",
+    "glossZh": "流利地；自由地",
+    "collocations": [
+      "говорить свободно"
+    ],
+    "example": "После практики она говорит свободно.",
+    "sentenceIDs": [
+      "sentence-language-learning-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-language-learning-слушать",
+    "lemma": "слушать",
+    "stressedForm": "слу́шать",
+    "speechText": "слушать",
+    "partOfSpeech": "verb",
+    "glossZh": "听",
+    "collocations": [
+      "внимательно слушать"
+    ],
+    "example": "В автобусе я люблю слушать подкасты.",
+    "sentenceIDs": [
+      "sentence-language-learning-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "послушать",
+    "government": "直接接第四格（слушать диалог / преподавателя）"
+  },
+  {
+    "id": "lexeme-language-learning-диалог",
+    "lemma": "диалог",
+    "stressedForm": "диало́г",
+    "speechText": "диалог",
+    "partOfSpeech": "noun",
+    "glossZh": "对话",
+    "collocations": [
+      "короткий диалог"
+    ],
+    "example": "Диалог легко запомнить по ролям.",
+    "sentenceIDs": [
+      "sentence-language-learning-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-language-learning-тренировать",
+    "lemma": "тренировать",
+    "stressedForm": "тренирова́ть",
+    "speechText": "тренировать",
+    "partOfSpeech": "verb",
+    "glossZh": "训练",
+    "collocations": [
+      "тренировать произношение"
+    ],
+    "example": "Полезно тренировать слух каждый день.",
+    "sentenceIDs": [
+      "sentence-language-learning-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "government": "直接接第四格（тренировать произношение）",
+    "aspectPair": "натренировать"
+  },
+  {
+    "id": "lexeme-language-learning-произношение",
+    "lemma": "произношение",
+    "stressedForm": "произноше́ние",
+    "speechText": "произношение",
+    "partOfSpeech": "noun",
+    "glossZh": "发音",
+    "collocations": [
+      "чёткое произношение"
+    ],
+    "example": "Произношение улучшилось после занятий.",
+    "sentenceIDs": [
+      "sentence-language-learning-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-health-болеть",
+    "lemma": "болеть",
+    "stressedForm": "боле́ть",
+    "speechText": "болеть",
+    "partOfSpeech": "verb",
+    "glossZh": "疼；生病",
+    "collocations": [
+      "сильно болеть"
+    ],
+    "example": "После падения колено продолжает болеть.",
+    "sentenceIDs": [
+      "sentence-health-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "болит"
+    ],
+    "aspect": "imperfective",
+    "aspectPairNote": "表示状态时无自然完成体对应词",
+    "government": "身体部位作第一格（болит голова）；疾病可用 чем + 第五格"
+  },
+  {
+    "id": "lexeme-health-голова",
+    "lemma": "голова",
+    "stressedForm": "голова́",
+    "speechText": "голова",
+    "partOfSpeech": "noun",
+    "glossZh": "头",
+    "collocations": [
+      "часто болит голова"
+    ],
+    "example": "Голова перестала болеть к вечеру.",
+    "sentenceIDs": [
+      "sentence-health-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-health-температура",
+    "lemma": "температура",
+    "stressedForm": "температу́ра",
+    "speechText": "температура",
+    "partOfSpeech": "noun",
+    "glossZh": "体温；温度",
+    "collocations": [
+      "высокая температура"
+    ],
+    "example": "Температура поднялась ночью.",
+    "sentenceIDs": [
+      "sentence-health-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-health-нужно",
+    "lemma": "нужно",
+    "stressedForm": "ну́жно",
+    "speechText": "нужно",
+    "partOfSpeech": "adverb",
+    "glossZh": "需要",
+    "collocations": [
+      "нужно отдохнуть"
+    ],
+    "example": "Мне нужно записаться к врачу.",
+    "sentenceIDs": [
+      "sentence-health-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-health-отдохнуть",
+    "lemma": "отдохнуть",
+    "stressedForm": "отдохну́ть",
+    "speechText": "отдохнуть",
+    "partOfSpeech": "verb",
+    "glossZh": "休息一下",
+    "collocations": [
+      "хорошо отдохнуть"
+    ],
+    "example": "После дороги хочется отдохнуть.",
+    "sentenceIDs": [
+      "sentence-health-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "отдыхать",
+    "government": "不及物；地点常用 в/на + 第六格"
+  },
+  {
+    "id": "lexeme-health-врач",
+    "lemma": "врач",
+    "stressedForm": "вра́ч",
+    "speechText": "врач",
+    "partOfSpeech": "noun",
+    "glossZh": "医生",
+    "collocations": [
+      "семейный врач"
+    ],
+    "example": "Врач внимательно выслушал пациента.",
+    "sentenceIDs": [
+      "sentence-health-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-health-советовать",
+    "lemma": "советовать",
+    "stressedForm": "сове́товать",
+    "speechText": "советовать",
+    "partOfSpeech": "verb",
+    "glossZh": "建议",
+    "collocations": [
+      "советовать больше отдыхать"
+    ],
+    "example": "Я не могу советовать это лекарство.",
+    "sentenceIDs": [
+      "sentence-health-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "советует"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "посоветовать",
+    "government": "第三格人 + 第四格事物，或 советовать + 动词不定式"
+  },
+  {
+    "id": "lexeme-health-пить",
+    "lemma": "пить",
+    "stressedForm": "пи́ть",
+    "speechText": "пить",
+    "partOfSpeech": "verb",
+    "glossZh": "喝",
+    "collocations": [
+      "пить воду"
+    ],
+    "example": "Во время жары важно пить чаще.",
+    "sentenceIDs": [
+      "sentence-health-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "выпить",
+    "government": "直接接第四格；部分量可用第二格（пить воду / выпить воды）"
+  },
+  {
+    "id": "lexeme-health-вода",
+    "lemma": "вода",
+    "stressedForm": "вода́",
+    "speechText": "вода",
+    "partOfSpeech": "noun",
+    "glossZh": "水",
+    "collocations": [
+      "питьевая вода"
+    ],
+    "example": "Вода в бутылке ещё прохладная.",
+    "sentenceIDs": [
+      "sentence-health-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "воды"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-health-лекарство",
+    "lemma": "лекарство",
+    "stressedForm": "лека́рство",
+    "speechText": "лекарство",
+    "partOfSpeech": "noun",
+    "glossZh": "药",
+    "collocations": [
+      "принимать лекарство"
+    ],
+    "example": "Лекарство следует хранить в шкафу.",
+    "sentenceIDs": [
+      "sentence-health-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-feelings-радоваться",
+    "lemma": "радоваться",
+    "stressedForm": "ра́доваться",
+    "speechText": "радоваться",
+    "partOfSpeech": "verb",
+    "glossZh": "高兴",
+    "collocations": [
+      "радоваться успеху"
+    ],
+    "example": "Дети умеют радоваться простым вещам.",
+    "sentenceIDs": [
+      "sentence-feelings-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "обрадоваться",
+    "government": "第三格（радоваться новости / успеху）"
+  },
+  {
+    "id": "lexeme-feelings-хороший",
+    "lemma": "хороший",
+    "stressedForm": "хоро́ший",
+    "speechText": "хороший",
+    "partOfSpeech": "adjective",
+    "glossZh": "好的",
+    "collocations": [
+      "хороший день"
+    ],
+    "example": "Хороший сон возвращает силы.",
+    "sentenceIDs": [
+      "sentence-feelings-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "хорошая",
+      "хорошее"
+    ]
+  },
+  {
+    "id": "lexeme-feelings-новость",
+    "lemma": "новость",
+    "stressedForm": "но́вость",
+    "speechText": "новость",
+    "partOfSpeech": "noun",
+    "glossZh": "消息",
+    "collocations": [
+      "приятная новость"
+    ],
+    "example": "Новость быстро разошлась по офису.",
+    "sentenceIDs": [
+      "sentence-feelings-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-feelings-чувствовать",
+    "lemma": "чувствовать",
+    "stressedForm": "чу́вствовать",
+    "speechText": "чувствовать",
+    "partOfSpeech": "verb",
+    "glossZh": "感觉",
+    "collocations": [
+      "чувствовать себя лучше"
+    ],
+    "example": "Я начал чувствовать запах кофе.",
+    "sentenceIDs": [
+      "sentence-feelings-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "чувствую"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "почувствовать",
+    "government": "直接接第四格；状态常用 чувствовать себя + 副词"
+  },
+  {
+    "id": "lexeme-feelings-спокойно",
+    "lemma": "спокойно",
+    "stressedForm": "споко́йно",
+    "speechText": "спокойно",
+    "partOfSpeech": "adverb",
+    "glossZh": "平静地",
+    "collocations": [
+      "говорить спокойно"
+    ],
+    "example": "Она спокойно объяснила свою просьбу.",
+    "sentenceIDs": [
+      "sentence-feelings-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-feelings-немного",
+    "lemma": "немного",
+    "stressedForm": "немно́го",
+    "speechText": "немного",
+    "partOfSpeech": "adverb",
+    "glossZh": "一点",
+    "collocations": [
+      "немного устать"
+    ],
+    "example": "После прогулки я немного замёрз.",
+    "sentenceIDs": [
+      "sentence-feelings-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-feelings-волноваться",
+    "lemma": "волноваться",
+    "stressedForm": "волнова́ться",
+    "speechText": "волноваться",
+    "partOfSpeech": "verb",
+    "glossZh": "担心；激动",
+    "collocations": [
+      "сильно волноваться"
+    ],
+    "example": "Перед экзаменом нормально волноваться.",
+    "sentenceIDs": [
+      "sentence-feelings-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "волнуюсь"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "взволноваться",
+    "government": "за + 第四格或 из-за + 第二格（волноваться за друга）"
+  },
+  {
+    "id": "lexeme-feelings-друг",
+    "lemma": "друг",
+    "stressedForm": "дру́г",
+    "speechText": "друг",
+    "partOfSpeech": "noun",
+    "glossZh": "朋友",
+    "collocations": [
+      "близкий друг"
+    ],
+    "example": "Друг встретил меня на вокзале.",
+    "sentenceIDs": [
+      "sentence-feelings-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-feelings-поддерживать",
+    "lemma": "поддерживать",
+    "stressedForm": "подде́рживать",
+    "speechText": "поддерживать",
+    "partOfSpeech": "verb",
+    "glossZh": "支持",
+    "collocations": [
+      "поддерживать друга"
+    ],
+    "example": "Важно поддерживать близких в трудный момент.",
+    "sentenceIDs": [
+      "sentence-feelings-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "поддержать",
+    "government": "直接接第四格（поддерживать друга）"
+  },
+  {
+    "id": "lexeme-feelings-настроение",
+    "lemma": "настроение",
+    "stressedForm": "настрое́ние",
+    "speechText": "настроение",
+    "partOfSpeech": "noun",
+    "glossZh": "心情",
+    "collocations": [
+      "хорошее настроение"
+    ],
+    "example": "Музыка сразу улучшила настроение.",
+    "sentenceIDs": [
+      "sentence-feelings-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-hobbies-свободный",
+    "lemma": "свободный",
+    "stressedForm": "свобо́дный",
+    "speechText": "свободный",
+    "partOfSpeech": "adjective",
+    "glossZh": "空闲的；自由的",
+    "collocations": [
+      "свободный вечер"
+    ],
+    "example": "Свободный столик нашёлся у окна.",
+    "sentenceIDs": [
+      "sentence-hobbies-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "свободен"
+    ]
+  },
+  {
+    "id": "lexeme-hobbies-рисовать",
+    "lemma": "рисовать",
+    "stressedForm": "рисова́ть",
+    "speechText": "рисовать",
+    "partOfSpeech": "verb",
+    "glossZh": "画画",
+    "collocations": [
+      "рисовать портреты"
+    ],
+    "example": "Моя дочь любит рисовать акварелью.",
+    "sentenceIDs": [
+      "sentence-hobbies-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "нарисовать",
+    "government": "直接接第四格；工具用第五格（рисовать портрет карандашом）"
+  },
+  {
+    "id": "lexeme-hobbies-фотографировать",
+    "lemma": "фотографировать",
+    "stressedForm": "фотографи́ровать",
+    "speechText": "фотографировать",
+    "partOfSpeech": "verb",
+    "glossZh": "摄影",
+    "collocations": [
+      "фотографировать природу"
+    ],
+    "example": "Здесь запрещено фотографировать со вспышкой.",
+    "sentenceIDs": [
+      "sentence-hobbies-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "сфотографировать",
+    "government": "直接接第四格（фотографировать природу）"
+  },
+  {
+    "id": "lexeme-hobbies-собирать",
+    "lemma": "собирать",
+    "stressedForm": "собира́ть",
+    "speechText": "собирать",
+    "partOfSpeech": "verb",
+    "glossZh": "收集",
+    "collocations": [
+      "собирать открытки"
+    ],
+    "example": "Осенью приятно собирать грибы.",
+    "sentenceIDs": [
+      "sentence-hobbies-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "собрать",
+    "government": "直接接第四格（собирать открытки）"
+  },
+  {
+    "id": "lexeme-hobbies-открытка",
+    "lemma": "открытка",
+    "stressedForm": "откры́тка",
+    "speechText": "открытка",
+    "partOfSpeech": "noun",
+    "glossZh": "明信片",
+    "collocations": [
+      "почтовая открытка"
+    ],
+    "example": "Открытка дошла за две недели.",
+    "sentenceIDs": [
+      "sentence-hobbies-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "открытки"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-hobbies-выходной",
+    "lemma": "выходной",
+    "stressedForm": "выходно́й",
+    "speechText": "выходной",
+    "partOfSpeech": "noun",
+    "glossZh": "休息日",
+    "collocations": [
+      "ближайший выходной"
+    ],
+    "example": "Выходной я проведу за городом.",
+    "sentenceIDs": [
+      "sentence-hobbies-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-hobbies-любить",
+    "lemma": "любить",
+    "stressedForm": "люби́ть",
+    "speechText": "любить",
+    "partOfSpeech": "verb",
+    "glossZh": "喜欢；爱",
+    "collocations": [
+      "любить музыку"
+    ],
+    "example": "Можно любить город за его ритм.",
+    "sentenceIDs": [
+      "sentence-hobbies-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "люблю"
+    ],
+    "aspect": "imperfective",
+    "aspectPairNote": "表示稳定情感或偏好，无自然完成体对应词",
+    "government": "直接接第四格，或 любить + 动词不定式"
+  },
+  {
+    "id": "lexeme-hobbies-играть",
+    "lemma": "играть",
+    "stressedForm": "игра́ть",
+    "speechText": "играть",
+    "partOfSpeech": "verb",
+    "glossZh": "演奏；玩",
+    "collocations": [
+      "играть на гитаре"
+    ],
+    "example": "Сосед учится играть на гитаре.",
+    "sentenceIDs": [
+      "sentence-hobbies-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "сыграть",
+    "government": "на + 第六格表示乐器；в + 第四格表示游戏或运动"
+  },
+  {
+    "id": "lexeme-hobbies-гитара",
+    "lemma": "гитара",
+    "stressedForm": "гита́ра",
+    "speechText": "гитара",
+    "partOfSpeech": "noun",
+    "glossZh": "吉他",
+    "collocations": [
+      "акустическая гитара"
+    ],
+    "example": "Гитара висит на стене.",
+    "sentenceIDs": [
+      "sentence-hobbies-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "гитаре"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-hobbies-кино",
+    "lemma": "кино",
+    "stressedForm": "кино́",
+    "speechText": "кино",
+    "partOfSpeech": "noun",
+    "glossZh": "电影",
+    "collocations": [
+      "смотреть кино"
+    ],
+    "example": "По пятницам мы обсуждаем кино.",
+    "sentenceIDs": [
+      "sentence-hobbies-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-sports-бегать",
+    "lemma": "бегать",
+    "stressedForm": "бе́гать",
+    "speechText": "бегать",
+    "partOfSpeech": "verb",
+    "glossZh": "跑步",
+    "collocations": [
+      "бегать по утрам"
+    ],
+    "example": "Врач разрешил мне снова бегать.",
+    "sentenceIDs": [
+      "sentence-sports-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPairNote": "多向运动动词，无单一中性完成体；побегать 表示跑一会儿",
+    "government": "по + 第三格表示活动范围（бегать по утрам / по парку）"
+  },
+  {
+    "id": "lexeme-sports-стадион",
+    "lemma": "стадион",
+    "stressedForm": "стадио́н",
+    "speechText": "стадион",
+    "partOfSpeech": "noun",
+    "glossZh": "体育场",
+    "collocations": [
+      "городской стадион"
+    ],
+    "example": "Стадион открыли после ремонта.",
+    "sentenceIDs": [
+      "sentence-sports-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "стадионе"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-sports-разминка",
+    "lemma": "разминка",
+    "stressedForm": "разми́нка",
+    "speechText": "разминка",
+    "partOfSpeech": "noun",
+    "glossZh": "热身",
+    "collocations": [
+      "короткая разминка"
+    ],
+    "example": "Разминка заняла около десяти минут.",
+    "sentenceIDs": [
+      "sentence-sports-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "разминку"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-sports-утром",
+    "lemma": "утром",
+    "stressedForm": "у́тром",
+    "speechText": "утром",
+    "partOfSpeech": "adverb",
+    "glossZh": "早晨",
+    "collocations": [
+      "тренироваться утром"
+    ],
+    "example": "Утром в парке почти нет людей.",
+    "sentenceIDs": [
+      "sentence-sports-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-sports-упражнение",
+    "lemma": "упражнение",
+    "stressedForm": "упражне́ние",
+    "speechText": "упражнение",
+    "partOfSpeech": "noun",
+    "glossZh": "练习；动作",
+    "collocations": [
+      "простое упражнение"
+    ],
+    "example": "Это упражнение укрепляет спину.",
+    "sentenceIDs": [
+      "sentence-sports-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "упражнения"
+    ],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-sports-команда",
+    "lemma": "команда",
+    "stressedForm": "кома́нда",
+    "speechText": "команда",
+    "partOfSpeech": "noun",
+    "glossZh": "队伍",
+    "collocations": [
+      "сильная команда"
+    ],
+    "example": "Команда вышла на поле первой.",
+    "sentenceIDs": [
+      "sentence-sports-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "команды"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-sports-тренироваться",
+    "lemma": "тренироваться",
+    "stressedForm": "тренирова́ться",
+    "speechText": "тренироваться",
+    "partOfSpeech": "verb",
+    "glossZh": "训练",
+    "collocations": [
+      "тренироваться регулярно"
+    ],
+    "example": "Мы будем тренироваться трижды в неделю.",
+    "sentenceIDs": [
+      "sentence-sports-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "натренироваться",
+    "government": "в + 第六格表示训练项目；地点常用 в/на + 第六格"
+  },
+  {
+    "id": "lexeme-sports-тренер",
+    "lemma": "тренер",
+    "stressedForm": "тре́нер",
+    "speechText": "тренер",
+    "partOfSpeech": "noun",
+    "glossZh": "教练",
+    "collocations": [
+      "новый тренер"
+    ],
+    "example": "Тренер показал правильное движение.",
+    "sentenceIDs": [
+      "sentence-sports-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-sports-записывать",
+    "lemma": "записывать",
+    "stressedForm": "запи́сывать",
+    "speechText": "записывать",
+    "partOfSpeech": "verb",
+    "glossZh": "记录",
+    "collocations": [
+      "записывать результат"
+    ],
+    "example": "Секретарь начал записывать имена участников.",
+    "sentenceIDs": [
+      "sentence-sports-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "записывает"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "записать",
+    "government": "直接接第四格；记录到某处用 в/на + 第四格"
+  },
+  {
+    "id": "lexeme-sports-результат",
+    "lemma": "результат",
+    "stressedForm": "результа́т",
+    "speechText": "результат",
+    "partOfSpeech": "noun",
+    "glossZh": "结果",
+    "collocations": [
+      "лучший результат"
+    ],
+    "example": "Результат превзошёл наши ожидания.",
+    "sentenceIDs": [
+      "sentence-sports-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-travel-путешествие",
+    "lemma": "путешествие",
+    "stressedForm": "путеше́ствие",
+    "speechText": "путешествие",
+    "partOfSpeech": "noun",
+    "glossZh": "旅行",
+    "collocations": [
+      "долгое путешествие"
+    ],
+    "example": "Путешествие по северу длилось неделю.",
+    "sentenceIDs": [
+      "sentence-travel-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "путешествием"
+    ],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-travel-маршрут",
+    "lemma": "маршрут",
+    "stressedForm": "маршру́т",
+    "speechText": "маршрут",
+    "partOfSpeech": "noun",
+    "glossZh": "路线",
+    "collocations": [
+      "удобный маршрут"
+    ],
+    "example": "Маршрут проходит через старый город.",
+    "sentenceIDs": [
+      "sentence-travel-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-travel-чемодан",
+    "lemma": "чемодан",
+    "stressedForm": "чемода́н",
+    "speechText": "чемодан",
+    "partOfSpeech": "noun",
+    "glossZh": "行李箱",
+    "collocations": [
+      "тяжёлый чемодан"
+    ],
+    "example": "Чемодан едва поместился на полке.",
+    "sentenceIDs": [
+      "sentence-travel-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-travel-собираться",
+    "lemma": "собираться",
+    "stressedForm": "собира́ться",
+    "speechText": "собираться",
+    "partOfSpeech": "verb",
+    "glossZh": "收拾；准备",
+    "collocations": [
+      "собираться в поездку"
+    ],
+    "example": "Я начал собираться ещё вечером.",
+    "sentenceIDs": [
+      "sentence-travel-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "собраться",
+    "government": "в + 第四格表示去向；собираться + 动词不定式表示打算"
+  },
+  {
+    "id": "lexeme-travel-поездка",
+    "lemma": "поездка",
+    "stressedForm": "по́ездка",
+    "speechText": "поездка",
+    "partOfSpeech": "noun",
+    "glossZh": "出行",
+    "collocations": [
+      "деловая поездка"
+    ],
+    "example": "Поездка прошла без задержек.",
+    "sentenceIDs": [
+      "sentence-travel-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "поездку"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-travel-место",
+    "lemma": "место",
+    "stressedForm": "ме́сто",
+    "speechText": "место",
+    "partOfSpeech": "noun",
+    "glossZh": "地方；位置",
+    "collocations": [
+      "новое место"
+    ],
+    "example": "Это место напоминает мне детство.",
+    "sentenceIDs": [
+      "sentence-travel-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-travel-гулять",
+    "lemma": "гулять",
+    "stressedForm": "гуля́ть",
+    "speechText": "гулять",
+    "partOfSpeech": "verb",
+    "glossZh": "散步",
+    "collocations": [
+      "гулять по городу"
+    ],
+    "example": "Мы любим гулять без определённого плана.",
+    "sentenceIDs": [
+      "sentence-travel-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "погулять",
+    "government": "по + 第三格表示地点范围（гулять по городу）"
+  },
+  {
+    "id": "lexeme-travel-снимать",
+    "lemma": "снимать",
+    "stressedForm": "снима́ть",
+    "speechText": "снимать",
+    "partOfSpeech": "verb",
+    "glossZh": "拍摄；租",
+    "collocations": [
+      "снимать пейзажи"
+    ],
+    "example": "В центре дорого снимать квартиру.",
+    "sentenceIDs": [
+      "sentence-travel-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "снять",
+    "government": "直接接第四格（снимать пейзажи / квартиру）"
+  },
+  {
+    "id": "lexeme-travel-знакомиться",
+    "lemma": "знакомиться",
+    "stressedForm": "знако́миться",
+    "speechText": "знакомиться",
+    "partOfSpeech": "verb",
+    "glossZh": "结识",
+    "collocations": [
+      "знакомиться с местными"
+    ],
+    "example": "В поездках легко знакомиться с людьми.",
+    "sentenceIDs": [
+      "sentence-travel-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "познакомиться",
+    "government": "с + 第五格（знакомиться с местными жителями）"
+  },
+  {
+    "id": "lexeme-travel-местный",
+    "lemma": "местный",
+    "stressedForm": "ме́стный",
+    "speechText": "местный",
+    "partOfSpeech": "adjective",
+    "glossZh": "当地的",
+    "collocations": [
+      "местный житель"
+    ],
+    "example": "Местный рынок работает по субботам.",
+    "sentenceIDs": [
+      "sentence-travel-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "местными"
+    ]
+  },
+  {
+    "id": "lexeme-hotel-бронировать",
+    "lemma": "бронировать",
+    "stressedForm": "брони́ровать",
+    "speechText": "бронировать",
+    "partOfSpeech": "verb",
+    "glossZh": "预订",
+    "collocations": [
+      "бронировать номер"
+    ],
+    "example": "Летом лучше бронировать жильё заранее.",
+    "sentenceIDs": [
+      "sentence-hotel-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "biaspectual",
+    "aspectPair": "забронировать",
+    "government": "直接接第四格；日期用 на + 第四格（бронировать номер на неделю）"
+  },
+  {
+    "id": "lexeme-hotel-одноместный",
+    "lemma": "одноместный",
+    "stressedForm": "одноме́стный",
+    "speechText": "одноместный",
+    "partOfSpeech": "adjective",
+    "glossZh": "单人的",
+    "collocations": [
+      "одноместный номер"
+    ],
+    "example": "Одноместный номер выходит во двор.",
+    "sentenceIDs": [
+      "sentence-hotel-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-hotel-номер",
+    "lemma": "номер",
+    "stressedForm": "но́мер",
+    "speechText": "номер",
+    "partOfSpeech": "noun",
+    "glossZh": "房间；号码",
+    "collocations": [
+      "свободный номер"
+    ],
+    "example": "Номер оказался тихим и просторным.",
+    "sentenceIDs": [
+      "sentence-hotel-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-hotel-питание",
+    "lemma": "питание",
+    "stressedForm": "пита́ние",
+    "speechText": "питание",
+    "partOfSpeech": "noun",
+    "glossZh": "餐食",
+    "collocations": [
+      "трёхразовое питание"
+    ],
+    "example": "Питание не входит в стоимость.",
+    "sentenceIDs": [
+      "sentence-hotel-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-hotel-гостиница",
+    "lemma": "гостиница",
+    "stressedForm": "гости́ница",
+    "speechText": "гостиница",
+    "partOfSpeech": "noun",
+    "glossZh": "酒店",
+    "collocations": [
+      "небольшая гостиница"
+    ],
+    "example": "Гостиница расположена возле станции.",
+    "sentenceIDs": [
+      "sentence-hotel-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "гостинице"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-hotel-администратор",
+    "lemma": "администратор",
+    "stressedForm": "администра́тор",
+    "speechText": "администратор",
+    "partOfSpeech": "noun",
+    "glossZh": "前台人员；管理员",
+    "collocations": [
+      "дежурный администратор"
+    ],
+    "example": "Администратор вызвал для нас такси.",
+    "sentenceIDs": [
+      "sentence-hotel-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-hotel-ключ",
+    "lemma": "ключ",
+    "stressedForm": "клю́ч",
+    "speechText": "ключ",
+    "partOfSpeech": "noun",
+    "glossZh": "钥匙",
+    "collocations": [
+      "электронный ключ"
+    ],
+    "example": "Ключ оставили на стойке.",
+    "sentenceIDs": [
+      "sentence-hotel-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-hotel-назвать",
+    "lemma": "назвать",
+    "stressedForm": "назва́ть",
+    "speechText": "назвать",
+    "partOfSpeech": "verb",
+    "glossZh": "说出；命名",
+    "collocations": [
+      "назвать фамилию"
+    ],
+    "example": "Я затрудняюсь назвать точную дату.",
+    "sentenceIDs": [
+      "sentence-hotel-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "назвали"
+    ],
+    "aspect": "perfective",
+    "aspectPair": "называть",
+    "government": "直接接第四格（назвать фамилию）；命名结构可接第五格"
+  },
+  {
+    "id": "lexeme-hotel-пароль",
+    "lemma": "пароль",
+    "stressedForm": "паро́ль",
+    "speechText": "пароль",
+    "partOfSpeech": "noun",
+    "glossZh": "密码",
+    "collocations": [
+      "новый пароль"
+    ],
+    "example": "Пароль состоит из восьми символов.",
+    "sentenceIDs": [
+      "sentence-hotel-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-hotel-вайфай",
+    "lemma": "вайфай",
+    "stressedForm": "ва́йфа́й",
+    "speechText": "вайфай",
+    "partOfSpeech": "noun",
+    "glossZh": "无线网络",
+    "collocations": [
+      "бесплатный вайфай"
+    ],
+    "example": "Вайфай работает только в холле.",
+    "sentenceIDs": [
+      "sentence-hotel-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "вайфая"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-airport-регистрация",
+    "lemma": "регистрация",
+    "stressedForm": "регистра́ция",
+    "speechText": "регистрация",
+    "partOfSpeech": "noun",
+    "glossZh": "登记；值机",
+    "collocations": [
+      "регистрация на рейс"
+    ],
+    "example": "Регистрация заканчивается за сорок минут.",
+    "sentenceIDs": [
+      "sentence-airport-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "регистрации"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-airport-показать",
+    "lemma": "показать",
+    "stressedForm": "показа́ть",
+    "speechText": "показать",
+    "partOfSpeech": "verb",
+    "glossZh": "出示；展示",
+    "collocations": [
+      "показать паспорт"
+    ],
+    "example": "На контроле попросят показать билет.",
+    "sentenceIDs": [
+      "sentence-airport-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "показывать",
+    "government": "第三格人 + 第四格事物（показать сотруднику паспорт）"
+  },
+  {
+    "id": "lexeme-airport-паспорт",
+    "lemma": "паспорт",
+    "stressedForm": "па́спорт",
+    "speechText": "паспорт",
+    "partOfSpeech": "noun",
+    "glossZh": "护照",
+    "collocations": [
+      "заграничный паспорт"
+    ],
+    "example": "Паспорт лежит во внутреннем кармане.",
+    "sentenceIDs": [
+      "sentence-airport-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-airport-билет",
+    "lemma": "билет",
+    "stressedForm": "биле́т",
+    "speechText": "билет",
+    "partOfSpeech": "noun",
+    "glossZh": "票",
+    "collocations": [
+      "электронный билет"
+    ],
+    "example": "Билет пришёл на почту вечером.",
+    "sentenceIDs": [
+      "sentence-airport-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-airport-багаж",
+    "lemma": "багаж",
+    "stressedForm": "бага́ж",
+    "speechText": "багаж",
+    "partOfSpeech": "noun",
+    "glossZh": "行李",
+    "collocations": [
+      "ручной багаж"
+    ],
+    "example": "Багаж уже приняли у стойки.",
+    "sentenceIDs": [
+      "sentence-airport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "багажа"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-airport-рейс",
+    "lemma": "рейс",
+    "stressedForm": "ре́йс",
+    "speechText": "рейс",
+    "partOfSpeech": "noun",
+    "glossZh": "航班",
+    "collocations": [
+      "вечерний рейс"
+    ],
+    "example": "Рейс перенесли на завтра.",
+    "sentenceIDs": [
+      "sentence-airport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-airport-задерживаться",
+    "lemma": "задерживаться",
+    "stressedForm": "заде́рживаться",
+    "speechText": "задерживаться",
+    "partOfSpeech": "verb",
+    "glossZh": "延误",
+    "collocations": [
+      "часто задерживаться"
+    ],
+    "example": "Самолёт может задерживаться из-за тумана.",
+    "sentenceIDs": [
+      "sentence-airport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "задерживается"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "задержаться",
+    "government": "不及物；时长常用 на + 第四格（задержаться на час）"
+  },
+  {
+    "id": "lexeme-airport-выход",
+    "lemma": "выход",
+    "stressedForm": "вы́ход",
+    "speechText": "выход",
+    "partOfSpeech": "noun",
+    "glossZh": "出口；登机口",
+    "collocations": [
+      "нужный выход"
+    ],
+    "example": "Выход расположен рядом с кафе.",
+    "sentenceIDs": [
+      "sentence-airport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-airport-посадка",
+    "lemma": "посадка",
+    "stressedForm": "поса́дка",
+    "speechText": "посадка",
+    "partOfSpeech": "noun",
+    "glossZh": "登机；落座",
+    "collocations": [
+      "посадка на рейс"
+    ],
+    "example": "Посадка начнётся через пять минут.",
+    "sentenceIDs": [
+      "sentence-airport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "посадку"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-airport-измениться",
+    "lemma": "измениться",
+    "stressedForm": "измени́ться",
+    "speechText": "измениться",
+    "partOfSpeech": "verb",
+    "glossZh": "改变",
+    "collocations": [
+      "резко измениться"
+    ],
+    "example": "Номер выхода успел измениться.",
+    "sentenceIDs": [
+      "sentence-airport-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "изменяться",
+    "government": "不及物；变化幅度常用 на + 第四格"
+  },
+  {
+    "id": "lexeme-train-поезд",
+    "lemma": "поезд",
+    "stressedForm": "по́езд",
+    "speechText": "поезд",
+    "partOfSpeech": "noun",
+    "glossZh": "火车",
+    "collocations": [
+      "скорый поезд"
+    ],
+    "example": "Поезд прибыл на первую платформу.",
+    "sentenceIDs": [
+      "sentence-train-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-train-отправляться",
+    "lemma": "отправляться",
+    "stressedForm": "отправля́ться",
+    "speechText": "отправляться",
+    "partOfSpeech": "verb",
+    "glossZh": "出发",
+    "collocations": [
+      "отправляться каждый час"
+    ],
+    "example": "Поезда отсюда будут отправляться каждый час.",
+    "sentenceIDs": [
+      "sentence-train-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "отправиться",
+    "government": "в/на + 第四格表示目的地；из/с + 第二格表示出发地"
+  },
+  {
+    "id": "lexeme-train-второй",
+    "lemma": "второй",
+    "stressedForm": "второ́й",
+    "speechText": "второй",
+    "partOfSpeech": "numeral",
+    "glossZh": "第二",
+    "collocations": [
+      "второй вагон"
+    ],
+    "example": "Второй подъезд находится за магазином.",
+    "sentenceIDs": [
+      "sentence-train-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-train-платформа",
+    "lemma": "платформа",
+    "stressedForm": "платфо́рма",
+    "speechText": "платформа",
+    "partOfSpeech": "noun",
+    "glossZh": "站台",
+    "collocations": [
+      "нужная платформа"
+    ],
+    "example": "Платформа оказалась на другой стороне.",
+    "sentenceIDs": [
+      "sentence-train-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "платформу",
+      "платформы"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-train-расписание",
+    "lemma": "расписание",
+    "stressedForm": "расписа́ние",
+    "speechText": "расписание",
+    "partOfSpeech": "noun",
+    "glossZh": "时刻表",
+    "collocations": [
+      "новое расписание"
+    ],
+    "example": "Расписание висит возле кассы.",
+    "sentenceIDs": [
+      "sentence-train-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "расписании"
+    ],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-train-найти",
+    "lemma": "найти",
+    "stressedForm": "найти́",
+    "speechText": "найти",
+    "partOfSpeech": "verb",
+    "glossZh": "找到",
+    "collocations": [
+      "быстро найти"
+    ],
+    "example": "Мне удалось найти свободное место.",
+    "sentenceIDs": [
+      "sentence-train-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "находить",
+    "government": "直接接第四格（найти платформу）"
+  },
+  {
+    "id": "lexeme-train-вагон",
+    "lemma": "вагон",
+    "stressedForm": "ваго́н",
+    "speechText": "вагон",
+    "partOfSpeech": "noun",
+    "glossZh": "车厢",
+    "collocations": [
+      "соседний вагон"
+    ],
+    "example": "Вагон был почти пустым.",
+    "sentenceIDs": [
+      "sentence-train-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-train-сиденье",
+    "lemma": "сиденье",
+    "stressedForm": "сиде́нье",
+    "speechText": "сиденье",
+    "partOfSpeech": "noun",
+    "glossZh": "座位",
+    "collocations": [
+      "удобное сиденье"
+    ],
+    "example": "Сиденье у окна уже занято.",
+    "sentenceIDs": [
+      "sentence-train-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-train-полка",
+    "lemma": "полка",
+    "stressedForm": "по́лка",
+    "speechText": "полка",
+    "partOfSpeech": "noun",
+    "glossZh": "卧铺；搁板",
+    "collocations": [
+      "верхняя полка"
+    ],
+    "example": "Полка выдерживает тяжёлый чемодан.",
+    "sentenceIDs": [
+      "sentence-train-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "полку"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-train-проводник",
+    "lemma": "проводник",
+    "stressedForm": "прово́дник",
+    "speechText": "проводник",
+    "partOfSpeech": "noun",
+    "glossZh": "列车员",
+    "collocations": [
+      "вежливый проводник"
+    ],
+    "example": "Проводник проверил билеты после отправления.",
+    "sentenceIDs": [
+      "sentence-train-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-communication-позвонить",
+    "lemma": "позвонить",
+    "stressedForm": "позвони́ть",
+    "speechText": "позвонить",
+    "partOfSpeech": "verb",
+    "glossZh": "打电话",
+    "collocations": [
+      "позвонить родителям"
+    ],
+    "example": "Я обещал позвонить после работы.",
+    "sentenceIDs": [
+      "sentence-communication-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "позвоните"
+    ],
+    "aspect": "perfective",
+    "aspectPair": "звонить",
+    "government": "第三格表示致电对象（позвонить родителям）"
+  },
+  {
+    "id": "lexeme-communication-отправить",
+    "lemma": "отправить",
+    "stressedForm": "отпра́вить",
+    "speechText": "отправить",
+    "partOfSpeech": "verb",
+    "glossZh": "发送",
+    "collocations": [
+      "отправить сообщение"
+    ],
+    "example": "Не забудь отправить адрес встречи.",
+    "sentenceIDs": [
+      "sentence-communication-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "отправлять",
+    "government": "直接接第四格；收件人用第三格（отправить другу сообщение）"
+  },
+  {
+    "id": "lexeme-communication-сообщение",
+    "lemma": "сообщение",
+    "stressedForm": "сообще́ние",
+    "speechText": "сообщение",
+    "partOfSpeech": "noun",
+    "glossZh": "消息",
+    "collocations": [
+      "голосовое сообщение"
+    ],
+    "example": "Сообщение пришло слишком поздно.",
+    "sentenceIDs": [
+      "sentence-communication-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-communication-или",
+    "lemma": "или",
+    "stressedForm": "и́ли",
+    "speechText": "или",
+    "partOfSpeech": "conjunction",
+    "glossZh": "或者",
+    "collocations": [
+      "чай или кофе"
+    ],
+    "example": "Можно встретиться сегодня или завтра.",
+    "sentenceIDs": [
+      "sentence-communication-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-communication-телефон",
+    "lemma": "телефон",
+    "stressedForm": "телефо́н",
+    "speechText": "телефон",
+    "partOfSpeech": "noun",
+    "glossZh": "电话；手机",
+    "collocations": [
+      "мобильный телефон"
+    ],
+    "example": "Телефон лежит рядом с ключами.",
+    "sentenceIDs": [
+      "sentence-communication-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "телефону"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-communication-ответить",
+    "lemma": "ответить",
+    "stressedForm": "отве́тить",
+    "speechText": "ответить",
+    "partOfSpeech": "verb",
+    "glossZh": "回答；接听",
+    "collocations": [
+      "быстро ответить"
+    ],
+    "example": "Я постараюсь ответить до обеда.",
+    "sentenceIDs": [
+      "sentence-communication-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "отвечать",
+    "government": "на + 第四格（ответить на сообщение）；第三格表示回答某人"
+  },
+  {
+    "id": "lexeme-communication-связаться",
+    "lemma": "связаться",
+    "stressedForm": "связа́ться",
+    "speechText": "связаться",
+    "partOfSpeech": "verb",
+    "glossZh": "联系",
+    "collocations": [
+      "связаться с мастером"
+    ],
+    "example": "С курьером не удалось связаться.",
+    "sentenceIDs": [
+      "sentence-communication-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "связываться",
+    "government": "с + 第五格（связаться с мастером）"
+  },
+  {
+    "id": "lexeme-communication-позже",
+    "lemma": "позже",
+    "stressedForm": "по́зже",
+    "speechText": "позже",
+    "partOfSpeech": "adverb",
+    "glossZh": "稍后",
+    "collocations": [
+      "немного позже"
+    ],
+    "example": "Давайте обсудим это позже.",
+    "sentenceIDs": [
+      "sentence-communication-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-communication-контакт",
+    "lemma": "контакт",
+    "stressedForm": "конта́кт",
+    "speechText": "контакт",
+    "partOfSpeech": "noun",
+    "glossZh": "联系；联系人",
+    "collocations": [
+      "рабочий контакт"
+    ],
+    "example": "Сохраните мой контакт в телефоне.",
+    "sentenceIDs": [
+      "sentence-communication-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-communication-разговор",
+    "lemma": "разговор",
+    "stressedForm": "разгово́р",
+    "speechText": "разговор",
+    "partOfSpeech": "noun",
+    "glossZh": "谈话",
+    "collocations": [
+      "короткий разговор"
+    ],
+    "example": "Разговор закончился на дружеской ноте.",
+    "sentenceIDs": [
+      "sentence-communication-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-technology-разрядиться",
+    "lemma": "разрядиться",
+    "stressedForm": "разряди́ться",
+    "speechText": "разрядиться",
+    "partOfSpeech": "verb",
+    "glossZh": "没电",
+    "collocations": [
+      "быстро разрядиться"
+    ],
+    "example": "Телефон может разрядиться на морозе.",
+    "sentenceIDs": [
+      "sentence-technology-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "разрядился"
+    ],
+    "aspect": "perfective",
+    "aspectPair": "разряжаться",
+    "government": "不及物；主体用第一格（батарея разрядилась）"
+  },
+  {
+    "id": "lexeme-technology-зарядный",
+    "lemma": "зарядный",
+    "stressedForm": "заря́дный",
+    "speechText": "зарядный",
+    "partOfSpeech": "adjective",
+    "glossZh": "充电的",
+    "collocations": [
+      "зарядное устройство"
+    ],
+    "example": "Зарядный кабель остался дома.",
+    "sentenceIDs": [
+      "sentence-technology-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "зарядное"
+    ]
+  },
+  {
+    "id": "lexeme-technology-устройство",
+    "lemma": "устройство",
+    "stressedForm": "устро́йство",
+    "speechText": "устройство",
+    "partOfSpeech": "noun",
+    "glossZh": "设备",
+    "collocations": [
+      "новое устройство"
+    ],
+    "example": "Устройство включается боковой кнопкой.",
+    "sentenceIDs": [
+      "sentence-technology-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-technology-экран",
+    "lemma": "экран",
+    "stressedForm": "экра́н",
+    "speechText": "экран",
+    "partOfSpeech": "noun",
+    "glossZh": "屏幕",
+    "collocations": [
+      "яркий экран"
+    ],
+    "example": "Экран погас через минуту.",
+    "sentenceIDs": [
+      "sentence-technology-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "экране"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-technology-батарея",
+    "lemma": "батарея",
+    "stressedForm": "ба́тарея",
+    "speechText": "батарея",
+    "partOfSpeech": "noun",
+    "glossZh": "电池",
+    "collocations": [
+      "запасная батарея"
+    ],
+    "example": "Батарея полностью зарядилась.",
+    "sentenceIDs": [
+      "sentence-technology-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-technology-подключиться",
+    "lemma": "подключиться",
+    "stressedForm": "подключи́ться",
+    "speechText": "подключиться",
+    "partOfSpeech": "verb",
+    "glossZh": "连接",
+    "collocations": [
+      "подключиться к сети"
+    ],
+    "example": "Не получается подключиться к вайфаю.",
+    "sentenceIDs": [
+      "sentence-technology-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "подключаться",
+    "government": "к + 第三格（подключиться к сети）"
+  },
+  {
+    "id": "lexeme-technology-сеть",
+    "lemma": "сеть",
+    "stressedForm": "се́ть",
+    "speechText": "сеть",
+    "partOfSpeech": "noun",
+    "glossZh": "网络",
+    "collocations": [
+      "домашняя сеть"
+    ],
+    "example": "Сеть временно недоступна.",
+    "sentenceIDs": [
+      "sentence-technology-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "сети"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-technology-открыть",
+    "lemma": "открыть",
+    "stressedForm": "откры́ть",
+    "speechText": "открыть",
+    "partOfSpeech": "verb",
+    "glossZh": "打开",
+    "collocations": [
+      "открыть приложение"
+    ],
+    "example": "Нажмите здесь, чтобы открыть файл.",
+    "sentenceIDs": [
+      "sentence-technology-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "откройте"
+    ],
+    "aspect": "perfective",
+    "aspectPair": "открывать",
+    "government": "直接接第四格（открыть приложение）"
+  },
+  {
+    "id": "lexeme-technology-приложение",
+    "lemma": "приложение",
+    "stressedForm": "приложе́ние",
+    "speechText": "приложение",
+    "partOfSpeech": "noun",
+    "glossZh": "应用程序",
+    "collocations": [
+      "мобильное приложение"
+    ],
+    "example": "Приложение обновилось этой ночью.",
+    "sentenceIDs": [
+      "sentence-technology-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-technology-интернет",
+    "lemma": "интернет",
+    "stressedForm": "интерне́т",
+    "speechText": "интернет",
+    "partOfSpeech": "noun",
+    "glossZh": "互联网",
+    "collocations": [
+      "быстрый интернет"
+    ],
+    "example": "Интернет пропал во время звонка.",
+    "sentenceIDs": [
+      "sentence-technology-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-clothing-холодный",
+    "lemma": "холодный",
+    "stressedForm": "холо́дный",
+    "speechText": "холодный",
+    "partOfSpeech": "adjective",
+    "glossZh": "寒冷的",
+    "collocations": [
+      "холодный день"
+    ],
+    "example": "Холодный воздух проник через окно.",
+    "sentenceIDs": [
+      "sentence-clothing-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-clothing-надевать",
+    "lemma": "надевать",
+    "stressedForm": "надева́ть",
+    "speechText": "надевать",
+    "partOfSpeech": "verb",
+    "glossZh": "穿上",
+    "collocations": [
+      "надевать пальто"
+    ],
+    "example": "Ребёнок учится сам надевать сапоги.",
+    "sentenceIDs": [
+      "sentence-clothing-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "надеть",
+    "government": "直接接第四格；надевать что на кого（надевать пальто）"
+  },
+  {
+    "id": "lexeme-clothing-пальто",
+    "lemma": "пальто",
+    "stressedForm": "па́льто",
+    "speechText": "пальто",
+    "partOfSpeech": "noun",
+    "glossZh": "大衣",
+    "collocations": [
+      "зимнее пальто"
+    ],
+    "example": "Пальто висит у входа.",
+    "sentenceIDs": [
+      "sentence-clothing-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-clothing-шарф",
+    "lemma": "шарф",
+    "stressedForm": "ша́рф",
+    "speechText": "шарф",
+    "partOfSpeech": "noun",
+    "glossZh": "围巾",
+    "collocations": [
+      "шерстяной шарф"
+    ],
+    "example": "Шарф подходит к этой куртке.",
+    "sentenceIDs": [
+      "sentence-clothing-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-clothing-сапог",
+    "lemma": "сапог",
+    "stressedForm": "сапо́г",
+    "speechText": "сапог",
+    "partOfSpeech": "noun",
+    "glossZh": "靴子",
+    "collocations": [
+      "резиновый сапог"
+    ],
+    "example": "Правый сапог промок у ручья.",
+    "sentenceIDs": [
+      "sentence-clothing-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "сапоги"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-clothing-рубашка",
+    "lemma": "рубашка",
+    "stressedForm": "руба́шка",
+    "speechText": "рубашка",
+    "partOfSpeech": "noun",
+    "glossZh": "衬衫",
+    "collocations": [
+      "белая рубашка"
+    ],
+    "example": "Рубашка уже выглажена.",
+    "sentenceIDs": [
+      "sentence-clothing-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-clothing-впору",
+    "lemma": "впору",
+    "stressedForm": "впо́ру",
+    "speechText": "впору",
+    "partOfSpeech": "adverb",
+    "glossZh": "正合身",
+    "collocations": [
+      "быть впору"
+    ],
+    "example": "Эти ботинки мне как раз впору.",
+    "sentenceIDs": [
+      "sentence-clothing-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-clothing-брюки",
+    "lemma": "брюки",
+    "stressedForm": "брю́ки",
+    "speechText": "брюки",
+    "partOfSpeech": "noun",
+    "glossZh": "裤子",
+    "collocations": [
+      "тёмные брюки"
+    ],
+    "example": "Брюки нужно немного укоротить.",
+    "sentenceIDs": [
+      "sentence-clothing-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "plural"
+  },
+  {
+    "id": "lexeme-clothing-слишком",
+    "lemma": "слишком",
+    "stressedForm": "сли́шком",
+    "speechText": "слишком",
+    "partOfSpeech": "adverb",
+    "glossZh": "过于",
+    "collocations": [
+      "слишком длинный"
+    ],
+    "example": "Здесь слишком жарко для пальто.",
+    "sentenceIDs": [
+      "sentence-clothing-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-clothing-длинный",
+    "lemma": "длинный",
+    "stressedForm": "дли́нный",
+    "speechText": "длинный",
+    "partOfSpeech": "adjective",
+    "glossZh": "长的",
+    "collocations": [
+      "длинный рукав"
+    ],
+    "example": "Длинный шарф дважды обернули вокруг шеи.",
+    "sentenceIDs": [
+      "sentence-clothing-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "длинные"
+    ]
+  },
+  {
+    "id": "lexeme-appearance-высокий",
+    "lemma": "высокий",
+    "stressedForm": "высо́кий",
+    "speechText": "высокий",
+    "partOfSpeech": "adjective",
+    "glossZh": "高的",
+    "collocations": [
+      "высокий мужчина"
+    ],
+    "example": "Высокий юноша стоял у двери.",
+    "sentenceIDs": [
+      "sentence-appearance-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "высокого"
+    ]
+  },
+  {
+    "id": "lexeme-appearance-мужчина",
+    "lemma": "мужчина",
+    "stressedForm": "мужчи́на",
+    "speechText": "мужчина",
+    "partOfSpeech": "noun",
+    "glossZh": "男人",
+    "collocations": [
+      "пожилой мужчина"
+    ],
+    "example": "Мужчина в очках улыбнулся ребёнку.",
+    "sentenceIDs": [
+      "sentence-appearance-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "мужчины"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-appearance-короткий",
+    "lemma": "короткий",
+    "stressedForm": "коро́ткий",
+    "speechText": "короткий",
+    "partOfSpeech": "adjective",
+    "glossZh": "短的",
+    "collocations": [
+      "короткие волосы"
+    ],
+    "example": "Ему очень идут короткие волосы.",
+    "sentenceIDs": [
+      "sentence-appearance-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "короткие"
+    ]
+  },
+  {
+    "id": "lexeme-appearance-волос",
+    "lemma": "волос",
+    "stressedForm": "во́лос",
+    "speechText": "волос",
+    "partOfSpeech": "noun",
+    "glossZh": "头发",
+    "collocations": [
+      "густые волосы"
+    ],
+    "example": "Волосы быстро сохнут на солнце.",
+    "sentenceIDs": [
+      "sentence-appearance-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "волосы"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-appearance-очки",
+    "lemma": "очки",
+    "stressedForm": "очки́",
+    "speechText": "очки",
+    "partOfSpeech": "noun",
+    "glossZh": "眼镜",
+    "collocations": [
+      "круглые очки"
+    ],
+    "example": "Очки лежали в чёрном футляре.",
+    "sentenceIDs": [
+      "sentence-appearance-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "очках"
+    ],
+    "grammaticalGender": "plural"
+  },
+  {
+    "id": "lexeme-appearance-добрый",
+    "lemma": "добрый",
+    "stressedForm": "до́брый",
+    "speechText": "добрый",
+    "partOfSpeech": "adjective",
+    "glossZh": "友善的",
+    "collocations": [
+      "добрый взгляд"
+    ],
+    "example": "Добрый взгляд сразу успокоил малыша.",
+    "sentenceIDs": [
+      "sentence-appearance-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "добрая"
+    ]
+  },
+  {
+    "id": "lexeme-appearance-улыбка",
+    "lemma": "улыбка",
+    "stressedForm": "улы́бка",
+    "speechText": "улыбка",
+    "partOfSpeech": "noun",
+    "glossZh": "微笑",
+    "collocations": [
+      "широкая улыбка"
+    ],
+    "example": "Улыбка сделала её лицо моложе.",
+    "sentenceIDs": [
+      "sentence-appearance-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-appearance-синий",
+    "lemma": "синий",
+    "stressedForm": "си́ний",
+    "speechText": "синий",
+    "partOfSpeech": "adjective",
+    "glossZh": "蓝色的",
+    "collocations": [
+      "синий шарф"
+    ],
+    "example": "Синий цвет подчёркивает глаза.",
+    "sentenceIDs": [
+      "sentence-appearance-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "синее"
+    ]
+  },
+  {
+    "id": "lexeme-appearance-платье",
+    "lemma": "платье",
+    "stressedForm": "пла́тье",
+    "speechText": "платье",
+    "partOfSpeech": "noun",
+    "glossZh": "连衣裙",
+    "collocations": [
+      "летнее платье"
+    ],
+    "example": "Платье хорошо сидит по фигуре.",
+    "sentenceIDs": [
+      "sentence-appearance-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-appearance-внешность",
+    "lemma": "внешность",
+    "stressedForm": "вне́шность",
+    "speechText": "внешность",
+    "partOfSpeech": "noun",
+    "glossZh": "外貌",
+    "collocations": [
+      "яркая внешность"
+    ],
+    "example": "Внешность бывает обманчивой.",
+    "sentenceIDs": [
+      "sentence-appearance-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-friends-старый",
+    "lemma": "старый",
+    "stressedForm": "ста́рый",
+    "speechText": "старый",
+    "partOfSpeech": "adjective",
+    "glossZh": "老的；相识已久的",
+    "collocations": [
+      "старый друг"
+    ],
+    "example": "Старый альбом хранит наши фотографии.",
+    "sentenceIDs": [
+      "sentence-friends-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-friends-жить",
+    "lemma": "жить",
+    "stressedForm": "жи́ть",
+    "speechText": "жить",
+    "partOfSpeech": "verb",
+    "glossZh": "居住；生活",
+    "collocations": [
+      "жить рядом"
+    ],
+    "example": "После учёбы я хочу жить у моря.",
+    "sentenceIDs": [
+      "sentence-friends-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "живёт"
+    ],
+    "aspect": "imperfective",
+    "aspectPairNote": "表示持续状态，无自然完成体对应词",
+    "government": "地点用 в/на + 第六格；与某人同住用 с + 第五格"
+  },
+  {
+    "id": "lexeme-friends-недалеко",
+    "lemma": "недалеко",
+    "stressedForm": "недалеко́",
+    "speechText": "недалеко",
+    "partOfSpeech": "adverb",
+    "glossZh": "不远",
+    "collocations": [
+      "совсем недалеко"
+    ],
+    "example": "Вокзал находится недалеко.",
+    "sentenceIDs": [
+      "sentence-friends-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-friends-часто",
+    "lemma": "часто",
+    "stressedForm": "ча́сто",
+    "speechText": "часто",
+    "partOfSpeech": "adverb",
+    "glossZh": "经常",
+    "collocations": [
+      "довольно часто"
+    ],
+    "example": "Мы часто созваниваемся по вечерам.",
+    "sentenceIDs": [
+      "sentence-friends-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-friends-видеться",
+    "lemma": "видеться",
+    "stressedForm": "ви́деться",
+    "speechText": "видеться",
+    "partOfSpeech": "verb",
+    "glossZh": "见面",
+    "collocations": [
+      "редко видеться"
+    ],
+    "example": "Теперь нам удаётся видеться чаще.",
+    "sentenceIDs": [
+      "sentence-friends-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "увидеться",
+    "government": "с + 第五格（видеться с товарищем）"
+  },
+  {
+    "id": "lexeme-friends-доверять",
+    "lemma": "доверять",
+    "stressedForm": "доверя́ть",
+    "speechText": "доверять",
+    "partOfSpeech": "verb",
+    "glossZh": "信任",
+    "collocations": [
+      "полностью доверять"
+    ],
+    "example": "Я привык доверять этому человеку.",
+    "sentenceIDs": [
+      "sentence-friends-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPairNote": "表示持续信任，无中性的完成体对应词；довериться 含“托付/交心”",
+    "government": "第三格（доверять другу）"
+  },
+  {
+    "id": "lexeme-friends-товарищ",
+    "lemma": "товарищ",
+    "stressedForm": "това́рищ",
+    "speechText": "товарищ",
+    "partOfSpeech": "noun",
+    "glossZh": "伙伴",
+    "collocations": [
+      "школьный товарищ"
+    ],
+    "example": "Товарищ помог донести сумки.",
+    "sentenceIDs": [
+      "sentence-friends-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "товарищу"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-friends-честно",
+    "lemma": "честно",
+    "stressedForm": "че́стно",
+    "speechText": "честно",
+    "partOfSpeech": "adverb",
+    "glossZh": "坦诚地",
+    "collocations": [
+      "говорить честно"
+    ],
+    "example": "Она честно признала свою ошибку.",
+    "sentenceIDs": [
+      "sentence-friends-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-friends-говорить",
+    "lemma": "говорить",
+    "stressedForm": "говори́ть",
+    "speechText": "говорить",
+    "partOfSpeech": "verb",
+    "glossZh": "说话",
+    "collocations": [
+      "тихо говорить"
+    ],
+    "example": "Давайте говорить по очереди.",
+    "sentenceIDs": [
+      "sentence-friends-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "сказать",
+    "government": "с + 第五格表示交谈对象；о + 第六格表示话题"
+  },
+  {
+    "id": "lexeme-friends-дружба",
+    "lemma": "дружба",
+    "stressedForm": "дру́жба",
+    "speechText": "дружба",
+    "partOfSpeech": "noun",
+    "glossZh": "友谊",
+    "collocations": [
+      "крепкая дружба"
+    ],
+    "example": "Дружба сохранилась спустя много лет.",
+    "sentenceIDs": [
+      "sentence-friends-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-plans-завтра",
+    "lemma": "завтра",
+    "stressedForm": "за́втра",
+    "speechText": "завтра",
+    "partOfSpeech": "adverb",
+    "glossZh": "明天",
+    "collocations": [
+      "уже завтра"
+    ],
+    "example": "Завтра мы уезжаем за город.",
+    "sentenceIDs": [
+      "sentence-plans-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-plans-планировать",
+    "lemma": "планировать",
+    "stressedForm": "планирова́ть",
+    "speechText": "планировать",
+    "partOfSpeech": "verb",
+    "glossZh": "计划",
+    "collocations": [
+      "планировать неделю"
+    ],
+    "example": "Я люблю планировать дела заранее.",
+    "sentenceIDs": [
+      "sentence-plans-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "планирую"
+    ],
+    "aspect": "imperfective",
+    "government": "直接接第四格，或 планировать + 动词不定式",
+    "aspectPair": "спланировать"
+  },
+  {
+    "id": "lexeme-plans-закончить",
+    "lemma": "закончить",
+    "stressedForm": "зако́нчить",
+    "speechText": "закончить",
+    "partOfSpeech": "verb",
+    "glossZh": "完成",
+    "collocations": [
+      "закончить работу"
+    ],
+    "example": "Нужно закончить отчёт до пятницы.",
+    "sentenceIDs": [
+      "sentence-plans-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "заканчивать",
+    "government": "直接接第四格，或 закончить + 动词不定式"
+  },
+  {
+    "id": "lexeme-plans-весь",
+    "lemma": "весь",
+    "stressedForm": "ве́сь",
+    "speechText": "весь",
+    "partOfSpeech": "pronoun",
+    "glossZh": "全部的",
+    "collocations": [
+      "весь день"
+    ],
+    "example": "Весь вечер лил дождь.",
+    "sentenceIDs": [
+      "sentence-plans-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-plans-дело",
+    "lemma": "дело",
+    "stressedForm": "де́ло",
+    "speechText": "дело",
+    "partOfSpeech": "noun",
+    "glossZh": "事情",
+    "collocations": [
+      "важное дело"
+    ],
+    "example": "Это дело займёт не больше часа.",
+    "sentenceIDs": [
+      "sentence-plans-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "дел"
+    ],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-plans-если",
+    "lemma": "если",
+    "stressedForm": "е́сли",
+    "speechText": "если",
+    "partOfSpeech": "conjunction",
+    "glossZh": "如果",
+    "collocations": [
+      "если будет время"
+    ],
+    "example": "Если погода улучшится, поедем к озеру.",
+    "sentenceIDs": [
+      "sentence-plans-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-plans-время",
+    "lemma": "время",
+    "stressedForm": "вре́мя",
+    "speechText": "время",
+    "partOfSpeech": "noun",
+    "glossZh": "时间",
+    "collocations": [
+      "свободное время"
+    ],
+    "example": "Время до поезда пролетело быстро.",
+    "sentenceIDs": [
+      "sentence-plans-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-plans-вечером",
+    "lemma": "вечером",
+    "stressedForm": "ве́чером",
+    "speechText": "вечером",
+    "partOfSpeech": "adverb",
+    "glossZh": "晚上",
+    "collocations": [
+      "сегодня вечером"
+    ],
+    "example": "Вечером зажглись фонари.",
+    "sentenceIDs": [
+      "sentence-plans-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-plans-пойти",
+    "lemma": "пойти",
+    "stressedForm": "пойти́",
+    "speechText": "пойти",
+    "partOfSpeech": "verb",
+    "glossZh": "去；开始走",
+    "collocations": [
+      "пойти гулять"
+    ],
+    "example": "После ужина можно пойти в парк.",
+    "sentenceIDs": [
+      "sentence-plans-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "идти",
+    "government": "в/на + 第四格表示目的地；к + 第三格表示走向某人或某物"
+  },
+  {
+    "id": "lexeme-plans-прогуляться",
+    "lemma": "прогуляться",
+    "stressedForm": "прогуля́ться",
+    "speechText": "прогуляться",
+    "partOfSpeech": "verb",
+    "glossZh": "散步一下",
+    "collocations": [
+      "немного прогуляться"
+    ],
+    "example": "Перед сном полезно прогуляться.",
+    "sentenceIDs": [
+      "sentence-plans-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "perfective",
+    "aspectPair": "прогуливаться",
+    "government": "по + 第三格表示地点范围（прогуляться по парку）"
+  },
+  {
+    "id": "lexeme-invitations-приходить",
+    "lemma": "приходить",
+    "stressedForm": "приходи́ть",
+    "speechText": "приходить",
+    "partOfSpeech": "verb",
+    "glossZh": "来",
+    "collocations": [
+      "приходить вовремя"
+    ],
+    "example": "Гости начали приходить после шести.",
+    "sentenceIDs": [
+      "sentence-invitations-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "прийти",
+    "government": "в/на + 第四格表示目的地；к + 第三格表示到某人处"
+  },
+  {
+    "id": "lexeme-invitations-гость",
+    "lemma": "гость",
+    "stressedForm": "го́сть",
+    "speechText": "гость",
+    "partOfSpeech": "noun",
+    "glossZh": "客人；做客",
+    "collocations": [
+      "дорогой гость"
+    ],
+    "example": "Первый гость принёс цветы.",
+    "sentenceIDs": [
+      "sentence-invitations-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "гостей"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-invitations-суббота",
+    "lemma": "суббота",
+    "stressedForm": "суббо́та",
+    "speechText": "суббота",
+    "partOfSpeech": "noun",
+    "glossZh": "星期六",
+    "collocations": [
+      "ближайшая суббота"
+    ],
+    "example": "Суббота подходит для пикника.",
+    "sentenceIDs": [
+      "sentence-invitations-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "субботу"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-invitations-угощение",
+    "lemma": "угощение",
+    "stressedForm": "угоще́ние",
+    "speechText": "угощение",
+    "partOfSpeech": "noun",
+    "glossZh": "招待；点心",
+    "collocations": [
+      "домашнее угощение"
+    ],
+    "example": "Угощение уже расставили на столе.",
+    "sentenceIDs": [
+      "sentence-invitations-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-invitations-приглашать",
+    "lemma": "приглашать",
+    "stressedForm": "приглаша́ть",
+    "speechText": "приглашать",
+    "partOfSpeech": "verb",
+    "glossZh": "邀请",
+    "collocations": [
+      "приглашать друзей"
+    ],
+    "example": "Мы решили приглашать только близких.",
+    "sentenceIDs": [
+      "sentence-invitations-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "приглашаем"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "пригласить",
+    "government": "第四格人 + на + 第四格活动（приглашать друзей на праздник）"
+  },
+  {
+    "id": "lexeme-invitations-приглашение",
+    "lemma": "приглашение",
+    "stressedForm": "приглаше́ние",
+    "speechText": "приглашение",
+    "partOfSpeech": "noun",
+    "glossZh": "邀请",
+    "collocations": [
+      "письменное приглашение"
+    ],
+    "example": "Приглашение пришло по электронной почте.",
+    "sentenceIDs": [
+      "sentence-invitations-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-invitations-удовольствие",
+    "lemma": "удовольствие",
+    "stressedForm": "удово́льствие",
+    "speechText": "удовольствие",
+    "partOfSpeech": "noun",
+    "glossZh": "愉快",
+    "collocations": [
+      "с удовольствием"
+    ],
+    "example": "Прогулка доставила детям удовольствие.",
+    "sentenceIDs": [
+      "sentence-invitations-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "удовольствием"
+    ],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-invitations-прийти",
+    "lemma": "прийти",
+    "stressedForm": "прийти́",
+    "speechText": "прийти",
+    "partOfSpeech": "verb",
+    "glossZh": "来到",
+    "collocations": [
+      "прийти на праздник"
+    ],
+    "example": "Он обещал прийти немного раньше.",
+    "sentenceIDs": [
+      "sentence-invitations-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "приду"
+    ],
+    "aspect": "perfective",
+    "aspectPair": "приходить",
+    "government": "в/на + 第四格表示目的地；к + 第三格表示到某人处"
+  },
+  {
+    "id": "lexeme-invitations-соглашаться",
+    "lemma": "соглашаться",
+    "stressedForm": "соглаша́ться",
+    "speechText": "соглашаться",
+    "partOfSpeech": "verb",
+    "glossZh": "同意",
+    "collocations": [
+      "охотно соглашаться"
+    ],
+    "example": "Не обязательно сразу соглашаться.",
+    "sentenceIDs": [
+      "sentence-invitations-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "соглашается"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "согласиться",
+    "government": "с + 第五格表示同意某人；на + 第四格表示接受条件"
+  },
+  {
+    "id": "lexeme-invitations-отказываться",
+    "lemma": "отказываться",
+    "stressedForm": "отка́зываться",
+    "speechText": "отказываться",
+    "partOfSpeech": "verb",
+    "glossZh": "拒绝",
+    "collocations": [
+      "вежливо отказываться"
+    ],
+    "example": "Иногда приходится отказываться от встречи.",
+    "sentenceIDs": [
+      "sentence-invitations-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "отказывается"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "отказаться",
+    "government": "от + 第二格表示拒绝某事；也可接动词不定式"
+  },
+  {
+    "id": "lexeme-chores-заправлять",
+    "lemma": "заправлять",
+    "stressedForm": "заправля́ть",
+    "speechText": "заправлять",
+    "partOfSpeech": "verb",
+    "glossZh": "整理；铺好",
+    "collocations": [
+      "заправлять кровать"
+    ],
+    "example": "Детей учат утром заправлять кровать.",
+    "sentenceIDs": [
+      "sentence-chores-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "заправляю"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "заправить",
+    "government": "直接接第四格（заправлять кровать）"
+  },
+  {
+    "id": "lexeme-chores-кровать",
+    "lemma": "кровать",
+    "stressedForm": "крова́ть",
+    "speechText": "кровать",
+    "partOfSpeech": "noun",
+    "glossZh": "床",
+    "collocations": [
+      "удобная кровать"
+    ],
+    "example": "Кровать поставили у дальней стены.",
+    "sentenceIDs": [
+      "sentence-chores-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-chores-подметать",
+    "lemma": "подметать",
+    "stressedForm": "подмета́ть",
+    "speechText": "подметать",
+    "partOfSpeech": "verb",
+    "glossZh": "扫地",
+    "collocations": [
+      "подметать пол"
+    ],
+    "example": "Балкон лучше подметать влажной щёткой.",
+    "sentenceIDs": [
+      "sentence-chores-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "подметаю"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "подмести",
+    "government": "直接接第四格（подметать пол）"
+  },
+  {
+    "id": "lexeme-chores-пол",
+    "lemma": "пол",
+    "stressedForm": "по́л",
+    "speechText": "пол",
+    "partOfSpeech": "noun",
+    "glossZh": "地板",
+    "collocations": [
+      "деревянный пол"
+    ],
+    "example": "Пол скрипит возле двери.",
+    "sentenceIDs": [
+      "sentence-chores-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-chores-мусор",
+    "lemma": "мусор",
+    "stressedForm": "му́сор",
+    "speechText": "мусор",
+    "partOfSpeech": "noun",
+    "glossZh": "垃圾",
+    "collocations": [
+      "выносить мусор"
+    ],
+    "example": "Мусор нужно вынести до вечера.",
+    "sentenceIDs": [
+      "sentence-chores-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-chores-мыть",
+    "lemma": "мыть",
+    "stressedForm": "мыть",
+    "speechText": "мыть",
+    "partOfSpeech": "verb",
+    "glossZh": "清洗",
+    "collocations": [
+      "мыть посуду"
+    ],
+    "example": "После готовки приходится мыть плиту.",
+    "sentenceIDs": [
+      "sentence-chores-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "моем"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "помыть",
+    "government": "直接接第四格（мыть посуду）"
+  },
+  {
+    "id": "lexeme-chores-посуда",
+    "lemma": "посуда",
+    "stressedForm": "посу́да",
+    "speechText": "посуда",
+    "partOfSpeech": "noun",
+    "glossZh": "餐具",
+    "collocations": [
+      "чистая посуда"
+    ],
+    "example": "Посуда сохнет на полотенце.",
+    "sentenceIDs": [
+      "sentence-chores-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "посуду"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-chores-убирать",
+    "lemma": "убирать",
+    "stressedForm": "убира́ть",
+    "speechText": "убирать",
+    "partOfSpeech": "verb",
+    "glossZh": "打扫；收拾",
+    "collocations": [
+      "убирать кухню"
+    ],
+    "example": "По субботам мы начинаем убирать вместе.",
+    "sentenceIDs": [
+      "sentence-chores-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "убираем"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "убрать",
+    "government": "直接接第四格（убирать кухню / мусор）"
+  },
+  {
+    "id": "lexeme-chores-чистый",
+    "lemma": "чистый",
+    "stressedForm": "чи́стый",
+    "speechText": "чистый",
+    "partOfSpeech": "adjective",
+    "glossZh": "干净的",
+    "collocations": [
+      "чистый дом"
+    ],
+    "example": "Чистый стол приятно пахнет деревом.",
+    "sentenceIDs": [
+      "sentence-chores-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "чистой"
+    ]
+  },
+  {
+    "id": "lexeme-chores-порядок",
+    "lemma": "порядок",
+    "stressedForm": "поря́док",
+    "speechText": "порядок",
+    "partOfSpeech": "noun",
+    "glossZh": "整洁；秩序",
+    "collocations": [
+      "полный порядок"
+    ],
+    "example": "Порядок в шкафу держится недолго.",
+    "sentenceIDs": [
+      "sentence-chores-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-services-посылка",
+    "lemma": "посылка",
+    "stressedForm": "посы́лка",
+    "speechText": "посылка",
+    "partOfSpeech": "noun",
+    "glossZh": "包裹",
+    "collocations": [
+      "тяжёлая посылка"
+    ],
+    "example": "Посылка дошла за четыре дня.",
+    "sentenceIDs": [
+      "sentence-services-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "посылку"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-services-почта",
+    "lemma": "почта",
+    "stressedForm": "по́чта",
+    "speechText": "почта",
+    "partOfSpeech": "noun",
+    "glossZh": "邮局；邮件",
+    "collocations": [
+      "ближайшая почта"
+    ],
+    "example": "Почта открывается в девять утра.",
+    "sentenceIDs": [
+      "sentence-services-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "почте"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-services-отправлять",
+    "lemma": "отправлять",
+    "stressedForm": "отпра́влять",
+    "speechText": "отправлять",
+    "partOfSpeech": "verb",
+    "glossZh": "发送；寄出",
+    "collocations": [
+      "отправлять посылку"
+    ],
+    "example": "Документы лучше отправлять заказным письмом.",
+    "sentenceIDs": [
+      "sentence-services-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "отправить",
+    "government": "直接接第四格；收件人用第三格（отправлять посылку другу）"
+  },
+  {
+    "id": "lexeme-services-адрес",
+    "lemma": "адрес",
+    "stressedForm": "а́дрес",
+    "speechText": "адрес",
+    "partOfSpeech": "noun",
+    "glossZh": "地址",
+    "collocations": [
+      "точный адрес"
+    ],
+    "example": "Адрес написан на обратной стороне.",
+    "sentenceIDs": [
+      "sentence-services-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-services-марка",
+    "lemma": "марка",
+    "stressedForm": "ма́рка",
+    "speechText": "марка",
+    "partOfSpeech": "noun",
+    "glossZh": "邮票",
+    "collocations": [
+      "почтовая марка"
+    ],
+    "example": "Марка отклеилась от конверта.",
+    "sentenceIDs": [
+      "sentence-services-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "марку"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-services-мастер",
+    "lemma": "мастер",
+    "stressedForm": "ма́стер",
+    "speechText": "мастер",
+    "partOfSpeech": "noun",
+    "glossZh": "师傅",
+    "collocations": [
+      "опытный мастер"
+    ],
+    "example": "Мастер починил кран за час.",
+    "sentenceIDs": [
+      "sentence-services-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-services-парикмахерская",
+    "lemma": "парикмахерская",
+    "stressedForm": "парикма́херская",
+    "speechText": "парикмахерская",
+    "partOfSpeech": "noun",
+    "glossZh": "理发店",
+    "collocations": [
+      "соседняя парикмахерская"
+    ],
+    "example": "Парикмахерская работает без выходных.",
+    "sentenceIDs": [
+      "sentence-services-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "парикмахерской"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-services-записаться",
+    "lemma": "записаться",
+    "stressedForm": "записа́ться",
+    "speechText": "записаться",
+    "partOfSpeech": "verb",
+    "glossZh": "预约；报名",
+    "collocations": [
+      "записаться на стрижку"
+    ],
+    "example": "Я хочу записаться на пятницу.",
+    "sentenceIDs": [
+      "sentence-services-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "записался"
+    ],
+    "aspect": "perfective",
+    "aspectPair": "записываться",
+    "government": "на + 第四格（записаться на стрижку）；к + 第三格表示预约某人"
+  },
+  {
+    "id": "lexeme-services-стрижка",
+    "lemma": "стрижка",
+    "stressedForm": "стри́жка",
+    "speechText": "стрижка",
+    "partOfSpeech": "noun",
+    "glossZh": "理发；发型",
+    "collocations": [
+      "короткая стрижка"
+    ],
+    "example": "Стрижка хорошо держит форму.",
+    "sentenceIDs": [
+      "sentence-services-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "стрижку"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-services-услуга",
+    "lemma": "услуга",
+    "stressedForm": "услу́га",
+    "speechText": "услуга",
+    "partOfSpeech": "noun",
+    "glossZh": "服务",
+    "collocations": [
+      "дополнительная услуга"
+    ],
+    "example": "Эта услуга оплачивается отдельно.",
+    "sentenceIDs": [
+      "sentence-services-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "услугу"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-nature-лес",
+    "lemma": "лес",
+    "stressedForm": "ле́с",
+    "speechText": "лес",
+    "partOfSpeech": "noun",
+    "glossZh": "森林",
+    "collocations": [
+      "сосновый лес"
+    ],
+    "example": "Лес начинается сразу за деревней.",
+    "sentenceIDs": [
+      "sentence-nature-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-nature-прозрачный",
+    "lemma": "прозрачный",
+    "stressedForm": "прозра́чный",
+    "speechText": "прозрачный",
+    "partOfSpeech": "adjective",
+    "glossZh": "清澈的",
+    "collocations": [
+      "прозрачный лёд"
+    ],
+    "example": "Прозрачный ручей бежит вдоль тропы.",
+    "sentenceIDs": [
+      "sentence-nature-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "прозрачная",
+      "прозрачной"
+    ]
+  },
+  {
+    "id": "lexeme-nature-река",
+    "lemma": "река",
+    "stressedForm": "река́",
+    "speechText": "река",
+    "partOfSpeech": "noun",
+    "glossZh": "河",
+    "collocations": [
+      "горная река"
+    ],
+    "example": "Река разлилась после сильных дождей.",
+    "sentenceIDs": [
+      "sentence-nature-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "реки",
+      "реке"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-nature-крутой",
+    "lemma": "крутой",
+    "stressedForm": "круто́й",
+    "speechText": "крутой",
+    "partOfSpeech": "adjective",
+    "glossZh": "陡峭的",
+    "collocations": [
+      "крутой склон"
+    ],
+    "example": "Крутой подъём оказался утомительным.",
+    "sentenceIDs": [
+      "sentence-nature-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-nature-гора",
+    "lemma": "гора",
+    "stressedForm": "гора́",
+    "speechText": "гора",
+    "partOfSpeech": "noun",
+    "glossZh": "山",
+    "collocations": [
+      "высокая гора"
+    ],
+    "example": "Гора скрылась за облаками.",
+    "sentenceIDs": [
+      "sentence-nature-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "горы"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-nature-тропинка",
+    "lemma": "тропинка",
+    "stressedForm": "тропи́нка",
+    "speechText": "тропинка",
+    "partOfSpeech": "noun",
+    "glossZh": "小路",
+    "collocations": [
+      "узкая тропинка"
+    ],
+    "example": "Тропинка вывела нас к озеру.",
+    "sentenceIDs": [
+      "sentence-nature-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-nature-слышать",
+    "lemma": "слышать",
+    "stressedForm": "слы́шать",
+    "speechText": "слышать",
+    "partOfSpeech": "verb",
+    "glossZh": "听见",
+    "collocations": [
+      "хорошо слышать"
+    ],
+    "example": "Из палатки было слышать сову.",
+    "sentenceIDs": [
+      "sentence-nature-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "услышать",
+    "government": "直接接第四格（слышать пение птиц）"
+  },
+  {
+    "id": "lexeme-nature-пение",
+    "lemma": "пение",
+    "stressedForm": "пе́ние",
+    "speechText": "пение",
+    "partOfSpeech": "noun",
+    "glossZh": "歌声；鸣叫",
+    "collocations": [
+      "пение птиц"
+    ],
+    "example": "Пение доносилось из сада.",
+    "sentenceIDs": [
+      "sentence-nature-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-nature-птица",
+    "lemma": "птица",
+    "stressedForm": "пти́ца",
+    "speechText": "птица",
+    "partOfSpeech": "noun",
+    "glossZh": "鸟",
+    "collocations": [
+      "редкая птица"
+    ],
+    "example": "Птица села на нижнюю ветку.",
+    "sentenceIDs": [
+      "sentence-nature-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "птицы",
+      "птиц"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-nature-природа",
+    "lemma": "природа",
+    "stressedForm": "приро́да",
+    "speechText": "природа",
+    "partOfSpeech": "noun",
+    "glossZh": "自然",
+    "collocations": [
+      "беречь природу"
+    ],
+    "example": "Природа здесь почти не тронута.",
+    "sentenceIDs": [
+      "sentence-nature-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "природу",
+      "природе"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-holidays-праздник",
+    "lemma": "праздник",
+    "stressedForm": "пра́здник",
+    "speechText": "праздник",
+    "partOfSpeech": "noun",
+    "glossZh": "节日",
+    "collocations": [
+      "семейный праздник"
+    ],
+    "example": "Праздник начался с общего ужина.",
+    "sentenceIDs": [
+      "sentence-holidays-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "праздником"
+    ],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-holidays-украшать",
+    "lemma": "украшать",
+    "stressedForm": "украша́ть",
+    "speechText": "украшать",
+    "partOfSpeech": "verb",
+    "glossZh": "装饰",
+    "collocations": [
+      "украшать комнату"
+    ],
+    "example": "Дети помогали украшать ёлку.",
+    "sentenceIDs": [
+      "sentence-holidays-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "украсить",
+    "government": "第四格对象 + 第五格装饰物（украшать комнату гирляндами）"
+  },
+  {
+    "id": "lexeme-holidays-комната",
+    "lemma": "комната",
+    "stressedForm": "ко́мната",
+    "speechText": "комната",
+    "partOfSpeech": "noun",
+    "glossZh": "房间",
+    "collocations": [
+      "большая комната"
+    ],
+    "example": "Комната наполнилась запахом хвои.",
+    "sentenceIDs": [
+      "sentence-holidays-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "комнату"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-holidays-покупать",
+    "lemma": "покупать",
+    "stressedForm": "покупа́ть",
+    "speechText": "покупать",
+    "partOfSpeech": "verb",
+    "glossZh": "购买",
+    "collocations": [
+      "покупать подарки"
+    ],
+    "example": "Мы стараемся покупать подарки заранее.",
+    "sentenceIDs": [
+      "sentence-holidays-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "aspect": "imperfective",
+    "aspectPair": "купить",
+    "government": "直接接第四格；给某人用第三格（покупать другу подарок）"
+  },
+  {
+    "id": "lexeme-holidays-подарок",
+    "lemma": "подарок",
+    "stressedForm": "пода́рок",
+    "speechText": "подарок",
+    "partOfSpeech": "noun",
+    "glossZh": "礼物",
+    "collocations": [
+      "неожиданный подарок"
+    ],
+    "example": "Подарок лежал под ёлкой.",
+    "sentenceIDs": [
+      "sentence-holidays-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-holidays-полночь",
+    "lemma": "полночь",
+    "stressedForm": "по́лночь",
+    "speechText": "полночь",
+    "partOfSpeech": "noun",
+    "glossZh": "午夜",
+    "collocations": [
+      "ровно в полночь"
+    ],
+    "example": "В полночь на площади зазвонили часы.",
+    "sentenceIDs": [
+      "sentence-holidays-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-holidays-поздравлять",
+    "lemma": "поздравлять",
+    "stressedForm": "поздравля́ть",
+    "speechText": "поздравлять",
+    "partOfSpeech": "verb",
+    "glossZh": "祝贺",
+    "collocations": [
+      "поздравлять друзей"
+    ],
+    "example": "Мы пришли поздравлять бабушку.",
+    "sentenceIDs": [
+      "sentence-holidays-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "поздравляем"
+    ],
+    "aspect": "imperfective",
+    "aspectPair": "поздравить",
+    "government": "第四格人 + с + 第五格节日（поздравлять друзей с праздником）"
+  },
+  {
+    "id": "lexeme-holidays-общий",
+    "lemma": "общий",
+    "stressedForm": "о́бщий",
+    "speechText": "общий",
+    "partOfSpeech": "adjective",
+    "glossZh": "共同的",
+    "collocations": [
+      "общий снимок"
+    ],
+    "example": "Общий стол поставили у окна.",
+    "sentenceIDs": [
+      "sentence-holidays-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "общее"
+    ]
+  },
+  {
+    "id": "lexeme-holidays-фото",
+    "lemma": "фото",
+    "stressedForm": "фо́то",
+    "speechText": "фото",
+    "partOfSpeech": "noun",
+    "glossZh": "照片",
+    "collocations": [
+      "семейное фото"
+    ],
+    "example": "Фото получилось немного тёмным.",
+    "sentenceIDs": [
+      "sentence-holidays-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  },
+  {
+    "id": "lexeme-holidays-традиция",
+    "lemma": "традиция",
+    "stressedForm": "тради́ция",
+    "speechText": "традиция",
+    "partOfSpeech": "noun",
+    "glossZh": "传统",
+    "collocations": [
+      "семейная традиция"
+    ],
+    "example": "Эта традиция объединяет три поколения.",
+    "sentenceIDs": [
+      "sentence-holidays-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "традиции"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-emergencies-помочь",
+    "lemma": "помочь",
+    "stressedForm": "помо́чь",
+    "speechText": "помочь",
+    "partOfSpeech": "verb",
+    "glossZh": "帮助",
+    "collocations": [
+      "помочь людям"
+    ],
+    "example": "Соседи пришли помочь после грозы.",
+    "sentenceIDs": [
+      "sentence-emergencies-1"
+    ],
+    "reviewStatus": "reviewed",
+    "aspect": "perfective",
+    "aspectPair": "помогать",
+    "surfaceForms": [
+      "помогите"
+    ],
+    "government": "第三格人 + с + 第五格事情，或 помочь + 动词不定式"
+  },
+  {
+    "id": "lexeme-emergencies-человек",
+    "lemma": "человек",
+    "stressedForm": "челове́к",
+    "speechText": "человек",
+    "partOfSpeech": "noun",
+    "glossZh": "人",
+    "collocations": [
+      "пожилой человек"
+    ],
+    "example": "Человек попросил вызвать врача.",
+    "sentenceIDs": [
+      "sentence-emergencies-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-emergencies-потерять",
+    "lemma": "потерять",
+    "stressedForm": "потеря́ть",
+    "speechText": "потерять",
+    "partOfSpeech": "verb",
+    "glossZh": "丢失",
+    "collocations": [
+      "потерять кошелёк"
+    ],
+    "example": "В толпе легко потерять ребёнка.",
+    "sentenceIDs": [
+      "sentence-emergencies-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "потерял"
+    ],
+    "aspect": "perfective",
+    "aspectPair": "терять",
+    "government": "直接接第四格（потерять кошелёк）"
+  },
+  {
+    "id": "lexeme-emergencies-кошелек",
+    "lemma": "кошелёк",
+    "stressedForm": "кошелёк",
+    "speechText": "кошелёк",
+    "partOfSpeech": "noun",
+    "glossZh": "钱包",
+    "collocations": [
+      "кожаный кошелёк"
+    ],
+    "example": "Кошелёк нашли возле кассы.",
+    "sentenceIDs": [
+      "sentence-emergencies-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-emergencies-срочно",
+    "lemma": "срочно",
+    "stressedForm": "сро́чно",
+    "speechText": "срочно",
+    "partOfSpeech": "adverb",
+    "glossZh": "紧急地",
+    "collocations": [
+      "очень срочно"
+    ],
+    "example": "Мне срочно нужен номер полиции.",
+    "sentenceIDs": [
+      "sentence-emergencies-1"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-emergencies-экстренный",
+    "lemma": "экстренный",
+    "stressedForm": "экстре́нный",
+    "speechText": "экстренный",
+    "partOfSpeech": "adjective",
+    "glossZh": "紧急的",
+    "collocations": [
+      "экстренный вызов"
+    ],
+    "example": "Экстренный выход нельзя загромождать.",
+    "sentenceIDs": [
+      "sentence-emergencies-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "экстренная",
+      "экстренной"
+    ]
+  },
+  {
+    "id": "lexeme-emergencies-ситуация",
+    "lemma": "ситуация",
+    "stressedForm": "ситуа́ция",
+    "speechText": "ситуация",
+    "partOfSpeech": "noun",
+    "glossZh": "情况",
+    "collocations": [
+      "опасная ситуация"
+    ],
+    "example": "Ситуация быстро стала спокойнее.",
+    "sentenceIDs": [
+      "sentence-emergencies-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [
+      "ситуации"
+    ],
+    "grammaticalGender": "feminine"
+  },
+  {
+    "id": "lexeme-emergencies-звонок",
+    "lemma": "звонок",
+    "stressedForm": "звоно́к",
+    "speechText": "звонок",
+    "partOfSpeech": "noun",
+    "glossZh": "电话；铃声",
+    "collocations": [
+      "тревожный звонок"
+    ],
+    "example": "Звонок поступил около полуночи.",
+    "sentenceIDs": [
+      "sentence-emergencies-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "masculine"
+  },
+  {
+    "id": "lexeme-emergencies-точно",
+    "lemma": "точно",
+    "stressedForm": "то́чно",
+    "speechText": "точно",
+    "partOfSpeech": "adverb",
+    "glossZh": "准确地",
+    "collocations": [
+      "знать точно"
+    ],
+    "example": "Я точно помню название улицы.",
+    "sentenceIDs": [
+      "sentence-emergencies-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": []
+  },
+  {
+    "id": "lexeme-emergencies-местонахождение",
+    "lemma": "местонахождение",
+    "stressedForm": "местонахожде́ние",
+    "speechText": "местонахождение",
+    "partOfSpeech": "noun",
+    "glossZh": "所在位置",
+    "collocations": [
+      "текущее местонахождение"
+    ],
+    "example": "Местонахождение телефона видно на карте.",
+    "sentenceIDs": [
+      "sentence-emergencies-2"
+    ],
+    "reviewStatus": "reviewed",
+    "surfaceForms": [],
+    "grammaticalGender": "neuter"
+  }
+]

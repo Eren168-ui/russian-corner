@@ -250,7 +250,6 @@ public final class FloatingPanelController: NSObject, NSWindowDelegate {
         runtimeSource.activeRuntime?.dailyReflection?
           .isCompletionOfferPresented == true
     )
-    panel.appearance = activeAppModel.appearanceMode.nsAppearance
     panel.isMovableByWindowBackground =
       presentation.allowsWindowBackgroundDragging
     resizePanelAtomically(to: presentation.size)
