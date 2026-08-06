@@ -1,6 +1,7 @@
 import RussianCornerCore
 import SwiftUI
 
+@MainActor
 public struct SceneTrainingView: View {
   @Bindable private var model: SceneTrainingViewModel
   @Environment(\.colorScheme) private var colorScheme

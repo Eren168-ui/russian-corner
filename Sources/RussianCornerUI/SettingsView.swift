@@ -2,6 +2,7 @@ import RussianCornerCore
 import RussianCornerPlatform
 import SwiftUI
 
+@MainActor
 public struct RussianCornerSettingsView: View {
   @Bindable private var runtime: AppRuntime
   @Bindable private var appModel: AppModel
