@@ -105,9 +105,9 @@ public enum AppAppearanceMode: String, CaseIterable, Codable, Sendable {
   @MainActor
   public static func apply(
     _ mode: Self,
-    to application: NSApplication = .shared
+    to application: NSApplication? = nil
   ) {
-    application.appearance = mode.nsAppearance
+    (application ?? NSApplication.shared).appearance = mode.nsAppearance
   }
 }
 

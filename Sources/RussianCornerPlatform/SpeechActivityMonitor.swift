@@ -154,7 +154,6 @@ public struct SystemMicrophonePermissionProvider:
     }
 }
 
-@MainActor
 public protocol SpeechActivityMonitoring: AnyObject {
     var isMonitoring: Bool { get }
     func start() async -> SpeechActivityStartResult
@@ -201,7 +200,6 @@ private final class SpeechActivityBox: @unchecked Sendable {
     }
 }
 
-@MainActor
 public final class SpeechActivityMonitor: SpeechActivityMonitoring {
     public private(set) var isMonitoring = false
 

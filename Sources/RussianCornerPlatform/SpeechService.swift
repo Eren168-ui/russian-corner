@@ -29,12 +29,11 @@ public struct SystemSpeechVoiceProvider: SpeechVoiceProviding {
     }
 }
 
-@MainActor
 public protocol SpeechSynthesizing: AnyObject {
     func speak(
         _ text: String,
         voiceIdentifier: String,
-        completion: @escaping @MainActor @Sendable (
+        completion: @escaping (
             SpeechSynthesisOutcome
         ) -> Void
     )
@@ -42,7 +41,7 @@ public protocol SpeechSynthesizing: AnyObject {
         _ text: String,
         voiceIdentifier: String,
         rate: Float,
-        completion: @escaping @MainActor @Sendable (
+        completion: @escaping (
             SpeechSynthesisOutcome
         ) -> Void
     )
@@ -54,7 +53,7 @@ public extension SpeechSynthesizing {
         _ text: String,
         voiceIdentifier: String,
         rate: Float,
-        completion: @escaping @MainActor @Sendable (
+        completion: @escaping (
             SpeechSynthesisOutcome
         ) -> Void
     ) {
@@ -67,14 +66,14 @@ public extension SpeechSynthesizing {
     }
 }
 
-@MainActor
-public final class SystemSpeechSynthesizer:
+public class SystemSpeechSynthesizer:
     NSObject,
     SpeechSynthesizing,
-    AVSpeechSynthesizerDelegate
+    AVSpeechSynthesizerDelegate,
+    @unchecked Sendable
 {
     private typealias Completion =
-        @MainActor @Sendable (SpeechSynthesisOutcome) -> Void
+        (SpeechSynthesisOutcome) -> Void
 
     private let synthesizer: AVSpeechSynthesizer
     private var completions: [ObjectIdentifier: Completion] = [:]
@@ -88,7 +87,7 @@ public final class SystemSpeechSynthesizer:
     public func speak(
         _ text: String,
         voiceIdentifier: String,
-        completion: @escaping @MainActor @Sendable (
+        completion: @escaping (
             SpeechSynthesisOutcome
         ) -> Void
     ) {
@@ -104,7 +103,7 @@ public final class SystemSpeechSynthesizer:
         _ text: String,
         voiceIdentifier: String,
         rate: Float,
-        completion: @escaping @MainActor @Sendable (
+        completion: @escaping (
             SpeechSynthesisOutcome
         ) -> Void
     ) {
@@ -172,7 +171,6 @@ public enum SpeechServiceStatus: Equatable, Sendable {
     case emptyText
 }
 
-@MainActor
 public final class SpeechService {
     private let voiceProvider: any SpeechVoiceProviding
     private let synthesizer: any SpeechSynthesizing
@@ -181,10 +179,10 @@ public final class SpeechService {
     public init(
         voiceProvider: any SpeechVoiceProviding =
             SystemSpeechVoiceProvider(),
-        synthesizer: any SpeechSynthesizing = SystemSpeechSynthesizer()
+        synthesizer: (any SpeechSynthesizing)? = nil
     ) {
         self.voiceProvider = voiceProvider
-        self.synthesizer = synthesizer
+        self.synthesizer = synthesizer ?? SystemSpeechSynthesizer()
     }
 
     public func voiceStatus(
@@ -236,7 +234,7 @@ public final class SpeechService {
         language: StudyLanguage,
         playbackRate: Float = AVSpeechUtteranceDefaultSpeechRate,
         allowUnrelatedFallback: Bool = false,
-        completion: @escaping @MainActor @Sendable (
+        completion: @escaping (
             SpeechSynthesisOutcome
         ) -> Void = { _ in }
     ) -> SpeechServiceStatus {
@@ -269,7 +267,7 @@ public final class SpeechService {
     public func speak(
         _ text: String,
         voicePolicy: SpeechVoicePolicy = .allowFallback,
-        completion: @escaping @MainActor @Sendable (
+        completion: @escaping (
             SpeechSynthesisOutcome
         ) -> Void = { _ in }
     ) -> SpeechServiceStatus {
@@ -321,7 +319,7 @@ public final class SpeechService {
         _ text: String,
         voiceIdentifier: String,
         rate: Float,
-        completion: @escaping @MainActor @Sendable (
+        completion: @escaping (
             SpeechSynthesisOutcome
         ) -> Void
     ) {
