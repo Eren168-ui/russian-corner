@@ -1,0 +1,48 @@
+name: Build and release macOS package
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-macos-package:
+    name: Build and package macOS app
+    runs-on: macos-14
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run macOS release build
+        run: |
+          ./Scripts/build-app.sh
+
+      - name: Package macOS app
+        run: |
+          set -euo pipefail
+          mkdir -p Clients/release
+          rm -f Clients/release/*.zip
+          APP_VERSION="${GITHUB_REF_NAME#v}"
+          APP_PATH="dist/Russian Corner.app"
+          OUT_NAME="Language-Corner-Desktop-${APP_VERSION}-mac"
+          ditto -c -k --keepParent "$APP_PATH" "Clients/release/${OUT_NAME}.zip"
+          echo "MAC_ZIP=Clients/release/${OUT_NAME}.zip" >> "$GITHUB_ENV"
+
+      - name: Upload macOS package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-package
+          path: Clients/release/*.zip
+          if-no-files-found: error
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Clients/release/*.zip
+          generate_release_notes: true
+          append_body: true
