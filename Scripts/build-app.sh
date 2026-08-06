@@ -67,9 +67,13 @@ if [ "$LOCK_FILE" != "$GIT_ADMIN_DIR/russian-corner-build.lock" ] ||
   exit 1
 fi
 exec 9>"$LOCK_FILE"
-if ! /usr/bin/lockf -s -t 0 9; then
-  printf 'error: another build-app process holds %s\n' "$LOCK_FILE" >&2
-  exit 1
+if command -v /usr/bin/lockf >/dev/null 2>&1; then
+  if ! /usr/bin/lockf -s -t 0 9; then
+    printf 'error: another build-app process holds %s\n' "$LOCK_FILE" >&2
+    exit 1
+  fi
+else
+  printf 'warning: /usr/bin/lockf unavailable; skip process lock on %s\n' "$LOCK_FILE" >&2
 fi
 LOCK_HELD=1
 
