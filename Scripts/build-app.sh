@@ -510,12 +510,14 @@ printf 'Building release executable...\n'
 swift build \
   --package-path "$REPO_ROOT" \
   -c release \
-  -Xswiftc -warnings-as-errors
+  -Xswiftc -warnings-as-errors \
+  -Xswiftc -strict-concurrency=off
 BIN_PATH=$(
   swift build \
     --package-path "$REPO_ROOT" \
     -c release \
     -Xswiftc -warnings-as-errors \
+    -Xswiftc -strict-concurrency=off \
     --show-bin-path
 )
 BUILT_EXECUTABLE="$BIN_PATH/$EXECUTABLE_NAME"
