@@ -511,13 +511,13 @@ swift build \
   --package-path "$REPO_ROOT" \
   -c release \
   -Xswiftc -warnings-as-errors \
-  -Xswiftc -strict-concurrency=off
+  -Xswiftc -strict-concurrency=minimal
 BIN_PATH=$(
   swift build \
     --package-path "$REPO_ROOT" \
     -c release \
     -Xswiftc -warnings-as-errors \
-    -Xswiftc -strict-concurrency=off \
+    -Xswiftc -strict-concurrency=minimal \
     --show-bin-path
 )
 BUILT_EXECUTABLE="$BIN_PATH/$EXECUTABLE_NAME"
