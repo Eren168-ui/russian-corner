@@ -7,8 +7,8 @@
   "scripts": {
     "sync": "node ./scripts/prepare-dist.mjs",
     "start": "npm run sync && electron .",
-    "build:win": "npm run sync && electron-builder --win nsis --x64",
-    "build:win:portable": "npm run sync && electron-builder --win portable --x64"
+    "build:win": "npm run sync && electron-builder --win nsis --x64 --publish never",
+    "build:win:portable": "npm run sync && electron-builder --win portable --x64 --publish never"
   },
   "devDependencies": {
     "electron": "^35.6.2",
@@ -24,6 +24,9 @@
     "win": {
       "target": "nsis",
       "artifactName": "Language-Corner-Desktop-${version}-setup.${ext}"
+    },
+    "directories": {
+      "output": "../release"
     },
     "nsis": {
       "oneClick": false,
