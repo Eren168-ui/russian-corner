@@ -329,11 +329,8 @@ public struct TrialReportBuilder: Sendable {
     }
 
     private func naturalSpeechText(_ value: Bool?) -> String {
-        switch value {
-        case true: "是"
-        case false: "否"
-        case nil: "不确定"
-        }
+        guard let value else { return "不确定" }
+        return value ? "是" : "否"
     }
 
     private func textOrDash(_ value: String) -> String {
