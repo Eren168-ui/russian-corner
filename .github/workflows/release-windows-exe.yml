@@ -27,11 +27,11 @@ jobs:
 
       - name: Install Universal client dependencies
         working-directory: Clients/Universal
-        run: npm ci
+        run: npm install --no-fund --no-audit
 
       - name: Install Windows shell dependencies
         working-directory: Clients/Windows
-        run: npm ci
+        run: npm install --no-fund --no-audit
 
       - name: Build Windows installer
         working-directory: Clients/Windows
